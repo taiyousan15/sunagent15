@@ -3,19 +3,30 @@
     "notion": {
       "type": "http",
       "url": "https://mcp.notion.com/mcp",
-      "description": "Notion Knowledge Management"
+      "description": "Notion Knowledge Management",
+      "category": "productivity"
     },
     "postgres-ro": {
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-postgres", "${POSTGRES_MCP_DSN}"],
-      "description": "PostgreSQL Read-Only Analytics"
+      "description": "PostgreSQL Read-Only Analytics",
+      "category": "database"
+    },
+    "postgres-rw": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${POSTGRES_MCP_DSN_RW}"],
+      "description": "PostgreSQL Read-Write Access (use with caution)",
+      "category": "database",
+      "requires_confirmation": true
     },
     "filesystem": {
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-filesystem", "${PROJECT_ROOT}"],
-      "description": "Local Filesystem Access"
+      "description": "Local Filesystem Access",
+      "category": "system"
     },
     "github": {
       "type": "stdio",
@@ -24,7 +35,67 @@
       "env": {
         "GITHUB_TOKEN": "${GITHUB_TOKEN}"
       },
-      "description": "GitHub Integration"
+      "description": "GitHub Integration (Issues, PRs, Repos)",
+      "category": "development"
+    },
+    "slack": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      },
+      "description": "Slack Integration (Channels, Messages, Notifications)",
+      "category": "communication"
+    },
+    "docker": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-server-docker"],
+      "description": "Docker Container Management",
+      "category": "infrastructure"
+    },
+    "brave-search": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-brave-search"],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      },
+      "description": "Brave Search API for Web Research",
+      "category": "search"
+    },
+    "memory": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "description": "Persistent Memory/Knowledge Graph",
+      "category": "memory"
+    },
+    "sequential-thinking": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "description": "Sequential Thinking for Complex Problem Solving",
+      "category": "reasoning"
+    }
+  },
+  "mcpConfig": {
+    "healthCheck": {
+      "enabled": true,
+      "interval": 300,
+      "timeout": 30
+    },
+    "categories": {
+      "productivity": "Notion, Todoist, Calendar",
+      "database": "PostgreSQL, SQLite, Redis",
+      "development": "GitHub, GitLab, Linear",
+      "communication": "Slack, Discord, Email",
+      "infrastructure": "Docker, Kubernetes, AWS",
+      "search": "Brave, Google, Exa",
+      "memory": "Persistent storage and knowledge",
+      "reasoning": "Enhanced thinking capabilities"
     }
   }
 }

@@ -243,25 +243,187 @@ export function createMockMCPServer(
 }
 
 /**
+ * Mock data for GitHub
+ */
+const MOCK_GITHUB_DATA = {
+  issues: [
+    { number: 1, title: 'Bug fix needed', state: 'open', labels: ['bug'] },
+    { number: 2, title: 'Feature request', state: 'open', labels: ['enhancement'] },
+    { number: 3, title: 'Documentation update', state: 'closed', labels: ['docs'] },
+  ],
+  pulls: [
+    { number: 10, title: 'Fix authentication', state: 'open', draft: false },
+    { number: 11, title: 'Add new feature', state: 'merged', draft: false },
+  ],
+  repos: [
+    { name: 'taisun_v2', full_name: 'san15/taisun_v2', private: false },
+  ],
+};
+
+/**
+ * Mock data for Slack
+ */
+const MOCK_SLACK_DATA = {
+  channels: [
+    { id: 'C001', name: 'general', is_private: false },
+    { id: 'C002', name: 'development', is_private: false },
+    { id: 'C003', name: 'random', is_private: false },
+  ],
+  messages: [
+    { channel: 'C001', user: 'U001', text: 'Hello team!', ts: '1234567890.000100' },
+    { channel: 'C001', user: 'U002', text: 'Hi there!', ts: '1234567890.000200' },
+  ],
+};
+
+/**
+ * Mock data for Docker
+ */
+const MOCK_DOCKER_DATA = {
+  containers: [
+    { id: 'abc123', name: 'web-app', image: 'nginx:latest', state: 'running', status: 'Up 2 hours' },
+    { id: 'def456', name: 'database', image: 'postgres:15', state: 'running', status: 'Up 3 hours' },
+    { id: 'ghi789', name: 'cache', image: 'redis:7', state: 'exited', status: 'Exited (0) 1 hour ago' },
+  ],
+  images: [
+    { id: 'sha256:abc', repository: 'nginx', tag: 'latest', size: '142MB' },
+    { id: 'sha256:def', repository: 'postgres', tag: '15', size: '379MB' },
+  ],
+};
+
+/**
+ * Handle GitHub MCP requests
+ */
+function handleGitHubRequest(request: MCPRequest): MCPResponse {
+  const { method, params } = request;
+
+  switch (method) {
+    case 'list_issues':
+      const state = params?.state as string || 'open';
+      const filteredIssues = MOCK_GITHUB_DATA.issues.filter(
+        (i) => state === 'all' || i.state === state
+      );
+      return { result: { issues: filteredIssues } };
+
+    case 'get_issue':
+      const issueNumber = params?.number as number;
+      const issue = MOCK_GITHUB_DATA.issues.find((i) => i.number === issueNumber);
+      if (issue) {
+        return { result: issue };
+      }
+      return { error: { code: 404, message: `Issue #${issueNumber} not found` } };
+
+    case 'list_pulls':
+      return { result: { pulls: MOCK_GITHUB_DATA.pulls } };
+
+    case 'create_issue':
+      const newIssue = {
+        number: MOCK_GITHUB_DATA.issues.length + 1,
+        title: (params?.title as string) || 'Untitled',
+        state: 'open',
+        labels: (params?.labels as string[]) || [],
+      };
+      MOCK_GITHUB_DATA.issues.push(newIssue);
+      return { result: newIssue };
+
+    default:
+      return { error: { code: 400, message: `Unknown method: ${method}` } };
+  }
+}
+
+/**
+ * Handle Slack MCP requests
+ */
+function handleSlackRequest(request: MCPRequest): MCPResponse {
+  const { method, params } = request;
+
+  switch (method) {
+    case 'list_channels':
+      return { result: { channels: MOCK_SLACK_DATA.channels } };
+
+    case 'get_channel_history':
+      const channelId = params?.channel as string;
+      const messages = MOCK_SLACK_DATA.messages.filter((m) => m.channel === channelId);
+      return { result: { messages } };
+
+    case 'post_message':
+      const newMessage = {
+        channel: params?.channel as string,
+        user: 'BOT',
+        text: params?.text as string,
+        ts: Date.now().toString(),
+      };
+      MOCK_SLACK_DATA.messages.push(newMessage);
+      return { result: { ok: true, ts: newMessage.ts } };
+
+    default:
+      return { error: { code: 400, message: `Unknown method: ${method}` } };
+  }
+}
+
+/**
+ * Handle Docker MCP requests
+ */
+function handleDockerRequest(request: MCPRequest): MCPResponse {
+  const { method, params } = request;
+
+  switch (method) {
+    case 'list_containers':
+      const all = params?.all as boolean || false;
+      const containers = all
+        ? MOCK_DOCKER_DATA.containers
+        : MOCK_DOCKER_DATA.containers.filter((c) => c.state === 'running');
+      return { result: { containers } };
+
+    case 'get_container':
+      const containerId = params?.id as string;
+      const container = MOCK_DOCKER_DATA.containers.find(
+        (c) => c.id === containerId || c.name === containerId
+      );
+      if (container) {
+        return { result: container };
+      }
+      return { error: { code: 404, message: `Container ${containerId} not found` } };
+
+    case 'list_images':
+      return { result: { images: MOCK_DOCKER_DATA.images } };
+
+    case 'container_logs':
+      return { result: { logs: 'Mock container logs...\nLine 1\nLine 2\nLine 3' } };
+
+    default:
+      return { error: { code: 400, message: `Unknown method: ${method}` } };
+  }
+}
+
+type MCPServerType = 'postgres' | 'notion' | 'github' | 'slack' | 'docker';
+
+/**
  * Mock MCP Client for testing
  */
 export class MockMCPClient {
-  private serverType: 'postgres' | 'notion';
+  private serverType: MCPServerType;
 
-  constructor(serverType: 'postgres' | 'notion') {
+  constructor(serverType: MCPServerType) {
     this.serverType = serverType;
   }
 
   async call(method: string, params?: Record<string, unknown>): Promise<MCPResponse> {
     const request: MCPRequest = { method, params };
 
-    if (this.serverType === 'postgres') {
-      return handlePostgresRequest(request);
-    } else if (this.serverType === 'notion') {
-      return handleNotionRequest(request);
+    switch (this.serverType) {
+      case 'postgres':
+        return handlePostgresRequest(request);
+      case 'notion':
+        return handleNotionRequest(request);
+      case 'github':
+        return handleGitHubRequest(request);
+      case 'slack':
+        return handleSlackRequest(request);
+      case 'docker':
+        return handleDockerRequest(request);
+      default:
+        return { error: { code: 400, message: 'Unknown server type' } };
     }
-
-    return { error: { code: 400, message: 'Unknown server type' } };
   }
 }
 
@@ -277,4 +439,25 @@ export function getMockPostgresClient(): MockMCPClient {
  */
 export function getMockNotionClient(): MockMCPClient {
   return new MockMCPClient('notion');
+}
+
+/**
+ * Get mock GitHub client
+ */
+export function getMockGitHubClient(): MockMCPClient {
+  return new MockMCPClient('github');
+}
+
+/**
+ * Get mock Slack client
+ */
+export function getMockSlackClient(): MockMCPClient {
+  return new MockMCPClient('slack');
+}
+
+/**
+ * Get mock Docker client
+ */
+export function getMockDockerClient(): MockMCPClient {
+  return new MockMCPClient('docker');
 }

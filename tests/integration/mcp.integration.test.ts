@@ -4,15 +4,28 @@
  * Tests for Model Context Protocol server integrations.
  */
 
-import { getMockPostgresClient, getMockNotionClient, MockMCPClient } from '../mocks/mock-mcp-server';
+import {
+  getMockPostgresClient,
+  getMockNotionClient,
+  getMockGitHubClient,
+  getMockSlackClient,
+  getMockDockerClient,
+  MockMCPClient,
+} from '../mocks/mock-mcp-server';
 
 describe('MCP Integration Tests', () => {
   let postgresClient: MockMCPClient;
   let notionClient: MockMCPClient;
+  let githubClient: MockMCPClient;
+  let slackClient: MockMCPClient;
+  let dockerClient: MockMCPClient;
 
   beforeAll(() => {
     postgresClient = getMockPostgresClient();
     notionClient = getMockNotionClient();
+    githubClient = getMockGitHubClient();
+    slackClient = getMockSlackClient();
+    dockerClient = getMockDockerClient();
   });
 
   describe('PostgreSQL MCP', () => {
@@ -209,6 +222,171 @@ describe('MCP Integration Tests', () => {
         sql: 'SELECT * FROM orders WHERE status = "completed"',
       });
       expect(queryResponse.result).toBeDefined();
+    });
+  });
+
+  describe('GitHub MCP', () => {
+    it('should list open issues', async () => {
+      const response = await githubClient.call('list_issues', { state: 'open' });
+
+      expect(response.result).toBeDefined();
+      const issues = (response.result as { issues: { state: string }[] }).issues;
+      expect(issues.length).toBeGreaterThan(0);
+      expect(issues.every((i) => i.state === 'open')).toBe(true);
+    });
+
+    it('should list all issues', async () => {
+      const response = await githubClient.call('list_issues', { state: 'all' });
+
+      expect(response.result).toBeDefined();
+      const issues = (response.result as { issues: unknown[] }).issues;
+      expect(issues.length).toBeGreaterThan(0);
+    });
+
+    it('should get specific issue', async () => {
+      const response = await githubClient.call('get_issue', { number: 1 });
+
+      expect(response.result).toBeDefined();
+      expect((response.result as { number: number }).number).toBe(1);
+    });
+
+    it('should return error for non-existent issue', async () => {
+      const response = await githubClient.call('get_issue', { number: 999 });
+
+      expect(response.error).toBeDefined();
+      expect(response.error?.code).toBe(404);
+    });
+
+    it('should list pull requests', async () => {
+      const response = await githubClient.call('list_pulls');
+
+      expect(response.result).toBeDefined();
+      const pulls = (response.result as { pulls: unknown[] }).pulls;
+      expect(pulls.length).toBeGreaterThan(0);
+    });
+
+    it('should create new issue', async () => {
+      const response = await githubClient.call('create_issue', {
+        title: 'Test Issue',
+        labels: ['test'],
+      });
+
+      expect(response.result).toBeDefined();
+      const issue = response.result as { number: number; title: string };
+      expect(issue.title).toBe('Test Issue');
+      expect(issue.number).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Slack MCP', () => {
+    it('should list channels', async () => {
+      const response = await slackClient.call('list_channels');
+
+      expect(response.result).toBeDefined();
+      const channels = (response.result as { channels: { name: string }[] }).channels;
+      expect(channels.length).toBeGreaterThan(0);
+      expect(channels.some((c) => c.name === 'general')).toBe(true);
+    });
+
+    it('should get channel history', async () => {
+      const response = await slackClient.call('get_channel_history', { channel: 'C001' });
+
+      expect(response.result).toBeDefined();
+      const messages = (response.result as { messages: unknown[] }).messages;
+      expect(messages.length).toBeGreaterThan(0);
+    });
+
+    it('should post message', async () => {
+      const response = await slackClient.call('post_message', {
+        channel: 'C001',
+        text: 'Hello from test!',
+      });
+
+      expect(response.result).toBeDefined();
+      expect((response.result as { ok: boolean }).ok).toBe(true);
+    });
+  });
+
+  describe('Docker MCP', () => {
+    it('should list running containers', async () => {
+      const response = await dockerClient.call('list_containers');
+
+      expect(response.result).toBeDefined();
+      const containers = (response.result as { containers: { state: string }[] }).containers;
+      expect(containers.length).toBeGreaterThan(0);
+      expect(containers.every((c) => c.state === 'running')).toBe(true);
+    });
+
+    it('should list all containers including stopped', async () => {
+      const response = await dockerClient.call('list_containers', { all: true });
+
+      expect(response.result).toBeDefined();
+      const containers = (response.result as { containers: unknown[] }).containers;
+      expect(containers.length).toBeGreaterThan(0);
+    });
+
+    it('should get specific container', async () => {
+      const response = await dockerClient.call('get_container', { id: 'web-app' });
+
+      expect(response.result).toBeDefined();
+      expect((response.result as { name: string }).name).toBe('web-app');
+    });
+
+    it('should return error for non-existent container', async () => {
+      const response = await dockerClient.call('get_container', { id: 'non-existent' });
+
+      expect(response.error).toBeDefined();
+      expect(response.error?.code).toBe(404);
+    });
+
+    it('should list images', async () => {
+      const response = await dockerClient.call('list_images');
+
+      expect(response.result).toBeDefined();
+      const images = (response.result as { images: unknown[] }).images;
+      expect(images.length).toBeGreaterThan(0);
+    });
+
+    it('should get container logs', async () => {
+      const response = await dockerClient.call('container_logs', { id: 'web-app' });
+
+      expect(response.result).toBeDefined();
+      expect((response.result as { logs: string }).logs).toContain('Mock container logs');
+    });
+  });
+
+  describe('Cross-MCP Workflows', () => {
+    it('should create GitHub issue and notify Slack', async () => {
+      // Step 1: Create GitHub issue
+      const issueResponse = await githubClient.call('create_issue', {
+        title: 'New Feature Request',
+        labels: ['enhancement'],
+      });
+      expect(issueResponse.result).toBeDefined();
+
+      const issue = issueResponse.result as { number: number; title: string };
+
+      // Step 2: Notify Slack
+      const slackResponse = await slackClient.call('post_message', {
+        channel: 'C002',
+        text: `New issue created: #${issue.number} - ${issue.title}`,
+      });
+      expect(slackResponse.result).toBeDefined();
+    });
+
+    it('should check Docker containers and report to Notion', async () => {
+      // Step 1: Get Docker container status
+      const dockerResponse = await dockerClient.call('list_containers');
+      expect(dockerResponse.result).toBeDefined();
+
+      const containers = (dockerResponse.result as { containers: unknown[] }).containers;
+
+      // Step 2: Create Notion page with status
+      const notionResponse = await notionClient.call('create_page', {
+        title: 'Infrastructure Status',
+        content: `Running containers: ${containers.length}`,
+      });
+      expect(notionResponse.result).toBeDefined();
     });
   });
 });
