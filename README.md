@@ -1,134 +1,274 @@
-# TAISUN v2 - Unified Development System
+# TAISUN v2
 
-世界最高品質のシステム開発を実現する統合開発環境。
+**Unified Development System** - 世界最高品質のシステム開発を実現する統合開発プラットフォーム
+
+[![CI](https://github.com/san15/taisun_agent/actions/workflows/ci.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/ci.yml)
+[![Security](https://github.com/san15/taisun_agent/actions/workflows/security.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/security.yml)
+[![Node.js](https://img.shields.io/badge/Node.js-18.x%20%7C%2020.x-green)](https://nodejs.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## 概要
 
-TAISUN v2は、AIT42エージェントシステム、マーケティングスキル、MCP統合を一元管理する
-統合開発プラットフォームです。
+TAISUN v2は、**69の専門エージェント**と**24のスキル**を統合した開発支援システムです。
+Claude Codeと連携し、設計から実装、テスト、デプロイまでを一貫して支援します。
 
-### 特徴
+### 主な機能
 
-- **49種類の専門エージェント** - 設計から運用まで全フェーズをカバー
-- **24種類の統合スキル** - マーケティング、クリエイティブ、インフラ自動化
-- **メモリシステム** - エージェント学習と品質追跡
-- **MCP統合** - Notion、PostgreSQL、GitHub等との連携
+- **マルチエージェントシステム**: 69種類の専門エージェントが協調して作業
+- **スキルライブラリ**: マーケティング、クリエイティブ、インフラ自動化
+- **品質ゲート**: 80%カバレッジ、セキュリティスキャン自動化
+- **MCP統合**: PostgreSQL、Notion、GitHub等との連携
+- **メモリシステム**: エージェント学習と品質追跡
 
 ## クイックスタート
 
-```bash
-# リポジトリクローン
-git clone <repository-url> taisun_v2
-cd taisun_v2
+### 前提条件
 
-# 依存関係インストール
+- Node.js 18.x 以上
+- npm 9.x 以上
+- Claude Code CLI
+
+### インストール
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/san15/taisun_agent.git
+cd taisun_agent
+
+# 依存関係をインストール
 npm install
 
-# 環境設定
+# 環境変数を設定
 cp .env.example .env
-# .envを編集して必要な認証情報を設定
+# .env を編集してAPIキー等を設定
 ```
 
-## ディレクトリ構造
+### 動作確認
+
+```bash
+# テスト実行
+npm test
+
+# Lint実行
+npm run lint
+
+# 型チェック
+npm run typecheck
+```
+
+## 基本的な使い方
+
+### エージェントを呼び出す
+
+```javascript
+// システムアーキテクチャ設計
+Task(subagent_type="system-architect", prompt="ECサイトのアーキテクチャを設計して")
+
+// バックエンド実装
+Task(subagent_type="backend-developer", prompt="ユーザー認証APIを実装して")
+
+// コードレビュー
+Task(subagent_type="code-reviewer", prompt="このPRをレビューして")
+
+// テスト生成
+Task(subagent_type="test-generator", prompt="src/app.ts のテストを作成して")
+```
+
+### スキルを実行する
+
+```bash
+# セールスレター作成
+/sales-letter --product "オンライン講座"
+
+# LP分析
+/lp-analysis https://example.com
+
+# 画像プロンプト生成
+/nanobanana-prompts YouTubeサムネイル用プロンプトを生成して
+
+# セキュリティスキャン
+/security-scan-trivy
+```
+
+### コーディネーターを使う
+
+```javascript
+// 最適なエージェントを自動選択
+Task(subagent_type="ait42-coordinator", prompt="ユーザー認証機能を設計・実装して")
+
+// 軽量版（高速）
+Task(subagent_type="ait42-coordinator-fast", prompt="簡単なバグを修正して")
+```
+
+## エージェント一覧
+
+### カテゴリ別エージェント数
+
+| カテゴリ | 数 | 主なエージェント |
+|---------|---|-----------------|
+| Coordinators | 4 | ait42-coordinator, omega-aware-coordinator |
+| Architecture | 6 | system-architect, api-designer, database-designer |
+| Development | 6 | backend-developer, frontend-developer, api-developer |
+| Quality Assurance | 8 | code-reviewer, test-generator, security-tester |
+| Operations | 8 | devops-engineer, cicd-manager, monitoring-specialist |
+| Documentation | 3 | tech-writer, doc-reviewer, knowledge-manager |
+| Analysis | 4 | complexity-analyzer, feedback-analyzer |
+| Specialized | 5 | bug-fixer, refactor-specialist, feature-builder |
+| Multi-Agent | 4 | multi-agent-competition, multi-agent-debate |
+| Process | 5 | workflow-coordinator, requirements-elicitation |
+
+詳細は [docs/API_REFERENCE.md](docs/API_REFERENCE.md) を参照してください。
+
+## スキル一覧
+
+### Marketing & Content (11種)
+
+| スキル | 説明 |
+|--------|------|
+| `copywriting-helper` | コピーライティング支援 |
+| `sales-letter` | セールスレター作成 |
+| `step-mail` | ステップメール作成 |
+| `vsl` | ビデオセールスレター |
+| `launch-video` | ローンチ動画スクリプト |
+| `lp-generator` | LP作成 (PASCOLA/漫画) |
+| `funnel-builder` | ファネル構築 |
+| `mendan-lp` | 面談LP作成 |
+| `lp-analysis` | LP分析・最適化 |
+| `customer-support` | カスタマーサポート返信 |
+| `tommy-style` | トミースタイル適用 |
+
+### Creative & Media (3種)
+
+| スキル | 説明 |
+|--------|------|
+| `gemini-image-generator` | 画像生成 (NanoBanana統合) |
+| `nanobanana-prompts` | プロンプト最適化 |
+| `japanese-tts-reading` | 日本語TTS |
+
+### Infrastructure (9種)
+
+| スキル | 説明 |
+|--------|------|
+| `workflow-automation-n8n` | n8nワークフロー |
+| `docker-mcp-ops` | Dockerオペレーション |
+| `security-scan-trivy` | セキュリティスキャン |
+| `pdf-automation-gotenberg` | PDF自動化 |
+| `doc-convert-pandoc` | ドキュメント変換 |
+| `unified-notifications-apprise` | 通知統合 |
+| `postgres-mcp-analyst` | PostgreSQL分析 |
+| `notion-knowledge-mcp` | Notionナレッジ |
+| `nlq-bi-wrenai` | 自然言語BI |
+
+### Research (1種)
+
+| スキル | 説明 |
+|--------|------|
+| `research-cited-report` | 出典付きリサーチレポート |
+
+## プロジェクト構造
 
 ```
 taisun_v2/
 ├── .claude/
-│   ├── CLAUDE.md          # プロジェクト指示書
-│   ├── settings.json      # 設定
-│   ├── agents/            # 49種のエージェント定義
-│   ├── commands/          # 統合コマンド
-│   ├── skills/            # 24種の統合スキル
-│   └── memory/            # 学習・統計システム
-├── .mcp.json              # MCP設定
-├── src/                   # ソースコード
-├── docs/                  # ドキュメント
-├── scripts/               # ユーティリティ
-└── config/                # 環境設定
+│   ├── CLAUDE.md           # プロジェクト指示書
+│   ├── settings.json       # パーミッション設定
+│   ├── agents/             # 69エージェント定義
+│   ├── commands/           # コマンド定義
+│   ├── skills/             # 24スキル定義
+│   └── memory/             # 学習・統計システム
+├── .github/
+│   ├── workflows/          # CI/CDワークフロー
+│   │   ├── ci.yml          # 継続的インテグレーション
+│   │   ├── cd.yml          # 継続的デプロイ
+│   │   └── security.yml    # セキュリティスキャン
+│   ├── ISSUE_TEMPLATE/     # Issueテンプレート
+│   └── dependabot.yml      # 依存関係自動更新
+├── src/                    # ソースコード
+├── docs/                   # ドキュメント
+├── scripts/                # ユーティリティ
+└── config/                 # 設定ファイル
 ```
-
-## エージェントカテゴリ
-
-| カテゴリ | エージェント数 | 主な用途 |
-|---------|-------------|---------|
-| Coordinators | 4 | オーケストレーション |
-| Architecture | 6 | 設計・アーキテクチャ |
-| Development | 6 | 実装 |
-| Quality Assurance | 8 | テスト・品質保証 |
-| Operations | 8 | DevOps・運用 |
-| Documentation | 3 | ドキュメント |
-| Analysis | 4 | 分析・改善 |
-| Specialized | 5 | 特化型タスク |
-| Multi-Agent | 4 | マルチエージェントモード |
-| Process | 5 | プロセス管理 |
-
-## スキルカテゴリ
-
-### Marketing & Content
-- copywriting-helper, sales-letter, step-mail, vsl
-- launch-video, lp-generator, funnel-builder
-- mendan-lp, lp-analysis, customer-support, tommy-style
-
-### Creative & Media
-- gemini-image-generator (統合画像生成)
-- japanese-tts-reading, nanobanana-prompts
-
-### Infrastructure & Automation
-- workflow-automation-n8n, docker-mcp-ops
-- security-scan-trivy, pdf-automation-gotenberg
-- doc-convert-pandoc, unified-notifications-apprise
-- postgres-mcp-analyst, notion-knowledge-mcp, nlq-bi-wrenai
-
-### Research
-- research-cited-report
-
-## 使用方法
-
-### エージェント呼び出し
-
-```
-# システムアーキテクチャ設計
-Task(subagent_type="system-architect", prompt="マイクロサービス設計...")
-
-# バックエンド実装
-Task(subagent_type="backend-developer", prompt="認証API実装...")
-
-# コードレビュー
-Task(subagent_type="code-reviewer", prompt="PRレビュー...")
-```
-
-### スキル実行
-
-```
-# 画像生成
-/gemini-image-generator thumbnail "YouTube動画タイトル"
-
-# LP作成
-/lp-generator normal --product "オンライン講座"
-
-# ファネル構築
-/funnel-builder kindle --product "電子書籍"
-```
-
-## 統合による改善点
-
-| 項目 | 統合前 | 統合後 | 改善率 |
-|------|--------|--------|--------|
-| エージェント管理 | 分散（3箇所） | 統合（1箇所） | 66%削減 |
-| スキル重複 | 5件 | 0件 | 100%解消 |
-| 設定ファイル | 分散 | 統合 | 一元管理 |
-| メモリシステム | 不整合 | 統合 | 完全統合 |
 
 ## 品質ゲート
 
-- コードレビュースコア: 80点以上
-- テストカバレッジ: 80%以上
-- セキュリティスキャン: Critical/Highゼロ
+| 項目 | 基準 |
+|------|------|
+| コードレビュースコア | 80点以上 |
+| テストカバレッジ | 80%以上 |
+| セキュリティスキャン | Critical/High ゼロ |
+
+## CI/CD
+
+### 自動実行されるチェック
+
+| チェック | トリガー |
+|---------|---------|
+| Lint & TypeScript | Push/PR |
+| ユニットテスト | Push/PR |
+| セキュリティスキャン | Push/PR, 週次 |
+| ビルド | Push/PR |
+
+### デプロイフロー
+
+```
+develop → ステージング環境
+main/tag → 本番環境
+```
+
+## ドキュメント
+
+| ドキュメント | 内容 |
+|-------------|------|
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | システムアーキテクチャ |
+| [DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) | 開発者ガイド |
+| [API_REFERENCE.md](docs/API_REFERENCE.md) | APIリファレンス |
+| [OPERATIONS.md](docs/OPERATIONS.md) | 運用ガイド |
+| [RUNBOOK.md](docs/RUNBOOK.md) | オペレーション手順書 |
+
+## 開発
+
+### テスト実行
+
+```bash
+# ユニットテスト
+npm test
+
+# カバレッジ付きテスト
+npm run test:coverage
+
+# Lint
+npm run lint
+
+# 型チェック
+npm run typecheck
+```
+
+### セキュリティスキャン
+
+```bash
+# npm audit
+npm audit
+
+# Trivy (要インストール)
+npm run security:scan
+```
 
 ## ライセンス
 
-MIT License
+MIT License - 詳細は [LICENSE](LICENSE) を参照してください。
 
-## 貢献
+## コントリビューション
 
-プルリクエスト歓迎します。大きな変更は事前にIssueで議論してください。
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## サポート
+
+- Issues: [GitHub Issues](https://github.com/san15/taisun_agent/issues)
+
+---
+
+Built with Claude Code
