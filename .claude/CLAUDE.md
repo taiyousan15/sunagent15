@@ -1,175 +1,257 @@
-# TAISUN v2 - Unified Development System
+# TAISUN v2 - Ultimate Unified System
 
 ## Overview
-世界最高品質のシステム開発を実現する統合開発環境。
-AIT42エージェントシステム、マーケティングスキル、MCP統合を一元管理。
+世界最高品質の開発・マーケティング統合システム。
+AIエージェント、MCPツール、マーケティングスキルを完全統合。
 
-## System Architecture
+## System Stats
+
+| Component | Count | Description |
+|-----------|-------|-------------|
+| **Agents** | 75 | AIT42 + 統合エージェント |
+| **Skills** | 51 | マーケティング・クリエイティブ・インフラ |
+| **Commands** | 73 | ショートカットコマンド |
+| **MCP Servers** | 32 | 外部サービス連携 |
+| **MCP Tools** | 227 | 自動化ツール群 |
+
+## Architecture
 
 ```
-taisun_v2/
-├── .claude/
-│   ├── CLAUDE.md          # このファイル（プロジェクト指示書）
-│   ├── settings.json      # パーミッション・設定
-│   ├── agents/            # 統合エージェント定義（49種）
-│   ├── commands/          # 統合コマンド（カテゴリ別）
-│   ├── skills/            # 統合スキル（重複排除済み）
-│   └── memory/            # 学習・統計システム
-├── src/                   # ソースコード
-├── docs/                  # ドキュメント
-├── scripts/               # ユーティリティスクリプト
-└── config/                # 環境設定
+taisun_v2/.claude/
+├── agents/              # 75 統合エージェント
+├── commands/            # 73 コマンド
+├── skills/              # 51 スキル
+├── memory/              # 学習・統計システム
+├── mcp-servers/         # カスタムMCPサーバー (4)
+├── mcp-tools/           # → taisun MCPツール (227)
+├── hooks/               # 自動化フック
+├── content-reference/   # → -taiyo/content
+├── video-agent-reference/ # → video-agent
+├── CLAUDE.md            # このファイル
+└── settings.json        # 設定
 ```
 
-## Agent Categories
+## Agent Categories (75 Agents)
 
-### 1. Coordinators (オーケストレーション)
-- `ait42-coordinator` - メインコーディネーター
-- `ait42-coordinator-fast` - 軽量O(1)選択
-- `omega-aware-coordinator` - Ω関数理論ベース
-- `self-healing-coordinator` - 自己修復システム
+### Coordinators (4)
+- `ait42-coordinator` - メインオーケストレーター
+- `ait42-coordinator-fast` - 高速O(1)選択
+- `omega-aware-coordinator` - Ω関数理論
+- `self-healing-coordinator` - 自己修復
 
-### 2. Architecture & Design (設計)
-- `system-architect` - システムアーキテクチャ
-- `api-designer` - API設計
-- `database-designer` - データベース設計
-- `security-architect` - セキュリティ設計
-- `cloud-architect` - クラウドアーキテクチャ
-- `ui-ux-designer` - UI/UX設計
+### Architecture & Design (6)
+- `system-architect`, `api-designer`, `database-designer`
+- `security-architect`, `cloud-architect`, `ui-ux-designer`
 
-### 3. Development (開発)
-- `backend-developer` - バックエンド実装
-- `frontend-developer` - フロントエンド実装
-- `api-developer` - API実装
-- `database-developer` - データベース実装
-- `integration-developer` - 統合実装
-- `migration-developer` - マイグレーション
+### Development (6)
+- `backend-developer`, `frontend-developer`, `api-developer`
+- `database-developer`, `integration-developer`, `migration-developer`
 
-### 4. Quality Assurance (品質保証)
-- `code-reviewer` - コードレビュー
-- `test-generator` - テスト生成
-- `qa-validator` - 品質検証
-- `integration-tester` - 統合テスト
-- `security-tester` - セキュリティテスト
-- `performance-tester` - パフォーマンステスト
-- `mutation-tester` - ミューテーションテスト
-- `chaos-engineer` - カオスエンジニアリング
+### Quality Assurance (8)
+- `code-reviewer`, `test-generator`, `qa-validator`
+- `integration-tester`, `security-tester`, `performance-tester`
+- `mutation-tester`, `chaos-engineer`
 
-### 5. Operations (運用)
-- `devops-engineer` - DevOps
-- `cicd-manager` - CI/CDパイプライン
-- `monitoring-specialist` - 監視・オブザーバビリティ
-- `incident-responder` - インシデント対応
-- `backup-manager` - バックアップ管理
-- `container-specialist` - コンテナ最適化
-- `config-manager` - 設定管理
-- `release-manager` - リリース管理
+### Operations (8)
+- `devops-engineer`, `cicd-manager`, `monitoring-specialist`
+- `incident-responder`, `backup-manager`, `container-specialist`
+- `config-manager`, `release-manager`
 
-### 6. Documentation (ドキュメント)
-- `tech-writer` - 技術文書
-- `doc-reviewer` - ドキュメントレビュー
-- `knowledge-manager` - ナレッジ管理
+### Documentation (3)
+- `tech-writer`, `doc-reviewer`, `knowledge-manager`
 
-### 7. Analysis (分析)
-- `complexity-analyzer` - 複雑度分析
-- `feedback-analyzer` - フィードバック分析
-- `innovation-scout` - 技術トレンド分析
-- `learning-agent` - 学習キャプチャ
+### Analysis (4)
+- `complexity-analyzer`, `feedback-analyzer`
+- `innovation-scout`, `learning-agent`
 
-### 8. Specialized (特化型)
-- `bug-fixer` - バグ修正
-- `refactor-specialist` - リファクタリング
-- `feature-builder` - 新機能実装
-- `script-writer` - スクリプト作成
-- `implementation-assistant` - 実装支援
+### Specialized (5)
+- `bug-fixer`, `refactor-specialist`, `feature-builder`
+- `script-writer`, `implementation-assistant`
 
-### 9. Multi-Agent Modes (マルチエージェント)
-- `multi-agent-competition` - 競争モード
-- `multi-agent-debate` - 討論モード
-- `multi-agent-ensemble` - アンサンブルモード
-- `reflection-agent` - 品質ゲーティング
+### Multi-Agent (4)
+- `multi-agent-competition`, `multi-agent-debate`
+- `multi-agent-ensemble`, `reflection-agent`
 
-### 10. Process & Integration (プロセス)
-- `workflow-coordinator` - ワークフロー最適化
-- `integration-planner` - 統合計画
-- `process-optimizer` - プロセス最適化
-- `metrics-collector` - メトリクス収集
-- `requirements-elicitation` - 要件引き出し
+### Process (5)
+- `workflow-coordinator`, `integration-planner`
+- `process-optimizer`, `metrics-collector`, `requirements-elicitation`
 
-## Skill Categories
+###  Agents (6)
+- `-coordinator-agent`, `-codegen-agent`
+- `-issue-agent`, `-pr-agent`
+- `-review-agent`, `-deployment-agent`
 
-### Marketing & Content
-- `copywriting-helper` - コピーライティング支援
-- `sales-letter` - セールスレター作成
-- `step-mail` - ステップメール作成
-- `vsl` - ビデオセールスレター
-- `launch-video` - ローンチ動画
-- `lp-generator` - LP作成（通常/漫画統合）
-- `funnel-builder` - ファネル構築（Kindle/note統合）
-- `mendan-lp` - 面談LP作成
-- `lp-analysis` - LP分析
-- `customer-support` - カスタマーサポート
-- `tommy-style` - トミースタイル
+### Specialized Tools (16+)
+- Data analyst, Researcher, Automation architect, etc.
 
-### Creative & Media
-- `gemini-image-generator` - 画像生成（NanoBanana統合）
-- `japanese-tts-reading` - 日本語TTS
-- `nanobanana-prompts` - プロンプト生成
+## Skill Categories (51 Skills)
 
-### Infrastructure & Automation
-- `workflow-automation-n8n` - n8nワークフロー
-- `docker-mcp-ops` - Dockerオペレーション
-- `security-scan-trivy` - セキュリティスキャン
-- `pdf-automation-gotenberg` - PDF自動化
-- `doc-convert-pandoc` - ドキュメント変換
-- `unified-notifications-apprise` - 通知統合
-- `postgres-mcp-analyst` - PostgreSQL分析
-- `notion-knowledge-mcp` - Notionナレッジ
-- `nlq-bi-wrenai` - 自然言語BI
+### Marketing & Sales (15)
+| Skill | Description |
+|-------|-------------|
+| `copywriting-helper` | コピーライティング支援 |
+| `sales-letter` | セールスレター作成 |
+| `step-mail` | ステップメール作成 |
+| `vsl` | ビデオセールスレター |
+| `launch-video` | ローンチ動画 |
+| `lp-generator` | LP作成 |
+| `lp-analysis` | LP分析・改善 |
+| `lp-design` | LP設計 |
+| `mendan-lp` | 面談LP |
+| `funnel-builder` | ファネル構築 |
+| `customer-support` | カスタマーサポート |
+| `tommy-style` | トミースタイル |
+| `education-framework` | 6つの教育要素 |
+| `line-marketing` | LINEマーケティング |
+| `sales-systems` | セールスシステム |
 
-### Research
-- `research-cited-report` - 出典付きリサーチ
+### Content Creation (10)
+| Skill | Description |
+|-------|-------------|
+| `kindle-publishing` | Kindle本出版 |
+| `note-marketing` | note記事戦略 |
+| `youtube-content` | YouTube動画企画 |
+| `youtube-thumbnail` | サムネイル作成 |
+| `manga-production` | 漫画制作 |
+| `anime-production` | アニメ制作 |
+| `video-production` | 動画制作 |
+| `diagram-illustration` | 図解作成 |
+| `custom-character` | キャラクター設定 |
+| `sns-marketing` | SNSマーケティング |
 
-## MCP Servers
+### AI Image & Video (5)
+| Skill | Description |
+|-------|-------------|
+| `gemini-image-generator` | Gemini画像生成 |
+| `nanobanana-pro` | NanoBanana Pro |
+| `nanobanana-prompts` | プロンプト最適化 |
+| `omnihuman1-video` | AIアバター動画 |
+| `japanese-tts-reading` | 日本語TTS |
 
-```json
-{
-  "mcpServers": {
-    "notion": {
-      "type": "http",
-      "url": "https://mcp.notion.com/mcp"
-    },
-    "postgres-ro": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "${POSTGRES_MCP_DSN}"]
-    },
-    "ide": {
-      "type": "builtin"
-    }
-  }
-}
+### Video Agent System (10)
+| Skill | Description |
+|-------|-------------|
+| `video-policy` | ポリシー管理 |
+| `video-eval` | 評価システム |
+| `video-ci-scheduling` | CI/CDスケジューリング |
+| `video-metrics` | メトリクス収集 |
+| `video-notify` | 通知システム |
+| `video-anomaly` | 異常検知 |
+| `video-dispatch` | ディスパッチ |
+| `video-validate` | バリデーション |
+| `video-guard` | ガード機能 |
+| `video-agent-runbooks` | 運用ガイド |
+
+### Infrastructure (11)
+| Skill | Description |
+|-------|-------------|
+| `workflow-automation-n8n` | n8nワークフロー |
+| `docker-mcp-ops` | Docker操作 |
+| `security-scan-trivy` | セキュリティスキャン |
+| `pdf-automation-gotenberg` | PDF自動化 |
+| `doc-convert-pandoc` | ドキュメント変換 |
+| `unified-notifications-apprise` | 通知統合 |
+| `postgres-mcp-analyst` | PostgreSQL分析 |
+| `notion-knowledge-mcp` | Notionナレッジ |
+| `nlq-bi-wrenai` | 自然言語BI |
+| `research-cited-report` | 出典付きリサーチ |
+| `sns-patterns` | SNSパターン |
+
+## MCP Integration
+
+### MCP Servers (32)
+
+| Category | Servers |
+|----------|---------|
+| **Development** | ide-integration, github-enhanced, project-context, github, gitlab, greptile |
+| **Productivity** | asana, atlassian, linear, notion |
+| **Infrastructure** | firebase, supabase, vercel, docker |
+| **Database** | postgres-ro, postgres-rw |
+| **Communication** | slack |
+| **AI** | context-engineering, context7, serena |
+| **Automation** | , -mcp |
+| **Media** | youtube-automation, remotion-documentation |
+| **Testing** | playwright |
+| **Observability** | sentry |
+| **Search** | brave-search |
+| **Memory** | memory, sequential-thinking |
+| **System** | filesystem |
+
+### MCP Tools (227)
+
+| Category | Count | Examples |
+|----------|-------|----------|
+| **git** | 20 | status, diff, log, branch, commit |
+| **file** | 18 | read, write, search, convert |
+| **process** | 19 | execute, monitor, schedule |
+| **agent** | 18 | coordinate, delegate, reflect |
+| **marketing** | 10 | lp-generate, email-create |
+| **sns** | 10 | post, schedule, analyze |
+| **content** | 9 | generate, edit, optimize |
+| **cloud** | 25 | deploy, scale, monitor |
+| **database** | 25 | query, migrate, backup |
+| **observability** | 24 | log, trace, metric |
+| **devops** | 25 | build, test, deploy |
+| **development** | 24 | lint, format, refactor |
+
+## Commands (73)
+
+### Development
+`build-feature`, `fix-bug`, `refactor-code`, `review-code`, `generate-tests`
+
+### Design
+`design-api`, `design-architecture`, `design-database`, `design-security`, `design-ui-ux`
+
+### Operations
+`manage-cicd`, `manage-config`, `manage-releases`, `setup-monitoring`
+
+### Quality
+`validate-quality`, `scan-security`, `test-integration`, `test-performance`
+
+### Marketing
+`lp-normal`, `lp-manga`, `kindle-line-vsl`, `note-line-vsl`, `youtube-thumbnail`
+
+### 
+`-agent`, `-auto`, `-status`, `-todos`, `create-issue`
+
+### MCP
+`mcp-health`, `mcp-git`, `mcp-github`, `mcp-files`, `mcp-system`
+
+## Quick Start
+
+```bash
+# エージェント実行
+/agent-run
+
+# スキル使用
+/copywriting-helper
+/youtube-thumbnail
+/security-scan
+
+# 状態確認
+/-status
+/mcp-health
 ```
 
 ## Guidelines
 
-### Development Principles
-1. **TDD First** - テスト駆動開発を基本とする
-2. **Clean Architecture** - レイヤー分離を維持
-3. **SOLID Principles** - 設計原則を遵守
-4. **Security by Design** - セキュリティを設計段階から組み込む
-
-### Agent Selection
-1. タスクに最適なエージェントを自動選択（Coordinator経由）
-2. 複雑なタスクは複数エージェントを並列実行
-3. 品質ゲートでreflection-agentを使用
+### Development
+1. **TDD First** - テスト駆動開発
+2. **Clean Architecture** - レイヤー分離
+3. **SOLID Principles** - 設計原則遵守
+4. **Security by Design** - セキュリティ組み込み
 
 ### Quality Gates
-- コードレビュースコア: 80点以上必須
+- コードレビュー: 80点以上
 - テストカバレッジ: 80%以上
-- セキュリティスキャン: Critical/High脆弱性ゼロ
+- セキュリティ: Critical/High脆弱性ゼロ
+
+### Agent Selection
+1. Coordinator経由で最適エージェント自動選択
+2. 複雑タスクは並列実行
+3. reflection-agentで品質ゲート
 
 ## Language
-- 日本語でのコミュニケーションを優先
-- 技術用語は英語でも可
-- マーケティング用語・専門用語を適切に使用
+- 日本語優先
+- 技術用語は英語可
+- マーケティング専門用語を適切に使用
