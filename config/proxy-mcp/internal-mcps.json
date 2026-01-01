@@ -6,66 +6,138 @@
       "name": "github",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-github"],
+      "args": [
+        "-y",
+        "@anthropic/mcp-server-github"
+      ],
       "enabled": false,
-      "tags": ["vcs", "code", "issues", "pr", "repository"],
+      "tags": [
+        "vcs",
+        "code",
+        "issues",
+        "pr",
+        "repository"
+      ],
       "shortDescription": "GitHub operations: repos, issues, PRs, code search",
-      "dangerousOperations": ["delete", "force-push", "archive"]
+      "dangerousOperations": [
+        "delete",
+        "force-push",
+        "archive"
+      ]
     },
     {
       "name": "notion",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-notion"],
+      "args": [
+        "-y",
+        "@anthropic/mcp-server-notion"
+      ],
       "enabled": false,
-      "tags": ["docs", "wiki", "database", "notes"],
+      "tags": [
+        "docs",
+        "wiki",
+        "database",
+        "notes"
+      ],
       "shortDescription": "Notion pages and databases: read, create, update",
-      "dangerousOperations": ["delete", "archive"]
+      "dangerousOperations": [
+        "delete",
+        "archive"
+      ]
     },
     {
       "name": "postgres",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-postgres"],
+      "args": [
+        "-y",
+        "@anthropic/mcp-server-postgres"
+      ],
       "enabled": false,
-      "tags": ["database", "sql", "query", "data"],
+      "tags": [
+        "database",
+        "sql",
+        "query",
+        "data"
+      ],
       "shortDescription": "PostgreSQL queries and schema operations",
-      "dangerousOperations": ["drop", "truncate", "delete", "alter"]
+      "dangerousOperations": [
+        "drop",
+        "truncate",
+        "delete",
+        "alter"
+      ]
     },
     {
       "name": "filesystem",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-filesystem"],
+      "args": [
+        "-y",
+        "@anthropic/mcp-server-filesystem"
+      ],
       "enabled": false,
-      "tags": ["files", "read", "write", "directory"],
+      "tags": [
+        "files",
+        "read",
+        "write",
+        "directory"
+      ],
       "shortDescription": "Local filesystem: read, write, list files",
-      "dangerousOperations": ["delete", "overwrite"]
+      "dangerousOperations": [
+        "delete",
+        "overwrite"
+      ]
     },
     {
       "name": "chrome",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-puppeteer"],
+      "args": [
+        "-y",
+        "@anthropic/mcp-server-puppeteer"
+      ],
       "enabled": false,
-      "tags": ["browser", "web", "automation", "scrape", "dom"],
+      "tags": [
+        "browser",
+        "web",
+        "automation",
+        "scrape",
+        "dom"
+      ],
       "shortDescription": "Browser automation: navigate, click, extract DOM",
-      "dangerousOperations": ["login", "submit-form", "payment"]
+      "dangerousOperations": [
+        "login",
+        "submit-form",
+        "payment"
+      ]
     },
     {
       "name": "slack",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-slack"],
+      "args": [
+        "-y",
+        "@anthropic/mcp-server-slack"
+      ],
       "enabled": false,
-      "tags": ["chat", "messaging", "notification", "team"],
+      "tags": [
+        "chat",
+        "messaging",
+        "notification",
+        "team"
+      ],
       "shortDescription": "Slack: send messages, read channels, manage threads",
-      "dangerousOperations": ["delete-message", "archive-channel"]
+      "dangerousOperations": [
+        "delete-message",
+        "archive-channel"
+      ]
     }
   ],
   "routerConfig": {
     "ruleFirst": true,
-    "semanticThreshold": 0.70,
+    "semanticThreshold": 0.7,
     "topK": 5,
     "fallback": "require_human_or_clarify"
   }
