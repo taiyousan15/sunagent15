@@ -10,6 +10,7 @@ import {
   mockAgentExecution,
   validateAgentDefinition,
   generateTestFixtures,
+  TestResult,
 } from '../utils/test-helpers';
 
 describe('Agent Integration Tests', () => {
@@ -142,7 +143,7 @@ describe('Agent Integration Tests', () => {
 
     it('should execute agents in sequence', async () => {
       const agents = ['system-architect', 'backend-developer', 'test-generator'];
-      const results = [];
+      const results: TestResult[] = [];
 
       for (const agent of agents) {
         const result = await mockAgentExecution(agent, `Task for ${agent}`);
