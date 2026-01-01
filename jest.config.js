@@ -9,6 +9,8 @@ module.exports = {
     '!src/**/*.test.ts',
     '!src/**/index.ts',           // re-export files
     '!src/**/BenchmarkRunner.ts', // benchmarking utility
+    '!src/proxy-mcp/server.ts',   // MCP server entry point (requires stdio)
+    '!src/proxy-mcp/internal/normalize.ts', // future embedding utilities
   ],
   testPathIgnorePatterns: ['/node_modules/'],
   // Transform TypeScript files
