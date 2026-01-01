@@ -20,7 +20,7 @@ module.exports = {
     {
       displayName: 'unit',
       preset: 'ts-jest',
-      testMatch: ['<rootDir>/src/**/*.test.ts'],
+      testMatch: ['<rootDir>/src/**/*.test.ts', '<rootDir>/tests/unit/**/*.test.ts'],
       testEnvironment: 'node',
       transform: {
         '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
