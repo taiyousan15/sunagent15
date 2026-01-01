@@ -35,7 +35,9 @@
     "perf:benchmark": "npx ts-node scripts/run-benchmarks.ts",
     "perf:benchmark:json": "npx ts-node scripts/run-benchmarks.ts --format=json --output=benchmark-results.json",
     "agents:list": "node scripts/list-agents.js",
-    "skills:list": "node scripts/list-skills.js"
+    "skills:list": "node scripts/list-skills.js",
+    "proxy:start": "npx ts-node src/proxy-mcp/server.ts",
+    "proxy:build": "tsc src/proxy-mcp/server.ts --outDir dist/proxy-mcp --declaration"
   },
   "keywords": [
     "ai",
