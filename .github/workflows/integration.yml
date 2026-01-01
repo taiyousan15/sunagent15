@@ -39,14 +39,7 @@ jobs:
         run: npm ci
 
       - name: Run unit tests
-        run: npm test -- --selectProjects unit --coverage
-
-      - name: Upload unit test coverage
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage/lcov.info
-          flags: unit
-          name: unit-coverage
+        run: npm test -- --selectProjects unit
 
   integration-tests:
     name: Integration Tests
