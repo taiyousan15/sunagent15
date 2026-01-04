@@ -1,263 +1,320 @@
 # TAISUN v2
 
-**Unified Development System** - 世界最高品質のシステム開発を実現する統合開発プラットフォーム
+**Unified Development & Marketing Platform** - AIエージェント、MCPツール、マーケティングスキルを統合した次世代開発プラットフォーム
 
 [![CI](https://github.com/san15/taisun_agent/actions/workflows/ci.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/ci.yml)
-[![Security](https://github.com/san15/taisun_agent/actions/workflows/security.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/security.yml)
+[![Security Scan](https://github.com/san15/taisun_agent/actions/workflows/security.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/security.yml)
 [![Node.js](https://img.shields.io/badge/Node.js-18.x%20%7C%2020.x-green)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/Tests-524%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
 
-## 概要
+## Overview
 
-TAISUN v2は、**75の専門エージェント**、**51のスキル**、**73のコマンド**、**32のMCPサーバー**、**227のMCPツール**を統合した世界最高品質の開発・マーケティング統合システムです。
-Claude Codeと連携し、設計から実装、テスト、デプロイ、さらにマーケティングまでを一貫して支援します。
+TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプロイ、マーケティングまでを一貫して支援する**統合開発・マーケティングプラットフォーム**です。
 
-### 主な機能
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    TAISUN v2 Architecture                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐       │
+│  │   Claude    │◄──│  Proxy MCP  │──►│  32 External │       │
+│  │    Code     │   │   Server    │   │  MCP Servers │       │
+│  └─────────────┘   └──────┬──────┘   └─────────────┘       │
+│                           │                                 │
+│         ┌─────────────────┼─────────────────┐              │
+│         ▼                 ▼                 ▼              │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐       │
+│  │ 77 Agents   │   │  59 Skills  │   │ 76 Commands │       │
+│  └─────────────┘   └─────────────┘   └─────────────┘       │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
 
-- **マルチエージェントシステム**: 75種類の専門エージェント（AIT42 + ）が協調して作業
-- **スキルライブラリ**: マーケティング(15)、コンテンツ制作(10)、AI画像/動画(5)、Video Agent(10)、インフラ(11)
-- **品質ゲート**: 80%カバレッジ、セキュリティスキャン自動化
-- **MCP統合**: PostgreSQL、Notion、GitHub等との連携
-- **メモリシステム**: エージェント学習と品質追跡
+### System Statistics
 
-## クイックスタート
+| Component | Count | Description |
+|-----------|-------|-------------|
+| **AI Agents** | 77 | 専門家エージェント (AIT42 + ) |
+| **Skills** | 59 | マーケティング・インフラ自動化スキル |
+| **Commands** | 76 | ショートカットコマンド |
+| **MCP Servers** | 32 | 外部サービス連携 |
+| **MCP Tools** | 227 | 統合ツール群 |
+| **Source Lines** | 11,167 | TypeScript (proxy-mcp) |
+| **Tests** | 524 | ユニット・統合テスト |
 
-### 前提条件
+## Key Features
 
-- Node.js 18.x 以上
-- npm 9.x 以上
+### 1. Single MCP Entrypoint (Proxy MCP)
+
+5つのツールで32+の外部MCPサーバーを統合管理:
+
+```typescript
+// 5 Public Tools
+system_health   // ヘルスチェック
+skill_search    // スキル検索
+skill_run       // スキル実行
+memory_add      // コンテンツ保存
+memory_search   // コンテンツ検索
+```
+
+### 2. Hybrid Router
+
+- **ルールベース安全性**: 危険操作の自動検出・ブロック
+- **セマンティック検索**: 類似度ベースのMCP選択
+- **人間承認フロー**: 高リスク操作のエスカレーション
+
+### 3. Multi-Agent System (77 Agents)
+
+| Category | Count | Examples |
+|----------|-------|----------|
+| **Coordinators** | 4 | ait42-coordinator, omega-aware-coordinator |
+| **Architecture** | 6 | system-architect, api-designer, security-architect |
+| **Development** | 6 | backend-developer, frontend-developer, api-developer |
+| **Quality Assurance** | 8 | code-reviewer, test-generator, security-tester |
+| **Operations** | 8 | devops-engineer, incident-responder, cicd-manager |
+| **Documentation** | 3 | tech-writer, doc-reviewer, knowledge-manager |
+| **Analysis** | 4 | complexity-analyzer, feedback-analyzer |
+| **Specialized** | 5 | bug-fixer, refactor-specialist, feature-builder |
+| **Multi-Agent** | 4 | competition, debate, ensemble, reflection |
+| **Process** | 5 | workflow-coordinator, requirements-elicitation |
+| **** | 6 | -codegen-agent, -pr-agent |
+
+### 4. Skill Library (59 Skills)
+
+#### Marketing & Sales (15)
+- `copywriting-helper` - コピーライティング支援
+- `sales-letter` - セールスレター作成
+- `step-mail` - ステップメール作成
+- `vsl` - ビデオセールスレター
+- `launch-video` - ローンチ動画スクリプト
+- `lp-generator` / `lp-analysis` / `mendan-lp` - LP作成・分析
+- `funnel-builder` - ファネル構築
+- `customer-support` - カスタマーサポート
+- `tommy-style` - トミースタイル適用
+
+#### Content Creation (10)
+- `kindle-publishing` - Kindle本出版
+- `youtube-content` / `youtube-thumbnail` - YouTube企画・サムネイル
+- `manga-production` / `anime-production` - 漫画・アニメ制作
+- `diagram-illustration` - 図解作成
+- `sns-marketing` - SNSマーケティング
+
+#### AI Image & Video (5)
+- `gemini-image-generator` - Gemini画像生成
+- `nanobanana-pro` / `nanobanana-prompts` - NanoBanana統合
+- `omnihuman1-video` - AIアバター動画
+- `japanese-tts-reading` - 日本語TTS
+
+#### Infrastructure (11)
+- `workflow-automation-n8n` - n8nワークフロー
+- `docker-mcp-ops` - Docker操作
+- `security-scan-trivy` - セキュリティスキャン
+- `pdf-automation-gotenberg` - PDF自動化
+- `doc-convert-pandoc` - ドキュメント変換
+- `postgres-mcp-analyst` - PostgreSQL分析
+- `notion-knowledge-mcp` - Notionナレッジ
+- `unified-notifications-apprise` - 通知統合
+
+### 5. Production-Grade Operations
+
+- **Circuit Breaker**: 障害耐性・自動復旧
+- **Incident Lifecycle (P17)**: インシデント相関・ノイズ削減・週次ダイジェスト
+- **Scheduled Jobs (P18)**: 日次/週次レポート自動生成
+- **Observability**: Prometheus/Grafana/Loki統合
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18.x+
+- npm 9.x+
 - Claude Code CLI
+- Docker (optional, for monitoring stack)
 
-### インストール
+### Installation
 
 ```bash
-# リポジトリをクローン
+# Clone repository
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 
-# 依存関係をインストール
+# Install dependencies
 npm install
 
-# 環境変数を設定
+# Setup environment
 cp .env.example .env
-# .env を編集してAPIキー等を設定
+# Edit .env with your API keys
 ```
 
-### 動作確認
+### Verification
 
 ```bash
-# テスト実行
+# Run tests (524 tests)
 npm test
 
-# Lint実行
-npm run lint
-
-# 型チェック
+# Type check
 npm run typecheck
-```
-
-## 基本的な使い方
-
-### エージェントを呼び出す
-
-```javascript
-// システムアーキテクチャ設計
-Task(subagent_type="system-architect", prompt="ECサイトのアーキテクチャを設計して")
-
-// バックエンド実装
-Task(subagent_type="backend-developer", prompt="ユーザー認証APIを実装して")
-
-// コードレビュー
-Task(subagent_type="code-reviewer", prompt="このPRをレビューして")
-
-// テスト生成
-Task(subagent_type="test-generator", prompt="src/app.ts のテストを作成して")
-```
-
-### スキルを実行する
-
-```bash
-# セールスレター作成
-/sales-letter --product "オンライン講座"
-
-# LP分析
-/lp-analysis https://example.com
-
-# 画像プロンプト生成
-/nanobanana-prompts YouTubeサムネイル用プロンプトを生成して
-
-# セキュリティスキャン
-/security-scan-trivy
-```
-
-### コーディネーターを使う
-
-```javascript
-// 最適なエージェントを自動選択
-Task(subagent_type="ait42-coordinator", prompt="ユーザー認証機能を設計・実装して")
-
-// 軽量版（高速）
-Task(subagent_type="ait42-coordinator-fast", prompt="簡単なバグを修正して")
-```
-
-## エージェント一覧
-
-### カテゴリ別エージェント数
-
-| カテゴリ | 数 | 主なエージェント |
-|---------|---|-----------------|
-| Coordinators | 4 | ait42-coordinator, omega-aware-coordinator |
-| Architecture | 6 | system-architect, api-designer, database-designer |
-| Development | 6 | backend-developer, frontend-developer, api-developer |
-| Quality Assurance | 8 | code-reviewer, test-generator, security-tester |
-| Operations | 8 | devops-engineer, cicd-manager, monitoring-specialist |
-| Documentation | 3 | tech-writer, doc-reviewer, knowledge-manager |
-| Analysis | 4 | complexity-analyzer, feedback-analyzer |
-| Specialized | 5 | bug-fixer, refactor-specialist, feature-builder |
-| Multi-Agent | 4 | multi-agent-competition, multi-agent-debate |
-| Process | 5 | workflow-coordinator, requirements-elicitation |
-
-詳細は [docs/API_REFERENCE.md](docs/API_REFERENCE.md) を参照してください。
-
-## スキル一覧
-
-### Marketing & Content (11種)
-
-| スキル | 説明 |
-|--------|------|
-| `copywriting-helper` | コピーライティング支援 |
-| `sales-letter` | セールスレター作成 |
-| `step-mail` | ステップメール作成 |
-| `vsl` | ビデオセールスレター |
-| `launch-video` | ローンチ動画スクリプト |
-| `lp-generator` | LP作成 (PASCOLA/漫画) |
-| `funnel-builder` | ファネル構築 |
-| `mendan-lp` | 面談LP作成 |
-| `lp-analysis` | LP分析・最適化 |
-| `customer-support` | カスタマーサポート返信 |
-| `tommy-style` | トミースタイル適用 |
-
-### Creative & Media (3種)
-
-| スキル | 説明 |
-|--------|------|
-| `gemini-image-generator` | 画像生成 (NanoBanana統合) |
-| `nanobanana-prompts` | プロンプト最適化 |
-| `japanese-tts-reading` | 日本語TTS |
-
-### Infrastructure (9種)
-
-| スキル | 説明 |
-|--------|------|
-| `workflow-automation-n8n` | n8nワークフロー |
-| `docker-mcp-ops` | Dockerオペレーション |
-| `security-scan-trivy` | セキュリティスキャン |
-| `pdf-automation-gotenberg` | PDF自動化 |
-| `doc-convert-pandoc` | ドキュメント変換 |
-| `unified-notifications-apprise` | 通知統合 |
-| `postgres-mcp-analyst` | PostgreSQL分析 |
-| `notion-knowledge-mcp` | Notionナレッジ |
-| `nlq-bi-wrenai` | 自然言語BI |
-
-### Research (1種)
-
-| スキル | 説明 |
-|--------|------|
-| `research-cited-report` | 出典付きリサーチレポート |
-
-## プロジェクト構造
-
-```
-taisun_v2/
-├── .claude/
-│   ├── CLAUDE.md           # プロジェクト指示書
-│   ├── settings.json       # パーミッション設定
-│   ├── agents/             # 69エージェント定義
-│   ├── commands/           # コマンド定義
-│   ├── skills/             # 24スキル定義
-│   └── memory/             # 学習・統計システム
-├── .github/
-│   ├── workflows/          # CI/CDワークフロー
-│   │   ├── ci.yml          # 継続的インテグレーション
-│   │   ├── cd.yml          # 継続的デプロイ
-│   │   └── security.yml    # セキュリティスキャン
-│   ├── ISSUE_TEMPLATE/     # Issueテンプレート
-│   └── dependabot.yml      # 依存関係自動更新
-├── src/                    # ソースコード
-├── docs/                   # ドキュメント
-├── scripts/                # ユーティリティ
-└── config/                 # 設定ファイル
-```
-
-## 品質ゲート
-
-| 項目 | 基準 |
-|------|------|
-| コードレビュースコア | 80点以上 |
-| テストカバレッジ | 80%以上 |
-| セキュリティスキャン | Critical/High ゼロ |
-
-## CI/CD
-
-### 自動実行されるチェック
-
-| チェック | トリガー |
-|---------|---------|
-| Lint & TypeScript | Push/PR |
-| ユニットテスト | Push/PR |
-| セキュリティスキャン | Push/PR, 週次 |
-| ビルド | Push/PR |
-
-### デプロイフロー
-
-```
-develop → ステージング環境
-main/tag → 本番環境
-```
-
-## ドキュメント
-
-| ドキュメント | 内容 |
-|-------------|------|
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | システムアーキテクチャ |
-| [DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) | 開発者ガイド |
-| [API_REFERENCE.md](docs/API_REFERENCE.md) | APIリファレンス |
-| [OPERATIONS.md](docs/OPERATIONS.md) | 運用ガイド |
-| [RUNBOOK.md](docs/RUNBOOK.md) | オペレーション手順書 |
-
-## 開発
-
-### テスト実行
-
-```bash
-# ユニットテスト
-npm test
-
-# カバレッジ付きテスト
-npm run test:coverage
 
 # Lint
 npm run lint
 
-# 型チェック
-npm run typecheck
+# Build
+npm run build:all
 ```
 
-### セキュリティスキャン
+## Usage
+
+### Using Agents
+
+```javascript
+// Architecture design
+Task(subagent_type="system-architect", prompt="ECサイトのアーキテクチャを設計して")
+
+// Backend implementation
+Task(subagent_type="backend-developer", prompt="ユーザー認証APIを実装して")
+
+// Code review (0-100 scoring)
+Task(subagent_type="code-reviewer", prompt="このPRをレビューして")
+
+// Auto-select optimal agent
+Task(subagent_type="ait42-coordinator", prompt="ユーザー認証機能を設計・実装して")
+```
+
+### Using Skills
 
 ```bash
-# npm audit
-npm audit
+# Sales letter
+/sales-letter --product "オンライン講座"
 
-# Trivy (要インストール)
-npm run security:scan
+# LP analysis
+/lp-analysis https://example.com
+
+# Security scan
+/security-scan-trivy
+
+# Daily observability report
+npm run obs:report:daily
 ```
 
-## ライセンス
+### Monitoring Stack
 
-MIT License - 詳細は [LICENSE](LICENSE) を参照してください。
+```bash
+# Start monitoring (Prometheus, Grafana, Loki)
+make monitoring-up
 
-## コントリビューション
+# Start ops tools (Gotenberg, PDF)
+make tools-up
+
+# Start scheduled jobs daemon
+docker compose -f docker-compose.ops.yml --profile ops-scheduler up -d
+```
+
+## Project Structure
+
+```
+taisun_agent/
+├── src/
+│   └── proxy-mcp/              # Proxy MCP Server (11.2K LOC)
+│       ├── server.ts           # MCP server entry
+│       ├── tools/              # Public tools (system, skill, memory)
+│       ├── memory/             # Memory service & storage
+│       ├── router/             # Hybrid router engine
+│       ├── internal/           # Circuit breaker, resilience
+│       ├── browser/            # Chrome/CDP integration
+│       ├── skillize/           # URL→Skill generation
+│       ├── supervisor/         # GitHub workflow integration
+│       ├── ops/                # Schedule, incidents, digest
+│       └── observability/      # Event tracking & metrics
+│
+├── .claude/                    # Agent system
+│   ├── agents/                 # 77 agent definitions
+│   ├── skills/                 # 59 skill definitions
+│   ├── commands/               # 76 command shortcuts
+│   ├── mcp-servers/            # 4 custom MCP servers
+│   ├── mcp-tools/              # 227 MCP tools
+│   └── memory/                 # Learning & statistics
+│
+├── config/
+│   └── proxy-mcp/              # MCP configuration
+│       ├── internal-mcps.json  # MCP registry
+│       ├── ops-schedule.json   # Scheduled jobs
+│       └── incidents.json      # Incident tracking
+│
+├── docs/                       # Documentation (30+ files)
+│   ├── ARCHITECTURE.md
+│   ├── DEVELOPER_GUIDE.md
+│   ├── API_REFERENCE.md
+│   ├── OPERATIONS.md
+│   └── third-agent/            # Advanced docs
+│
+├── tests/
+│   ├── unit/                   # 22 unit test files
+│   └── integration/            # 5 integration suites
+│
+├── docker-compose.monitoring.yml  # Prometheus/Grafana/Loki
+├── docker-compose.tools.yml       # Document processing
+└── docker-compose.ops.yml         # Operations environment
+```
+
+## Quality Gates
+
+| Metric | Requirement | Current |
+|--------|-------------|---------|
+| Test Coverage | 80%+ | 80%+ |
+| Code Review Score | 80+ | 80+ |
+| Security Scan | Zero Critical/High | Zero |
+| P0/P1 Bugs | Zero | Zero |
+
+## NPM Scripts
+
+```bash
+# Development
+npm run dev                    # Watch mode
+npm test                       # Run all tests
+npm run lint                   # ESLint
+npm run typecheck              # TypeScript check
+
+# Building
+npm run proxy:build           # Build proxy MCP
+npm run scripts:build         # Build scripts
+npm run build:all             # Full build
+
+# Operations
+npm run obs:report:daily      # Daily observability report
+npm run obs:report:weekly     # Weekly report
+npm run ops:schedule:status   # Check scheduled jobs
+
+# Utilities
+npm run agents:list           # List available agents
+npm run skills:list           # List available skills
+npm run proxy:smoke           # MCP smoke test
+```
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System architecture |
+| [DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) | Developer guide |
+| [API_REFERENCE.md](docs/API_REFERENCE.md) | API reference |
+| [OPERATIONS.md](docs/OPERATIONS.md) | Operations guide |
+| [RUNBOOK.md](docs/RUNBOOK.md) | Runbook procedures |
+
+## Technology Stack
+
+| Category | Technologies |
+|----------|--------------|
+| **Runtime** | Node.js 18+, TypeScript 5.3+ |
+| **Testing** | Jest 29.7 |
+| **MCP** | @modelcontextprotocol/sdk 1.0 |
+| **AI** | Anthropic SDK, LangChain |
+| **Browser** | Playwright Core 1.57 |
+| **Monitoring** | Prometheus, Grafana, Loki |
+| **Infrastructure** | Docker, n8n |
+
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -265,10 +322,15 @@ MIT License - 詳細は [LICENSE](LICENSE) を参照してください。
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## サポート
+## License
+
+MIT License - See [LICENSE](LICENSE) for details.
+
+## Support
 
 - Issues: [GitHub Issues](https://github.com/san15/taisun_agent/issues)
+- Documentation: [docs/](docs/)
 
 ---
 
-Built with Claude Code
+Built with [Claude Code](https://claude.ai/code)
