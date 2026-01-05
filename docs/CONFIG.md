@@ -187,9 +187,14 @@ MCPサーバーの定義ファイル。各MCPの接続設定、タグ、危険�
 
 **起動方法:**
 ```bash
-npm run ops:schedule:loop &    # バックグラウンドで常駐
-npm run ops:schedule:status    # 状態確認
+# 環境変数で有効化（推奨）
+OPS_SCHEDULE_ENABLED=true npm run ops:schedule:loop &
+
+# 状態確認
+npm run ops:schedule:status
 ```
+
+**注意:** デフォルトでは `enabled: false` です。本番環境では `OPS_SCHEDULE_ENABLED=true` を設定してください。
 
 ### observability-report.json (レポート設定)
 

@@ -28,6 +28,9 @@ const CONFIG_PATH = path.join(process.cwd(), 'config', 'proxy-mcp', 'ops-schedul
 
 /**
  * Load schedule configuration
+ *
+ * Environment variable overrides:
+ * - OPS_SCHEDULE_ENABLED=true: Override global enabled flag
  */
 export function loadScheduleConfig(): ScheduleConfig | null {
   try {
@@ -35,7 +38,14 @@ export function loadScheduleConfig(): ScheduleConfig | null {
       return null;
     }
     const content = fs.readFileSync(CONFIG_PATH, 'utf-8');
-    return JSON.parse(content) as ScheduleConfig;
+    const config = JSON.parse(content) as ScheduleConfig;
+
+    // Environment variable override for enabled flag
+    if (process.env.OPS_SCHEDULE_ENABLED === 'true') {
+      config.enabled = true;
+    }
+
+    return config;
   } catch (error) {
     console.error('[schedule-runner] Failed to load config:', error);
     return null;
