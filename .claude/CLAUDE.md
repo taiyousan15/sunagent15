@@ -9,8 +9,8 @@ AIエージェント、MCPツール、マーケティングスキルを完全統
 | Component | Count | Description |
 |-----------|-------|-------------|
 | **Agents** | 75 | AIT42 + 統合エージェント |
-| **Skills** | 51 | マーケティング・クリエイティブ・インフラ |
-| **Commands** | 73 | ショートカットコマンド |
+| **Skills** | 56 | マーケティング・クリエイティブ・インフラ |
+| **Commands** | 74 | ショートカットコマンド |
 | **MCP Servers** | 32 | 外部サービス連携 |
 | **MCP Tools** | 227 | 自動化ツール群 |
 
@@ -19,8 +19,8 @@ AIエージェント、MCPツール、マーケティングスキルを完全統
 ```
 taisun_v2/.claude/
 ├── agents/              # 75 統合エージェント
-├── commands/            # 73 コマンド
-├── skills/              # 51 スキル
+├── commands/            # 74 コマンド
+├── skills/              # 56 スキル
 ├── memory/              # 学習・統計システム
 ├── mcp-servers/         # カスタムMCPサーバー (4)
 ├── mcp-tools/           # → taisun MCPツール (227)

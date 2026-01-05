@@ -36,9 +36,9 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| **AI Agents** | 77 | 専門家エージェント (AIT42 + ) |
-| **Skills** | 59 | マーケティング・インフラ自動化スキル |
-| **Commands** | 76 | ショートカットコマンド |
+| **AI Agents** | 75 | 専門家エージェント (AIT42 + ) |
+| **Skills** | 56 | マーケティング・インフラ自動化スキル |
+| **Commands** | 74 | ショートカットコマンド |
 | **MCP Servers** | 32 | 外部サービス連携 |
 | **MCP Tools** | 227 | 統合ツール群 |
 | **Source Lines** | 11,167 | TypeScript (proxy-mcp) |
