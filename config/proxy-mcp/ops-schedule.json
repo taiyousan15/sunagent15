@@ -1,29 +1,29 @@
 {
   "$schema": "./ops-schedule.schema.json",
-  "enabled": false,
+  "enabled": true,
   "timezone": "Asia/Tokyo",
   "stateDir": "logs/schedule-state",
-  "dashboardIssue": null,
+  "dashboardIssue": 197,
   "jobs": {
     "daily_observability_report": {
-      "enabled": false,
+      "enabled": true,
       "cadence": "daily",
       "at": "09:00",
-      "postToIssue": false
+      "postToIssue": true
     },
     "weekly_observability_report": {
-      "enabled": false,
+      "enabled": true,
       "cadence": "weekly",
       "dow": "Mon",
       "at": "09:10",
-      "postToIssue": false
+      "postToIssue": true
     },
     "weekly_improvement_digest": {
-      "enabled": false,
+      "enabled": true,
       "cadence": "weekly",
       "dow": "Mon",
       "at": "09:20",
-      "postToIssue": false
+      "postToIssue": true
     }
   },
   "redaction": {
