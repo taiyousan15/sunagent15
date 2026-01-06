@@ -13,20 +13,43 @@
 
 ## はじめての方へ
 
-| ステップ | ドキュメント | 所要時間 |
-|---------|-------------|---------|
-| **1. まずはここから** | [QUICK_START.md](docs/QUICK_START.md) | 5分 |
-| **2. エラーが出たら** | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | - |
-| **3. 詳しく設定したい** | [CONFIG.md](docs/CONFIG.md) | 10分 |
-| **4. 開発に参加したい** | [CONTRIBUTING.md](docs/CONTRIBUTING.md) | 15分 |
+> **重要**: TAISUN v2は **Claude Code の拡張機能** です。
+> インストール後、このディレクトリで Claude Code を起動すると、81のエージェントと59のスキルが自動的に使えるようになります。
+
+### 1. インストール（5分）
 
 ```bash
-# 最短セットアップ
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 npm install
-npm test
+npm test  # 556テストがパスすればOK
 ```
+
+### 2. 使い方（超簡単）
+
+```bash
+cd taisun_agent
+claude  # Claude Code を起動
+```
+
+**あとは普通に会話するだけ:**
+
+```
+あなた: 「セールスレターを書いて」
+Claude: /sales-letter スキルで作成します...
+
+あなた: 「このコードをレビューして」
+Claude: code-reviewer エージェントで分析します...
+```
+
+### 3. 詳細ガイド
+
+| ドキュメント | 内容 |
+|-------------|------|
+| [QUICK_START.md](docs/QUICK_START.md) | 詳細セットアップ手順 |
+| [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | エラー解決 |
+| [CONFIG.md](docs/CONFIG.md) | 設定カスタマイズ |
+| [CONTRIBUTING.md](docs/CONTRIBUTING.md) | 開発参加方法 |
 
 ---
 
@@ -47,7 +70,7 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 │         ┌─────────────────┼─────────────────┐              │
 │         ▼                 ▼                 ▼              │
 │  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐       │
-│  │ 77 Agents   │   │  59 Skills  │   │ 76 Commands │       │
+│  │ 81 Agents   │   │  59 Skills  │   │ 76 Commands │       │
 │  └─────────────┘   └─────────────┘   └─────────────┘       │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
@@ -57,8 +80,8 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| **AI Agents** | 75 | 専門家エージェント (AIT42 + ) |
-| **Skills** | 56 | マーケティング・インフラ自動化スキル |
+| **AI Agents** | 81 | 専門家エージェント (AIT42 +  + Diagnostics) |
+| **Skills** | 67 | マーケティング・インフラ自動化スキル |
 | **Commands** | 74 | ショートカットコマンド |
 | **MCP Servers** | 32 | 外部サービス連携 |
 | **MCP Tools** | 227 | 統合ツール群 |
@@ -86,11 +109,12 @@ memory_search   // コンテンツ検索
 - **セマンティック検索**: 類似度ベースのMCP選択
 - **人間承認フロー**: 高リスク操作のエスカレーション
 
-### 3. Multi-Agent System (77 Agents)
+### 3. Multi-Agent System (81 Agents)
 
 | Category | Count | Examples |
 |----------|-------|----------|
-| **Coordinators** | 4 | ait42-coordinator, omega-aware-coordinator |
+| **Coordinators** | 5 | ait42-coordinator, omega-aware-coordinator, initialization-orchestrator |
+| **Diagnostics & Recovery** | 5 | system-diagnostician, error-recovery-planner, environment-doctor 🆕 |
 | **Architecture** | 6 | system-architect, api-designer, security-architect |
 | **Development** | 6 | backend-developer, frontend-developer, api-developer |
 | **Quality Assurance** | 8 | code-reviewer, test-generator, security-tester |
@@ -102,7 +126,7 @@ memory_search   // コンテンツ検索
 | **Process** | 5 | workflow-coordinator, requirements-elicitation |
 | **** | 6 | -codegen-agent, -pr-agent |
 
-### 4. Skill Library (59 Skills)
+### 4. Skill Library (67 Skills)
 
 #### Marketing & Sales (15)
 - `copywriting-helper` - コピーライティング支援
@@ -113,7 +137,7 @@ memory_search   // コンテンツ検索
 - `lp-generator` / `lp-analysis` / `mendan-lp` - LP作成・分析
 - `funnel-builder` - ファネル構築
 - `customer-support` - カスタマーサポート
-- `tommy-style` - トミースタイル適用
+- `taiyo-style` - 太陽スタイル適用
 
 #### Content Creation (10)
 - `kindle-publishing` - Kindle本出版
@@ -322,6 +346,7 @@ npm run proxy:smoke           # MCP smoke test
 | Document | Description |
 |----------|-------------|
 | [QUICK_START.md](docs/QUICK_START.md) | 5分クイックスタート |
+| [BEGINNERS_PROMPT_GUIDE.md](docs/BEGINNERS_PROMPT_GUIDE.md) | 初心者向けフレーズ集 ⭐ |
 | [CONFIG.md](docs/CONFIG.md) | 設定ガイド |
 | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | トラブルシューティング |
 | [getting-started-ja.md](docs/getting-started-ja.md) | 日本語セットアップガイド |
