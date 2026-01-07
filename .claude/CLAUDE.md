@@ -283,5 +283,7 @@ taisun_v2/.claude/
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #623 | 4:53 PM | ✅ | Task contract updated for memory system enhancement work | ~643 |
+| #622 | 4:52 PM | 🟣 | New memory enhancement task directive added to instruction ledger | ~621 |
 | #605 | 4:26 PM | ✅ | Running summary updated to mark directive fidelity framework as complete | ~410 |
 </claude-mem-context>

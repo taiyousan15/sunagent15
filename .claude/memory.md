@@ -92,5 +92,33 @@
 
 ---
 
+## 記憶強化機能
+
+### セッション開始ブリーフィング
+新しいセッション開始時に自動表示される情報:
+1. 現在の状態（running_summary.md）
+2. 現在のタスク契約（task_contract.md）
+3. 再発防止リマインダー（mistakes.md）
+4. 重要ルール
+
+実行方法:
+```bash
+npm run briefing        # ブリーフィング表示
+npm run briefing:sync   # Memory同期も実行
+```
+
+### MCP Memory統合
+- directives.md, mistakes.md等をMemoryServiceに同期
+- セマンティック検索が可能
+- タグベースのフィルタリング
+
+### 関連ファイル
+- `src/proxy-mcp/memory/directive-sync.ts` - 同期ユーティリティ
+- `.claude/hooks/session-start-briefing.md` - フック説明
+- `scripts/session-briefing.ts` - CLIスクリプト
+
+---
+
 ## 変更履歴
+- 2026-01-07: 記憶強化機能追加（MCP Memory統合、セッション開始ブリーフィング）
 - 2026-01-07: 初版作成（Master Prompt Framework導入）

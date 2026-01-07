@@ -1,52 +1,47 @@
 # Task Contract（現在のタスク契約）
 
 ## Goal
-- 指示忠実性と再発防止のフレームワークを確立する
+- 記憶システムを強化し、セッション間の継続性を向上させる
 
 ## Deliverables
-- Issue: N/A（フレームワーク設定タスク）
+- Issue: N/A
 - PR: N/A
-- Docs: directives.md, mistakes.md, task_contract.md, running_summary.md
-- Tests: N/A
+- Docs: memory.md更新, hooks/session-start-briefing.md作成
+- Tests: 動作確認完了
 
 ## Constraints (Must)
-- ユーザーの指示を契約として扱う
-- 推測や自己流で上書きしない
-- デフォルト言語は日本語
-- 変更は最小差分・可逆
+- ✅ 既存のmemory.md, mistakes.md等を破壊しない
+- ✅ 無料で実装（追加コストなし）
+- ✅ 既存のMCPツール（memory_add, memory_search）を活用
 
 ## Never Do (Must NOT)
-- 勝手にリファクタしない
-- 出力を肥大化させない（全文を会話に垂れ流さない）
-- 秘密情報をログに書かない
-- 既存実装を読まずに修正案を出さない
+- ✅ 外部サービス契約なし
+- ✅ 既存ファイル構造の大幅変更なし
+- ✅ 秘密情報をログに書かない
 
 ## Acceptance Criteria / DoD
-- [x] directives.md 作成
-- [x] mistakes.md 作成（過去のミス4件を記録）
-- [x] task_contract.md 作成
-- [x] running_summary.md 作成
-- [x] memory.md に長期ルールを追記
+- [x] MCP Memory統合実装（directive-sync.ts）
+- [x] セッション開始ブリーフィング実装（npm run briefing）
+- [x] テスト通過（630 tests passed）
+- [x] ドキュメント更新（memory.md）
 
 ## Regression Checklist (from mistakes.md)
-- [x] success: true を誤って返していないか
-- [x] execSync の文字列補間を使っていないか
-- [x] 空の catch ブロックがないか
-- [x] ワイルドカード許可を使っていないか
+- [x] エラー時にsuccess: trueを返していないか
+- [x] execSyncの文字列補間を使っていないか
+- [x] 空のcatchブロックがないか
 
 ## Plan (file-level)
 - files:
-  - path: .claude/directives.md
-    change: 新規作成
-  - path: .claude/mistakes.md
-    change: 新規作成（過去ミス4件記録）
-  - path: .claude/task_contract.md
-    change: 新規作成
-  - path: .claude/running_summary.md
-    change: 新規作成
+  - path: src/proxy-mcp/memory/directive-sync.ts
+    change: ✅ 新規作成（同期ユーティリティ）
+  - path: .claude/hooks/session-start-briefing.md
+    change: ✅ 新規作成（フック説明）
+  - path: scripts/session-briefing.ts
+    change: ✅ 新規作成（CLIスクリプト）
   - path: .claude/memory.md
-    change: 長期ルール追記
+    change: ✅ 記憶強化機能ドキュメント追加
+  - path: package.json
+    change: ✅ briefingスクリプト追加
 
-## Assumptions
-- 既存の .claude/CLAUDE.md は保持する
-- フレームワークファイルは .claude/ 直下に配置
+## Status
+✅ **完了** - 2026-01-07

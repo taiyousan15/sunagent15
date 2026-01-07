@@ -22,3 +22,25 @@
   - running_summary.md 作成
   - memory.md 更新
 - **Notes**: 以後のタスクはこのフレームワークに従って実行する
+
+---
+
+## 2026-01-07 Task: Memory Enhancement（記憶強化）
+- **Goal**: 記憶システムをさらに強化し、セッション間の継続性を向上
+- **Deliverables**:
+  - MCP Memory統合スクリプト
+  - セッション開始ブリーフィング機能
+  - 関連ドキュメント更新
+- **Constraints**:
+  - 既存のmemory.md, mistakes.md等を破壊しない
+  - 無料で実装（追加コストなし）
+  - 既存のMCPツール（memory_add, memory_search）を活用
+- **Never Do**:
+  - 外部サービス契約
+  - 既存ファイル構造の大幅変更
+- **DoD**:
+  - [ ] MCP Memory統合実装
+  - [ ] セッション開始ブリーフィング実装
+  - [ ] テスト通過
+  - [ ] ドキュメント更新
+- **Notes**: 高優先度2項目を先に実装
