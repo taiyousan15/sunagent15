@@ -137,7 +137,8 @@ async function startChromeDebug(): Promise<void> {
     `--remote-debugging-port=${config.port}`,
     '--remote-debugging-address=127.0.0.1', // Security: localhost only
     `--user-data-dir=${config.profileDir}`,
-    '--remote-allow-origins=*', // Allow Playwright connection
+    // Security: Restrict origins to localhost only (prevents remote access)
+    '--remote-allow-origins=http://127.0.0.1,http://localhost,http://localhost:*,http://127.0.0.1:*',
     '--no-first-run',
     '--no-default-browser-check',
   ];

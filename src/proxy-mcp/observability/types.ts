@@ -19,7 +19,14 @@ export type EventType =
   | 'memory_search'
   | 'url_bundle_normalize'
   | 'pipeline_tabs_skillize'
-  | 'error';
+  | 'error'
+  // Context Budget Monitor events
+  | 'context_budget_init'
+  | 'context_budget_warning'
+  | 'context_budget_critical'
+  | 'context_budget_emergency'
+  | 'context_budget_compaction'
+  | 'context_operation';
 
 /**
  * Event status

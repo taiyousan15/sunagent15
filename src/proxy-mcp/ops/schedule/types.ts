@@ -51,6 +51,8 @@ export interface ScheduleState {
 export interface JobResult {
   jobName: JobName;
   success: boolean;
+  /** Indicates job was skipped due to optional dependency unavailability */
+  skipped?: boolean;
   refId?: string;
   summary?: string;
   error?: string;

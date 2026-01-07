@@ -5,7 +5,7 @@
  * P20 Update: i18n support for Japanese default
  */
 
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 import { SupervisorState, ExecutionPlan } from './types';
 import { t, formatSteps } from '../../i18n';
 
@@ -64,12 +64,21 @@ export async function createRunlogIssue(
   });
 
   try {
-    const result = execSync(
-      `gh issue create --repo ${targetRepo} --title "[SUPERVISOR] ${state.runId}" --body "${body.replace(/"/g, '\\"')}"`,
-      { encoding: 'utf8', stdio: 'pipe' }
-    ).trim();
+    // Use spawnSync with array arguments to prevent command injection
+    const result = spawnSync('gh', [
+      'issue', 'create',
+      '--repo', targetRepo,
+      '--title', `[SUPERVISOR] ${state.runId}`,
+      '--body', body,
+    ], { encoding: 'utf8', stdio: 'pipe' });
+
+    if (result.error || result.status !== 0) {
+      console.error('[Supervisor] gh issue create failed:', result.stderr || result.error);
+      return null;
+    }
+
     // Extract issue number from URL
-    const match = result.match(/\/issues\/(\d+)/);
+    const match = result.stdout.trim().match(/\/issues\/(\d+)/);
     return match ? parseInt(match[1], 10) : null;
   } catch (err) {
     console.error('[Supervisor] Failed to create RUNLOG issue:', err);
@@ -108,11 +117,21 @@ export async function createApprovalIssue(
   });
 
   try {
-    const result = execSync(
-      `gh issue create --repo ${targetRepo} --title "${title.replace(/"/g, '\\"')}" --body "${body.replace(/"/g, '\\"')}" --label "approval-required"`,
-      { encoding: 'utf8', stdio: 'pipe' }
-    ).trim();
-    const match = result.match(/\/issues\/(\d+)/);
+    // Use spawnSync with array arguments to prevent command injection
+    const result = spawnSync('gh', [
+      'issue', 'create',
+      '--repo', targetRepo,
+      '--title', title,
+      '--body', body,
+      '--label', 'approval-required',
+    ], { encoding: 'utf8', stdio: 'pipe' });
+
+    if (result.error || result.status !== 0) {
+      console.error('[Supervisor] gh issue create failed:', result.stderr || result.error);
+      return null;
+    }
+
+    const match = result.stdout.trim().match(/\/issues\/(\d+)/);
     return match ? parseInt(match[1], 10) : null;
   } catch (err) {
     console.error('[Supervisor] Failed to create approval issue:', err);
@@ -137,21 +156,28 @@ export async function checkApproval(
   }
 
   try {
-    // Check for approved label
-    const labels = execSync(
-      `gh issue view ${issueId} --repo ${targetRepo} --json labels -q '.labels[].name'`,
-      { encoding: 'utf8', stdio: 'pipe' }
-    ).trim();
+    // Check for approved label - use spawnSync with array arguments
+    const labelsResult = spawnSync('gh', [
+      'issue', 'view', String(issueId),
+      '--repo', targetRepo,
+      '--json', 'labels',
+      '-q', '.labels[].name',
+    ], { encoding: 'utf8', stdio: 'pipe' });
 
+    const labels = labelsResult.stdout?.trim() || '';
     if (labels.includes('approved')) {
       return { approved: true };
     }
 
-    // Check for APPROVE/REJECT comments
-    const comments = execSync(
-      `gh issue view ${issueId} --repo ${targetRepo} --json comments -q '.comments[] | "\\(.author.login): \\(.body)"'`,
-      { encoding: 'utf8', stdio: 'pipe' }
-    ).trim();
+    // Check for APPROVE/REJECT comments - use spawnSync with array arguments
+    const commentsResult = spawnSync('gh', [
+      'issue', 'view', String(issueId),
+      '--repo', targetRepo,
+      '--json', 'comments',
+      '-q', '.comments[] | "\\(.author.login): \\(.body)"',
+    ], { encoding: 'utf8', stdio: 'pipe' });
+
+    const comments = commentsResult.stdout?.trim() || '';
 
     for (const line of comments.split('\n')) {
       const match = line.match(/^(\w+): (.+)/);
@@ -191,10 +217,18 @@ export async function addIssueComment(
   }
 
   try {
-    execSync(
-      `gh issue comment ${issueId} --repo ${targetRepo} --body "${comment.replace(/"/g, '\\"')}"`,
-      { stdio: 'pipe' }
-    );
+    // Use spawnSync with array arguments to prevent command injection
+    const result = spawnSync('gh', [
+      'issue', 'comment', String(issueId),
+      '--repo', targetRepo,
+      '--body', comment,
+    ], { encoding: 'utf8', stdio: 'pipe' });
+
+    if (result.error || result.status !== 0) {
+      console.error('[Supervisor] gh issue comment failed:', result.stderr || result.error);
+      return false;
+    }
+
     return true;
   } catch (err) {
     console.error('[Supervisor] Failed to add comment:', err);
@@ -223,7 +257,17 @@ export async function closeIssue(
     if (comment) {
       await addIssueComment(issueId, comment, targetRepo);
     }
-    execSync(`gh issue close ${issueId} --repo ${targetRepo}`, { stdio: 'pipe' });
+    // Use spawnSync with array arguments to prevent command injection
+    const result = spawnSync('gh', [
+      'issue', 'close', String(issueId),
+      '--repo', targetRepo,
+    ], { encoding: 'utf8', stdio: 'pipe' });
+
+    if (result.error || result.status !== 0) {
+      console.error('[Supervisor] gh issue close failed:', result.stderr || result.error);
+      return false;
+    }
+
     return true;
   } catch (err) {
     console.error('[Supervisor] Failed to close issue:', err);

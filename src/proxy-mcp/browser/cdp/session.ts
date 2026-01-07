@@ -50,8 +50,9 @@ export async function connectCDP(
       // Verify connection is still alive
       await cachedConnection.browser.contexts();
       return cachedConnection;
-    } catch {
-      // Connection is stale, clear cache
+    } catch (error) {
+      // Connection is stale, clear cache and log for diagnostics
+      console.debug('[CDP] Cached connection stale, reconnecting:', error instanceof Error ? error.message : String(error));
       cachedConnection = null;
     }
   }
@@ -130,8 +131,9 @@ export async function disconnectCDP(): Promise<void> {
     try {
       // Just disconnect, don't close browser
       await cachedConnection.browser.close();
-    } catch {
-      // Ignore errors during disconnect
+    } catch (error) {
+      // Log at debug level for diagnostics, but don't fail
+      console.debug('[CDP] Error during disconnect (non-fatal):', error instanceof Error ? error.message : String(error));
     }
     cachedConnection = null;
   }

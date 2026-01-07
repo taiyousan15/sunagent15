@@ -259,10 +259,13 @@ export async function executeJob(
             durationMs: Date.now() - startTime,
           };
         } catch (error) {
+          // P17 digest module error - report as skipped, not failed
+          console.warn('[schedule-runner] Digest module error:', error);
           return {
             jobName,
-            success: true, // Don't fail if P17 is not available
-            summary: 'Digest module not available',
+            success: false,
+            skipped: true, // Distinguish from hard failure
+            summary: 'Digest module not available (optional dependency)',
             durationMs: Date.now() - startTime,
           };
         }
