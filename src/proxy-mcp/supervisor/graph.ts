@@ -9,7 +9,6 @@
 
 import {
   SupervisorState,
-  SupervisorStep,
   SupervisorOptions,
   SupervisorResult,
   ExecutionPlan,

@@ -7,7 +7,7 @@
  * Opens example.com, gets title, then closes tab (keeps Chrome running).
  */
 
-import { isCDPPortOpen, connectCDP, disconnectCDP } from './session';
+import { isCDPPortOpen, connectCDP } from './session';
 
 const TEST_URL = 'https://example.com';
 const DEFAULT_PORT = 9222;

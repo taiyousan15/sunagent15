@@ -192,7 +192,8 @@ export async function mockAgentExecution(
   options: { timeout?: number } = {}
 ): Promise<TestResult> {
   const startTime = Date.now();
-  const timeout = options.timeout || 5000;
+  // Note: timeout option available for future use
+  void options.timeout;
 
   try {
     const agent = loadAgentDefinition(agentName);
@@ -233,7 +234,8 @@ export async function mockSkillExecution(
   options: { timeout?: number } = {}
 ): Promise<TestResult> {
   const startTime = Date.now();
-  const timeout = options.timeout || 5000;
+  // Note: timeout option available for future use
+  void options.timeout;
 
   try {
     const skill = loadSkillDefinition(skillName);

@@ -180,7 +180,7 @@ export function clearEvents(): void {
 /**
  * Get recent events summary (for system_health)
  */
-export function getRecentEventsSummary(limit: number = 100): {
+export function getRecentEventsSummary(_limit: number = 100): {
   total: number;
   last24h: MetricsSummary;
   topErrors: Array<{ type: string; count: number }>;

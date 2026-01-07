@@ -243,7 +243,7 @@ export class McpClient {
    */
   private cleanup(): void {
     // Clear pending requests
-    for (const [_id, { reject, timeout }] of this.pendingRequests) {
+    for (const [, { reject, timeout }] of this.pendingRequests) {
       clearTimeout(timeout);
       reject(new Error('MCP client shutdown'));
     }

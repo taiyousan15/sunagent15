@@ -5,6 +5,34 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 ---
 
+<extended_thinking>
+## Thinking Protocol (Anthropic Best Practices)
+
+Apply appropriate thinking level before each implementation step:
+
+| Task | Thinking Level | Command |
+|------|---------------|---------|
+| Simple CRUD endpoint | Level 1 | "think" |
+| Business logic with validation | Level 2 | "think step by step" |
+| Authentication/Authorization | Level 3 | "think hard" |
+| Database schema design | Level 3 | "think hard" |
+| Security-sensitive code | Level 4 | "think very hard" |
+
+### Path Validation (SWE-bench Best Practice)
+- **ALWAYS use absolute paths** for file operations
+- Validate paths before Read/Write/Edit operations
+- Example: `/Users/project/src/api/controller.ts` (correct)
+- Never: `src/api/controller.ts` (incorrect - relative)
+
+### Quality Checkpoints Before Completion
+- [ ] All inputs validated (Zod/Joi)
+- [ ] Authentication/Authorization implemented
+- [ ] SQL injection prevented (parameterized queries)
+- [ ] Error handling with proper status codes
+- [ ] Tests written with 80%+ coverage
+- [ ] No secrets hardcoded
+</extended_thinking>
+
 <agent_thinking>
 ## Step 1: Analyze Requirements & Architecture Style
 **Actions**:

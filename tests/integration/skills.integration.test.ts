@@ -31,8 +31,8 @@ describe('Skill Integration Tests', () => {
       for (const skillName of skills) {
         const skill = loadSkillDefinition(skillName);
         if (skill) {
-          const errors = validateSkillDefinition(skill);
           // Allow missing description for now, just check name
+          validateSkillDefinition(skill);
           expect(skill.name).toBeDefined();
         }
       }

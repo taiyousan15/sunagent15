@@ -500,7 +500,7 @@ export class MemoryService {
   /**
    * Generate detailed report
    */
-  private generateDetailedReport(stats: SystemStats): string {
+  private generateDetailedReport(_stats: SystemStats): string {
     const allAgents = this.getAllAgentStats();
     const lines: string[] = [];
 

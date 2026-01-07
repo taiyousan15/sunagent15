@@ -6,7 +6,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { ObservabilityEvent, EventType, MetricsSummary } from './types';
+import { ObservabilityEvent } from './types';
 import { getCircuitSummary } from '../internal/circuit-breaker';
 
 const EVENTS_DIR = path.join(process.cwd(), '.taisun', 'observability');

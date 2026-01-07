@@ -9,7 +9,7 @@
 
 import { RouteResult, RouterConfig, InternalMcpDefinition } from './types';
 import { evaluateSafetyRules, isDangerousOperation } from './rules';
-import { findMatchingMcps, findBestMatch } from './semantic';
+import { findMatchingMcps } from './semantic';
 
 const DEFAULT_CONFIG: RouterConfig = {
   ruleFirst: true,

@@ -5,7 +5,6 @@
  * Priority: overlay > local > base
  */
 
-import * as fs from 'fs';
 import * as path from 'path';
 import { InternalMcpDefinition, InternalMcpsConfig, RouterConfig } from '../router/types';
 import { loadMergedConfig, loadBaseConfig, getRolloutConfig, RolloutConfig } from './overlay';
@@ -14,12 +13,11 @@ import { isRolloutEnabled, formatRolloutStatus } from './rollout';
 const CONFIG_PATH = path.join(process.cwd(), 'config', 'proxy-mcp', 'internal-mcps.json');
 
 let cachedConfig: InternalMcpsConfig | null = null;
-let cachedMcps: InternalMcpDefinition[] | null = null;
 
 /**
  * Load internal MCPs config from file (uses overlay system)
  */
-export function loadConfig(configPath: string = CONFIG_PATH): InternalMcpsConfig {
+export function loadConfig(_configPath: string = CONFIG_PATH): InternalMcpsConfig {
   if (cachedConfig) {
     return cachedConfig;
   }
@@ -33,7 +31,6 @@ export function loadConfig(configPath: string = CONFIG_PATH): InternalMcpsConfig
       ...baseConfig,
       mcps: mergedMcps,
     };
-    cachedMcps = mergedMcps;
 
     return cachedConfig;
   } catch (error) {
@@ -56,7 +53,6 @@ export function loadConfig(configPath: string = CONFIG_PATH): InternalMcpsConfig
  */
 export function clearCache(): void {
   cachedConfig = null;
-  cachedMcps = null;
 }
 
 /**

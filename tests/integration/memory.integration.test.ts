@@ -9,7 +9,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'yaml';
 import { MemoryService } from '../../src/memory/MemoryService';
-import { AgentStats, TaskRecord, TaskCategory } from '../../src/memory/types';
+import { TaskRecord, TaskCategory } from '../../src/memory/types';
 
 describe('Memory System Integration Tests', () => {
   const testBasePath = path.join(__dirname, '../fixtures/test-memory');

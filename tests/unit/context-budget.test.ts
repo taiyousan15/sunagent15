@@ -17,7 +17,6 @@ import {
   CONTEXT_LIMITS,
   OPERATION_TOKEN_ESTIMATES,
   BUDGET_THRESHOLDS,
-  type BudgetLevel,
 } from '../../src/proxy-mcp/observability/context-budget';
 
 describe('Context Budget Monitor', () => {
@@ -303,6 +302,7 @@ describe('Context Budget Monitor', () => {
       );
 
       expect(result).toBe('test result');
+      expect(warning).toBeNull();
       expect(getContextBudget()!.operationCount).toBe(1);
     });
 

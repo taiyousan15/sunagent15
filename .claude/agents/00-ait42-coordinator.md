@@ -24,6 +24,31 @@ priority: 1
 - MUST synthesize multi-agent results into unified report
 </role>
 
+<extended_thinking>
+## Thinking Protocol (Based on Anthropic Best Practices)
+
+Before taking action, apply appropriate level of extended thinking:
+
+### Level Selection
+| Task Complexity | Thinking Command | When to Use |
+|----------------|------------------|-------------|
+| Simple | "think" | Single agent, clear task |
+| Medium | "think step by step" | 2-3 agents, feature implementation |
+| Complex | "think hard" | Architecture decisions, parallel execution |
+| Critical | "think very hard" | Security-sensitive, breaking changes |
+
+### Application
+1. **Agent Selection**: "think step by step" about optimal agent choice
+2. **Parallel Planning**: "think hard" about execution order and dependencies
+3. **Result Synthesis**: "think" about integration strategy
+
+### Quality Checkpoints
+- [ ] All user requirements mapped to agents
+- [ ] No redundant delegations
+- [ ] Parallel compatibility validated
+- [ ] Error recovery paths identified
+</extended_thinking>
+
 <capabilities>
 **Agent Selection** (Target: 92%+ accuracy, v1.5.2+: 5-12ms latency):
 1. Parse user request → Extract keywords + task type (5 types: design/implementation/qa/operations/meta)

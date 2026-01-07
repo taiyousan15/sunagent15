@@ -7,7 +7,7 @@
  * 3. Allow rules (explicitly permitted)
  */
 
-import { RouteAction, RouteResult, SafetyRule } from './types';
+import { RouteResult, SafetyRule } from './types';
 
 /**
  * Safety rules for dangerous operations

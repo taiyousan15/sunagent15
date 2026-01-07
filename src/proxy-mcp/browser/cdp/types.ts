@@ -4,7 +4,7 @@
  * Type definitions for Chrome DevTools Protocol integration.
  */
 
-import type { Browser, BrowserContext, Page } from 'playwright-core';
+import type { Browser, BrowserContext } from 'playwright-core';
 
 export interface CDPConfig {
   /** CDP endpoint URL (default: http://127.0.0.1:9222) */
