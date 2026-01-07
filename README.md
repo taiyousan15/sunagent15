@@ -7,7 +7,29 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18.x%20%7C%2020.x-green)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-524%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
+[![Tests](https://img.shields.io/badge/Tests-692%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
+
+---
+
+## アップデートのお知らせ
+
+> **2026-01-07: UTF-8安全対策をリリースしました**
+>
+> 日本語/マルチバイト文字を含むファイルの編集時にクラッシュ・文字化けが発生する問題への対策を追加しました。
+>
+> ### アップデート方法
+> ```bash
+> cd taisun_agent
+> git pull origin main
+> npm install
+> ```
+>
+> ### 新機能
+> - **safe-replace**: Unicode安全な置換ツール
+> - **utf8-guard**: 文字化け自動検知
+> - **品質ゲート強化**: CIでエンコーディングチェック
+>
+> 詳細: [docs/operations/text-safety-ja.md](docs/operations/text-safety-ja.md)
 
 ---
 
@@ -22,7 +44,7 @@
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 npm install
-npm test  # 556テストがパスすればOK
+npm test  # 692テストがパスすればOK
 ```
 
 ### 2. 使い方（超簡単）
