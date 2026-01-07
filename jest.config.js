@@ -46,6 +46,15 @@ module.exports = {
       },
       setupFilesAfterEnv: ['<rootDir>/tests/utils/setup.ts'],
     },
+    {
+      displayName: 'regression',
+      preset: 'ts-jest',
+      testMatch: ['<rootDir>/tests/regression/**/*.test.ts'],
+      testEnvironment: 'node',
+      transform: {
+        '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
+      },
+    },
   ],
   // Coverage thresholds
   coverageThreshold: {

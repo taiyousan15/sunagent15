@@ -56,7 +56,10 @@
     "security:secrets-scan": "npx gitleaks detect --source . --verbose",
     "doctor": "npx ts-node src/utils/env-check.ts",
     "briefing": "npx ts-node scripts/session-briefing.ts",
-    "briefing:sync": "npx ts-node scripts/session-briefing.ts --sync"
+    "briefing:sync": "npx ts-node scripts/session-briefing.ts --sync",
+    "contract:lint": "npx ts-node scripts/contract-lint.ts",
+    "mistake:testgen": "npx ts-node scripts/mistake-to-test.ts",
+    "quality:check": "npm run contract:lint && npm test"
   },
   "keywords": [
     "ai",

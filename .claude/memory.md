@@ -119,6 +119,39 @@ npm run briefing:sync   # Memory同期も実行
 
 ---
 
+---
+
+## Memory++ (v1.1)
+
+### ピン留め（pins.md）
+- 「ここを修正して」の"ここ"を固定
+- ファイル/関数/行レベルで範囲を指定
+- 解除条件が満たされるまでアクティブ
+
+### トレーサビリティ（traceability.yml）
+- DoD→変更→テスト→証跡の対応表
+- 自動生成・更新
+- Issue/RUNLOGに要約を添付
+
+### 契約Lint（contract:lint）
+- proxy-only / 日本語既定 / secrets非露出を自動検証
+- CIゲートとして使用
+- 違反があればビルド失敗
+
+### 回帰テスト生成（mistake:testgen）
+- mistakes.md から tests/regression/ にテスト生成
+- 再発防止を機械的に担保
+
+### コマンド
+```bash
+npm run contract:lint    # 契約/ルール違反チェック
+npm run mistake:testgen  # 回帰テスト生成
+npm run quality:check    # 全品質チェック
+```
+
+---
+
 ## 変更履歴
+- 2026-01-07: Memory++ v1.1 追加（pins, traceability, contract-lint, mistake-to-test）
 - 2026-01-07: 記憶強化機能追加（MCP Memory統合、セッション開始ブリーフィング）
 - 2026-01-07: 初版作成（Master Prompt Framework導入）
