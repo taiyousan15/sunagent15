@@ -13,6 +13,35 @@
 
 ## アップデートのお知らせ
 
+> **2026-01-08: Windows完全対応リリース 🎉**
+>
+> Windows環境で100%動作することを保証するアップデートをリリースしました。
+>
+> ### アップデート方法
+> ```powershell
+> cd taisun_agent
+> git pull origin main
+> npm install
+> ```
+>
+> ### 新機能
+> - **自動環境診断**: `npm run setup:windows` で環境をチェック
+> - **改行コード統一**: .gitattributes による自動統一（CRLF/LF問題を解決）
+> - **Node.js版スクリプト**: シェルスクリプト不要
+> - **詳細ガイド**: 475行の [Windows専用セットアップガイド](docs/WINDOWS_SETUP.md)
+>
+> ### Windows環境での使い方
+> ```powershell
+> npm run setup:windows  # 環境診断
+> npm install
+> npm test               # 692テスト全通過を確認
+> npm run mcp:health     # MCP設定チェック
+> ```
+>
+> 詳細: [docs/WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md)
+
+---
+
 > **2026-01-07: セキュリティ強化アップデート**
 >
 > MCPツールの入力検証とインジェクション防止機能を追加しました。
