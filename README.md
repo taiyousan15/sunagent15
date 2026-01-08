@@ -105,10 +105,19 @@ npm run setup:windows
 
 # 指示に従って依存関係をインストール
 npm install
-npm test  # 692テストがパスすればOK
+
+# ビルド確認（重要！）
+ls dist/  # dist フォルダが存在すればOK
+
+# テスト実行（ログを抑制）
+npm run test:silent  # または npm run test:summary
 ```
 
-> **Windows ユーザー向け**: 詳細な手順は [docs/WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md) を参照してください。
+> **⚠️ Windows ユーザー向け重要事項**:
+> - `npm test` で大量のエラーが出る場合、`npm run build:all` を実行してください
+> - 13万文字以上のログが出た場合、**Claudeに貼り付けないでください**（API 400エラーの原因）
+> - 必ず `npm run test:summary` で要約のみを取得してください
+> - 詳細: [docs/WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md) の「🚨 緊急: テストで大量のエラーが出る場合」
 
 ### 2. 使い方（超簡単）
 

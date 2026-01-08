@@ -151,6 +151,17 @@ if (fs.existsSync(nodeModulesPath)) {
   hasWarnings = true;
 }
 
+// Check dist folder (build output)
+const distPath = path.join(projectRoot, 'dist');
+if (fs.existsSync(distPath)) {
+  console.log(`${colors.green}  ✓ dist folder exists (TypeScript build successful)${colors.reset}`);
+} else {
+  console.log(`${colors.yellow}  ! dist folder not found${colors.reset}`);
+  console.log(`${colors.yellow}    Run: npm run build:all${colors.reset}`);
+  console.log(`${colors.yellow}    If build fails, see docs/WINDOWS_SETUP.md (🚨 Troubleshooting)${colors.reset}`);
+  hasWarnings = true;
+}
+
 // Summary
 console.log(`\n${colors.cyan}==========================================`);
 console.log('  Setup Summary');
@@ -173,9 +184,18 @@ if (hasErrors) {
 function printNextSteps() {
   console.log(`${colors.cyan}Next Steps:${colors.reset}`);
   console.log('  1. Run: npm install');
-  console.log('  2. Run: npm test');
-  console.log('  3. Run: npm run mcp:health');
-  console.log('  4. Run: claude (start Claude Code)');
+  console.log('  2. Verify build: ls dist/');
+  console.log('     If dist/ is missing, run: npm run build:all');
+  console.log('  3. Run tests (with minimal output): npm run test:silent');
+  console.log('     Or for summary only: npm run test:summary');
+  console.log('  4. Run: npm run mcp:health');
+  console.log('  5. Run: claude (start Claude Code)');
+  console.log('');
+  console.log(`${colors.yellow}⚠️  Important:${colors.reset}`);
+  console.log('  - If tests produce massive logs (13万+ characters):');
+  console.log('    See docs/WINDOWS_SETUP.md "🚨 Troubleshooting"');
+  console.log('  - DO NOT paste large logs into Claude (causes API 400 error)');
+  console.log('  - Use: npm run test:summary instead');
   console.log('');
   console.log(`${colors.cyan}Documentation:${colors.reset}`);
   console.log('  - README.md');
