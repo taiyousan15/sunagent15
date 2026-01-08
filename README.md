@@ -53,7 +53,9 @@
 > **重要**: TAISUN v2は **Claude Code の拡張機能** です。
 > インストール後、このディレクトリで Claude Code を起動すると、81のエージェントと59のスキルが自動的に使えるようになります。
 
-### 1. インストール（5分）
+### 1. インストール
+
+#### Mac / Linux（5分）
 
 ```bash
 git clone https://github.com/san15/taisun_agent.git
@@ -61,6 +63,23 @@ cd taisun_agent
 npm install
 npm test  # 692テストがパスすればOK
 ```
+
+#### Windows（10分）
+
+```powershell
+# PowerShell または Git Bash を開く
+git clone https://github.com/san15/taisun_agent.git
+cd taisun_agent
+
+# Windows セットアップスクリプトを実行
+npm run setup:windows
+
+# 指示に従って依存関係をインストール
+npm install
+npm test  # 692テストがパスすればOK
+```
+
+> **Windows ユーザー向け**: 詳細な手順は [docs/WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md) を参照してください。
 
 ### 2. 使い方（超簡単）
 
@@ -84,6 +103,7 @@ Claude: code-reviewer エージェントで分析します...
 | ドキュメント | 内容 |
 |-------------|------|
 | [QUICK_START.md](docs/QUICK_START.md) | 詳細セットアップ手順 |
+| [WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md) | **Windows 専用**セットアップガイド（100%動作保証） |
 | [CONTEXT_MANAGEMENT.md](docs/CONTEXT_MANAGEMENT.md) | コンテキスト管理システム完全ガイド（99%削減の仕組み） |
 | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | エラー解決 |
 | [CONFIG.md](docs/CONFIG.md) | 設定カスタマイズ |

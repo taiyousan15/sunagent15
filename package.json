@@ -62,7 +62,9 @@
     "text:safe-replace": "npx ts-node scripts/text/safe-replace.ts",
     "text:utf8-guard": "npx ts-node scripts/text/utf8-guard.ts",
     "quality:encoding": "npx ts-node scripts/text/utf8-guard.ts",
-    "quality:check": "npm run contract:lint && npm run quality:encoding && npm test"
+    "quality:check": "npm run contract:lint && npm run quality:encoding && npm test",
+    "mcp:health": "node scripts/mcp-health-check.js",
+    "setup:windows": "node scripts/setup-windows.js"
   },
   "keywords": [
     "ai",
