@@ -283,6 +283,10 @@ taisun_v2/.claude/
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #708 | 5:32 PM | 🟣 | Implemented UTF-8 safety tools preventing multibyte text corruption | ~596 |
+| #641 | 5:04 PM | 🟣 | Created pins registry for tracking specific modification targets | ~475 |
+| #640 | " | 🔵 | Directives ledger tracks two completed tasks with structured instruction decomposition | ~576 |
+| #639 | " | ✅ | Directive ledger updated with Memory++ upgrade task specification | ~755 |
 | #623 | 4:53 PM | ✅ | Task contract updated for memory system enhancement work | ~643 |
 | #622 | 4:52 PM | 🟣 | New memory enhancement task directive added to instruction ledger | ~621 |
 | #605 | 4:26 PM | ✅ | Running summary updated to mark directive fidelity framework as complete | ~410 |

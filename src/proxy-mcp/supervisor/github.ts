@@ -45,6 +45,12 @@ export async function createRunlogIssue(
   state: SupervisorState,
   repo?: string
 ): Promise<number | null> {
+  // Skip GitHub issue creation in test environment
+  if (process.env.NODE_ENV === 'test') {
+    console.debug('[Supervisor] Skipping GitHub issue creation in test environment');
+    return null;
+  }
+
   if (!isGhAvailable()) {
     console.warn('[Supervisor] gh CLI not available, skipping RUNLOG issue');
     return null;
@@ -94,6 +100,12 @@ export async function createApprovalIssue(
   plan: ExecutionPlan,
   repo?: string
 ): Promise<number | null> {
+  // Skip GitHub issue creation in test environment
+  if (process.env.NODE_ENV === 'test') {
+    console.debug('[Supervisor] Skipping GitHub issue creation in test environment');
+    return null;
+  }
+
   if (!isGhAvailable()) {
     console.warn('[Supervisor] gh CLI not available, cannot create approval issue');
     return null;

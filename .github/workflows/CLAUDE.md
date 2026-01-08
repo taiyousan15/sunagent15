@@ -8,4 +8,5 @@
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
 | #708 | 5:32 PM | 🟣 | Implemented UTF-8 safety tools preventing multibyte text corruption | ~596 |
+| #701 | 5:30 PM | ✅ | CI workflow quality gate summary updated to clarify UTF-8 encoding checks | ~446 |
 </claude-mem-context>

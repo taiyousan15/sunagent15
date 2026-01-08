@@ -206,6 +206,11 @@ describe('Supervisor', () => {
       MemoryService.resetInstance();
     });
 
+    afterEach(async () => {
+      // Clean up any pending promises or timers
+      await new Promise(resolve => setImmediate(resolve));
+    });
+
     describe('skillRunAsync for supervisor', () => {
       it('should require input', async () => {
         const result = await skillRunAsync('supervisor', {});
