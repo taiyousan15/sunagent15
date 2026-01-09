@@ -29,6 +29,8 @@ usage() {
   -c FILE     Cookieファイル (デフォルト: ./cookies.txt)
   -l LANG     字幕言語 (デフォルト: ja,en)
   -a          音声認識を使用 (字幕がない場合)
+  -p          Ollama処理を実行 (要約・学習ノート・キーワード抽出)
+  -m MODEL    Ollamaモデル (デフォルト: qwen2.5:14b)
   -h          ヘルプを表示
 
 例:
@@ -40,6 +42,15 @@ usage() {
 
   # 音声認識を使用
   $0 -a "https://www.udemy.com/course/xxx/learn/lecture/12345"
+
+  # 文字起こし + Ollama処理（要約・学習ノート・キーワード）
+  $0 -p "https://www.udemy.com/course/xxx/learn/lecture/12345"
+
+  # 音声認識 + Ollama処理
+  $0 -a -p "https://www.udemy.com/course/xxx/learn/lecture/12345"
+
+  # カスタムモデル使用
+  $0 -p -m llama3.1:70b "https://www.udemy.com/course/xxx/learn/lecture/12345"
 
 前提条件:
   1. Udemyアカウントでログイン済み
@@ -58,12 +69,16 @@ EOF
 
 # オプション解析
 USE_AUDIO=false
-while getopts "o:c:l:ah" opt; do
+USE_OLLAMA=false
+OLLAMA_MODEL="${OLLAMA_MODEL:-qwen2.5:14b}"
+while getopts "o:c:l:apm:h" opt; do
     case $opt in
         o) OUTPUT_DIR="$OPTARG" ;;
         c) COOKIES_FILE="$OPTARG" ;;
         l) SUBTITLE_LANG="$OPTARG" ;;
         a) USE_AUDIO=true ;;
+        p) USE_OLLAMA=true ;;
+        m) OLLAMA_MODEL="$OPTARG" ;;
         h) usage ;;
         *) usage ;;
     esac
@@ -187,7 +202,42 @@ echo ""
 echo -e "${GREEN}=== 完了 ===${NC}"
 echo "出力先: $OUTPUT_DIR"
 echo ""
+
+# Ollama処理
+if [ "$USE_OLLAMA" = true ]; then
+    echo ""
+    echo -e "${GREEN}=== Ollama 処理を開始 ===${NC}"
+    echo "モデル: $OLLAMA_MODEL"
+    echo ""
+
+    # 処理するテキストファイルを探す
+    TXT_FILES=$(find "$OUTPUT_DIR" -name "*.txt" -not -name "*_summary.md" -not -name "*_notes.md" -not -name "*_keywords.md" -not -name "*_improved.txt" -type f)
+
+    if [ -z "$TXT_FILES" ]; then
+        echo -e "${YELLOW}⚠️  処理するテキストファイルが見つかりません${NC}"
+    else
+        SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+        OLLAMA_SCRIPT="$SCRIPT_DIR/ollama-process-transcript.sh"
+
+        if [ ! -f "$OLLAMA_SCRIPT" ]; then
+            echo -e "${RED}エラー: Ollamaスクリプトが見つかりません: $OLLAMA_SCRIPT${NC}"
+        else
+            echo "$TXT_FILES" | while read -r txt_file; do
+                echo ""
+                echo "処理中: $(basename "$txt_file")"
+                "$OLLAMA_SCRIPT" -m "$OLLAMA_MODEL" -o "$OUTPUT_DIR" "$txt_file"
+            done
+        fi
+    fi
+fi
+
+echo ""
 echo "次のステップ:"
 echo "1. $OUTPUT_DIR ディレクトリを確認"
 echo "2. .txt ファイルで文字起こし結果を確認"
+if [ "$USE_OLLAMA" = true ]; then
+    echo "3. _summary.md で要約を確認"
+    echo "4. _notes.md で学習ノートを確認"
+    echo "5. _keywords.md でキーワードを確認"
+fi
 echo ""
