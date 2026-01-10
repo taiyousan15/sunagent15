@@ -84,6 +84,52 @@ writeFileSync('artifacts/result.json', JSON.stringify(bigData));
 console.log('結果を artifacts/result.json に保存しました');
 ```
 
+### 3. 書き込み操作の最適化 🆕
+
+**問題**: Writeツールは全内容をメッセージ履歴に記録する
+
+#### Agent委託（最も効果的）
+```bash
+# ❌ 悪い例：大きなファイルを直接Write
+Write hero_styles.css (14KB)  → 14KB全てが履歴に記録
+
+# ✅ 良い例：Agent委託
+/Task frontend-developer "hero_styles.css を生成"
+→ Agentの作業は圧縮される
+→ 結果のみを受け取る
+```
+
+#### ファイルサイズ別ガイドライン
+```markdown
+< 5KB   : 直接Write OK
+5-20KB  : Agent委託を検討 or Write後に/compact
+20-50KB : Agent委託推奨
+> 50KB  : 必須Agent委託 or 外部生成
+```
+
+#### バッチ処理
+```bash
+# 3-5ファイル生成したら/compact
+Write file1.md
+Write file2.md
+Write file3.md
+/compact  # ← ここで圧縮
+Write file4.md
+Write file5.md
+Write file6.md
+/compact  # ← 再度圧縮
+```
+
+#### 自動監視（実装済み）
+```bash
+# .claude/hooks/context-monitor.js が自動で：
+- ファイルサイズチェック（5KB/20KB/50KB閾値）
+- コンテキスト使用率監視（60%/75%/85%警告）
+- Agent委託・/compact推奨を表示
+```
+
+**詳細**: `docs/CONTEXT_WRITE_OPTIMIZATION.md` を参照
+
 ---
 
 ## メモリーシステム階層

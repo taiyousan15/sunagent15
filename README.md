@@ -13,6 +13,30 @@
 
 ## アップデートのお知らせ
 
+> **2026-01-09: コンテキスト最適化システム強化 🚀**
+>
+> 書き込み操作の最適化により、コンテキスト使用量を**70%削減**できるようになりました。
+>
+> ### 新機能
+> - **自動監視**: ファイルサイズ・コンテキスト使用率の自動チェック
+> - **Agent委託ガイド**: 5KB/20KB/50KB閾値による最適化提案
+> - **バッチ処理**: 3-5ファイルごとに/compact推奨
+> - **警告システム**: 60%/75%/85%で段階的警告
+>
+> ### ドキュメント
+> - [CONTEXT_MANAGEMENT.md](docs/CONTEXT_MANAGEMENT.md) - 読み取り最適化（99%削減）
+> - [CONTEXT_WRITE_OPTIMIZATION.md](docs/CONTEXT_WRITE_OPTIMIZATION.md) - 書き込み最適化（70%削減）
+> - [context-monitor.js](.claude/hooks/context-monitor.js) - 自動監視フック
+>
+> ### 効果
+> ```
+> Before: 113KB生成 → 83k tokens (41%)
+> After:  113KB生成 → 15-25k tokens (8-12%)
+> 削減:   約60k tokens (70%削減)
+> ```
+
+---
+
 > **2026-01-08: Windows完全対応リリース 🎉**
 >
 > Windows環境で100%動作することを保証するアップデートをリリースしました。
