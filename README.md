@@ -167,6 +167,8 @@ Claude: code-reviewer エージェントで分析します...
 | [QUICK_START.md](docs/QUICK_START.md) | 詳細セットアップ手順 |
 | [WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md) | **Windows 専用**セットアップガイド（100%動作保証） |
 | [CONTEXT_MANAGEMENT.md](docs/CONTEXT_MANAGEMENT.md) | コンテキスト管理システム完全ガイド（99%削減の仕組み） |
+| [opencode/README-ja.md](docs/opencode/README-ja.md) | OpenCode/OMO 任意導入ガイド（opt-in セカンドエンジン） |
+| [opencode/USAGE-ja.md](docs/opencode/USAGE-ja.md) | OpenCode/OMO 使用例（バグ修正・Ralph Loop） |
 | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | エラー解決 |
 | [CONFIG.md](docs/CONFIG.md) | 設定カスタマイズ |
 | [CONTRIBUTING.md](docs/CONTRIBUTING.md) | 開発参加方法 |
