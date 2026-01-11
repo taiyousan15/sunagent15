@@ -13,6 +13,43 @@
 
 ## アップデートのお知らせ
 
+> **2026-01-11: OpenCode/OMO統合 - 任意で使えるセカンドエンジン 🤖**
+>
+> 難しいバグ修正やTDD自動化を支援する**OpenCode/OMO統合**を追加しました。
+> 完全opt-in設計で、使いたい時だけ明示的に有効化できます。
+>
+> ### 新機能
+> - **memory_add(content_path)**: 大量ログをファイルから直接保存（コンテキスト節約99%）
+> - **/opencode-setup**: セットアップ確認と導入ガイド
+> - **/opencode-fix**: バグ修正支援（mistakes.md統合 + セッション回収）
+> - **/opencode-ralph-loop**: TDD自動反復開発（デフォルト無効）
+> - **環境診断拡張**: `npm run doctor`でOpenCode状態を確認
+>
+> ### セキュリティ
+> - **Path Traversal防止**: プロジェクト外ファイル読み込み不可
+> - **Size Limit**: 10MB制限でDoS防止
+> - **UTF-8 Validation**: 文字化けファイル自動検出
+>
+> ### ドキュメント
+> - [docs/opencode/README-ja.md](docs/opencode/README-ja.md) - OpenCode/OMO導入ガイド
+> - [docs/opencode/USAGE-ja.md](docs/opencode/USAGE-ja.md) - 使用例・ベストプラクティス
+>
+> ### 使用例
+> ```bash
+> # 環境確認
+> npm run doctor
+>
+> # バグ修正相談
+> /opencode-fix "DBコネクションプールが枯渇するバグ"
+>
+> # ログは自動的にmemory_addに保存（会話に含めない）
+> # → コンテキスト消費: 100KB → 50トークン（99.8%削減）
+> ```
+>
+> **重要**: OpenCodeは完全オプショナルです。インストールしなくてもTAISUNは100%動作します。
+
+---
+
 > **2026-01-09: コンテキスト最適化システム強化 🚀**
 >
 > 書き込み操作の最適化により、コンテキスト使用量を**70%削減**できるようになりました。
@@ -204,11 +241,11 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 |-----------|-------|-------------|
 | **AI Agents** | 81 | 専門家エージェント (AIT42 +  + Diagnostics) |
 | **Skills** | 67 | マーケティング・インフラ自動化スキル |
-| **Commands** | 74 | ショートカットコマンド |
+| **Commands** | 77 | ショートカットコマンド（OpenCode統合含む） |
 | **MCP Servers** | 32 | 外部サービス連携 |
 | **MCP Tools** | 227 | 統合ツール群 |
 | **Source Lines** | 11,167 | TypeScript (proxy-mcp) |
-| **Tests** | 524 | ユニット・統合テスト |
+| **Tests** | 692 | ユニット・統合テスト（全Pass） |
 
 ## Key Features
 
@@ -497,13 +534,21 @@ mcp__taisun-proxy__skill_run(name="youtube-thumbnail")
 ### メモリ操作
 
 ```javascript
-// 長期メモリに保存
+// 長期メモリに保存（直接テキスト）
 mcp__taisun-proxy__memory_add(
   content="重要な調査結果...",
   type="long-term",
   metadata={ project: "LP改善" }
 )
 // → refId: "mem_abc123" を返す
+
+// ファイルから保存（大量ログ向け）
+mcp__taisun-proxy__memory_add(
+  content_path="logs/test-failure.log",
+  type="short-term",
+  metadata={ type: "test-log", issue: "DB接続エラー" }
+)
+// → コンテキスト節約: 100KB → 50トークン（99.8%削減）
 
 // 検索
 mcp__taisun-proxy__memory_search(query="mem_abc123")
