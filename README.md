@@ -7,7 +7,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18.x%20%7C%2020.x-green)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-692%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
+[![Tests](https://img.shields.io/badge/Tests-699%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
 
 ---
 
