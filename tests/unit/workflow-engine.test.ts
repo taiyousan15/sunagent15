@@ -5,7 +5,12 @@
 import * as fs from 'fs';
 import { loadState, saveState, clearState } from '../../src/proxy-mcp/workflow/store';
 import { loadAllWorkflows, getWorkflow } from '../../src/proxy-mcp/workflow/registry';
-import { startWorkflow, getStatus, transitionToNextPhase } from '../../src/proxy-mcp/workflow/engine';
+import {
+  startWorkflow,
+  getStatus,
+  transitionToNextPhase,
+  canRunSkill
+} from '../../src/proxy-mcp/workflow/engine';
 import type { WorkflowState } from '../../src/proxy-mcp/workflow/types';
 
 describe('Workflow Store', () => {
@@ -115,5 +120,56 @@ describe('Workflow Engine', () => {
     const result = transitionToNextPhase();
     expect(result.success).toBe(false);
     expect(result.errors.length).toBeGreaterThan(0);
+  });
+});
+
+describe('Workflow Phase 2 - Strict Mode', () => {
+  beforeEach(() => {
+    clearState();
+  });
+
+  afterEach(() => {
+    clearState();
+  });
+
+  it('should start workflow in strict mode', () => {
+    const state = startWorkflow('video_generation_v1', true);
+    expect(state.strict).toBe(true);
+  });
+
+  it('should allow skills in non-strict mode', () => {
+    startWorkflow('video_generation_v1', false);
+
+    const result = canRunSkill('unauthorized-skill');
+    expect(result.ok).toBe(true);
+  });
+
+  it('should block unauthorized skills in strict mode', () => {
+    // Start in strict mode and move to phase_1
+    startWorkflow('video_generation_v1', true);
+    const state = loadState();
+    if (state) {
+      state.currentPhase = 'phase_1';
+      saveState(state);
+    }
+
+    // Phase 1 allows: vsl, launch-video, copywriting-helper, taiyo-style-vsl
+    const result = canRunSkill('unauthorized-skill');
+    expect(result.ok).toBe(false);
+    expect(result.reason).toContain('🔒 strict mode');
+  });
+
+  it('should allow authorized skills in strict mode', () => {
+    // Start in strict mode and move to phase_1
+    startWorkflow('video_generation_v1', true);
+    const state = loadState();
+    if (state) {
+      state.currentPhase = 'phase_1';
+      saveState(state);
+    }
+
+    // Phase 1 allows: vsl
+    const result = canRunSkill('vsl');
+    expect(result.ok).toBe(true);
   });
 });

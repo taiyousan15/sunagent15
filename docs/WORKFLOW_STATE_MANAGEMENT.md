@@ -180,20 +180,34 @@ config/workflows/
 }
 ```
 
-## Phase 1の制限事項
+## Phase 1 vs Phase 2
 
-### できること
+### Phase 1（デフォルト）: Advisory Mode
 
 ✅ 状態の永続化（セッション跨ぎで継続可能）
 ✅ 進捗の可視化（現在フェーズ、必須成果物）
 ✅ 完了条件の検証（次へ進む前にチェック）
 ✅ 完了判定（verify コマンド）
+⚠️ スキル制限（警告のみ、ブロックしない）
 
-### できないこと（Phase 2で実装予定）
+### Phase 2（strict mode）: Enforcement Mode
 
-❌ スキル実行の強制的なブロック（`allowedSkills`は定義のみ）
-❌ Hooksによる危険操作のブロック
-❌ strict mode の強制機能
+✅ **Phase 1のすべて機能に加えて:**
+✅ スキル実行の強制ブロック（`allowedSkills`以外は拒否）
+✅ Hooksによる危険操作のブロック
+✅ strict mode の完全強制
+
+### Phase 2の使い方
+
+```bash
+# Phase 2 (strict mode) で開始
+npm run workflow:start -- video_generation_v1 --strict
+```
+
+strict mode時の動作:
+- ✅ 許可されていないスキルは実行不可
+- ✅ 危険なBashコマンドは実行不可（`rm -rf`, `git push --force`等）
+- ✅ 重要ファイルへの書き込み禁止（`.env`, `secrets/`等）
 
 ## セッション跨ぎの継続
 
@@ -249,13 +263,61 @@ touch <required_file>
 npm run workflow:next
 ```
 
-## Next Steps
+## Phase 2詳細: Strict Enforcement
 
-### Phase 2: Strict Enforcement（予定）
+### Proxy MCP Skill Guard
 
-- Proxy MCP での skill_run ガード
-- Claude Code Hooks による危険操作ブロック
-- strict mode の完全実装
+**実装場所**: `src/proxy-mcp/tools/skill.ts`
+
+strict mode時、`allowedSkills`に含まれないスキルの実行を自動的にブロックします。
+
+```typescript
+// Phase 2: Workflow Guardian - Check if skill is allowed
+if (hasState()) {
+  const skillCheck = canRunSkill(skillName);
+  if (!skillCheck.ok) {
+    return {
+      success: false,
+      error: `🔒 strict mode: スキル '${skillName}' は許可されていません`,
+    };
+  }
+}
+```
+
+### Claude Code Hooks
+
+**実装場所**: `.claude/hooks/`
+
+2つのhooksを提供（オプション、settings.jsonで有効化）:
+
+1. **workflow-guard-bash.sh**: 危険なBashコマンドをブロック
+   - `rm -rf`
+   - `git push --force`
+   - `DROP TABLE`
+   - `chmod 777`
+   - `sudo`
+   - `.env` ファイル操作
+
+2. **workflow-guard-write.sh**: 重要ファイルへの書き込みをブロック
+   - `.env` ファイル
+   - `secrets/` ディレクトリ
+   - `.git/` ディレクトリ
+   - `.workflow_state.json`
+
+### Hooks有効化方法
+
+`.claude/settings.json` で hooks を有効化:
+
+```json
+{
+  "hooks": {
+    "beforeBash": ".claude/hooks/workflow-guard-bash.sh",
+    "beforeWrite": ".claude/hooks/workflow-guard-write.sh"
+  }
+}
+```
+
+デフォルトでは無効（コメントアウト）です。必要に応じて有効化してください。
 
 ### ワークフロー追加
 
@@ -267,11 +329,19 @@ npm run workflow:next
 
 ## まとめ
 
-Phase 1は「忘却を防ぐ」ことに特化しています:
+### Phase 1（Advisory Mode）
+「忘却を防ぐ」ことに特化:
 
 - ✅ セッション跨ぎで状態保持
 - ✅ 現在フェーズの可視化
 - ✅ 完了条件の明確化
 - ✅ 完了判定の構造化
 
-Phase 2では「ショートカットを防ぐ」強制機能を追加予定です。
+### Phase 2（Strict Mode）
+「ショートカットを防ぐ」強制機能を追加:
+
+- ✅ スキル実行の強制ブロック
+- ✅ 危険操作の自動防止
+- ✅ セキュリティ保護の強化
+
+**推奨**: 本番環境や重要なワークフローでは Phase 2 (strict mode) を使用してください。

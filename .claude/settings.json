@@ -20,5 +20,10 @@
     "codeReviewMinScore": 80,
     "testCoverageMin": 80,
     "securityScanRequired": true
+  },
+  "hooks": {
+    "_comment": "Workflow Guardian Phase 2 hooks (optional). Uncomment to enable strict mode enforcement.",
+    "beforeBash": ".claude/hooks/workflow-guard-bash.sh",
+    "beforeWrite": ".claude/hooks/workflow-guard-write.sh"
   }
 }

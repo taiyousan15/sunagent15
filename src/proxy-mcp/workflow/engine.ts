@@ -85,7 +85,24 @@ export function getStatus(): {
 }
 
 /**
- * Check if a skill can run in the current phase (Phase 1: advisory only)
+ * Check if workflow is active
+ */
+export function hasState(): boolean {
+  return loadState() !== null;
+}
+
+/**
+ * Check if workflow is in strict mode (Phase 2)
+ */
+export function isStrictMode(): boolean {
+  const state = loadState();
+  return state?.strict ?? false;
+}
+
+/**
+ * Check if a skill can run in the current phase
+ * Phase 1 (strict=false): advisory only, warnings
+ * Phase 2 (strict=true): enforcement, blocking
  */
 export function canRunSkill(skillName: string): CanRunSkillResult {
   const state = loadState();
@@ -101,7 +118,7 @@ export function canRunSkill(skillName: string): CanRunSkillResult {
     return { ok: true };
   }
 
-  // Phase 1: No enforcement, just advisory
+  // No skill restrictions defined
   if (!currentPhase.allowedSkills || currentPhase.allowedSkills.length === 0) {
     return { ok: true };
   }
@@ -109,10 +126,14 @@ export function canRunSkill(skillName: string): CanRunSkillResult {
   const allowed = currentPhase.allowedSkills.includes(skillName);
 
   if (!allowed) {
+    const strict = isStrictMode();
+
     return {
-      ok: true, // Phase 1: Don't block, just warn
-      reason: `スキル '${skillName}' は Phase ${currentPhase.id} では推奨されていません。`,
-      suggestedNext: `推奨スキル: ${currentPhase.allowedSkills.join(', ')}`,
+      ok: !strict, // Phase 2 (strict): block, Phase 1: allow
+      reason: strict
+        ? `🔒 strict mode: スキル '${skillName}' は Phase ${currentPhase.id} (${currentPhase.name}) で許可されていません。`
+        : `⚠️  推奨: スキル '${skillName}' は Phase ${currentPhase.id} では推奨されていません。`,
+      suggestedNext: `許可されているスキル: ${currentPhase.allowedSkills.join(', ')}`,
     };
   }
 

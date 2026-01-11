@@ -20,6 +20,7 @@ import {
   checkDangerousPatterns,
   SupervisorOptions,
 } from '../supervisor';
+import { canRunSkill, hasState } from '../workflow/engine';
 
 const SKILLS_DIR = path.join(process.cwd(), '.claude', 'skills');
 
@@ -167,6 +168,23 @@ export function skillRun(
       success: false,
       error: `Invalid skill name: ${validation.error}`,
     };
+  }
+
+  // Phase 2: Workflow Guardian - Check if skill is allowed in current phase
+  if (hasState()) {
+    const skillCheck = canRunSkill(skillName);
+    if (!skillCheck.ok) {
+      return {
+        success: false,
+        error: `${skillCheck.reason}\n${skillCheck.suggestedNext || ''}`,
+        data: {
+          blocked: true,
+          skillName,
+          reason: skillCheck.reason,
+          suggestion: skillCheck.suggestedNext,
+        },
+      };
+    }
   }
 
   const mode = (params?.mode as SkillRunMode) || 'preview';
