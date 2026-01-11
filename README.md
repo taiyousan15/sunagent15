@@ -13,6 +13,43 @@
 
 ## アップデートのお知らせ
 
+> **2026-01-11: OpenCode/OMO統合 - 任意で使えるセカンドエンジン 🤖**
+>
+> 難しいバグ修正やTDD自動化を支援する**OpenCode/OMO統合**を追加しました。
+> 完全opt-in設計で、使いたい時だけ明示的に有効化できます。
+>
+> ### 新機能
+> - **memory_add(content_path)**: 大量ログをファイルから直接保存（コンテキスト節約99%）
+> - **/opencode-setup**: セットアップ確認と導入ガイド
+> - **/opencode-fix**: バグ修正支援（mistakes.md統合 + セッション回収）
+> - **/opencode-ralph-loop**: TDD自動反復開発（デフォルト無効）
+> - **環境診断拡張**: `npm run doctor`でOpenCode状態を確認
+>
+> ### セキュリティ
+> - **Path Traversal防止**: プロジェクト外ファイル読み込み不可
+> - **Size Limit**: 10MB制限でDoS防止
+> - **UTF-8 Validation**: 文字化けファイル自動検出
+>
+> ### ドキュメント
+> - [docs/opencode/README-ja.md](docs/opencode/README-ja.md) - OpenCode/OMO導入ガイド
+> - [docs/opencode/USAGE-ja.md](docs/opencode/USAGE-ja.md) - 使用例・ベストプラクティス
+>
+> ### 使用例
+> ```bash
+> # 環境確認
+> npm run doctor
+>
+> # バグ修正相談
+> /opencode-fix "DBコネクションプールが枯渇するバグ"
+>
+> # ログは自動的にmemory_addに保存（会話に含めない）
+> # → コンテキスト消費: 100KB → 50トークン（99.8%削減）
+> ```
+>
+> **重要**: OpenCodeは完全オプショナルです。インストールしなくてもTAISUNは100%動作します。
+
+---
+
 > **2026-01-09: コンテキスト最適化システム強化 🚀**
 >
 > 書き込み操作の最適化により、コンテキスト使用量を**70%削減**できるようになりました。
@@ -167,6 +204,8 @@ Claude: code-reviewer エージェントで分析します...
 | [QUICK_START.md](docs/QUICK_START.md) | 詳細セットアップ手順 |
 | [WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md) | **Windows 専用**セットアップガイド（100%動作保証） |
 | [CONTEXT_MANAGEMENT.md](docs/CONTEXT_MANAGEMENT.md) | コンテキスト管理システム完全ガイド（99%削減の仕組み） |
+| [opencode/README-ja.md](docs/opencode/README-ja.md) | OpenCode/OMO 任意導入ガイド（opt-in セカンドエンジン） |
+| [opencode/USAGE-ja.md](docs/opencode/USAGE-ja.md) | OpenCode/OMO 使用例（バグ修正・Ralph Loop） |
 | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | エラー解決 |
 | [CONFIG.md](docs/CONFIG.md) | 設定カスタマイズ |
 | [CONTRIBUTING.md](docs/CONTRIBUTING.md) | 開発参加方法 |
@@ -202,11 +241,11 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 |-----------|-------|-------------|
 | **AI Agents** | 81 | 専門家エージェント (AIT42 +  + Diagnostics) |
 | **Skills** | 67 | マーケティング・インフラ自動化スキル |
-| **Commands** | 74 | ショートカットコマンド |
+| **Commands** | 77 | ショートカットコマンド（OpenCode統合含む） |
 | **MCP Servers** | 32 | 外部サービス連携 |
 | **MCP Tools** | 227 | 統合ツール群 |
 | **Source Lines** | 11,167 | TypeScript (proxy-mcp) |
-| **Tests** | 524 | ユニット・統合テスト |
+| **Tests** | 692 | ユニット・統合テスト（全Pass） |
 
 ## Key Features
 
@@ -328,7 +367,7 @@ TAISUN v2では、**3つのMCPサーバー**と**11のMCPツール**を提供し
 | `system_health` | システム稼働状況確認、ヘルスチェック | `mcp__taisun-proxy__system_health()` |
 | `skill_search` | 66スキルの検索（キーワードまたは全件） | `skill_search(query="taiyo")` |
 | `skill_run` | スキルのロード・実行 | `skill_run(name="youtube-thumbnail")` |
-| `memory_add` | 大規模コンテンツの保存、参照ID発行 | `memory_add(content="データ", type="long-term")` |
+| `memory_add` | 大規模コンテンツの保存、参照ID発行<br>- `content`: 直接テキスト保存<br>- `content_path`: ファイルを読み込んで保存（巨大ログ向け） | `memory_add(content="データ", type="long-term")`<br>`memory_add(content_path="logs/output.log", type="short-term")` |
 | `memory_search` | 参照IDまたはキーワードでメモリ検索 | `memory_search(query="LP作成")` |
 
 **内部MCP（Rollout管理）:**
@@ -495,13 +534,21 @@ mcp__taisun-proxy__skill_run(name="youtube-thumbnail")
 ### メモリ操作
 
 ```javascript
-// 長期メモリに保存
+// 長期メモリに保存（直接テキスト）
 mcp__taisun-proxy__memory_add(
   content="重要な調査結果...",
   type="long-term",
   metadata={ project: "LP改善" }
 )
 // → refId: "mem_abc123" を返す
+
+// ファイルから保存（大量ログ向け）
+mcp__taisun-proxy__memory_add(
+  content_path="logs/test-failure.log",
+  type="short-term",
+  metadata={ type: "test-log", issue: "DB接続エラー" }
+)
+// → コンテキスト節約: 100KB → 50トークン（99.8%削減）
 
 // 検索
 mcp__taisun-proxy__memory_search(query="mem_abc123")
