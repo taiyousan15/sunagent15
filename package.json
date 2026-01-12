@@ -62,6 +62,7 @@
     "workflow:status": "npx tsx scripts/workflow/status.ts",
     "workflow:next": "npx tsx scripts/workflow/next.ts",
     "workflow:verify": "npx tsx scripts/workflow/verify.ts",
+    "workflow:rollback": "npx tsx scripts/workflow/rollback.ts",
     "briefing": "npx ts-node scripts/session-briefing.ts",
     "briefing:sync": "npx ts-node scripts/session-briefing.ts --sync",
     "contract:lint": "npx ts-node scripts/contract-lint.ts",

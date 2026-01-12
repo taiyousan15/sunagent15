@@ -17,6 +17,8 @@ import type {
   ConditionalNext,
   ParallelNext,
   ParallelExecutionState,
+  RollbackHistory,
+  PhaseSnapshot,
 } from './types';
 
 /**
@@ -729,4 +731,123 @@ export function verifyCompletion(): ValidationResult {
     errors: [],
     warnings: [],
   };
+}
+
+// ============================================================
+// Phase 3: Rollback Functions
+// ============================================================
+
+/**
+ * フェーズスナップショットを作成
+ * Phase 3: Create phase snapshot for rollback
+ */
+function createSnapshot(phaseId: string): PhaseSnapshot {
+  const state = loadState();
+  const workflow = getWorkflow(state!.workflowId);
+  const phase = workflow.phases.find((p) => p.id === phaseId);
+
+  if (!phase) {
+    throw new Error(`Phase ${phaseId} not found`);
+  }
+
+  const artifacts: Record<string, string> = {};
+
+  // 成果物のバックアップ
+  if (phase.requiredArtifacts) {
+    for (const artifact of phase.requiredArtifacts) {
+      if (fs.existsSync(artifact)) {
+        artifacts[artifact] = fs.readFileSync(artifact, 'utf-8');
+      }
+    }
+  }
+
+  return {
+    phaseId,
+    artifacts,
+    metadata: { ...state!.metadata },
+    timestamp: new Date().toISOString(),
+  };
+}
+
+/**
+ * 指定フェーズにロールバック
+ * Phase 3: Rollback to specified phase
+ */
+export function rollbackToPhase(
+  targetPhaseId: string,
+  reason?: string
+): RollbackHistory {
+  const state = loadState();
+
+  if (!state) {
+    throw new Error('No active workflow');
+  }
+
+  const workflow = getWorkflow(state.workflowId);
+
+  // ターゲットフェーズが存在するか確認
+  const targetPhase = workflow.phases.find((p) => p.id === targetPhaseId);
+  if (!targetPhase) {
+    throw new Error(`Phase ${targetPhaseId} not found in workflow`);
+  }
+
+  // ロールバック可能か確認
+  const currentPhase = workflow.phases.find((p) => p.id === state.currentPhase);
+  if (
+    currentPhase?.allowRollbackTo &&
+    !currentPhase.allowRollbackTo.includes(targetPhaseId)
+  ) {
+    throw new Error(
+      `Rollback to ${targetPhaseId} is not allowed from ${state.currentPhase}`
+    );
+  }
+
+  // 削除する成果物を収集
+  const deletedArtifacts: string[] = [];
+  const targetIndex = workflow.phases.findIndex((p) => p.id === targetPhaseId);
+  const currentIndex = workflow.phases.findIndex(
+    (p) => p.id === state.currentPhase
+  );
+
+  // 現在より後のフェーズの成果物を削除
+  for (let i = targetIndex + 1; i <= currentIndex; i++) {
+    const phase = workflow.phases[i];
+    if (phase.requiredArtifacts) {
+      for (const artifact of phase.requiredArtifacts) {
+        if (fs.existsSync(artifact)) {
+          fs.unlinkSync(artifact);
+          deletedArtifacts.push(artifact);
+        }
+      }
+    }
+  }
+
+  // ロールバック履歴を記録
+  const rollback: RollbackHistory = {
+    rollbackId: `rollback_${Date.now()}`,
+    fromPhase: state.currentPhase,
+    toPhase: targetPhaseId,
+    reason,
+    deletedArtifacts,
+    timestamp: new Date().toISOString(),
+  };
+
+  if (!state.rollbackHistory) {
+    state.rollbackHistory = [];
+  }
+  state.rollbackHistory.push(rollback);
+
+  // 完了フェーズを更新
+  state.completedPhases = state.completedPhases.filter((phaseId) => {
+    const index = workflow.phases.findIndex((p) => p.id === phaseId);
+    return index < targetIndex;
+  });
+
+  // 現在フェーズを更新
+  state.currentPhase = targetPhaseId;
+  state.lastUpdatedAt = new Date().toISOString();
+
+  saveState(state);
+
+  return rollback;
 }
