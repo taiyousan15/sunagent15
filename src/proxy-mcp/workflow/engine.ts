@@ -13,6 +13,8 @@ import type {
   ValidationResult,
   CanRunSkillResult,
   PhaseTransitionResult,
+  Condition,
+  ConditionalNext,
 } from './types';
 
 /**
@@ -206,6 +208,167 @@ export function validatePhase(): ValidationResult {
   };
 }
 
+// ========================================
+// Phase 3: Conditional Branching
+// ========================================
+
+/**
+ * 条件を評価して結果の値を返す
+ * @param condition 評価する条件
+ * @returns 条件の評価結果（マッチした値、またはnull）
+ */
+function evaluateCondition(condition: Condition): string | null {
+  try {
+    switch (condition.type) {
+      case 'file_content': {
+        // ファイル内容で判定
+        if (!fs.existsSync(condition.source)) {
+          return null;
+        }
+        const content = fs.readFileSync(condition.source, 'utf-8').trim();
+
+        // パターンマッチング
+        if (condition.pattern) {
+          const regex = new RegExp(condition.pattern);
+          const match = content.match(regex);
+          if (match) {
+            return match[0]; // マッチした値を返す
+          }
+          return null;
+        }
+
+        // 期待値チェック
+        if (condition.expectedValue) {
+          return content === condition.expectedValue ? content : null;
+        }
+
+        // パターンも期待値もない場合は、ファイル内容をそのまま返す
+        return content;
+      }
+
+      case 'file_exists': {
+        // ファイル存在で判定
+        return fs.existsSync(condition.source) ? 'true' : 'false';
+      }
+
+      case 'command_output': {
+        // コマンド出力で判定
+        try {
+          const output = execSync(condition.source, {
+            encoding: 'utf-8',
+            stdio: 'pipe',
+            timeout: 5000, // 5秒タイムアウト
+          }).trim();
+
+          // パターンマッチング
+          if (condition.pattern) {
+            const regex = new RegExp(condition.pattern);
+            const match = output.match(regex);
+            if (match) {
+              return match[0];
+            }
+            return null;
+          }
+
+          return output;
+        } catch (error) {
+          // コマンドエラーはnullを返す
+          return null;
+        }
+      }
+
+      case 'metadata_value': {
+        // メタデータの値で判定
+        const state = loadState();
+        if (!state?.metadata) {
+          return null;
+        }
+
+        const value = state.metadata[condition.source];
+        if (value === undefined || value === null) {
+          return null;
+        }
+
+        const stringValue = String(value);
+
+        // パターンマッチング
+        if (condition.pattern) {
+          const regex = new RegExp(condition.pattern);
+          const match = stringValue.match(regex);
+          if (match) {
+            return match[0];
+          }
+          return null;
+        }
+
+        return stringValue;
+      }
+
+      default:
+        return null;
+    }
+  } catch (error) {
+    // エラー時はnullを返す（安全側に倒す）
+    console.error(`条件評価エラー: ${(error as Error).message}`);
+    return null;
+  }
+}
+
+/**
+ * 次のフェーズを決定（条件分岐対応版）
+ * @param currentPhase 現在のフェーズ
+ * @returns 次のフェーズID、または null（最終フェーズ）
+ * @throws {Error} 条件分岐の評価に失敗した場合
+ */
+function determineNextPhase(currentPhase: WorkflowPhase): string | null {
+  // 1. 条件分岐がある場合
+  if (currentPhase.conditionalNext) {
+    const condNext = currentPhase.conditionalNext;
+    const value = evaluateCondition(condNext.condition);
+
+    // 条件値に対応する分岐先を探す
+    if (value && condNext.branches[value]) {
+      // 分岐履歴を記録
+      const state = loadState();
+      if (state) {
+        if (!state.branchHistory) {
+          state.branchHistory = [];
+        }
+        state.branchHistory.push(
+          `${currentPhase.id} -> ${condNext.branches[value]} (${value})`
+        );
+        saveState(state);
+      }
+
+      return condNext.branches[value];
+    }
+
+    // デフォルト遷移
+    if (condNext.defaultNext) {
+      return condNext.defaultNext;
+    }
+
+    // どの分岐にもマッチせず、デフォルトもない場合はエラー
+    throw new Error(
+      `条件分岐の評価に失敗しました。\n` +
+        `条件値: "${value ?? '(null)'}"\n` +
+        `利用可能な分岐: ${Object.keys(condNext.branches).join(', ')}\n` +
+        `デフォルト遷移: ${condNext.defaultNext ?? '(なし)'}`
+    );
+  }
+
+  // 2. 並列実行がある場合（Phase 3 - 未実装）
+  if (currentPhase.parallelNext) {
+    // TODO: Phase 3 並列実行の実装
+    throw new Error(
+      '並列実行はまだ実装されていません。Phase 3で実装予定です。'
+    );
+  }
+
+  // 3. 通常遷移
+  return currentPhase.nextPhase ?? null;
+}
+
 /**
  * Transition to next phase
  */
@@ -241,8 +404,20 @@ export function transitionToNextPhase(): PhaseTransitionResult {
     };
   }
 
+  // Determine next phase (Phase 3: supports conditional branching)
+  let nextPhaseId: string | null;
+  try {
+    nextPhaseId = determineNextPhase(currentPhase);
+  } catch (error) {
+    return {
+      success: false,
+      errors: [(error as Error).message],
+      message: `次のフェーズの決定に失敗しました`,
+    };
+  }
+
   // Check if this is the final phase
-  if (!currentPhase.nextPhase) {
+  if (!nextPhaseId) {
     return {
       success: false,
       errors: [],
@@ -252,14 +427,15 @@ export function transitionToNextPhase(): PhaseTransitionResult {
 
   // Move to next phase
   state.completedPhases.push(state.currentPhase);
-  state.currentPhase = currentPhase.nextPhase;
+  state.currentPhase = nextPhaseId;
+  state.lastUpdatedAt = new Date().toISOString();
   saveState(state);
 
   return {
     success: true,
-    newPhase: currentPhase.nextPhase,
+    newPhase: nextPhaseId,
     errors: [],
-    message: `✅ Phase ${currentPhase.nextPhase} に進みました`,
+    message: `✅ Phase ${nextPhaseId} に進みました`,
   };
 }
 
