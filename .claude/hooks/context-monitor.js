@@ -1,78 +1,182 @@
 #!/usr/bin/env node
 /**
- * Context Monitor Hook
+ * Context Monitor Hook - Phase 3統合版
  *
- * Automatically monitors context usage and suggests optimization
- * Runs after each tool use to check context consumption
+ * コンテキスト使用率を自動監視し、自動保存システムと連携
  */
 
+const fs = require('fs');
+const path = require('path');
+
 const CONTEXT_THRESHOLDS = {
-  WARNING: 60,  // 60% - suggest /compact
-  CRITICAL: 75, // 75% - strongly recommend /compact
-  EMERGENCY: 85 // 85% - must /compact before continuing
+  WARNING: 60,  // 60% - 警告開始
+  CRITICAL: 70, // 70% - 自動保存推奨
+  EMERGENCY: 85 // 85% - 緊急対応必要
 };
 
 const FILE_SIZE_THRESHOLDS = {
-  SMALL: 5 * 1024,      // 5KB - direct Write OK
-  MEDIUM: 20 * 1024,    // 20KB - consider Agent
-  LARGE: 50 * 1024      // 50KB - must use Agent
+  SMALL: 5 * 1024,      // 5KB - 直接出力OK
+  MEDIUM: 20 * 1024,    // 20KB - 要検討
+  LARGE: 50 * 1024      // 50KB - 自動保存推奨
 };
 
+/**
+ * コンテキスト使用率をチェック
+ */
 async function checkContextUsage() {
-  // This would integrate with Claude Code's context API
-  // For now, this is a template for future implementation
+  try {
+    // Claude Codeのコンテキスト情報を環境変数から取得（利用可能な場合）
+    const contextUsage = parseFloat(process.env.CLAUDE_CONTEXT_USAGE || '0');
 
-  console.log('[Context Monitor] Checking usage...');
+    if (contextUsage > 0) {
+      return {
+        percentage: contextUsage,
+        threshold: getThresholdLevel(contextUsage)
+      };
+    }
 
-  // Example logic:
-  // const usage = await getContextUsage();
-  // if (usage.percentage > CONTEXT_THRESHOLDS.WARNING) {
-  //   suggestCompact(usage);
-  // }
+    // 環境変数がない場合は推定値を返す
+    return estimateContextUsage();
+  } catch (error) {
+    return null;
+  }
 }
 
+/**
+ * 閾値レベルを判定
+ */
+function getThresholdLevel(percentage) {
+  if (percentage >= CONTEXT_THRESHOLDS.EMERGENCY) {
+    return 'EMERGENCY';
+  } else if (percentage >= CONTEXT_THRESHOLDS.CRITICAL) {
+    return 'CRITICAL';
+  } else if (percentage >= CONTEXT_THRESHOLDS.WARNING) {
+    return 'WARNING';
+  }
+  return 'OK';
+}
+
+/**
+ * コンテキスト使用率を推定
+ */
+function estimateContextUsage() {
+  try {
+    // 会話履歴ファイルのサイズから推定（概算）
+    const conversationFile = path.join(process.cwd(), '.claude/temp/conversation-history.json');
+
+    if (fs.existsSync(conversationFile)) {
+      const stats = fs.statSync(conversationFile);
+      const sizeInMB = stats.size / (1024 * 1024);
+
+      // 概算: 1MB ≈ 10%のコンテキスト使用率
+      const estimatedPercentage = Math.min(sizeInMB * 10, 100);
+
+      return {
+        percentage: estimatedPercentage,
+        threshold: getThresholdLevel(estimatedPercentage),
+        estimated: true
+      };
+    }
+  } catch (error) {
+    // Ignore
+  }
+
+  return {
+    percentage: 0,
+    threshold: 'OK',
+    estimated: true
+  };
+}
+
+/**
+ * 警告メッセージを表示
+ */
 function suggestCompact(usage) {
-  if (usage.percentage > CONTEXT_THRESHOLDS.EMERGENCY) {
-    console.log('🚨 EMERGENCY: Context at ' + usage.percentage + '%');
-    console.log('   Please run: /compact');
-    console.log('   Cannot continue without compaction');
-  } else if (usage.percentage > CONTEXT_THRESHOLDS.CRITICAL) {
-    console.log('⚠️  CRITICAL: Context at ' + usage.percentage + '%');
-    console.log('   Strongly recommend: /compact');
-  } else if (usage.percentage > CONTEXT_THRESHOLDS.WARNING) {
-    console.log('💡 INFO: Context at ' + usage.percentage + '%');
-    console.log('   Consider: /compact after 2-3 more files');
+  if (usage.threshold === 'EMERGENCY') {
+    console.log('\n🚨 EMERGENCY: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
+    console.log('   ✅ Phase 3自動保存が有効です');
+    console.log('   📊 大きな出力は自動的に保存されます');
+    console.log('   💡 必要に応じて /compact を実行してください\n');
+  } else if (usage.threshold === 'CRITICAL') {
+    console.log('\n⚠️  CRITICAL: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
+    console.log('   ✅ Phase 3自動保存が動作中');
+    console.log('   📊 大きな出力は自動保存されます\n');
+  } else if (usage.threshold === 'WARNING') {
+    console.log('\n💡 INFO: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
+    console.log('   📊 Phase 3自動保存により、さらに節約可能\n');
   }
 }
 
+/**
+ * ファイルサイズをチェック
+ */
 function checkFileSize(filePath, contentSize) {
-  if (contentSize > FILE_SIZE_THRESHOLDS.LARGE) {
-    console.log('🚫 File too large (' + Math.round(contentSize / 1024) + 'KB)');
-    console.log('   Recommendation: Use Agent delegation');
-    console.log('   Example: /Task [agent] "generate ' + filePath + '"');
-    return 'agent-required';
-  } else if (contentSize > FILE_SIZE_THRESHOLDS.MEDIUM) {
-    console.log('⚠️  Large file (' + Math.round(contentSize / 1024) + 'KB)');
-    console.log('   Recommendation: Consider Agent or run /compact after');
-    return 'agent-suggested';
-  } else if (contentSize > FILE_SIZE_THRESHOLDS.SMALL) {
-    console.log('💡 Medium file (' + Math.round(contentSize / 1024) + 'KB)');
-    console.log('   Tip: Run /compact after 3-5 similar files');
-    return 'compact-later';
+  const sizeKB = Math.round(contentSize / 1024);
+
+  if (contentSize >= FILE_SIZE_THRESHOLDS.LARGE) {
+    console.log('\n📁 大きなファイル (' + sizeKB + 'KB)');
+    console.log('   ✅ Phase 3自動保存が有効');
+    console.log('   💾 このファイルは自動的に保存されます\n');
+    return 'auto-save';
+  } else if (contentSize >= FILE_SIZE_THRESHOLDS.MEDIUM) {
+    console.log('\n📄 中規模ファイル (' + sizeKB + 'KB)');
+    console.log('   💡 Phase 3自動保存により最適化されます\n');
+    return 'optimized';
   }
+
   return 'ok';
 }
 
-// Export for use in hooks
+/**
+ * Phase 3統計を表示
+ */
+function showPhase3Status() {
+  try {
+    const statsFile = path.join(process.cwd(), '.claude/temp/memory-stats.json');
+
+    if (fs.existsSync(statsFile)) {
+      const stats = JSON.parse(fs.readFileSync(statsFile, 'utf8'));
+
+      if (stats.totalSaved > 0) {
+        console.log('\n✨ Phase 3 スーパーメモリー');
+        console.log('   保存回数: ' + stats.totalSaved + '回');
+        console.log('   節約: ' + (stats.contextSaved / 1000).toFixed(1) + 'k トークン');
+        console.log('   削減: $' + stats.costSaved.toFixed(4) + '\n');
+      }
+    }
+  } catch (error) {
+    // Ignore
+  }
+}
+
+/**
+ * メイン処理
+ */
+async function main() {
+  const command = process.argv[2] || 'check';
+
+  if (command === 'check') {
+    const usage = await checkContextUsage();
+    if (usage && usage.percentage > CONTEXT_THRESHOLDS.WARNING) {
+      suggestCompact(usage);
+    }
+    showPhase3Status();
+  } else if (command === 'status') {
+    showPhase3Status();
+  }
+}
+
+// エクスポート
 module.exports = {
   checkContextUsage,
   suggestCompact,
   checkFileSize,
+  showPhase3Status,
   CONTEXT_THRESHOLDS,
   FILE_SIZE_THRESHOLDS
 };
 
-// Run check if called directly
+// 直接実行時
 if (require.main === module) {
-  checkContextUsage().catch(console.error);
+  main().catch(console.error);
 }
