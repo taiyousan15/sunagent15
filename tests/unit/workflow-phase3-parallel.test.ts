@@ -46,8 +46,6 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
 
   describe('waitStrategy: all', () => {
     beforeEach(() => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_parallel_v1',
         name: 'Parallel Execution Test (All)',
@@ -97,6 +95,9 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // clearCache after creating workflow definition
+      clearCache();
     });
 
     it('should start parallel execution and transition to first parallel phase', () => {
@@ -176,8 +177,6 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
 
   describe('waitStrategy: any', () => {
     beforeEach(() => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_parallel_v1',
         name: 'Parallel Execution Test (Any)',
@@ -221,6 +220,9 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // clearCache after creating workflow definition
+      clearCache();
     });
 
     it('should complete parallel execution when any phase completes', () => {
@@ -252,8 +254,6 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
 
   describe('parallel execution state management', () => {
     beforeEach(() => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_parallel_v1',
         name: 'Parallel State Test',
@@ -292,6 +292,9 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // clearCache after creating workflow definition
+      clearCache();
     });
 
     it('should track parallel execution state correctly', () => {

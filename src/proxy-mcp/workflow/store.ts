@@ -66,8 +66,12 @@ export function saveState(state: WorkflowState): void {
     }
   } catch (error) {
     // Cleanup temp file on error
-    if (fs.existsSync(tmpPath)) {
-      fs.unlinkSync(tmpPath);
+    try {
+      if (fs.existsSync(tmpPath)) {
+        fs.unlinkSync(tmpPath);
+      }
+    } catch (cleanupError) {
+      // Ignore cleanup errors (file may have been deleted by another test)
     }
 
     const err = error as Error;
@@ -81,8 +85,16 @@ export function saveState(state: WorkflowState): void {
 export function clearState(): void {
   const filePath = getStateFilePath();
 
-  if (fs.existsSync(filePath)) {
-    fs.unlinkSync(filePath);
+  try {
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+  } catch (error) {
+    // Ignore ENOENT errors (file already deleted by another test)
+    const err = error as NodeJS.ErrnoException;
+    if (err.code !== 'ENOENT') {
+      throw error;
+    }
   }
 }
 

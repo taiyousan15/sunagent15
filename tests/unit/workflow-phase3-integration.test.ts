@@ -48,8 +48,6 @@ describe('Workflow Phase 3 - Integration', () => {
 
   describe('Conditional Branching + Parallel Execution', () => {
     beforeEach(() => {
-      clearCache();
-
       // コンテンツ制作ワークフロー：種類を選択 → 並列タスク実行
       const workflow: WorkflowDefinition = {
         id: 'test_integration_v1',
@@ -111,6 +109,9 @@ describe('Workflow Phase 3 - Integration', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // clearCache after creating workflow definition
+      clearCache();
     });
 
     it('should branch to video workflow and execute parallel tasks', () => {
@@ -225,8 +226,6 @@ describe('Workflow Phase 3 - Integration', () => {
 
   describe('Parallel Execution + Rollback', () => {
     beforeEach(() => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_integration_v1',
         name: 'Design Review Workflow',
@@ -272,6 +271,9 @@ describe('Workflow Phase 3 - Integration', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // clearCache after creating workflow definition
+      clearCache();
     });
 
     it('should rollback after parallel execution completes', () => {
@@ -345,8 +347,6 @@ describe('Workflow Phase 3 - Integration', () => {
 
   describe('Conditional Branching + Rollback', () => {
     beforeEach(() => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_integration_v1',
         name: 'Conditional with Rollback',
@@ -393,6 +393,9 @@ describe('Workflow Phase 3 - Integration', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // clearCache after creating workflow definition
+      clearCache();
     });
 
     it('should rollback to conditional phase and take different branch', () => {
@@ -456,8 +459,6 @@ describe('Workflow Phase 3 - Integration', () => {
 
   describe('Complex Integration: All Features', () => {
     beforeEach(() => {
-      clearCache();
-
       // 条件分岐 → 並列実行 → ロールバック対応の複雑なワークフロー
       const workflow: WorkflowDefinition = {
         id: 'test_integration_v1',
@@ -523,6 +524,9 @@ describe('Workflow Phase 3 - Integration', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // clearCache after creating workflow definition
+      clearCache();
     });
 
     it('should handle high priority with any wait strategy', () => {

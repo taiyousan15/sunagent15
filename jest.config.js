@@ -51,6 +51,9 @@ module.exports = {
       },
       // Run Phase 3 tests serially to avoid file system conflicts
       maxWorkers: 1,
+      // Force serial execution of test files
+      runner: 'jest-runner',
+      // Note: Users should run with --runInBand for reliable results
     },
     {
       displayName: 'integration',
