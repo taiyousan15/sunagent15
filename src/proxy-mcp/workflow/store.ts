@@ -52,8 +52,18 @@ export function saveState(state: WorkflowState): void {
     const content = JSON.stringify(state, null, 2);
     fs.writeFileSync(tmpPath, content, 'utf-8');
 
+    // Verify temp file was created
+    if (!fs.existsSync(tmpPath)) {
+      throw new Error(`Temp file was not created: ${tmpPath}`);
+    }
+
     // Rename (atomic on POSIX, near-atomic on Windows)
     fs.renameSync(tmpPath, filePath);
+
+    // Verify final file exists
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`Final file was not created: ${filePath}`);
+    }
   } catch (error) {
     // Cleanup temp file on error
     if (fs.existsSync(tmpPath)) {

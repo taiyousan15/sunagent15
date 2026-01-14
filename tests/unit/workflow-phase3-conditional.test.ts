@@ -21,9 +21,6 @@ const TEST_FILES_DIR = path.join(process.cwd(), 'test-conditional-temp');
 
 describe('Workflow Phase 3 - Conditional Branching', () => {
   beforeEach(() => {
-    // キャッシュをクリア（重要：新しいワークフロー定義を読み込むため）
-    clearCache();
-
     // テスト用ディレクトリ作成
     if (!fs.existsSync(TEST_FILES_DIR)) {
       fs.mkdirSync(TEST_FILES_DIR, { recursive: true });
@@ -93,6 +90,9 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
       JSON.stringify(testWorkflow, null, 2),
       'utf-8'
     );
+
+    // キャッシュをクリア（重要：ファイル作成後に新しいワークフロー定義を読み込むため）
+    clearCache();
   });
 
   afterEach(() => {
