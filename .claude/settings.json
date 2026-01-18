@@ -22,7 +22,7 @@
     "securityScanRequired": true
   },
   "hooks": {
-    "_comment": "7-Layer Defense System: Contract + State Injection + Permission + Read-before-Write + Baseline Lock + Skill Evidence + Deviation Approval",
+    "_comment": "8-Layer Defense System: Contract + State Injection + Permission + Read-before-Write + Baseline Lock + Skill Evidence + Deviation Approval + Agent Enforcement",
 
     "SessionStart": [
       {
@@ -55,12 +55,27 @@
             "type": "command",
             "command": "node .claude/hooks/skill-usage-guard.js",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-enforcement-guard.js",
+            "timeout": 5
           }
         ]
       }
     ],
 
     "PreToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-enforcement-guard.js",
+            "timeout": 5
+          }
+        ]
+      },
       {
         "matcher": "Bash",
         "hooks": [
@@ -103,6 +118,11 @@
             "type": "command",
             "command": "node .claude/hooks/deviation-approval-guard.js",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-enforcement-guard.js",
+            "timeout": 5
           }
         ]
       },
@@ -123,6 +143,11 @@
             "type": "command",
             "command": "node .claude/hooks/deviation-approval-guard.js",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-enforcement-guard.js",
+            "timeout": 5
           }
         ]
       }
@@ -164,6 +189,11 @@
             "type": "command",
             "command": "node .claude/hooks/session-handoff-generator.js",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/session-issue-logger.js",
+            "timeout": 30
           }
         ]
       }

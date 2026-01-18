@@ -46,9 +46,9 @@
 - 手動実装は**絶対禁止**
 - スキルを呼び出さずに後工程に進むことは**ブロック**される
 
-### 6. 7層防御システム
+### 6. 8層防御システム
 
-このシステムは以下の7層で防御されています：
+このシステムは以下の8層で防御されています：
 
 | Layer | Guard | 機能 |
 |-------|-------|------|
@@ -59,6 +59,7 @@
 | 4 | Baseline Lock | 重要スクリプト改変をブロック |
 | 5 | Skill Evidence | スキル証跡なしで後工程ブロック |
 | 6 | Deviation Approval | 勝手な行動の事前承認要求 |
+| 7 | Agent Enforcement | 複雑タスクでエージェント使用を強制 |
 
 **違反はexit code 2でブロックされ、実行不能になります。**
 
@@ -70,32 +71,33 @@ AIエージェント、MCPツール、マーケティングスキルを完全統
 
 ## System Stats
 
-| Component | Count | Description |
-|-----------|-------|-------------|
-| **Agents** | 81 | AIT42 + 統合エージェント |
-| **Skills** | 67 | マーケティング・クリエイティブ・インフラ |
-| **Commands** | 74 | ショートカットコマンド |
-| **MCP Servers** | 32 | 外部サービス連携 |
-| **MCP Tools** | 227 | 自動化ツール群 |
+| Component | Count | Active | Description |
+|-----------|-------|--------|-------------|
+| **Agents** | 82 | 11 | AIT42 + 統合エージェント |
+| **Skills** | 70 | 59 | マーケティング・クリエイティブ・インフラ |
+| **Commands** | 82 | 49 | ショートカットコマンド |
+| **MCP Servers** | 32 | - | 外部サービス連携 |
+| **MCP Tools** | 227 | - | 自動化ツール群 |
+| **Defense Layers** | 8 | 8 | 防御層システム |
 
 ## Architecture
 
 ```
 taisun_v2/.claude/
-├── agents/              # 81 統合エージェント
-├── commands/            # 74 コマンド
-├── skills/              # 56 スキル
+├── agents/              # 82 統合エージェント (11 active)
+├── commands/            # 82 コマンド (49 active)
+├── skills/              # 70 スキル (59 active)
 ├── memory/              # 学習・統計システム
 ├── mcp-servers/         # カスタムMCPサーバー (4)
 ├── mcp-tools/           # → taisun MCPツール (227)
-├── hooks/               # 自動化フック
+├── hooks/               # 8層防御システム (21ファイル)
 ├── content-reference/   # → -taiyo/content
 ├── video-agent-reference/ # → video-agent
 ├── CLAUDE.md            # このファイル
 └── settings.json        # 設定
 ```
 
-## Agent Categories (81 Agents)
+## Agent Categories (82 Agents)
 
 ### Coordinators (5)
 - `ait42-coordinator` - メインオーケストレーター
