@@ -51,7 +51,7 @@ is_referenced() {
 
 # Audit agents
 audit_agents() {
-    echo -e "${CYAN}===========================================\n  AGENT AUDIT\n===========================================${NC}"
+    echo -e "${CYAN}===========================================\n  AGENT AUDIT\n===========================================${NC}" >&2
 
     local total=0
     local unused=0
@@ -68,28 +68,28 @@ audit_agents() {
         local refs=$(is_referenced "$agent_name" "agents")
 
         if [[ $refs -eq 0 ]]; then
-            echo -e "${RED}  UNUSED:${NC} $agent_name"
+            echo -e "${RED}  UNUSED:${NC} $agent_name" >&2
             ((unused++))
         elif [[ $refs -le 2 ]]; then
-            echo -e "${YELLOW}  LOW USAGE:${NC} $agent_name (refs: $refs)"
+            echo -e "${YELLOW}  LOW USAGE:${NC} $agent_name (refs: $refs)" >&2
             ((low_usage++))
         fi
     done
 
-    echo ""
-    echo -e "${BLUE}Total agents:${NC} $total"
-    echo -e "${RED}Unused:${NC} $unused"
-    echo -e "${YELLOW}Low usage:${NC} $low_usage"
-    echo -e "${GREEN}Active:${NC} $((total - unused - low_usage))"
-    echo ""
+    echo "" >&2
+    echo -e "${BLUE}Total agents:${NC} $total" >&2
+    echo -e "${RED}Unused:${NC} $unused" >&2
+    echo -e "${YELLOW}Low usage:${NC} $low_usage" >&2
+    echo -e "${GREEN}Active:${NC} $((total - unused - low_usage))" >&2
+    echo "" >&2
 
-    # Return unused count
+    # Return unused count (only this goes to stdout)
     echo "$unused"
 }
 
 # Audit skills
 audit_skills() {
-    echo -e "${CYAN}===========================================\n  SKILL AUDIT\n===========================================${NC}"
+    echo -e "${CYAN}===========================================\n  SKILL AUDIT\n===========================================${NC}" >&2
 
     local total=0
     local unused=0
@@ -105,27 +105,28 @@ audit_skills() {
         local refs=$(is_referenced "$skill_name" "skills")
 
         if [[ $refs -eq 0 ]]; then
-            echo -e "${RED}  UNUSED:${NC} $skill_name"
+            echo -e "${RED}  UNUSED:${NC} $skill_name" >&2
             ((unused++))
         elif [[ $refs -le 2 ]]; then
-            echo -e "${YELLOW}  LOW USAGE:${NC} $skill_name (refs: $refs)"
+            echo -e "${YELLOW}  LOW USAGE:${NC} $skill_name (refs: $refs)" >&2
             ((low_usage++))
         fi
     done
 
-    echo ""
-    echo -e "${BLUE}Total skills:${NC} $total"
-    echo -e "${RED}Unused:${NC} $unused"
-    echo -e "${YELLOW}Low usage:${NC} $low_usage"
-    echo -e "${GREEN}Active:${NC} $((total - unused - low_usage))"
-    echo ""
+    echo "" >&2
+    echo -e "${BLUE}Total skills:${NC} $total" >&2
+    echo -e "${RED}Unused:${NC} $unused" >&2
+    echo -e "${YELLOW}Low usage:${NC} $low_usage" >&2
+    echo -e "${GREEN}Active:${NC} $((total - unused - low_usage))" >&2
+    echo "" >&2
 
+    # Return unused count (only this goes to stdout)
     echo "$unused"
 }
 
 # Audit commands
 audit_commands() {
-    echo -e "${CYAN}===========================================\n  COMMAND AUDIT\n===========================================${NC}"
+    echo -e "${CYAN}===========================================\n  COMMAND AUDIT\n===========================================${NC}" >&2
 
     local total=0
     local unused=0
@@ -142,21 +143,22 @@ audit_commands() {
         local refs=$(is_referenced "$cmd_name" "commands")
 
         if [[ $refs -eq 0 ]]; then
-            echo -e "${RED}  UNUSED:${NC} $cmd_name"
+            echo -e "${RED}  UNUSED:${NC} $cmd_name" >&2
             ((unused++))
         elif [[ $refs -le 2 ]]; then
-            echo -e "${YELLOW}  LOW USAGE:${NC} $cmd_name (refs: $refs)"
+            echo -e "${YELLOW}  LOW USAGE:${NC} $cmd_name (refs: $refs)" >&2
             ((low_usage++))
         fi
     done
 
-    echo ""
-    echo -e "${BLUE}Total commands:${NC} $total"
-    echo -e "${RED}Unused:${NC} $unused"
-    echo -e "${YELLOW}Low usage:${NC} $low_usage"
-    echo -e "${GREEN}Active:${NC} $((total - unused - low_usage))"
-    echo ""
+    echo "" >&2
+    echo -e "${BLUE}Total commands:${NC} $total" >&2
+    echo -e "${RED}Unused:${NC} $unused" >&2
+    echo -e "${YELLOW}Low usage:${NC} $low_usage" >&2
+    echo -e "${GREEN}Active:${NC} $((total - unused - low_usage))" >&2
+    echo "" >&2
 
+    # Return unused count (only this goes to stdout)
     echo "$unused"
 }
 
