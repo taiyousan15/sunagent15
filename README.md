@@ -13,6 +13,47 @@
 
 ## アップデートのお知らせ
 
+> **2026-01-18: v2.5.1 システム総合検証・安定化リリース 🎯**
+>
+> システム全体の動作検証と安定化を行い、**本番環境対応**の品質を達成しました。
+>
+> ### 検証済みコンポーネント
+> - **82 Agents**: 全エージェント動作確認済み
+> - **70 Skills**: 全スキル定義検証済み
+> - **13 Hooks**: 構文・実行テスト通過
+> - **227 MCP Tools**: 統合テスト完了
+>
+> ### 修正内容
+> - **Auto-save閾値最適化**: 50KB→15KB（より積極的なコンテキスト節約）
+> - **MCP Proxy cold start対応**: 初期状態での誤検知を修正
+> - **Agent Enforcement Guard**: 複雑タスク検出・Task tool強制機能
+>
+> ### インストール・アップデート
+> ```bash
+> git clone https://github.com/san15/taisun_agent.git
+> cd taisun_agent && npm install && npm run build:all
+> ./scripts/test-agents.sh  # 動作確認
+> ```
+>
+> 詳細: [DISTRIBUTION_GUIDE.md](DISTRIBUTION_GUIDE.md)
+
+---
+
+> **2026-01-15: v2.4.0 Workflow Guardian Phase 3 - 並列実行・条件分岐 🚀**
+>
+> ワークフローシステムに**Phase 3機能**を追加し、より複雑なワークフローをサポートします。
+>
+> ### 新機能
+> - **並列実行**: 複数フェーズの同時実行をサポート
+> - **条件分岐**: 動的なワークフロー制御
+> - **高度なロールバック**: フェーズ単位での安全な巻き戻し
+>
+> ### ドキュメント
+> - [docs/WORKFLOW_PHASE3_QUICKSTART.md](docs/WORKFLOW_PHASE3_QUICKSTART.md) - クイックスタート
+> - [CHANGELOG.md](CHANGELOG.md) - 詳細な変更履歴
+
+---
+
 > **2026-01-12: Workflow Guardian Phase 2 - AIの暴走を防ぐ厳格モード 🛡️**
 >
 > AIが勝手にワークフローのフェーズをスキップしたり、危険な操作を実行するのを**完全に防止**する
@@ -273,13 +314,14 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| **AI Agents** | 81 | 専門家エージェント (AIT42 +  + Diagnostics) |
-| **Skills** | 67 | マーケティング・インフラ自動化スキル |
+| **AI Agents** | 82 | 専門家エージェント (AIT42 +  + Diagnostics) |
+| **Skills** | 70 | マーケティング・インフラ自動化スキル |
+| **Hooks** | 13 | 8層防御システム |
 | **Commands** | 77 | ショートカットコマンド（OpenCode統合含む） |
 | **MCP Servers** | 32 | 外部サービス連携 |
 | **MCP Tools** | 227 | 統合ツール群 |
 | **Source Lines** | 11,167 | TypeScript (proxy-mcp) |
-| **Tests** | 692 | ユニット・統合テスト（全Pass） |
+| **Tests** | 712 | ユニット・統合テスト（全Pass） |
 
 ## Key Features
 
