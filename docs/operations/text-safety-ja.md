@@ -13,7 +13,7 @@ Claude Code の内蔵「一括置換」機能は、UTF-8 のマルチバイト�
 byte index is not a char boundary
 ```
 
-また、文字化け（U+FFFD `�` の混入）やファイル破損の原因になります。
+また、文字化け（U+FFFD 置換文字の混入）やファイル破損の原因になります。
 
 ### 解決策
 
@@ -93,7 +93,7 @@ npm run text:utf8-guard -- --fix-bom
 ### チェック項目
 
 1. **UTF-8 fatal decode**: 不正なバイト列を検知
-2. **U+FFFD 検出**: 文字化け（�）を検知
+2. **U+FFFD 検出**: 文字化け（置換文字）を検知
 3. **BOM 警告**: UTF-8 BOM を検出（オプションで削除可能）
 
 ### CI/CD 統合
