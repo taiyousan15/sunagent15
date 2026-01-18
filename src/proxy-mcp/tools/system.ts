@@ -53,14 +53,18 @@ export function systemHealth(): ToolResult {
     issues.push(`${circuitSummary.open} MCP(s) circuit open`);
   }
 
-  // Check success rate
-  if (metrics && metrics.last24h.successRate < 0.9) {
-    status = 'unhealthy';
-    issues.push(`Low success rate: ${Math.round(metrics.last24h.successRate * 100)}%`);
-  } else if (metrics && metrics.last24h.successRate < 0.95) {
-    if (status === 'healthy') status = 'degraded';
-    issues.push(`Warning: success rate ${Math.round(metrics.last24h.successRate * 100)}%`);
+  // Check success rate (only if there are events to evaluate)
+  const totalEvents = metrics?.last24h?.successCount + metrics?.last24h?.failureCount || 0;
+  if (totalEvents > 0) {
+    if (metrics && metrics.last24h.successRate < 0.9) {
+      status = 'unhealthy';
+      issues.push(`Low success rate: ${Math.round(metrics.last24h.successRate * 100)}%`);
+    } else if (metrics && metrics.last24h.successRate < 0.95) {
+      if (status === 'healthy') status = 'degraded';
+      issues.push(`Warning: success rate ${Math.round(metrics.last24h.successRate * 100)}%`);
+    }
   }
+  // Note: No events (cold start) is not considered unhealthy
 
   // Build per-MCP status
   const mcpStatus = enabledMcps.map((mcp) => {
