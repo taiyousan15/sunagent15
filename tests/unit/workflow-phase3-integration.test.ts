@@ -547,7 +547,7 @@ describe('Workflow Phase 3 - Integration', () => {
       result = transitionToNextPhase();
       expect(result.newPhase).toBe('phase_dev');
 
-      let status = getStatus();
+      const status = getStatus();
       expect(status.state?.parallelExecutions![0].waitStrategy).toBe('any');
 
       // 開発だけ完了（QAは未完了）
