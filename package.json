@@ -1,9 +1,11 @@
 {
   "name": "taisun-v2",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Unified Development System - World-class system development platform with OpenCode/OMO integration and Workflow Guardian",
   "main": "src/index.js",
   "scripts": {
+    "setup": "bash scripts/install.sh",
+    "update": "bash scripts/update.sh",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "test": "jest",

@@ -22,9 +22,19 @@
     "securityScanRequired": true
   },
   "hooks": {
-    "_comment": "5-Layer Defense System: CLAUDE.md Rules + Session Handoff + Session Guard + Skill Guard + File Guard + Memory Save",
+    "_comment": "7-Layer Defense System: Contract + State Injection + Permission + Read-before-Write + Baseline Lock + Skill Evidence + Deviation Approval",
 
     "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/workflow-sessionstart-injector.js",
+            "timeout": 10
+          }
+        ]
+      },
       {
         "matcher": "resume",
         "hooks": [
@@ -58,6 +68,16 @@
             "type": "command",
             "command": "bash .claude/hooks/workflow-guard-bash.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/workflow-fidelity-guard.js",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/deviation-approval-guard.js",
+            "timeout": 10
           }
         ]
       },
@@ -73,6 +93,16 @@
             "type": "command",
             "command": "node .claude/hooks/file-creation-guard.js",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/workflow-fidelity-guard.js",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/deviation-approval-guard.js",
+            "timeout": 10
           }
         ]
       },
@@ -83,12 +113,32 @@
             "type": "command",
             "command": "bash .claude/hooks/workflow-guard-write.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/workflow-fidelity-guard.js",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/deviation-approval-guard.js",
+            "timeout": 10
           }
         ]
       }
     ],
 
     "PostToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/workflow-fidelity-guard.js",
+            "timeout": 10
+          }
+        ]
+      },
       {
         "matcher": "Read|Bash|Grep|Glob|WebFetch",
         "hooks": [

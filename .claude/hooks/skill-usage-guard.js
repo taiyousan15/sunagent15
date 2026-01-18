@@ -5,6 +5,9 @@
  * UserPromptSubmit 時に実行され、
  * 「〇〇のスキルを使って」という指示を検出してコンテキストに追加します。
  *
+ * v2.0: スキル要求を .workflow_state.json に記録し、
+ *       後続の手動実装を物理的にブロック可能にする。
+ *
  * 防止する問題:
  * - スキル使用の指示を無視する
  * - 手動で同等の処理を実装してしまう
@@ -12,6 +15,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const stateManager = require('./workflow-state-manager.js');
 
 async function main() {
   let input = {};
@@ -96,6 +100,37 @@ async function main() {
 
     context.push('=== END SKILL USAGE GUARD ===');
     context.push('');
+  }
+
+  // スキル要求を .workflow_state.json に記録
+  if (detectedSkills.length > 0 || requiresSameWorkflow) {
+    const cwd = input.cwd || process.cwd();
+    let state = stateManager.loadState(cwd);
+
+    if (!state) {
+      // 状態がない場合は新規作成
+      state = stateManager.createInitialState('user_request', true);
+    }
+
+    // 要求されたスキルを記録（evidence.required_skills）
+    if (!state.evidence.required_skills) {
+      state.evidence.required_skills = {};
+    }
+
+    detectedSkills.forEach(skill => {
+      state.evidence.required_skills[skill] = {
+        requestedAt: new Date().toISOString(),
+        used: false
+      };
+    });
+
+    // 「同じワークフロー」要求を記録
+    if (requiresSameWorkflow) {
+      state.meta.requiresSameWorkflow = true;
+      state.meta.sameWorkflowRequestedAt = new Date().toISOString();
+    }
+
+    stateManager.saveState(state, cwd);
   }
 
   if (context.length > 0) {

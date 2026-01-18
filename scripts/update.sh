@@ -1,37 +1,45 @@
 #!/bin/bash
-# TAISUN Agent - Update Script
+# TAISUN Agent v2.5.0 - Update Script
 #
 # Usage: ./scripts/update.sh
 #
 # This script:
 # 1. Pulls latest changes
 # 2. Updates npm dependencies
-# 3. Re-applies Phase 3 Super Memory hooks
-# 4. Verifies update
+# 3. Verifies 7-Layer Defense System
 
 set -e
 
 echo "========================================"
-echo "  TAISUN Agent Update"
+echo "  TAISUN Agent v2.5.0 Update"
+echo "  7-Layer Fidelity Defense System"
 echo "========================================"
 echo ""
 
-# Get current version
-OLD_VERSION=$(cat package.json | grep '"version"' | head -1 | cut -d'"' -f4)
-echo "Current version: $OLD_VERSION"
-echo ""
+# Check if git repo
+if [ ! -d ".git" ]; then
+    echo "Error: Not a git repository"
+    echo "Please run from the taisun_agent directory"
+    exit 1
+fi
 
-echo "1. Pulling latest changes..."
-git pull origin main || {
-    echo "Warning: git pull failed. Continuing with local files..."
+echo "1. Checking current version..."
+CURRENT_VERSION=$(cat package.json | grep '"version"' | head -1 | cut -d'"' -f4)
+echo "   Current: $CURRENT_VERSION"
+
+echo ""
+echo "2. Pulling latest changes..."
+git fetch origin
+git pull origin main --ff-only || {
+    echo "Warning: Could not fast-forward. Manual merge may be needed."
 }
 
 echo ""
-echo "2. Updating npm dependencies..."
+echo "3. Updating dependencies..."
 npm install
 
 echo ""
-echo "3. Setting up Phase 3 Super Memory hooks..."
+echo "4. Setting up 7-Layer Defense System..."
 
 # Make hooks executable
 chmod +x .claude/hooks/*.sh 2>/dev/null || true
@@ -41,30 +49,67 @@ chmod +x .claude/hooks/*.js 2>/dev/null || true
 mkdir -p .claude/temp
 mkdir -p .taisun/memory
 
-echo "   - Hooks: executable"
-echo "   - Directories: created"
+# List of required hook files
+REQUIRED_HOOKS=(
+    "auto-memory-saver.js"
+    "session-continue-guard.js"
+    "skill-usage-guard.js"
+    "file-creation-guard.js"
+    "workflow-state-manager.js"
+    "workflow-fidelity-guard.js"
+    "deviation-approval-guard.js"
+    "workflow-sessionstart-injector.js"
+    "session-handoff-generator.js"
+    "violation-recorder.js"
+    "workflow-guard-bash.sh"
+    "workflow-guard-write.sh"
+)
+
+echo "   Checking hooks..."
+MISSING=0
+for hook in "${REQUIRED_HOOKS[@]}"; do
+    if [ -f ".claude/hooks/$hook" ]; then
+        echo "   - $hook: OK"
+    else
+        echo "   - $hook: MISSING"
+        MISSING=$((MISSING + 1))
+    fi
+done
+
+if [ $MISSING -gt 0 ]; then
+    echo ""
+    echo "Warning: $MISSING hook files are missing"
+    echo "Some defense features may not work correctly"
+fi
 
 echo ""
-echo "4. Verifying update..."
+echo "5. Verifying update..."
 
-# Check version
+# Check new version
 NEW_VERSION=$(cat package.json | grep '"version"' | head -1 | cut -d'"' -f4)
-echo "   - Version: $OLD_VERSION -> $NEW_VERSION"
+echo "   - Version: $CURRENT_VERSION -> $NEW_VERSION"
 
-# Check settings.json
-if grep -q "PostToolUse" .claude/settings.json 2>/dev/null; then
-    echo "   - Phase 3 hooks: configured"
+# Check settings.json for 7-layer defense
+if grep -q "7-Layer Defense" .claude/settings.json 2>/dev/null; then
+    echo "   - 7-Layer Defense: configured"
 else
-    echo "   - Phase 3 hooks: NOT configured (check .claude/settings.json)"
+    echo "   - 7-Layer Defense: NOT configured"
+fi
+
+# Check CLAUDE.md for contract
+if grep -q "WORKFLOW FIDELITY CONTRACT" .claude/CLAUDE.md 2>/dev/null; then
+    echo "   - Fidelity Contract: present"
+else
+    echo "   - Fidelity Contract: NOT found"
 fi
 
 # Test hook execution
 echo ""
-echo "5. Testing hooks..."
-if echo '{"tool_name":"Test","tool_response":"test"}' | node .claude/hooks/auto-memory-saver.js 2>/dev/null; then
-    echo "   - auto-memory-saver.js: OK"
+echo "6. Testing hooks..."
+if echo '{"source":"test","cwd":"'$(pwd)'"}' | node .claude/hooks/workflow-sessionstart-injector.js 2>/dev/null; then
+    echo "   - workflow-sessionstart-injector.js: OK"
 else
-    echo "   - auto-memory-saver.js: FAILED"
+    echo "   - workflow-sessionstart-injector.js: FAILED"
 fi
 
 echo ""
@@ -72,20 +117,18 @@ echo "========================================"
 echo "  Update Complete!"
 echo "========================================"
 echo ""
-
-# Show what's new if version changed
-if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
-    echo "What's new in $NEW_VERSION:"
-    if [ -f "RELEASE_v${NEW_VERSION}.md" ]; then
-        head -30 "RELEASE_v${NEW_VERSION}.md" | tail -25
-    else
-        echo "  See CHANGELOG.md for details"
-    fi
-    echo ""
-fi
-
-echo "Phase 3 Super Memory is active!"
-echo "  - Auto-save: outputs > 50KB"
-echo "  - Block: dangerous commands"
-echo "  - Stats: on session exit"
+echo "7-Layer Defense System v2.5.0:"
+echo "  Layer 0: CLAUDE.md Contract (absolute rules)"
+echo "  Layer 1: SessionStart State Injection"
+echo "  Layer 2: Permission Gate (phase restrictions)"
+echo "  Layer 3: Read-before-Write enforcement"
+echo "  Layer 4: Baseline Lock (script protection)"
+echo "  Layer 5: Skill Evidence (skill usage tracking)"
+echo "  Layer 6: Deviation Approval (pre-approval required)"
+echo ""
+echo "New features in v2.5.0:"
+echo "  - Physical blocking (exit code 2 stops execution)"
+echo "  - .workflow_state.json for persistent state"
+echo "  - Baseline file hash locking"
+echo "  - Deviation pre-approval requirement"
 echo ""
