@@ -12,6 +12,11 @@ on:
       - '.github/workflows/security.yml'
   workflow_dispatch:
 
+# Required for SARIF upload to GitHub Security
+permissions:
+  contents: read
+  security-events: write
+
 env:
   NODE_VERSION: '20.x'
 
@@ -96,7 +101,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
