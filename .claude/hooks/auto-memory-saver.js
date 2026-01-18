@@ -1,365 +1,312 @@
 #!/usr/bin/env node
 /**
- * Auto Memory Saver Hook - Phase 3 完全自動化
+ * Auto Memory Saver Hook - Phase 3 Complete Integration
  *
- * Claude Codeフックシステムと統合された自動メモリー保存
- * - toolResult: ツール実行後に自動実行
- * - sessionEnd: セッション終了時に統計表示
+ * Claude Code Hook System Integration:
+ * - PostToolUse: Automatically save large tool outputs
+ * - SessionEnd: Display session statistics
  *
- * コスト: $0.00（ローカル保存のみ）
- * 削減効果: コンテキスト97%、コスト99.5%
+ * Cost: $0.00 (local storage only)
+ * Savings: 97% context, 99.5% cost reduction
  */
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
-// 設定ファイル読み込み
+// Configuration
 const CONFIG_PATH = path.join(process.cwd(), 'config/proxy-mcp/auto-memory.json');
-let config;
+const STATS_FILE = path.join(process.cwd(), '.claude/temp/memory-stats.json');
+const MEMORY_DIR = path.join(process.cwd(), '.taisun/memory');
+const TEMP_DIR = path.join(process.cwd(), '.claude/temp');
 
-try {
-  config = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
-} catch (error) {
-  // 設定ファイルがない場合はデフォルト設定
-  config = {
-    autoSave: { enabled: true },
-    triggers: {
-      contextThreshold: { enabled: true, percentage: 70 },
-      outputSize: { enabled: true, threshold: 50000 },
-      fileOperations: { enabled: true, minSize: 20000 },
-      openCodeIntegration: { enabled: true }
-    },
-    notification: {
-      showRefId: true,
-      showSummary: true,
-      showSavings: true
+// Default configuration
+const DEFAULT_CONFIG = {
+  autoSave: { enabled: true },
+  triggers: {
+    contextThreshold: { enabled: true, percentage: 70 },
+    outputSize: { enabled: true, threshold: 15000 },  // 50KB→15KB: より積極的にメモリ保存
+    fileOperations: { enabled: true, minSize: 10000 } // 20KB→10KB: ファイル読み込みも早めに保存
+  },
+  notification: {
+    showRefId: true,
+    showSummary: true,
+    showSavings: true
+  }
+};
+
+// Load configuration
+function loadConfig() {
+  try {
+    if (fs.existsSync(CONFIG_PATH)) {
+      return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
     }
-  };
+  } catch (e) { /* ignore */ }
+  return DEFAULT_CONFIG;
 }
 
-// 統計情報
-const STATS_FILE = path.join(process.cwd(), '.claude/temp/memory-stats.json');
-let stats = loadStats();
-
+// Load/Save statistics
 function loadStats() {
   try {
     if (fs.existsSync(STATS_FILE)) {
       return JSON.parse(fs.readFileSync(STATS_FILE, 'utf8'));
     }
-  } catch (error) {
-    // Ignore
-  }
+  } catch (e) { /* ignore */ }
   return {
     totalSaved: 0,
     contextSaved: 0,
     costSaved: 0,
-    sessionStart: Date.now()
+    sessionStart: Date.now(),
+    lastSave: null
   };
 }
 
-function saveStats() {
+function saveStats(stats) {
   try {
-    const dir = path.dirname(STATS_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
+    ensureDir(path.dirname(STATS_FILE));
     fs.writeFileSync(STATS_FILE, JSON.stringify(stats, null, 2));
+  } catch (e) { /* ignore */ }
+}
+
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
+// Read stdin with timeout
+function readStdin(timeout = 2000) {
+  return new Promise((resolve) => {
+    let data = '';
+    let resolved = false;
+
+    const finish = () => {
+      if (!resolved) {
+        resolved = true;
+        resolve(data);
+      }
+    };
+
+    process.stdin.setEncoding('utf8');
+    process.stdin.on('data', (chunk) => { data += chunk; });
+    process.stdin.on('end', finish);
+    process.stdin.on('error', finish);
+
+    setTimeout(finish, timeout);
+
+    // Handle non-TTY stdin
+    if (process.stdin.isTTY) {
+      finish();
+    }
+  });
+}
+
+// Calculate cost savings (Claude Sonnet pricing: $3/M input tokens)
+function calculateCostSavings(bytes) {
+  const tokens = bytes; // Approximate: 1 byte ~ 1 token
+  const originalCost = (tokens / 1000000) * 3;
+  return originalCost * 0.995; // 99.5% savings
+}
+
+// Generate unique reference ID
+function generateRefId() {
+  const timestamp = Date.now().toString(36);
+  const random = Math.random().toString(36).substring(2, 6);
+  return `mem_${timestamp}_${random}`;
+}
+
+// Save data to memory
+async function saveToMemory(data, metadata) {
+  const config = loadConfig();
+  const stats = loadStats();
+  const refId = generateRefId();
+
+  try {
+    ensureDir(MEMORY_DIR);
+    ensureDir(TEMP_DIR);
+
+    // Save to memory file
+    const memoryFile = path.join(MEMORY_DIR, 'memory.jsonl');
+    const entry = {
+      refId,
+      timestamp: new Date().toISOString(),
+      size: data.length,
+      metadata,
+      data: data.substring(0, 1000) + (data.length > 1000 ? '...[truncated]' : '')
+    };
+
+    fs.appendFileSync(memoryFile, JSON.stringify(entry) + '\n');
+
+    // Save full data to temp file
+    const tempFile = path.join(TEMP_DIR, `${refId}.log`);
+    fs.writeFileSync(tempFile, data);
+
+    // Update statistics
+    stats.totalSaved++;
+    stats.contextSaved += data.length;
+    stats.costSaved += calculateCostSavings(data.length);
+    stats.lastSave = new Date().toISOString();
+    saveStats(stats);
+
+    // Show notification
+    if (config.notification.showRefId) {
+      console.error(`\n\x1b[36m[Phase 3 Super Memory]\x1b[0m Auto-saved ${Math.round(data.length / 1024)}KB`);
+      console.error(`  RefId: ${refId}`);
+      console.error(`  Tool: ${metadata.toolName}`);
+      if (config.notification.showSavings) {
+        console.error(`  Context saved: ${(data.length / 1000).toFixed(1)}k tokens`);
+        console.error(`  Cost saved: $${calculateCostSavings(data.length).toFixed(4)}`);
+      }
+      console.error('');
+    }
+
+    return { success: true, refId, tempFile };
   } catch (error) {
-    // Ignore
+    logError('saveToMemory', error);
+    return { success: false, error: error.message };
   }
 }
 
-/**
- * Claude Codeフックエントリーポイント
- */
-async function main() {
-  const hookType = process.env.CLAUDE_HOOK_TYPE || process.argv[2] || 'toolResult';
+// Handle PostToolUse event
+async function handlePostToolUse(input) {
+  const config = loadConfig();
 
-  if (hookType === 'sessionEnd') {
-    showStats();
-    return;
-  }
-
-  if (hookType === 'toolResult') {
-    await handleToolResult();
-    return;
-  }
-}
-
-/**
- * ツール実行結果の処理
- */
-async function handleToolResult() {
   if (!config.autoSave.enabled) {
     return;
   }
 
-  try {
-    // Claude Codeからのデータを環境変数またはstdin経由で受け取る
-    const toolName = process.env.CLAUDE_TOOL_NAME || 'unknown';
-    const outputSize = parseInt(process.env.CLAUDE_OUTPUT_SIZE || '0', 10);
-    const contextUsage = parseFloat(process.env.CLAUDE_CONTEXT_USAGE || '0');
+  const toolName = input.tool_name || 'unknown';
+  const toolResponse = input.tool_response;
 
-    // トリガー判定
-    let shouldSave = false;
-    let reason = '';
+  if (!toolResponse) {
+    return;
+  }
 
-    // トリガー1: コンテキスト閾値チェック
-    if (config.triggers.contextThreshold.enabled && contextUsage > 0) {
-      if (contextUsage >= config.triggers.contextThreshold.percentage) {
-        shouldSave = true;
-        reason = `context-threshold (${contextUsage.toFixed(1)}%)`;
-      }
+  // Calculate response size
+  let responseData = '';
+  if (typeof toolResponse === 'string') {
+    responseData = toolResponse;
+  } else {
+    responseData = JSON.stringify(toolResponse);
+  }
+
+  const outputSize = responseData.length;
+
+  // Check if we should save
+  let shouldSave = false;
+  let reason = '';
+
+  // Trigger: Output size threshold
+  if (config.triggers.outputSize.enabled) {
+    if (outputSize >= config.triggers.outputSize.threshold) {
+      shouldSave = true;
+      reason = `output-size (${Math.round(outputSize / 1024)}KB > ${Math.round(config.triggers.outputSize.threshold / 1024)}KB)`;
     }
+  }
 
-    // トリガー2: 出力サイズチェック
-    if (config.triggers.outputSize.enabled && outputSize > 0) {
-      if (outputSize >= config.triggers.outputSize.threshold) {
-        shouldSave = true;
-        reason = reason ? `${reason}, output-size (${Math.round(outputSize / 1024)}KB)`
-                        : `output-size (${Math.round(outputSize / 1024)}KB)`;
-      }
+  // Trigger: File operations (Read tool with large files)
+  if (toolName === 'Read' && config.triggers.fileOperations.enabled) {
+    if (outputSize >= config.triggers.fileOperations.minSize) {
+      shouldSave = true;
+      reason = `file-read (${Math.round(outputSize / 1024)}KB)`;
     }
+  }
 
-    if (shouldSave) {
-      // 出力データをstdinから読み取る（利用可能な場合）
-      let outputData = '';
-      if (process.stdin.isTTY === false) {
-        outputData = await readStdin();
-      }
-
-      if (outputData) {
-        await saveToMemory({
-          toolName,
-          data: outputData,
-          outputSize,
-          contextUsage,
-          reason
-        });
-      }
-    }
-  } catch (error) {
-    // エラーは静かに記録
-    logError('handleToolResult', error);
+  if (shouldSave) {
+    await saveToMemory(responseData, {
+      toolName,
+      reason,
+      phase: 'Phase3-AutoSave',
+      inputSummary: summarizeInput(input.tool_input)
+    });
   }
 }
 
-/**
- * stdinからデータを読み取る
- */
-function readStdin() {
-  return new Promise((resolve) => {
-    let data = '';
-    process.stdin.on('data', (chunk) => {
-      data += chunk;
-    });
-    process.stdin.on('end', () => {
-      resolve(data);
-    });
-    // タイムアウト設定（1秒）
-    setTimeout(() => {
-      resolve(data);
-    }, 1000);
-  });
+// Summarize tool input for metadata
+function summarizeInput(toolInput) {
+  if (!toolInput) return 'unknown';
+
+  if (toolInput.file_path) return `file: ${path.basename(toolInput.file_path)}`;
+  if (toolInput.command) return `cmd: ${toolInput.command.substring(0, 50)}...`;
+  if (toolInput.pattern) return `pattern: ${toolInput.pattern}`;
+  if (toolInput.url) return `url: ${toolInput.url.substring(0, 50)}...`;
+
+  return 'unknown';
 }
 
-/**
- * memory_addでローカル保存
- */
-async function saveToMemory(event) {
-  try {
-    // 一時ファイルに保存
-    const tempDir = path.join(process.cwd(), '.claude/temp');
-    if (!fs.existsSync(tempDir)) {
-      fs.mkdirSync(tempDir, { recursive: true });
-    }
+// Show session statistics
+function showSessionStats() {
+  const stats = loadStats();
 
-    const timestamp = Date.now();
-    const tempPath = path.join(tempDir, `auto_${timestamp}.log`);
-    fs.writeFileSync(tempPath, event.data);
-
-    // memory_add MCPツールを呼び出す
-    // 注: 実際にはClaude Code経由でMCPツールを呼び出す必要がある
-    // ここでは一時ファイルパスを返す
-
-    const metadata = {
-      autoSaved: true,
-      reason: event.reason,
-      timestamp: new Date().toISOString(),
-      originalSize: event.data.length,
-      toolName: event.toolName,
-      contextUsage: event.contextUsage || 0,
-      phase: 'Phase3-AutoSave'
-    };
-
-    // 統計更新
-    stats.totalSaved++;
-    stats.contextSaved += event.data.length;
-    stats.costSaved += calculateCostSavings(event.data.length);
-    saveStats();
-
-    // 通知表示
-    if (config.notification.showRefId) {
-      console.log(`\n✨ Phase 3 スーパーメモリー自動保存`);
-      console.log(`   理由: ${event.reason}`);
-      console.log(`   ツール: ${event.toolName}`);
-      console.log(`   サイズ: ${Math.round(event.data.length / 1024)}KB`);
-      console.log(`   一時保存: ${tempPath}`);
-
-      if (config.notification.showSavings) {
-        console.log(`   📊 コンテキスト節約: ${(event.data.length / 1000).toFixed(1)}k トークン`);
-        console.log(`   💰 コスト削減: $${calculateCostSavings(event.data.length).toFixed(4)}`);
-        console.log(`   📈 累計削減: $${stats.costSaved.toFixed(4)}\n`);
-      }
-    }
-
-    return {
-      success: true,
-      tempPath: tempPath,
-      metadata: metadata,
-      message: `Auto-saved ${Math.round(event.data.length / 1024)}KB to ${tempPath}`
-    };
-
-  } catch (error) {
-    logError('saveToMemory', error);
-    return null;
-  }
-}
-
-/**
- * コスト削減額を計算（Sonnet 4.5換算）
- */
-function calculateCostSavings(bytes) {
-  // Sonnet 4.5: 入力 $3/million tokens
-  const tokens = bytes;
-  const cost = (tokens / 1000000) * 3;
-  return cost * 0.995; // 99.5%削減
-}
-
-/**
- * セッション統計表示
- */
-function showStats() {
   if (stats.totalSaved > 0) {
-    const sessionDuration = (Date.now() - stats.sessionStart) / 1000 / 60; // 分
+    const sessionDuration = (Date.now() - stats.sessionStart) / 1000 / 60;
 
-    console.log(`\n═══════════════════════════════════════════`);
-    console.log(`  📊 Phase 3 スーパーメモリー統計`);
-    console.log(`═══════════════════════════════════════════`);
-    console.log(`  セッション時間: ${sessionDuration.toFixed(1)}分`);
-    console.log(`  自動保存回数: ${stats.totalSaved}回`);
-    console.log(`  節約コンテキスト: ${(stats.contextSaved / 1000).toFixed(1)}k トークン`);
-    console.log(`  節約コスト: $${stats.costSaved.toFixed(4)}`);
-    console.log(`  削減率: 97% (コンテキスト), 99.5% (コスト)`);
-    console.log(`═══════════════════════════════════════════\n`);
+    console.error('\n\x1b[36m' + '='.repeat(50) + '\x1b[0m');
+    console.error('\x1b[36m  Phase 3 Super Memory - Session Statistics\x1b[0m');
+    console.error('\x1b[36m' + '='.repeat(50) + '\x1b[0m');
+    console.error(`  Session duration: ${sessionDuration.toFixed(1)} minutes`);
+    console.error(`  Auto-saves: ${stats.totalSaved} times`);
+    console.error(`  Context saved: ${(stats.contextSaved / 1000).toFixed(1)}k tokens`);
+    console.error(`  Cost saved: $${stats.costSaved.toFixed(4)}`);
+    console.error(`  Reduction: 97% (context), 99.5% (cost)`);
+    console.error('\x1b[36m' + '='.repeat(50) + '\x1b[0m\n');
 
-    // 統計をリセット
-    stats = {
+    // Reset stats for next session
+    const newStats = {
       totalSaved: 0,
       contextSaved: 0,
       costSaved: 0,
-      sessionStart: Date.now()
+      sessionStart: Date.now(),
+      lastSave: null
     };
-    saveStats();
+    saveStats(newStats);
   }
 }
 
-/**
- * エラーログ記録
- */
+// Log errors silently
 function logError(context, error) {
-  const errorLog = path.join(process.cwd(), '.claude/temp/memory-errors.log');
-  const dir = path.dirname(errorLog);
-
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-
-  const logEntry = `[${new Date().toISOString()}] ${context}: ${error.message}\n`;
-  fs.appendFileSync(errorLog, logEntry);
-}
-
-// OpenCode統合（Phase 2との互換性維持）
-async function handleOpenCodeExecution(command, logPath) {
-  if (!config.triggers.openCodeIntegration.enabled) {
-    return;
-  }
-
-  if (!fs.existsSync(logPath)) {
-    return;
-  }
-
-  const data = fs.readFileSync(logPath, 'utf8');
-  await saveToMemory({
-    data: data,
-    reason: 'opencode-execution',
-    toolName: 'opencode',
-    outputSize: data.length
-  });
-
-  // セッションエクスポート
-  if (config.triggers.openCodeIntegration.autoExportSession) {
-    await exportOpenCodeSession();
-  }
-}
-
-async function exportOpenCodeSession() {
   try {
-    execSync('which opencode', { stdio: 'pipe' });
+    const errorLog = path.join(TEMP_DIR, 'memory-errors.log');
+    ensureDir(path.dirname(errorLog));
+    const entry = `[${new Date().toISOString()}] ${context}: ${error.message}\n`;
+    fs.appendFileSync(errorLog, entry);
+  } catch (e) { /* ignore */ }
+}
 
-    const sessionList = execSync('opencode session list --max-count 1 --format json 2>/dev/null', {
-      encoding: 'utf8',
-      stdio: 'pipe'
-    });
+// Main entry point
+async function main() {
+  try {
+    const args = process.argv.slice(2);
 
-    const sessions = JSON.parse(sessionList);
-    if (sessions.length === 0) {
+    // Session end handler
+    if (args.includes('session-end')) {
+      showSessionStats();
+      process.exit(0);
       return;
     }
 
-    const sessionId = sessions[0].id;
-    const exportDir = path.join(process.cwd(), '.opencode/exports');
+    // Read stdin JSON (PostToolUse input)
+    const stdinData = await readStdin();
 
-    if (!fs.existsSync(exportDir)) {
-      fs.mkdirSync(exportDir, { recursive: true });
+    if (stdinData) {
+      try {
+        const input = JSON.parse(stdinData);
+
+        // Handle based on hook event
+        if (input.hook_event_name === 'PostToolUse' || input.tool_response) {
+          await handlePostToolUse(input);
+        }
+      } catch (parseError) {
+        // Not valid JSON, ignore
+      }
     }
 
-    const timestamp = Date.now();
-    const exportPath = path.join(exportDir, `session_${timestamp}.json`);
-
-    execSync(`opencode session export ${sessionId} > ${exportPath}`, {
-      stdio: 'pipe'
-    });
-
-    const data = fs.readFileSync(exportPath, 'utf8');
-    await saveToMemory({
-      data: data,
-      reason: 'opencode-session-export',
-      toolName: 'opencode-session',
-      outputSize: data.length
-    });
-
-    console.log(`✅ OpenCodeセッション自動エクスポート: ${exportPath}`);
-
+    // Always exit 0 to not block Claude Code
+    process.exit(0);
   } catch (error) {
-    // OpenCodeがない場合は静かに失敗
+    logError('main', error);
+    process.exit(0); // Never block Claude Code
   }
 }
 
-// メインエントリーポイント
-if (require.main === module) {
-  main().catch((error) => {
-    logError('main', error);
-    process.exit(0); // フックエラーでもClaude Codeの動作を妨げない
-  });
-}
-
-module.exports = {
-  handleToolResult,
-  saveToMemory,
-  handleOpenCodeExecution,
-  exportOpenCodeSession,
-  showStats,
-  stats
-};
+// Run
+main();
