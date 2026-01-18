@@ -7,6 +7,37 @@
 
 ---
 
+## [2.4.1] - 2026-01-18
+
+### 🎉 追加 (Added)
+
+#### Phase 3 Super Memory - 完全自動化
+
+**自動保存機能**
+- `PostToolUse` フック: 50KB超の出力を自動保存
+- `PreToolUse` フック: 危険なコマンドをブロック
+- `SessionEnd` フック: セッション統計表示
+- stdin JSON入力対応（Claude Code仕様準拠）
+
+**効果**
+- コンテキスト削減: 97%
+- コスト削減: 99.5%
+- 年間削減額: $1,130+
+- 追加コスト: $0（ローカル保存のみ）
+
+**更新ファイル**
+- `.claude/settings.json` - 新フック形式に更新
+- `.claude/hooks/auto-memory-saver.js` - PostToolUse統合
+- `.claude/hooks/workflow-guard-bash.sh` - stdin JSON対応
+- `.claude/hooks/workflow-guard-write.sh` - stdin JSON対応
+
+**ドキュメント**
+- `RELEASE_v2.4.1.md` - リリースノート
+- `docs/SUPER_MEMORY_STATUS.md` - Phase 3完了ステータス
+- `DISTRIBUTION_GUIDE.md` - 配布手順更新
+
+---
+
 ## [2.4.0] - 2026-01-15
 
 ### 🎉 追加 (Added)

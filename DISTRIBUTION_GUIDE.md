@@ -1,6 +1,6 @@
-# TAISUN Agent v2.4.0 - 配布ガイド
+# TAISUN Agent v2.4.1 - 配布ガイド
 
-このドキュメントは、TAISUN Agent v2.4.0 を他の人に渡す時の手順書です。
+このドキュメントは、TAISUN Agent v2.4.1 を他の人に渡す時の手順書です。
 
 ---
 
@@ -9,15 +9,26 @@
 ### 必須ファイル
 
 1. **リリースノート**
-   - `RELEASE_v2.4.0.md` - 今回のアップデート内容（分かりやすい説明付き）
+   - `RELEASE_v2.4.0.md` - Workflow Guardian Phase 3
+   - `RELEASE_v2.4.1.md` - Super Memory Phase 3（完全自動化）
 
 2. **変更履歴**
    - `CHANGELOG.md` - 全バージョンの変更履歴
 
 3. **クイックスタート**
-   - `docs/WORKFLOW_PHASE3_QUICKSTART.md` - 5分で始められるガイド
+   - `docs/WORKFLOW_PHASE3_QUICKSTART.md` - ワークフロー機能ガイド
+   - `docs/SUPER_MEMORY_README.md` - スーパーメモリー機能ガイド
 
-4. **コード一式**
+4. **Phase 3 Super Memory 必須ファイル**
+   ```
+   .claude/settings.json              # フック設定（Phase 3形式）
+   .claude/hooks/auto-memory-saver.js # 自動保存フック
+   .claude/hooks/workflow-guard-bash.sh  # Bashコマンドガード
+   .claude/hooks/workflow-guard-write.sh # ファイル書き込みガード
+   config/proxy-mcp/auto-memory.json  # 自動保存設定
+   ```
+
+5. **コード一式**
    - Git リポジトリ全体
 
 ---
@@ -96,10 +107,13 @@ cd taisun_agent
 
 # または、既にある人は更新
 git pull origin main
-git checkout v2.4.0
+git checkout v2.4.1
 
 # 依存パッケージをインストール
 npm install
+
+# フックスクリプトに実行権限を付与
+chmod +x .claude/hooks/*.sh .claude/hooks/*.js
 ```
 
 ### ステップ2：動作確認（3分）
@@ -107,21 +121,38 @@ npm install
 ```bash
 # バージョン確認
 cat package.json | grep version
-# → "version": "2.4.0" と表示されればOK
+# → "version": "2.4.1" と表示されればOK
 
 # テスト実行
 npm test -- --selectProjects=workflow-phase3 --runInBand
 # → 50 tests passed と表示されればOK ✅
+
+# Phase 3 Super Memory テスト
+echo '{"tool_name":"Test","tool_response":"test"}' | node .claude/hooks/auto-memory-saver.js
+# → エラーなく終了すればOK ✅
 ```
 
-### ステップ3：使い始める（5分）
+### ステップ3：Phase 3 Super Memory 確認（2分）
 
 ```bash
-# クイックスタートを読む
-cat docs/WORKFLOW_PHASE3_QUICKSTART.md
+# 設定ファイル確認
+cat .claude/settings.json | grep -A 5 '"hooks"'
+# → "PostToolUse", "PreToolUse", "SessionEnd" が設定されていればOK
 
-# サンプルワークフローを試す
+# 自動保存設定確認
+cat config/proxy-mcp/auto-memory.json | grep '"enabled"'
+# → "enabled": true と表示されればOK
+```
+
+### ステップ4：使い始める（5分）
+
+```bash
+# ワークフロー機能
 npm run workflow:start video_generation_v1
+
+# スーパーメモリー機能
+# → 自動で動作！50KB以上の出力は自動保存されます
+# → セッション終了時に統計が表示されます
 ```
 
 ---
