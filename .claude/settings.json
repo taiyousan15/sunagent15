@@ -22,8 +22,6 @@
     "securityScanRequired": true
   },
   "hooks": {
-    "_comment": "8-Layer Defense System: Contract + State Injection + Permission + Read-before-Write + Baseline Lock + Skill Evidence + Deviation Approval + Agent Enforcement",
-
     "SessionStart": [
       {
         "matcher": "",
@@ -46,7 +44,6 @@
         ]
       }
     ],
-
     "UserPromptSubmit": [
       {
         "matcher": "",
@@ -64,7 +61,6 @@
         ]
       }
     ],
-
     "PreToolUse": [
       {
         "matcher": "Task",
@@ -79,6 +75,21 @@
       {
         "matcher": "Bash",
         "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/tmux-reminder.js",
+            "timeout": 3
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/copy-safety-guard.js",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/input-sanitizer-guard.js",
+            "timeout": 5
+          },
           {
             "type": "command",
             "command": "bash .claude/hooks/workflow-guard-bash.sh",
@@ -111,6 +122,11 @@
           },
           {
             "type": "command",
+            "command": "node .claude/hooks/input-sanitizer-guard.js",
+            "timeout": 5
+          },
+          {
+            "type": "command",
             "command": "node .claude/hooks/workflow-fidelity-guard.js",
             "timeout": 10
           },
@@ -136,6 +152,11 @@
           },
           {
             "type": "command",
+            "command": "node .claude/hooks/input-sanitizer-guard.js",
+            "timeout": 5
+          },
+          {
+            "type": "command",
             "command": "node .claude/hooks/workflow-fidelity-guard.js",
             "timeout": 10
           },
@@ -152,7 +173,6 @@
         ]
       }
     ],
-
     "PostToolUse": [
       {
         "matcher": "Read",
@@ -173,9 +193,38 @@
             "timeout": 30
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/definition-lint-gate.js",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/large-output-guard.js",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/console-log-guard.js",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/large-output-guard.js",
+            "timeout": 5
+          }
+        ]
       }
     ],
-
     "SessionEnd": [
       {
         "matcher": "",

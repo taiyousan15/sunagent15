@@ -1,0 +1,108 @@
+{
+  "_comment": "タスク種別からスキルを自動マッピングする設定ファイル",
+  "_version": "1.0.0",
+  "_updated": "2026-01-19",
+
+  "mappings": [
+    {
+      "name": "YouTubeSchool 教材動画生成（限定トリガー）",
+      "description": "YouTubeチャンネルの動画を分析し、日本語教材動画を生成する",
+      "when_contains_all": ["YOUTUBE", "教材", "動画", "生成"],
+      "when_contains_any": [],
+      "required_skills": ["youtubeschool-creator"],
+      "skill_path": "/Users/matsumototoshihiko/Desktop/テスト開発/videoJSON2/.claude/skills/youtube_channel_summary",
+      "priority": 100,
+      "strict": true
+    },
+    {
+      "name": "YouTube動画分析・生成",
+      "description": "YouTube動画を分析して日本語動画を生成",
+      "when_contains_all": ["YOUTUBE", "動画"],
+      "when_contains_any": ["分析", "生成", "まとめ", "日本語化"],
+      "required_skills": ["youtube_channel_summary"],
+      "skill_path": "/Users/matsumototoshihiko/Desktop/テスト開発/videoJSON2/.claude/skills/youtube_channel_summary",
+      "priority": 90,
+      "strict": true
+    },
+    {
+      "name": "YouTubeスライド動画生成",
+      "description": "スライド形式のYouTube動画を生成",
+      "when_contains_all": ["スライド", "動画"],
+      "when_contains_any": ["YOUTUBE", "生成", "作成"],
+      "required_skills": ["youtubeschool-creator"],
+      "skill_path": "/Users/matsumototoshihiko/Desktop/テスト開発/videoJSON2/.claude/skills/youtube_channel_summary",
+      "priority": 85,
+      "strict": true
+    },
+    {
+      "name": "セールスレター作成",
+      "description": "セールスレター・LPのコピー作成",
+      "when_contains_all": ["セールスレター"],
+      "when_contains_any": ["作成", "書く", "作って"],
+      "required_skills": ["sales-letter", "taiyo-style"],
+      "priority": 80,
+      "strict": false
+    },
+    {
+      "name": "ステップメール作成",
+      "description": "ステップメールシーケンスの作成",
+      "when_contains_all": ["ステップメール"],
+      "when_contains_any": ["作成", "書く", "作って"],
+      "required_skills": ["step-mail"],
+      "priority": 80,
+      "strict": false
+    },
+    {
+      "name": "VSL台本作成",
+      "description": "ビデオセールスレターの台本作成",
+      "when_contains_all": [],
+      "when_contains_any": ["VSL", "ビデオセールスレター"],
+      "required_skills": ["vsl", "taiyo-style-vsl"],
+      "priority": 80,
+      "strict": false
+    },
+    {
+      "name": "LP作成・分析",
+      "description": "ランディングページの作成または分析",
+      "when_contains_all": [],
+      "when_contains_any": ["LP", "ランディングページ"],
+      "required_skills": ["lp-analysis", "lp-generator"],
+      "priority": 70,
+      "strict": false
+    },
+    {
+      "name": "YouTubeサムネイル作成",
+      "description": "YouTubeサムネイル画像の作成",
+      "when_contains_all": ["サムネイル"],
+      "when_contains_any": ["YOUTUBE", "作成", "作って"],
+      "required_skills": ["youtube-thumbnail"],
+      "priority": 75,
+      "strict": false
+    },
+    {
+      "name": "画像生成（NanoBanana）",
+      "description": "NanoBanana/Geminiによる画像生成",
+      "when_contains_all": ["画像", "生成"],
+      "when_contains_any": ["NanoBanana", "Gemini", "AI画像"],
+      "required_skills": ["nanobanana-pro", "gemini-image-generator"],
+      "priority": 70,
+      "strict": false
+    },
+    {
+      "name": "セキュリティスキャン",
+      "description": "Trivyによるセキュリティ脆弱性スキャン",
+      "when_contains_all": [],
+      "when_contains_any": ["セキュリティスキャン", "脆弱性スキャン", "Trivy"],
+      "required_skills": ["security-scan-trivy"],
+      "priority": 80,
+      "strict": true
+    }
+  ],
+
+  "settings": {
+    "case_insensitive": true,
+    "match_threshold": 0.8,
+    "block_on_missing_skill": true,
+    "allow_manual_override": false
+  }
+}

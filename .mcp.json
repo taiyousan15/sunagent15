@@ -15,6 +15,47 @@
       "disabled": false,
       "description": "YouTube downloader - download subtitles from YouTube videos",
       "category": "media"
+    },
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "disabled": false,
+      "description": "Context7 - Up-to-date documentation for LLMs. Fetches current docs and code examples to prevent hallucinated APIs.",
+      "category": "documentation"
+    },
+    "gpt-researcher": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "gpt-researcher-mcp", "gpt-researcher-mcp"],
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
+      },
+      "disabled": false,
+      "description": "GPT Researcher - Autonomous deep research agent. Performs comprehensive web research, validates sources, generates citation-backed reports.",
+      "category": "research"
+    },
+    "figma": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "figma-developer-mcp", "--figma-api-key=${FIGMA_API_KEY}", "--stdio"],
+      "disabled": false,
+      "description": "Figma MCP - Access Figma designs for AI-powered code generation. Provides layout, components, and style information.",
+      "category": "design"
+    },
+    "qdrant": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-qdrant"],
+      "env": {
+        "QDRANT_URL": "${QDRANT_URL:-http://localhost:6333}",
+        "COLLECTION_NAME": "${QDRANT_COLLECTION_NAME:-taisun_memory}",
+        "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L6-v2"
+      },
+      "disabled": false,
+      "description": "Qdrant MCP - Vector database for semantic search and RAG. Stores embeddings for long-term memory and knowledge retrieval.",
+      "category": "database"
     }
   }
 }

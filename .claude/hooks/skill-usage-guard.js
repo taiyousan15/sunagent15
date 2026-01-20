@@ -1,21 +1,26 @@
 #!/usr/bin/env node
 /**
- * Skill Usage Guard - スキル使用指示の検出と強制
+ * Skill Usage Guard - スキル使用指示の検出と自動マッピング強制
  *
  * UserPromptSubmit 時に実行され、
- * 「〇〇のスキルを使って」という指示を検出してコンテキストに追加します。
+ * 1. 「〇〇のスキルを使って」という明示的指示を検出
+ * 2. タスク種別から必須スキルを自動推定して強制
  *
- * v2.0: スキル要求を .workflow_state.json に記録し、
- *       後続の手動実装を物理的にブロック可能にする。
+ * v3.0: skill-mapping.json による自動マッピング機能追加
+ *       スキル名を明示しなくても、タスク種別から必須スキルを強制
  *
  * 防止する問題:
  * - スキル使用の指示を無視する
  * - 手動で同等の処理を実装してしまう
+ * - 正しいスキルを使わずに古いワークフローを使ってしまう
  */
 
 const fs = require('fs');
 const path = require('path');
 const stateManager = require('./workflow-state-manager.js');
+
+// スキルマッピング設定ファイルのパス
+const SKILL_MAPPING_PATH = path.join(__dirname, 'config', 'skill-mapping.json');
 
 async function main() {
   let input = {};
@@ -33,7 +38,7 @@ async function main() {
   const prompt = input.prompt || '';
   const context = [];
 
-  // スキル使用パターンを検出
+  // スキル使用パターンを検出（明示的指示）
   const skillPatterns = [
     /([a-zA-Z0-9_-]+)\s*(?:の)?スキルを使(?:って|用)/gi,
     /(?:use|using)\s+(?:the\s+)?([a-zA-Z0-9_-]+)\s+skill/gi,
@@ -64,14 +69,43 @@ async function main() {
     }
   });
 
+  // ===== 新機能: タスク種別から自動マッピング =====
+  const autoMappedSkills = detectAutoMappedSkills(prompt);
+
   // コンテキストを追加
-  if (detectedSkills.length > 0 || requiresSameWorkflow) {
+  const hasExplicitSkills = detectedSkills.length > 0;
+  const hasAutoMappedSkills = autoMappedSkills.length > 0;
+  const hasAnyRequirement = hasExplicitSkills || hasAutoMappedSkills || requiresSameWorkflow;
+
+  if (hasAnyRequirement) {
     context.push('');
-    context.push('=== SKILL USAGE GUARD ===');
+    context.push('=== SKILL USAGE GUARD (v3.0) ===');
     context.push('');
 
-    if (detectedSkills.length > 0) {
-      context.push('**MANDATORY: ユーザーが指定したスキルを使用してください**');
+    // 自動マッピングされたスキル（最優先）
+    if (hasAutoMappedSkills) {
+      context.push('**MANDATORY: タスク種別から必須スキルが自動検出されました**');
+      context.push('');
+      autoMappedSkills.forEach(mapping => {
+        context.push(`【${mapping.name}】`);
+        context.push(`  説明: ${mapping.description}`);
+        context.push(`  必須スキル: ${mapping.required_skills.join(', ')}`);
+        if (mapping.skill_path) {
+          context.push(`  スキルパス: ${mapping.skill_path}`);
+        }
+        if (mapping.strict) {
+          context.push(`  **STRICT MODE**: このスキルを使わない実装はブロックされます`);
+        }
+        context.push('');
+      });
+      context.push('**WARNING**: 上記スキルを呼び出さずに手動実装することは禁止です。');
+      context.push('必ず Skill ツールまたは /スキル名 コマンドを使用してください。');
+      context.push('');
+    }
+
+    // 明示的に指定されたスキル
+    if (hasExplicitSkills) {
+      context.push('**MANDATORY: ユーザーが明示的に指定したスキル**');
       context.push('');
       context.push('検出されたスキル:');
       [...new Set(detectedSkills)].forEach(skill => {
@@ -103,7 +137,12 @@ async function main() {
   }
 
   // スキル要求を .workflow_state.json に記録
-  if (detectedSkills.length > 0 || requiresSameWorkflow) {
+  const allRequiredSkills = [
+    ...detectedSkills,
+    ...autoMappedSkills.flatMap(m => m.required_skills)
+  ];
+
+  if (allRequiredSkills.length > 0 || requiresSameWorkflow) {
     const cwd = input.cwd || process.cwd();
     let state = stateManager.loadState(cwd);
 
@@ -117,12 +156,22 @@ async function main() {
       state.evidence.required_skills = {};
     }
 
-    detectedSkills.forEach(skill => {
+    allRequiredSkills.forEach(skill => {
       state.evidence.required_skills[skill] = {
         requestedAt: new Date().toISOString(),
-        used: false
+        used: false,
+        autoMapped: !detectedSkills.includes(skill)
       };
     });
+
+    // 自動マッピング情報を記録
+    if (autoMappedSkills.length > 0) {
+      state.meta.autoMappedSkills = autoMappedSkills.map(m => ({
+        name: m.name,
+        required_skills: m.required_skills,
+        strict: m.strict
+      }));
+    }
 
     // 「同じワークフロー」要求を記録
     if (requiresSameWorkflow) {
@@ -138,6 +187,78 @@ async function main() {
   }
 
   process.exit(0);
+}
+
+/**
+ * タスク種別からスキルを自動マッピング
+ */
+function detectAutoMappedSkills(prompt) {
+  const mappings = loadSkillMappings();
+  if (!mappings || !mappings.mappings) {
+    return [];
+  }
+
+  const settings = mappings.settings || {};
+  const caseInsensitive = settings.case_insensitive !== false;
+
+  const normalizedPrompt = caseInsensitive ? prompt.toUpperCase() : prompt;
+  const matched = [];
+
+  for (const mapping of mappings.mappings) {
+    const { when_contains_all, when_contains_any, priority } = mapping;
+
+    // when_contains_all: 全てのキーワードが含まれている必要がある
+    let allMatch = true;
+    if (when_contains_all && when_contains_all.length > 0) {
+      for (const keyword of when_contains_all) {
+        const normalizedKeyword = caseInsensitive ? keyword.toUpperCase() : keyword;
+        if (!normalizedPrompt.includes(normalizedKeyword)) {
+          allMatch = false;
+          break;
+        }
+      }
+    }
+
+    if (!allMatch) continue;
+
+    // when_contains_any: いずれかのキーワードが含まれている必要がある
+    let anyMatch = false;
+    if (!when_contains_any || when_contains_any.length === 0) {
+      anyMatch = true; // anyが指定されていなければOK
+    } else {
+      for (const keyword of when_contains_any) {
+        const normalizedKeyword = caseInsensitive ? keyword.toUpperCase() : keyword;
+        if (normalizedPrompt.includes(normalizedKeyword)) {
+          anyMatch = true;
+          break;
+        }
+      }
+    }
+
+    if (allMatch && anyMatch) {
+      matched.push({ ...mapping, matchedPriority: priority || 0 });
+    }
+  }
+
+  // 優先度でソート（高い順）
+  matched.sort((a, b) => (b.matchedPriority || 0) - (a.matchedPriority || 0));
+
+  return matched;
+}
+
+/**
+ * スキルマッピング設定を読み込む
+ */
+function loadSkillMappings() {
+  try {
+    if (fs.existsSync(SKILL_MAPPING_PATH)) {
+      const content = fs.readFileSync(SKILL_MAPPING_PATH, 'utf8');
+      return JSON.parse(content);
+    }
+  } catch (e) {
+    console.error(`Warning: Failed to load skill mappings: ${e.message}`);
+  }
+  return null;
 }
 
 function readStdin(timeout = 1000) {

@@ -1,255 +1,262 @@
-# TAISUN Agent v2.4.1 - 配布ガイド
+# TAISUN Agent v2.5.1 - 配布ガイド
 
-このドキュメントは、TAISUN Agent v2.4.1 を他の人に渡す時の手順書です。
-
----
-
-## 📦 配布物一覧
-
-### 必須ファイル
-
-1. **リリースノート**
-   - `RELEASE_v2.4.0.md` - Workflow Guardian Phase 3
-   - `RELEASE_v2.4.1.md` - Super Memory Phase 3（完全自動化）
-
-2. **変更履歴**
-   - `CHANGELOG.md` - 全バージョンの変更履歴
-
-3. **クイックスタート**
-   - `docs/WORKFLOW_PHASE3_QUICKSTART.md` - ワークフロー機能ガイド
-   - `docs/SUPER_MEMORY_README.md` - スーパーメモリー機能ガイド
-
-4. **Phase 3 Super Memory 必須ファイル**
-   ```
-   .claude/settings.json              # フック設定（Phase 3形式）
-   .claude/hooks/auto-memory-saver.js # 自動保存フック
-   .claude/hooks/workflow-guard-bash.sh  # Bashコマンドガード
-   .claude/hooks/workflow-guard-write.sh # ファイル書き込みガード
-   config/proxy-mcp/auto-memory.json  # 自動保存設定
-   ```
-
-5. **コード一式**
-   - Git リポジトリ全体
+このドキュメントは、TAISUN Agent v2.5.1 を他の人に渡す時の手順書です。
 
 ---
 
-## 🚀 配布方法
+## 📦 システム概要
 
-### 方法1：Git経由（推奨）
+| コンポーネント | 数 | 説明 |
+|---------------|-----|------|
+| **Agents** | 82 | AI専門エージェント |
+| **Skills** | 70 | マーケティング・開発スキル |
+| **Hooks** | 13 | 8層防御システム |
+| **MCP Tools** | 227 | 自動化ツール |
+
+---
+
+## 🚀 インストール手順
+
+### 新規インストール（5分）
 
 ```bash
-# リモートリポジトリにプッシュ
-git push origin main
-git push origin v2.4.0
-
-# 受け取る人の操作
-git clone <repository-url>
-cd taisun_agent
-git checkout v2.4.0
-npm install
-```
-
-### 方法2：ZIPファイル
-
-```bash
-# アーカイブ作成
-git archive --format=zip --output=taisun_agent_v2.4.0.zip v2.4.0
-
-# 配布
-# → taisun_agent_v2.4.0.zip を渡す
-```
-
-### 方法3：GitHub Release（一番簡単）
-
-1. GitHubのリポジトリページを開く
-2. "Releases" → "Create a new release"
-3. タグ: `v2.4.0` を選択
-4. タイトル: `TAISUN Agent v2.4.0 - Workflow Guardian Phase 3`
-5. 説明: `RELEASE_v2.4.0.md` の内容をコピペ
-6. "Publish release" をクリック
-
----
-
-## 📧 配布時のメッセージテンプレート
-
-### Slackやメール用
-
-```
-【TAISUN Agent v2.4.0 リリースのお知らせ】
-
-ワークフローシステムがパワーアップしました！🎉
-
-＜主な新機能＞
-📍 条件分岐 - 状況に応じて次の手順が自動で変わる
-⚡ 並列実行 - 複数の作業を同時に進められる
-🔄 ロールバック - 前の段階にやり直せる
-
-＜使い始めるには＞
-1. git pull origin main
-2. npm install
-3. docs/WORKFLOW_PHASE3_QUICKSTART.md を読む
-
-詳細はリポジトリの RELEASE_v2.4.0.md をご覧ください。
-
-質問があればお気軽にどうぞ！
-```
-
----
-
-## 📋 受け取った人がやること
-
-### ステップ1：インストール（2分）
-
-```bash
-# リポジトリを取得（初回のみ）
-git clone <repository-url>
+# 1. リポジトリをクローン
+git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 
-# または、既にある人は更新
-git pull origin main
-git checkout v2.4.1
-
-# 依存パッケージをインストール
+# 2. Node.js依存パッケージをインストール
 npm install
 
-# フックスクリプトに実行権限を付与
+# 3. Python依存パッケージをインストール（オプション）
+pip install -r requirements.txt
+
+# 4. フックスクリプトに実行権限を付与
 chmod +x .claude/hooks/*.sh .claude/hooks/*.js
+chmod +x scripts/*.sh
+
+# 5. TypeScriptをビルド
+npm run build:all
+
+# 6. 動作確認
+./scripts/test-agents.sh
 ```
 
-### ステップ2：動作確認（3分）
+### 既存環境のアップデート（2分）
+
+```bash
+# 1. 最新版を取得
+cd taisun_agent
+git pull origin main
+
+# 2. 依存パッケージを更新
+npm install
+pip install -r requirements.txt 2>/dev/null || true
+
+# 3. ビルド
+npm run build:all
+
+# 4. 動作確認
+./scripts/test-agents.sh
+```
+
+---
+
+## ✅ 動作確認
+
+### 基本チェック（1分）
 
 ```bash
 # バージョン確認
-cat package.json | grep version
-# → "version": "2.4.1" と表示されればOK
+cat package.json | grep '"version"'
+# → "version": "2.5.0" 以上ならOK
 
-# テスト実行
-npm test -- --selectProjects=workflow-phase3 --runInBand
-# → 50 tests passed と表示されればOK ✅
+# Hook構文チェック
+for f in .claude/hooks/*.js; do node --check "$f" && echo "OK: $(basename $f)"; done
 
-# Phase 3 Super Memory テスト
-echo '{"tool_name":"Test","tool_response":"test"}' | node .claude/hooks/auto-memory-saver.js
-# → エラーなく終了すればOK ✅
+# エージェント数確認
+ls -1 .claude/agents/*.md | wc -l
+# → 82 と表示されればOK
 ```
 
-### ステップ3：Phase 3 Super Memory 確認（2分）
+### 詳細テスト（3分）
 
 ```bash
-# 設定ファイル確認
-cat .claude/settings.json | grep -A 5 '"hooks"'
-# → "PostToolUse", "PreToolUse", "SessionEnd" が設定されていればOK
+# 全体テスト
+./scripts/test-agents.sh
 
-# 自動保存設定確認
-cat config/proxy-mcp/auto-memory.json | grep '"enabled"'
-# → "enabled": true と表示されればOK
-```
-
-### ステップ4：使い始める（5分）
-
-```bash
-# ワークフロー機能
-npm run workflow:start video_generation_v1
-
-# スーパーメモリー機能
-# → 自動で動作！50KB以上の出力は自動保存されます
-# → セッション終了時に統計が表示されます
+# 期待される結果:
+# ✓ PASS: 13/13 hooks
+# ✓ PASS: 82 agents
+# ✓ PASS: 70 skills
+# ✓ All tests passed!
 ```
 
 ---
 
-## ❓ よくある質問（FAQ）
+## 🔧 環境変数設定（オプション）
 
-### Q1: 既存のワークフローは動く？
-
-**A: はい！** 完全な後方互換性があります。Phase 1/2 のワークフローはそのまま動きます。
-
-### Q2: 新機能を使うには設定が必要？
-
-**A: いいえ！** 新しいワークフロー定義を書くだけで使えます。
-
-### Q3: テストが失敗する
-
-**A: `--runInBand` を付けてください**
+外部MCPを使用する場合のみ設定してください。
 
 ```bash
-npm test -- --selectProjects=workflow-phase3 --runInBand
-```
+# ~/.zshrc または ~/.bashrc に追加
 
-### Q4: どこから始めればいい？
+# GitHub MCP（Issue/PR操作）
+export GITHUB_TOKEN="ghp_xxxxxxxxxxxx"
+# 取得: https://github.com/settings/tokens
 
-**A: クイックスタートから！**
+# Notion MCP（ドキュメント連携）
+export NOTION_API_KEY="secret_xxxxxxxxxxxx"
+# 取得: https://www.notion.so/my-integrations
 
-```bash
-# 5分で基本を学べます
-cat docs/WORKFLOW_PHASE3_QUICKSTART.md
+# PostgreSQL MCP（データベース分析）
+export POSTGRES_DSN="postgresql://user:pass@localhost:5432/db"
 ```
 
 ---
 
-## 🆘 サポート
+## 📂 重要ファイル一覧
 
-### 困った時の連絡先
+### 設定ファイル
 
-- **GitHub Issues**: バグ報告・機能要望
-- **Discord**: 質問・相談
-- **メール**: 個別サポート
+| ファイル | 説明 |
+|----------|------|
+| `.claude/settings.json` | Hook設定・8層防御 |
+| `.claude/CLAUDE.md` | システム契約・ルール |
+| `config/proxy-mcp/*.json` | MCP設定 |
 
-### よく読まれるドキュメント
+### 実行ファイル
 
-1. `RELEASE_v2.4.0.md` - 全体像を把握
-2. `docs/WORKFLOW_PHASE3_QUICKSTART.md` - 実践的なチュートリアル
-3. `CHANGELOG.md` - 詳細な変更履歴
+| ファイル | 説明 |
+|----------|------|
+| `.claude/hooks/*.js` | JavaScriptフック（13個） |
+| `.claude/hooks/*.sh` | Bashフック（2個） |
+| `scripts/test-agents.sh` | システムテスト |
+| `scripts/audit-unused-resources.sh` | リソース監査 |
+
+### ドキュメント
+
+| ファイル | 説明 |
+|----------|------|
+| `CHANGELOG.md` | 変更履歴 |
+| `DISTRIBUTION_GUIDE.md` | このファイル |
+| `docs/WORKFLOW_PHASE3_QUICKSTART.md` | ワークフロー入門 |
+
+---
+
+## 🎯 使い方
+
+### Claude Codeで使用
+
+```bash
+# プロジェクトディレクトリで起動
+cd taisun_agent
+claude
+
+# 以下のコマンドが使えます:
+# /agent-run      - エージェント実行
+# /-status  - 状態確認
+# /verify         - システム検証
+```
+
+### スキル呼び出し
+
+```bash
+# Claude Code内で
+/copywriting-helper
+/youtube-thumbnail
+/security-scan
+/taiyo-style-headline
+```
+
+### ワークフロー実行
+
+```bash
+npm run workflow:start <workflow_name>
+npm run workflow:status
+npm run workflow:next
+```
+
+---
+
+## ❓ トラブルシューティング
+
+### Q1: テストが失敗する
+
+```bash
+# 実行権限を付与
+chmod +x .claude/hooks/*.sh .claude/hooks/*.js
+
+# 再テスト
+./scripts/test-agents.sh
+```
+
+### Q2: npm install でエラー
+
+```bash
+# キャッシュクリア
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Q3: ビルドエラー
+
+```bash
+# TypeScript再インストール
+npm install typescript --save-dev
+npm run build:all
+```
+
+### Q4: MCP Proxyが "unhealthy"
+
+```bash
+# これは正常です（イベントがない状態）
+# 何か操作すると "healthy" になります
+```
 
 ---
 
 ## 📊 チェックリスト
 
-配布前に確認してください：
+### 配布前（送る側）
 
-- [ ] テストが全て通る（50/50 PASS）
-- [ ] ドキュメントが最新
-- [ ] バージョン番号が正しい（2.4.0）
-- [ ] Gitタグが作成されている（v2.4.0）
-- [ ] コミットがプッシュされている
+- [x] git push 完了
+- [x] テスト通過（./scripts/test-agents.sh）
+- [x] ドキュメント更新
+- [x] バージョン番号正しい
 
-受け取った人が確認すること：
+### 受け取り後（受ける側）
 
-- [ ] git pull / git clone できた
-- [ ] npm install が成功した
-- [ ] バージョンが 2.4.0 になっている
-- [ ] テストが通る（--runInBand 付き）
-- [ ] サンプルワークフローが動く
-
----
-
-## 🎓 学習パス
-
-おすすめの学習順序：
-
-1. **まず読む**（10分）
-   - RELEASE_v2.4.0.md - 何ができるか理解
-
-2. **実践する**（15分）
-   - docs/WORKFLOW_PHASE3_QUICKSTART.md - 手を動かす
-
-3. **応用する**（30分）
-   - 自分の仕事の流れをワークフローにしてみる
-
-4. **深掘りする**（必要に応じて）
-   - docs/WORKFLOW_PHASE3_DESIGN.md - 設計を理解
-   - テストコードを読む - 実装を学ぶ
+- [ ] git clone / git pull 成功
+- [ ] npm install 成功
+- [ ] pip install 成功（オプション）
+- [ ] chmod +x 実行
+- [ ] npm run build:all 成功
+- [ ] ./scripts/test-agents.sh 通過
 
 ---
 
 ## 📅 リリース情報
 
-- **バージョン**: 2.4.0
-- **リリース日**: 2026年1月15日
-- **前バージョン**: 2.3.0
-- **次の予定**: Phase 4（スケジューリング・通知機能）
+- **バージョン**: 2.5.1
+- **リリース日**: 2026年1月18日
+- **リポジトリ**: https://github.com/san15/taisun_agent
+
+### 主な機能
+
+- 82エージェント統合システム
+- 8層防御システム
+- 70スキル（マーケティング・開発）
+- MCP統合（227ツール）
+- Agent OS（Python版）
 
 ---
 
-**配布準備完了！** 🚀
+## 🆘 サポート
 
-何か問題があれば、すぐに連絡してください。
+- **GitHub Issues**: バグ報告・機能要望
+- **CLAUDE.md**: システムルール・契約
+
+---
+
+**配布準備完了！**
