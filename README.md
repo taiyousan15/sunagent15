@@ -11,7 +11,40 @@
 
 ---
 
-## アップデートのお知らせ
+
+> **2026-01-21: v2.6.0 13層防御システム完成・新スキル追加 🛡️**
+>
+> AIの暴走を完全に防止する**13層防御システム**を完成させ、新しいスキルとMCP統合を追加しました。
+>
+> ### 13層防御システム
+> | Layer | Guard | 機能 |
+> |-------|-------|------|
+> | 0 | CLAUDE.md | 絶対遵守ルール |
+> | 1-7 | Core Guards | 状態注入・権限・編集・スキル制御 |
+> | 8-9 | Safety Guards | 文字化け防止・インジェクション検出 |
+> | 10-12 | Quality Guards | スキル自動選択・定義検証・品質ガイド |
+>
+> ### 新スキル
+> - **diagram-illustration**: NanoBanana Proを使った図解・インフォグラフィック作成
+> - **taiyo-analyzer**: 176パターンに基づくコピーライティング品質分析
+>
+> ### 新MCP統合
+> - **context7-docs**: 最新フレームワークドキュメント取得（ハルシネーション防止）
+> - **figma-design**: Figmaデザイン→コード変換
+> - **gpt-researcher**: 自律型深層リサーチ（引用付きレポート生成）
+> - **qdrant-memory**: ベクトル検索・長期記憶
+> - **hierarchical-memory**: Mem0ベース3層メモリアーキテクチャ
+>
+> ### インストール・アップデート
+> ```bash
+> git clone https://github.com/san15/taisun_agent.git
+> cd taisun_agent && npm install && npm run build:all
+> ```
+>
+> 詳細: [DISTRIBUTION_GUIDE.md](DISTRIBUTION_GUIDE.md)
+
+---
+
 
 > **2026-01-18: v2.5.1 システム総合検証・安定化リリース 🎯**
 >
@@ -316,7 +349,7 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 |-----------|-------|-------------|
 | **AI Agents** | 82 | 専門家エージェント (AIT42 +  + Diagnostics) |
 | **Skills** | 70 | マーケティング・インフラ自動化スキル |
-| **Hooks** | 13 | 8層防御システム |
+| **Hooks** | 13 | 13層防御システム |
 | **Commands** | 77 | ショートカットコマンド（OpenCode統合含む） |
 | **MCP Servers** | 32 | 外部サービス連携 |
 | **MCP Tools** | 227 | 統合ツール群 |
