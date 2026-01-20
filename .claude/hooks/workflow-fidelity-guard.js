@@ -269,7 +269,7 @@ function evaluatePreToolUse(toolName, toolInput, state, isStrict, cwd) {
 
         // Phase 6: strict時は探索+Read+決定が必要
         if (isStrict && state) {
-          const readBeforeCreateCheck = checkReadBeforeCreate(state, filePath);
+          const readBeforeCreateCheck = stateManager.validateNewFileCreation(state, filePath);
           if (!readBeforeCreateCheck.valid) {
             result.blocked = true;
             result.reason = `【安全停止】新規ファイル作成前に必要な手順が完了していません。`;
@@ -297,61 +297,7 @@ function isBaselineFile(filePath) {
   return BASELINE_PATTERNS.some(p => p.test(filePath));
 }
 
-/**
- * Phase 6: Read Before Create チェック
- * 新規ファイル作成前に必要な手順が完了しているか確認
- */
-function checkReadBeforeCreate(state, newFilePath) {
-  const checks = {
-    hasSearch: false,
-    hasRead: false,
-    hasDecision: false,
-    searchCount: 0,
-    readCount: 0,
-    decisionCount: 0
-  };
-
-  // 証跡から探索/Read/決定の有無をチェック
-  const evidence = state.evidence.skillEvidence || [];
-  const recentEvidence = evidence.slice(-20); // 直近20件をチェック
-
-  for (const ev of recentEvidence) {
-    if (ev.type === stateManager.EVIDENCE_TYPES.SEARCH_REPO) {
-      checks.hasSearch = true;
-      checks.searchCount++;
-    }
-    if (ev.type === stateManager.EVIDENCE_TYPES.READ_FILE) {
-      checks.hasRead = true;
-      checks.readCount++;
-    }
-    if (ev.type === stateManager.EVIDENCE_TYPES.DECISION_MADE) {
-      checks.hasDecision = true;
-      checks.decisionCount++;
-    }
-  }
-
-  // 既存のRead履歴も確認
-  if (state.evidence.read_log && state.evidence.read_log.length > 0) {
-    checks.hasRead = true;
-    checks.readCount = Math.max(checks.readCount, state.evidence.read_log.length);
-  }
-
-  // 決定証跡は state.decisions.assetReuse からも確認
-  if (state.decisions.assetReuse && state.decisions.assetReuse.length > 0) {
-    checks.hasDecision = true;
-    checks.decisionCount = Math.max(checks.decisionCount, state.decisions.assetReuse.length);
-  }
-
-  // 条件: 探索または決定が必要
-  // 最低限、Readまたは決定が必要（探索なしでも明確な決定があればOK）
-  const valid = (checks.hasSearch || checks.hasRead) && (checks.hasDecision || checks.readCount >= 2);
-
-  return {
-    valid: valid,
-    checks: checks,
-    message: valid ? '' : '探索+Read+決定が不足しています'
-  };
-}
+// Note: checkReadBeforeCreate moved to stateManager.validateNewFileCreation
 
 /**
  * Read Before Create ブロックメッセージ (Phase 6)

@@ -3,13 +3,16 @@
  *
  * Phase 9: 論理違反が止まることをテストで固定
  *
- * テスト対象:
- * 1. Intent Contract 未確定では危険操作ができない
- * 2. reference_analysis 未生成で生成工程が block される
- * 3. sha256不一致で block される
- * 4. 探索/Read/decision無しの新規作成が block される
- * 5. requiredEvidence未達で step complete が fail する
- * 6. lint fail で start/resume/strict が block される
+ * テスト対象（5大シナリオ + 補助）:
+ * (1) Intent Contract無しでBashが止まる → Phase 1 tests
+ * (2) referenceAssetsあり & analysis無しで生成工程が止まる → Phase 2 tests
+ * (3) sha256不一致（すり替え）が止まる → Phase 5 tests
+ * (4) 探索無し新規作成が止まる → Phase 6 tests (直接テスト)
+ * (5) 定義lint failでstart/resume/strictがblock → Phase 7 tests
+ *
+ * 補助テスト:
+ * - requiredEvidence未達で step complete が fail する → Phase 3 & 4 tests
+ * - State Version 検証 → State Version tests
  */
 
 import * as fs from 'fs';
@@ -184,6 +187,43 @@ allowed_deviations_policy:
       expect(provenanceCheck.valid).toBe(false);
       expect(provenanceCheck.reason).toBe('provenance_mismatch');
       expect(provenanceCheck.mismatches.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Phase 6: Read Before Create Gate', () => {
+    test('Read証跡なしで新規ファイル作成が block される (シナリオ4直接テスト)', () => {
+      const state = stateManager.createInitialState('test-workflow', true);
+
+      // スキル開始
+      stateManager.startSkill(state, 'test-skill');
+      stateManager.startStep(state, 'step-1');
+
+      // Read/Search/Decision 証跡なしで新規ファイル作成を検証
+      const validation = stateManager.validateNewFileCreation(state, '/new/create_video.py');
+
+      expect(validation.valid).toBe(false);
+      expect(validation.reason).toBe('no_read_evidence');
+      expect(validation.checks.hasRead).toBe(false);
+      expect(validation.checks.hasSearch).toBe(false);
+    });
+
+    test('Read証跡ありで新規ファイル作成が許可される', () => {
+      const state = stateManager.createInitialState('test-workflow', true);
+
+      // スキル開始
+      stateManager.startSkill(state, 'test-skill');
+      stateManager.startStep(state, 'step-1');
+
+      // 証跡を記録（探索＋Read＋決定）
+      stateManager.captureSearchEvidence(state, 'glob', '*.py', ['existing.py']);
+      stateManager.captureReadEvidence(state, '/existing/file.py', 'session-1');
+      stateManager.captureDecisionEvidence(state, 'create_new', '既存に適切なファイルがないため新規作成');
+
+      // 新規ファイル作成を検証
+      const validation = stateManager.validateNewFileCreation(state, '/new/create_video.py');
+
+      expect(validation.valid).toBe(true);
+      expect(validation.reason).toBe(null);
     });
   });
 

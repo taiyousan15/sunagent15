@@ -595,6 +595,65 @@ function hasRequiredEvidence(state, stepId, requiredTypes) {
   };
 }
 
+// ===== Phase 6: Read Before Create Gate =====
+
+/**
+ * 新規ファイル作成前に必要な探索/Read/決定があるか検証
+ * PreToolUse の Write/Edit 時に呼び出し、証跡が不足していればブロック
+ */
+function validateNewFileCreation(state, filePath) {
+  const checks = {
+    hasSearch: false,
+    hasRead: false,
+    hasDecision: false,
+    searchCount: 0,
+    readCount: 0,
+    decisionCount: 0
+  };
+
+  // 証跡から探索/Read/決定の有無をチェック
+  const evidence = state.evidence.skillEvidence || [];
+  const recentEvidence = evidence.slice(-20); // 直近20件をチェック
+
+  for (const ev of recentEvidence) {
+    if (ev.type === EVIDENCE_TYPES.SEARCH_REPO) {
+      checks.hasSearch = true;
+      checks.searchCount++;
+    }
+    if (ev.type === EVIDENCE_TYPES.READ_FILE) {
+      checks.hasRead = true;
+      checks.readCount++;
+    }
+    if (ev.type === EVIDENCE_TYPES.DECISION_MADE) {
+      checks.hasDecision = true;
+      checks.decisionCount++;
+    }
+  }
+
+  // 既存のRead履歴も確認
+  if (state.evidence.read_log && state.evidence.read_log.length > 0) {
+    checks.hasRead = true;
+    checks.readCount = Math.max(checks.readCount, state.evidence.read_log.length);
+  }
+
+  // 決定証跡は state.decisions.assetReuse からも確認
+  if (state.decisions.assetReuse && state.decisions.assetReuse.length > 0) {
+    checks.hasDecision = true;
+    checks.decisionCount = Math.max(checks.decisionCount, state.decisions.assetReuse.length);
+  }
+
+  // 条件: 探索または決定が必要
+  // 最低限、Readまたは決定が必要（探索なしでも明確な決定があればOK）
+  const valid = (checks.hasSearch || checks.hasRead) && (checks.hasDecision || checks.readCount >= 2);
+
+  return {
+    valid: valid,
+    checks: checks,
+    reason: valid ? null : 'no_read_evidence',
+    message: valid ? '' : '探索+Read+決定が不足しています'
+  };
+}
+
 // ===== Phase 4: Skill Step Transition Gate =====
 
 /**
@@ -946,6 +1005,8 @@ module.exports = {
   captureSkillEvidence,
   captureDecisionEvidence,
   hasRequiredEvidence,
+  // Phase 6: Read Before Create Gate
+  validateNewFileCreation,
   // Phase 4: Skill Step Transition Gate
   startSkill,
   startStep,
