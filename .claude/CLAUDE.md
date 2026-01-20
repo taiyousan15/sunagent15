@@ -46,9 +46,9 @@
 - 手動実装は**絶対禁止**
 - スキルを呼び出さずに後工程に進むことは**ブロック**される
 
-### 6. 8層防御システム
+### 6. 13層防御システム
 
-このシステムは以下の8層で防御されています：
+このシステムは以下の13層で防御されています：
 
 | Layer | Guard | 機能 |
 |-------|-------|------|
@@ -60,8 +60,29 @@
 | 5 | Skill Evidence | スキル証跡なしで後工程ブロック |
 | 6 | Deviation Approval | 勝手な行動の事前承認要求 |
 | 7 | Agent Enforcement | 複雑タスクでエージェント使用を強制 |
+| 8 | Copy Safety | U+FFFD/U+3000/コピーマーカーをブロック |
+| 9 | Input Sanitizer | コマンドインジェクション/機密情報漏洩を検出 |
+| 10 | Skill Auto-Select | タスク種別から必須スキルを自動強制 |
+| 11 | Definition Lint | workflow/policy定義の検証 |
+| 12 | Context Quality | tmux推奨 + console.log警告（品質ガイド） |
 
 **違反はexit code 2でブロックされ、実行不能になります。**
+**Layer 12は警告のみ（品質優先のため強制しない）**
+
+### 7. スキル自動マッピング（v3.0新機能）
+
+タスク種別から必須スキルを自動検出・強制します：
+
+| トリガー | 必須スキル |
+|----------|------------|
+| YOUTUBE + 教材 + 動画 + 生成 | youtubeschool-creator |
+| YOUTUBE + 動画 + (分析/生成/まとめ) | youtube_channel_summary |
+| スライド + 動画 | youtubeschool-creator |
+| セールスレター | sales-letter, taiyo-style |
+| ステップメール | step-mail |
+| VSL/ビデオセールスレター | vsl, taiyo-style-vsl |
+
+設定ファイル: `.claude/hooks/config/skill-mapping.json`
 
 ---
 
@@ -74,11 +95,11 @@ AIエージェント、MCPツール、マーケティングスキルを完全統
 | Component | Count | Active | Description |
 |-----------|-------|--------|-------------|
 | **Agents** | 82 | 11 | AIT42 + 統合エージェント |
-| **Skills** | 70 | 59 | マーケティング・クリエイティブ・インフラ |
+| **Skills** | 75 | 64 | マーケティング・クリエイティブ・インフラ |
 | **Commands** | 82 | 49 | ショートカットコマンド |
-| **MCP Servers** | 32 | - | 外部サービス連携 |
+| **MCP Servers** | 36 | - | 外部サービス連携 |
 | **MCP Tools** | 227 | - | 自動化ツール群 |
-| **Defense Layers** | 8 | 8 | 防御層システム |
+| **Defense Layers** | 13 | 13 | 防御層システム |
 
 ## Architecture
 
@@ -178,6 +199,7 @@ taisun_v2/.claude/
 | `education-framework` | 6つの教育要素 |
 | `line-marketing` | LINEマーケティング |
 | `sales-systems` | セールスシステム |
+| `lp-json-generator` | LP画像のテキスト差し替え生成 |
 
 ### Content Creation (10)
 | Skill | Description |
@@ -233,16 +255,17 @@ taisun_v2/.claude/
 
 ## MCP Integration
 
-### MCP Servers (32)
+### MCP Servers (36)
 
 | Category | Servers |
 |----------|---------|
 | **Development** | ide-integration, github-enhanced, project-context, github, gitlab, greptile |
 | **Productivity** | asana, atlassian, linear, notion |
 | **Infrastructure** | firebase, supabase, vercel, docker |
-| **Database** | postgres-ro, postgres-rw |
+| **Database** | postgres-ro, postgres-rw, qdrant |
 | **Communication** | slack |
-| **AI** | context-engineering, context7, serena |
+| **AI** | context-engineering, context7, serena, gpt-researcher |
+| **Design** | figma |
 | **Automation** | , -mcp |
 | **Media** | youtube-automation, remotion-documentation |
 | **Testing** | playwright |
@@ -316,6 +339,60 @@ taisun_v2/.claude/
 「システムの状態を確認」      → system-diagnostician が診断
 ```
 
+### Context7: 最新ドキュメント取得（ハルシネーション防止）
+```
+「use context7 でNext.js 15のApp Routerについて教えて」
+「use context7 React 19の新機能でコンポーネントを作って」
+「use context7 Tailwind v4の設定方法」
+
+→ 訓練データではなく、最新の公式ドキュメントから取得
+→ 存在しないAPIの生成（ハルシネーション）を防止
+```
+
+### GPT Researcher: 自律型深層リサーチ
+```
+「AIエージェントフレームワークの最新動向を調査して」
+「予測市場プラットフォームの競合分析をして」
+「2026年のSaaS市場トレンドをレポートにまとめて」
+
+→ 数百ソースを自律的に探索・検証
+→ 引用付きの包括的レポートを生成
+→ Carnegie Mellon大学ベンチマークで最高評価
+```
+
+### Figma: デザイン→コード変換
+```
+「このFigmaデザインを実装して: https://www.figma.com/file/...」
+「FigmaのButtonコンポーネントをReactで作って」
+「Figmaからデザイントークンを抽出して」
+
+→ デザインファイルに直接アクセス
+→ 正確な色・スペーシング・タイポグラフィ値を取得
+→ ピクセルパーフェクトな実装を実現
+```
+
+### Qdrant: ベクトル検索・長期記憶
+```
+「このパターンを覚えておいて」
+「以前話した認証の実装方法は？」
+「類似のコードパターンを検索して」
+
+→ セマンティック検索で意味的に類似した情報を取得
+→ セッションをまたいだ永続的な記憶
+→ RAG（検索拡張生成）で精度向上
+```
+
+### 階層メモリ: Mem0ベース3層アーキテクチャ
+```
+短期記憶 → taisun-proxy (セッション内)
+長期記憶 → Qdrant (永続ベクトル)
+エピソード → claude-mem (決定履歴)
+
+→ Mem0研究に基づく26%精度向上
+→ 91%レイテンシ削減、90%トークン節約
+→ 自動統合でセッション終了時に重要情報を永続化
+```
+
 ## MANDATORY PRE-FLIGHT CHECKS (絶対遵守)
 
 ### BEFORE ANY ACTION - 必ず実行せよ
@@ -357,6 +434,15 @@ taisun_v2/.claude/
 ---
 
 ## Guidelines
+
+### Context Management（品質優先）
+コンテキスト効率より**品質が最優先**。必要であれば多くのファイルを読んで良い。
+詳細: `.claude/rules/context-management.md`
+
+| 項目 | 推奨値 | 理由 |
+|------|--------|------|
+| 有効化MCP | 10個以下 | コンテキスト縮小防止 |
+| アクティブツール | 80個以下 | 200k→70k縮小を防ぐ |
 
 ### Development
 1. **TDD First** - テスト駆動開発
