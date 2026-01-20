@@ -1,0 +1,232 @@
+# Intent Contract
+# Session: 2026-01-20
+# Purpose: Define session intent, goals, and constraints
+# Version: 2.0.0 (Required Fields Compliant)
+
+# =============================================================================
+# REQUIRED FIELDS (Intent Contract First Gate)
+# =============================================================================
+
+# タスクの目的（必須）
+objective: |
+  taisun_master_guard_spec.yaml に基づき、13層防御システムを強化する。
+  Phase 0-9 を順に実装し、論理的ワークフロー違反（Stepスキップ/入力すり替え/
+  既存無視/契約無視）を物理的に不可能にする。
+
+# やらないこと（必須）
+non_goals:
+  - "TAISUN-Apex (ACI/GraphRAG/DSPy/PyRIT/LangGraph) の実装（ユーザー承認待ち）"
+  - "既存の動作するコードの大幅な書き換え"
+  - "MCP Marketの常駐有効化"
+  - "外部依存でのガード（repo内Hook/stateで完結）"
+
+# 入力（必須）
+inputs:
+  reference_files:
+    - "docs/taisun_master_guard_spec.yaml"
+    - ".claude/CLAUDE.md"
+  existing_hooks:
+    - ".claude/hooks/workflow-state-manager.js"
+    - ".claude/hooks/workflow-fidelity-guard.js"
+    - ".claude/hooks/skill-usage-guard.js"
+    - ".claude/hooks/deviation-approval-guard.js"
+    - ".claude/hooks/definition-lint-gate.js"
+
+# 制約条件（必須）
+constraints:
+  - "既存設計を壊さない（差分最小）"
+  - "AIを信用しない：State + Permission + Validation で『できない』にする"
+  - "warnではなくblockが基本（安全側）"
+  - "大出力は memory_add へ退避"
+  - "lint と runtime の判定ロジックは single source of truth"
+
+# 完了条件（必須）
+definition_of_done:
+  - "Intent Contract 未確定では危険操作ができない"
+  - "deterministic analyzer の証跡なしに生成工程へ進めない"
+  - "Stepスキップは Hook + Step遷移ゲートで不可能"
+  - "参考入力すり替えは sha256 固定で不可能"
+  - "既存無視の新規作成は探索+Read+decision無しでは不可能"
+  - "lint fail なら start/resume/strict は不可能"
+
+# 許容される逸脱（必須）
+allowed_deviations_policy:
+  allow_without_approval:
+    - "軽微なコメント修正"
+    - "コードフォーマット調整"
+    - "テスト追加"
+  require_approval:
+    - "新規ファイル作成"
+    - "既存ファイルの大幅変更"
+    - "アーキテクチャ変更"
+    - "MCP設定の変更"
+
+# =============================================================================
+# SESSION METADATA
+# =============================================================================
+
+session:
+  id: "session-2026-01-20-phase-implementation"
+  started: "2026-01-20T05:00:00+09:00"
+  type: "implementation"
+  spec_version: "1"
+  spec_file: "docs/taisun_master_guard_spec.yaml"
+
+# =============================================================================
+# Goals (What to achieve)
+# =============================================================================
+
+goals:
+  - id: "GOAL-001"
+    title: "Complete Bootstrap Protocol"
+    status: "in_progress"
+    tasks:
+      - "Read master guard spec (or create if missing) ✓"
+      - "Read CLAUDE.md ✓"
+      - "Run workflow lint (if exists)"
+      - "Run skill lint (if exists)"
+      - "Create intent_contract.yaml ✓"
+    completion: 80
+
+  - id: "GOAL-002"
+    title: "TAISUN-Apex Evolution Analysis"
+    status: "completed"
+    tasks:
+      - "Analyze 130k token evolution document ✓"
+      - "Compare with current implementation ✓"
+      - "Identify needed vs not needed ✓"
+      - "Document pros and cons ✓"
+    completion: 100
+
+  - id: "GOAL-003"
+    title: "13-Layer Defense Gap Analysis"
+    status: "completed"
+    tasks:
+      - "Map all 19 hook files to layers ✓"
+      - "Identify implementation status ✓"
+      - "Document logical workflow violation gap ✓"
+      - "Propose Layer 14-16 additions ✓"
+    completion: 100
+
+# =============================================================================
+# Constraints (What NOT to do)
+# =============================================================================
+
+constraints:
+  mandatory:
+    - "DO NOT implement TAISUN-Apex proposals yet (user must approve first)"
+    - "DO NOT modify baseline locked files"
+    - "DO NOT skip workflow steps"
+    - "DO NOT create files without reading existing ones first"
+
+  workflow_fidelity:
+    - "Follow WORKFLOW FIDELITY CONTRACT in CLAUDE.md"
+    - "Use Skill tool when skill is specified"
+    - "Read SESSION_HANDOFF.md if exists"
+    - "Respect current workflow phase"
+
+  quality:
+    - "No console.log in production code"
+    - "No hardcoded secrets"
+    - "Maintain 80%+ test coverage"
+
+# =============================================================================
+# Decisions Made (Previous Session)
+# =============================================================================
+
+decisions:
+  - id: "DEC-001"
+    title: "13-Layer Defense Gap Identification"
+    decision: |
+      現在の防御システムは技術的違反（ファイル操作）は検出できるが、
+      論理的ワークフロー違反（手順スキップ）は検出できない。
+      Layer 14-16 の追加を提案。
+    rationale: |
+      LP画像生成タスクで、参照画像を分析せずにJSONテンプレートを作成した
+      エラーが13層防御システムを通過した。
+
+  - id: "DEC-002"
+    title: "TAISUN-Apex Implementation Priority"
+    decision: |
+      GraphRAG と LangGraph を最優先で導入すべき。
+      ACI、DSPy、PyRIT/Garak は Phase 2 以降。
+    rationale: |
+      - GraphRAG: 知識グラフによるRAG精度向上
+      - LangGraph: ワークフローオーケストレーション強化
+      両方とも現在の実装に不足している機能を補完。
+
+  - id: "DEC-003"
+    title: "MCP Server Activation"
+    decision: |
+      36 設計中の MCP サーバーのうち 6 のみアクティブ。
+      追加有効化はコンテキスト消費とのトレードオフで判断。
+    rationale: |
+      有効化 MCP が多すぎるとコンテキストウィンドウが縮小する
+      （200k → 70k の事例あり）
+
+# =============================================================================
+# Analysis Results (Previous Session)
+# =============================================================================
+
+analysis_results:
+  current_implementation:
+    agents: "82/82 (100%)"
+    skills: "75/75 (100%)"
+    commands: "83/82 (101%)"
+    mcp_servers: "6/36 active (17%)"
+    defense_layers: "10 full, 2 partial, 1 advisory"
+
+  taisun_apex_elements:
+    ACI: "not_implemented"
+    GraphRAG: "not_implemented"
+    DSPy: "not_implemented"
+    PyRIT_Garak: "not_implemented"
+    LangGraph: "not_implemented"
+
+  memory_system:
+    short_term: "implemented (taisun-proxy)"
+    long_term: "implemented (Qdrant)"
+    episodic: "implemented (claude-mem)"
+    hierarchical: "60% implemented"
+
+# =============================================================================
+# Next Actions (Pending User Approval)
+# =============================================================================
+
+next_actions:
+  immediate:
+    - "Complete Bootstrap Protocol documentation"
+    - "Await user approval for TAISUN-Apex implementation"
+
+  pending_approval:
+    - "Implement Layer 14-16 for logical workflow protection"
+    - "Integrate GraphRAG for knowledge graph RAG"
+    - "Integrate LangGraph for workflow orchestration"
+    - "Expand skill pattern matching in Layer 10"
+
+# =============================================================================
+# Session State
+# =============================================================================
+
+session_state:
+  phase: "analysis"
+  workflow_state_file: ".workflow_state.json"
+  handoff_file: "SESSION_HANDOFF.md"
+  mistakes_log: ".claude/hooks/mistakes.md"
+
+# =============================================================================
+# Validation
+# =============================================================================
+
+validation:
+  pre_flight_checklist:
+    skill_instruction_check: "passed"
+    existing_file_check: "passed"
+    session_handoff_check: "passed"
+    content_ratio_check: "n/a"
+
+  contract_compliance:
+    workflow_fidelity: true
+    read_before_write: true
+    baseline_lock: true
+    skill_evidence: true
