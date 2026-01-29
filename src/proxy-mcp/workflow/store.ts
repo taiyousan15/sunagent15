@@ -8,12 +8,27 @@ import * as path from 'path';
 import type { WorkflowState } from './types';
 
 const STATE_FILE = '.workflow_state.json';
+let stateDirectory = process.cwd();
 
 /**
- * Get the state file path (project root)
+ * Set custom state directory (for testing)
+ */
+export function setStateDir(dir: string): void {
+  stateDirectory = dir;
+}
+
+/**
+ * Reset state directory to default (for testing cleanup)
+ */
+export function resetStateDir(): void {
+  stateDirectory = process.cwd();
+}
+
+/**
+ * Get the state file path (project root or custom directory)
  */
 function getStateFilePath(): string {
-  return path.join(process.cwd(), STATE_FILE);
+  return path.join(stateDirectory, STATE_FILE);
 }
 
 /**

@@ -7,7 +7,21 @@ import * as fs from 'fs';
 import * as path from 'path';
 import type { WorkflowDefinition } from './types';
 
-const WORKFLOWS_DIR = path.join(process.cwd(), 'config', 'workflows');
+let WORKFLOWS_DIR = path.join(process.cwd(), 'config', 'workflows');
+
+/**
+ * Set custom workflows directory (for testing)
+ */
+export function setWorkflowsDir(dir: string): void {
+  WORKFLOWS_DIR = dir;
+}
+
+/**
+ * Reset workflows directory to default (for testing cleanup)
+ */
+export function resetWorkflowsDir(): void {
+  WORKFLOWS_DIR = path.join(process.cwd(), 'config', 'workflows');
+}
 
 /**
  * Load all workflow definitions
