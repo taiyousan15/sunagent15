@@ -42,7 +42,9 @@ export function loadState(): WorkflowState | null {
  */
 export function saveState(state: WorkflowState): void {
   const filePath = getStateFilePath();
-  const tmpPath = `${filePath}.tmp`;
+  // Use unique temp file name to avoid race conditions in parallel tests
+  const uniqueId = `${process.pid}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  const tmpPath = `${filePath}.${uniqueId}.tmp`;
 
   try {
     // Update timestamp
@@ -52,18 +54,8 @@ export function saveState(state: WorkflowState): void {
     const content = JSON.stringify(state, null, 2);
     fs.writeFileSync(tmpPath, content, 'utf-8');
 
-    // Verify temp file was created
-    if (!fs.existsSync(tmpPath)) {
-      throw new Error(`Temp file was not created: ${tmpPath}`);
-    }
-
     // Rename (atomic on POSIX, near-atomic on Windows)
     fs.renameSync(tmpPath, filePath);
-
-    // Verify final file exists
-    if (!fs.existsSync(filePath)) {
-      throw new Error(`Final file was not created: ${filePath}`);
-    }
   } catch (error) {
     // Cleanup temp file on error
     try {
@@ -81,6 +73,8 @@ export function saveState(state: WorkflowState): void {
 
 /**
  * Clear workflow state (delete .workflow_state.json)
+ * Note: Temp files are not cleaned up here to avoid race conditions in parallel tests.
+ * They will be cleaned up automatically by the OS or can be removed manually.
  */
 export function clearState(): void {
   const filePath = getStateFilePath();

@@ -21,6 +21,10 @@ const TEST_FILES_DIR = path.join(process.cwd(), 'test-conditional-temp');
 
 describe('Workflow Phase 3 - Conditional Branching', () => {
   beforeEach(() => {
+    // Clear any existing state from previous tests
+    clearState();
+    clearCache();
+
     // テスト用ディレクトリ作成
     if (!fs.existsSync(TEST_FILES_DIR)) {
       fs.mkdirSync(TEST_FILES_DIR, { recursive: true });
@@ -219,9 +223,6 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
 
   describe('file_exists condition', () => {
     beforeEach(() => {
-      // キャッシュをクリア
-      clearCache();
-
       // file_exists 条件を使うワークフローを作成
       const workflow: WorkflowDefinition = {
         id: 'test_conditional_v1',
@@ -266,6 +267,9 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
     });
 
     it('should branch to "true" when file exists', () => {
@@ -289,9 +293,6 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
 
   describe('metadata_value condition', () => {
     beforeEach(() => {
-      // キャッシュをクリア
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_conditional_v1',
         name: 'Metadata Test',
@@ -336,6 +337,9 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
     });
 
     it('should branch based on metadata value', () => {
@@ -365,9 +369,6 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
 
   describe('error handling', () => {
     it('should fail when no branch matches and no defaultNext', () => {
-      // キャッシュをクリア
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_conditional_v1',
         name: 'No Default Test',
@@ -401,6 +402,9 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
         'utf-8'
       );
 
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
+
       fs.writeFileSync(
         path.join(TEST_FILES_DIR, 'type.txt'),
         'option2', // マッチしない
@@ -417,9 +421,6 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
 
   describe('backward compatibility', () => {
     it('should work with Phase 1-2 style workflows (no conditionalNext)', () => {
-      // キャッシュをクリア
-      clearCache();
-
       const oldWorkflow: WorkflowDefinition = {
         id: 'test_conditional_v1',
         name: 'Old Style',
@@ -443,6 +444,9 @@ describe('Workflow Phase 3 - Conditional Branching', () => {
         JSON.stringify(oldWorkflow, null, 2),
         'utf-8'
       );
+
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
 
       startWorkflow('test_conditional_v1', false);
       const result = transitionToNextPhase();

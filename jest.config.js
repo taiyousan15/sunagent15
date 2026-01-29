@@ -33,8 +33,11 @@ module.exports = {
       testMatch: [
         '<rootDir>/src/**/*.test.ts',
         '<rootDir>/tests/unit/**/*.test.ts',
-        // Exclude Phase 3 workflow tests (run in separate project)
-        '!<rootDir>/tests/unit/workflow-phase3-*.test.ts'
+      ],
+      // Exclude Phase 3 workflow tests (run in separate project)
+      testPathIgnorePatterns: [
+        '/node_modules/',
+        '<rootDir>/tests/unit/workflow-phase3-.*\\.test\\.ts$'
       ],
       testEnvironment: 'node',
       transform: {

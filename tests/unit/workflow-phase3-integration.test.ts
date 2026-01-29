@@ -22,6 +22,8 @@ const TEST_FILES_DIR = path.join(process.cwd(), 'test-integration-temp');
 
 describe('Workflow Phase 3 - Integration', () => {
   beforeEach(() => {
+    // Clear any existing state from previous tests
+    clearState();
     clearCache();
 
     if (!fs.existsSync(TEST_FILES_DIR)) {

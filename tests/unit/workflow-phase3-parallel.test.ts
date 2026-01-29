@@ -20,6 +20,8 @@ const TEST_FILES_DIR = path.join(process.cwd(), 'test-parallel-temp');
 
 describe('Workflow Phase 3 - Parallel Execution', () => {
   beforeEach(() => {
+    // Clear any existing state from previous tests
+    clearState();
     clearCache();
 
     if (!fs.existsSync(TEST_FILES_DIR)) {
@@ -335,8 +337,6 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
 
   describe('backward compatibility', () => {
     it('should work with Phase 1-2 workflows (no parallelNext)', () => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_parallel_v1',
         name: 'Old Style',
@@ -361,6 +361,9 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
         'utf-8'
       );
 
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
+
       startWorkflow('test_parallel_v1', false);
       const result = transitionToNextPhase();
 
@@ -375,8 +378,6 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
 
   describe('error handling', () => {
     it('should handle missing artifacts in parallel phases', () => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_parallel_v1',
         name: 'Error Test',
@@ -409,6 +410,9 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
 
       startWorkflow('test_parallel_v1', false);
       transitionToNextPhase(); // Start parallel

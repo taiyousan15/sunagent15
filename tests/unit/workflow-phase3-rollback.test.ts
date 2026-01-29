@@ -21,6 +21,8 @@ const TEST_FILES_DIR = path.join(process.cwd(), 'test-rollback-temp');
 
 describe('Workflow Phase 3 - Rollback', () => {
   beforeEach(() => {
+    // Clear any existing state from previous tests
+    clearState();
     clearCache();
 
     if (!fs.existsSync(TEST_FILES_DIR)) {
@@ -47,8 +49,6 @@ describe('Workflow Phase 3 - Rollback', () => {
 
   describe('basic rollback functionality', () => {
     beforeEach(() => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_rollback_v1',
         name: 'Rollback Test Workflow',
@@ -85,6 +85,9 @@ describe('Workflow Phase 3 - Rollback', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
     });
 
     it('should rollback from phase_2 to phase_1 and delete artifacts', () => {
@@ -194,8 +197,6 @@ describe('Workflow Phase 3 - Rollback', () => {
 
   describe('rollback restrictions', () => {
     beforeEach(() => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_rollback_v1',
         name: 'Rollback Restrictions Test',
@@ -232,6 +233,9 @@ describe('Workflow Phase 3 - Rollback', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
     });
 
     it('should allow rollback when specified in allowRollbackTo', () => {
@@ -265,8 +269,6 @@ describe('Workflow Phase 3 - Rollback', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_rollback_v1',
         name: 'Error Handling Test',
@@ -290,6 +292,9 @@ describe('Workflow Phase 3 - Rollback', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
     });
 
     it('should throw error when no active workflow', () => {
@@ -307,8 +312,6 @@ describe('Workflow Phase 3 - Rollback', () => {
 
   describe('backward compatibility', () => {
     it('should work with workflows without rollback features', () => {
-      clearCache();
-
       const workflow: WorkflowDefinition = {
         id: 'test_rollback_v1',
         name: 'Old Style Workflow',
@@ -332,6 +335,9 @@ describe('Workflow Phase 3 - Rollback', () => {
         JSON.stringify(workflow, null, 2),
         'utf-8'
       );
+
+      // キャッシュをクリア（ファイル書き込み後に実行）
+      clearCache();
 
       startWorkflow('test_rollback_v1', false);
       transitionToNextPhase();
