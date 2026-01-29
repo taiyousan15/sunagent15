@@ -7,10 +7,45 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18.x%20%7C%2020.x-green)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-712%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
+[![Tests](https://img.shields.io/badge/Tests-775%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
 
 ---
 
+
+> **2026-01-30: v2.7.1 テスト安定化・配布品質向上 🔧**
+>
+> 他の環境でもテストが確実に通過するよう**権限問題を修正**しました。
+>
+> ### 修正内容
+> - ワークフローテストをOS一時ディレクトリで実行（権限問題を回避）
+> - 並列テスト実行時の分離を強化
+> - 全775テストが新規インストール環境で通過
+>
+> ### クイックインストール
+> ```bash
+> git clone https://github.com/san15/taisun_agent.git
+> cd taisun_agent && npm install && npm run build:all
+> npm test                 # 775テスト全通過
+> npm run taisun:diagnose  # 100/100点で成功
+> ```
+
+---
+
+> **2026-01-29: v2.7.0 GitHub配布対応・診断システム追加 🚀**
+>
+> 世界中の誰でも5分でインストールできる**GitHub配布対応**を完了しました。
+>
+> ### 新機能
+> | 機能 | 説明 |
+> |------|------|
+> | 🔧 **自動診断** | `npm run taisun:diagnose` で13層防御・82エージェント・77スキルを一括検証 |
+> | 📖 **5分インストール** | [INSTALL.md](INSTALL.md) でクイックスタート |
+> | 🏗️ **アーキテクチャ文書** | [docs/SYSTEM_ARCHITECTURE.md](docs/SYSTEM_ARCHITECTURE.md) で.mdファイル参照順序を解説 |
+> | 🎯 **セットアッププロンプト** | [TAISUN_SETUP_PROMPTS.md](TAISUN_SETUP_PROMPTS.md) で初期設定を支援 |
+>
+> 詳細: [INSTALL.md](INSTALL.md) | [DISTRIBUTION_GUIDE.md](DISTRIBUTION_GUIDE.md)
+
+---
 
 > **2026-01-21: v2.6.0 13層防御システム完成・新スキル追加 🛡️**
 >
@@ -24,24 +59,12 @@
 > | 8-9 | Safety Guards | 文字化け防止・インジェクション検出 |
 > | 10-12 | Quality Guards | スキル自動選択・定義検証・品質ガイド |
 >
-> ### 新スキル
-> - **diagram-illustration**: NanoBanana Proを使った図解・インフォグラフィック作成
-> - **taiyo-analyzer**: 176パターンに基づくコピーライティング品質分析
->
-> ### 新MCP統合
-> - **context7-docs**: 最新フレームワークドキュメント取得（ハルシネーション防止）
-> - **figma-design**: Figmaデザイン→コード変換
-> - **gpt-researcher**: 自律型深層リサーチ（引用付きレポート生成）
-> - **qdrant-memory**: ベクトル検索・長期記憶
+> ### 新スキル・MCP統合
+> - **diagram-illustration**: 図解・インフォグラフィック作成
+> - **taiyo-analyzer**: 176パターンコピーライティング品質分析
+> - **context7-docs**: 最新ドキュメント取得（ハルシネーション防止）
+> - **gpt-researcher**: 自律型深層リサーチ
 > - **hierarchical-memory**: Mem0ベース3層メモリアーキテクチャ
->
-> ### インストール・アップデート
-> ```bash
-> git clone https://github.com/san15/taisun_agent.git
-> cd taisun_agent && npm install && npm run build:all
-> ```
->
-> 詳細: [DISTRIBUTION_GUIDE.md](DISTRIBUTION_GUIDE.md)
 
 ---
 
@@ -203,7 +226,7 @@
 > ```powershell
 > npm run setup:windows  # 環境診断
 > npm install
-> npm test               # 692テスト全通過を確認
+> npm test               # 775テスト全通過を確認
 > npm run mcp:health     # MCP設定チェック
 > ```
 >
@@ -249,7 +272,7 @@
 ## はじめての方へ
 
 > **重要**: TAISUN v2は **Claude Code の拡張機能** です。
-> インストール後、このディレクトリで Claude Code を起動すると、81のエージェントと59のスキルが自動的に使えるようになります。
+> インストール後、このディレクトリで Claude Code を起動すると、82のエージェントと77のスキルが自動的に使えるようになります。
 
 ### 1. インストール
 
@@ -259,7 +282,8 @@
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 npm install
-npm test  # 692テストがパスすればOK
+npm run build:all
+npm run taisun:diagnose  # 100/100点で成功
 ```
 
 #### Windows（10分）
@@ -309,11 +333,13 @@ Claude: code-reviewer エージェントで分析します...
 
 | ドキュメント | 内容 |
 |-------------|------|
+| [INSTALL.md](INSTALL.md) | **5分クイックインストール** ⭐ |
+| [TAISUN_SETUP_PROMPTS.md](TAISUN_SETUP_PROMPTS.md) | 初期設定・検証プロンプト集 |
+| [docs/SYSTEM_ARCHITECTURE.md](docs/SYSTEM_ARCHITECTURE.md) | システムアーキテクチャ・.md参照順序 |
 | [QUICK_START.md](docs/QUICK_START.md) | 詳細セットアップ手順 |
 | [WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md) | **Windows 専用**セットアップガイド（100%動作保証） |
 | [CONTEXT_MANAGEMENT.md](docs/CONTEXT_MANAGEMENT.md) | コンテキスト管理システム完全ガイド（99%削減の仕組み） |
 | [opencode/README-ja.md](docs/opencode/README-ja.md) | OpenCode/OMO 任意導入ガイド（opt-in セカンドエンジン） |
-| [opencode/USAGE-ja.md](docs/opencode/USAGE-ja.md) | OpenCode/OMO 使用例（バグ修正・Ralph Loop） |
 | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | エラー解決 |
 | [CONFIG.md](docs/CONFIG.md) | 設定カスタマイズ |
 | [CONTRIBUTING.md](docs/CONTRIBUTING.md) | 開発参加方法 |
@@ -330,14 +356,14 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐       │
-│  │   Claude    │◄──│  Proxy MCP  │──►│  32 External │       │
+│  │   Claude    │◄──│  Proxy MCP  │──►│  36 External │       │
 │  │    Code     │   │   Server    │   │  MCP Servers │       │
 │  └─────────────┘   └──────┬──────┘   └─────────────┘       │
 │                           │                                 │
 │         ┌─────────────────┼─────────────────┐              │
 │         ▼                 ▼                 ▼              │
 │  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐       │
-│  │ 81 Agents   │   │  59 Skills  │   │ 76 Commands │       │
+│  │ 82 Agents   │   │  77 Skills  │   │ 82 Commands │       │
 │  └─────────────┘   └─────────────┘   └─────────────┘       │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
@@ -348,13 +374,13 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 | Component | Count | Description |
 |-----------|-------|-------------|
 | **AI Agents** | 82 | 専門家エージェント (AIT42 +  + Diagnostics) |
-| **Skills** | 70 | マーケティング・インフラ自動化スキル |
-| **Hooks** | 13 | 13層防御システム |
-| **Commands** | 77 | ショートカットコマンド（OpenCode統合含む） |
-| **MCP Servers** | 32 | 外部サービス連携 |
+| **Skills** | 77 | マーケティング・インフラ自動化スキル |
+| **Hooks** | 21 | 13層防御システム（21ファイル） |
+| **Commands** | 82 | ショートカットコマンド（OpenCode統合含む） |
+| **MCP Servers** | 36 | 外部サービス連携 |
 | **MCP Tools** | 227 | 統合ツール群 |
 | **Source Lines** | 11,167 | TypeScript (proxy-mcp) |
-| **Tests** | 712 | ユニット・統合テスト（全Pass） |
+| **Tests** | 775 | ユニット・統合テスト（全Pass） |
 
 ## Key Features
 
@@ -377,7 +403,7 @@ memory_search   // コンテンツ検索
 - **セマンティック検索**: 類似度ベースのMCP選択
 - **人間承認フロー**: 高リスク操作のエスカレーション
 
-### 3. Multi-Agent System (81 Agents)
+### 3. Multi-Agent System (82 Agents)
 
 | Category | Count | Examples |
 |----------|-------|----------|
@@ -394,7 +420,7 @@ memory_search   // コンテンツ検索
 | **Process** | 5 | workflow-coordinator, requirements-elicitation |
 | **** | 6 | -codegen-agent, -pr-agent |
 
-### 4. Skill Library (67 Skills)
+### 4. Skill Library (77 Skills)
 
 #### Marketing & Sales (15)
 - `copywriting-helper` - コピーライティング支援
@@ -518,7 +544,7 @@ VS Code連携による開発支援。
 
 ---
 
-## スキル完全リファレンス（66スキル）
+## スキル完全リファレンス（77スキル）
 
 ### マーケティング・セールス（15スキル）
 
@@ -722,7 +748,7 @@ cp .env.example .env
 ### Verification
 
 ```bash
-# Run tests (524 tests)
+# Run tests (775 tests)
 npm test
 
 # Type check
@@ -800,9 +826,9 @@ taisun_agent/
 │       └── observability/      # Event tracking & metrics
 │
 ├── .claude/                    # Agent system
-│   ├── agents/                 # 77 agent definitions
-│   ├── skills/                 # 59 skill definitions
-│   ├── commands/               # 76 command shortcuts
+│   ├── agents/                 # 82 agent definitions
+│   ├── skills/                 # 77 skill definitions
+│   ├── commands/               # 82 command shortcuts
 │   ├── mcp-servers/            # 4 custom MCP servers
 │   ├── mcp-tools/              # 227 MCP tools
 │   └── memory/                 # Learning & statistics
@@ -841,6 +867,11 @@ taisun_agent/
 ## NPM Scripts
 
 ```bash
+# TAISUN Diagnostics (推奨)
+npm run taisun:diagnose       # 13層防御・全コンポーネント診断
+npm run taisun:diagnose:full  # 詳細診断
+npm run taisun:setup          # セットアップガイド表示
+
 # Development
 npm run dev                    # Watch mode
 npm test                       # Run all tests
