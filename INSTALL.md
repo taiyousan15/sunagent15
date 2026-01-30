@@ -1,5 +1,17 @@
 # TAISUN Agent 2026 インストールガイド
 
+> ⚠️ **重要**: すべてのコマンドは `taisun_agent` ディレクトリ内で実行してください。
+>
+> ```bash
+> # 正しいディレクトリにいることを確認
+> pwd  # → /path/to/taisun_agent と表示されるはず
+>
+> # package.jsonにtaisun:diagnoseがあることを確認
+> grep "taisun:diagnose" package.json
+> ```
+
+---
+
 ## クイックインストール（5分）
 
 ```bash
@@ -228,6 +240,25 @@ QDRANT_URL=http://localhost:6333
 ---
 
 ## トラブルシューティング
+
+### 「スクリプトが存在しません」エラー
+
+```bash
+# 原因: 間違ったディレクトリにいる可能性
+# 確認方法:
+pwd                                    # 現在のディレクトリを確認
+grep "taisun:diagnose" package.json    # スクリプトが存在するか確認
+
+# 正しいディレクトリに移動
+cd /path/to/taisun_agent
+
+# 再確認
+npm run taisun:diagnose
+```
+
+**よくある間違い:**
+- 親ディレクトリで実行している（`taisun_agent2026/` ではなく `taisun_agent/` で実行）
+- 別のプロジェクトディレクトリで実行している
 
 ### ビルドエラー
 
