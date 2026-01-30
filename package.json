@@ -78,7 +78,15 @@
     "quality:encoding": "npx ts-node scripts/text/utf8-guard.ts",
     "quality:check": "npm run contract:lint && npm run quality:encoding && npm test",
     "mcp:health": "node scripts/mcp-health-check.js",
-    "setup:windows": "node scripts/setup-windows.js"
+    "setup:windows": "node scripts/setup-windows.js",
+    "perf:fast": "node scripts/switch-performance-mode.js fast",
+    "perf:normal": "node scripts/switch-performance-mode.js normal",
+    "perf:strict": "node scripts/switch-performance-mode.js strict",
+    "perf:status": "node scripts/switch-performance-mode.js status",
+    "taisun:diagnose": "node scripts/taisun-diagnose.js",
+    "taisun:diagnose:full": "node scripts/taisun-diagnose.js --full",
+    "taisun:diagnose:fix": "node scripts/taisun-diagnose.js --fix",
+    "taisun:setup": "npm install && npm run build:all && chmod +x .claude/hooks/*.js 2>/dev/null || true && npm run taisun:diagnose"
   },
   "keywords": [
     "ai",
