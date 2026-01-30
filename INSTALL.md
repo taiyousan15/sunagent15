@@ -16,7 +16,14 @@ npm run build:all
 # 4. Hooksの実行権限を付与
 chmod +x .claude/hooks/*.js 2>/dev/null || true
 
-# 5. 動作確認
+# 5. 高速モード有効化（推奨）
+npm run perf:fast
+
+# 6. メモリ対策（長時間セッション向け）
+echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
+source ~/.zshrc
+
+# 7. 動作確認
 npm run taisun:diagnose
 ```
 
@@ -138,9 +145,63 @@ npm install
 # 3. 再ビルド
 npm run build:all
 
-# 4. 診断
+# 4. 高速モード有効化（推奨）
+npm run perf:fast
+
+# 5. 診断
 npm run taisun:diagnose
 ```
+
+---
+
+## メモリ最適化（重要）
+
+長時間セッションでの「JavaScript heap out of memory」エラーを防ぐための設定です。
+
+### 対策1: Node.jsヒープサイズ増加
+
+```bash
+# zshの場合
+echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
+source ~/.zshrc
+
+# bashの場合
+echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### 対策2: 高速モード有効化
+
+```bash
+# 高速モード（フック81%削減）
+npm run perf:fast
+
+# 状態確認
+npm run perf:status
+
+# 通常モードに戻す
+npm run perf:normal
+```
+
+### 対策3: 安定起動エイリアス（オプション）
+
+```bash
+echo 'alias claude-stable="NODE_OPTIONS=\"--max-old-space-size=8192\" claude"' >> ~/.zshrc
+source ~/.zshrc
+
+# 使用方法
+claude-stable
+```
+
+### 各モードの比較
+
+| モード | フック数 | タイムアウト | 用途 |
+|--------|---------|------------|------|
+| `fast` | 4 | 16秒 | 日常の開発作業（推奨） |
+| `normal` | 31 | 83秒 | バランス型 |
+| `strict` | 31+ | 100秒+ | 本番ワークフロー |
+
+詳細: [docs/PERFORMANCE_MODE.md](docs/PERFORMANCE_MODE.md)
 
 ---
 

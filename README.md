@@ -12,6 +12,40 @@
 ---
 
 
+> **2026-01-30: v2.7.2 メモリ最適化・安定性向上 🚀**
+>
+> 長時間セッションでのメモリ不足クラッシュ（heap out of memory）を解決しました。
+>
+> ### 新機能
+> | 機能 | 説明 |
+> |------|------|
+> | 🧠 **メモリ最適化** | Node.jsヒープサイズ8GB対応 |
+> | ⚡ **高速モード** | `npm run perf:fast` でフック81%削減 |
+> | 🔧 **安定起動** | `claude-stable` エイリアス追加 |
+>
+> ### アップグレード（既存ユーザー）
+> ```bash
+> cd taisun_agent
+> git pull origin main
+> npm install && npm run build:all
+> npm run perf:fast              # 高速モード有効化
+> echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
+> source ~/.zshrc
+> npm run taisun:diagnose        # 100/100点で成功
+> ```
+>
+> ### 新規インストール（5分）
+> ```bash
+> git clone https://github.com/san15/taisun_agent.git
+> cd taisun_agent && npm install && npm run build:all
+> npm run perf:fast              # 推奨: 高速モード
+> npm run taisun:diagnose        # 100/100点で成功
+> ```
+>
+> 詳細: [docs/PERFORMANCE_MODE.md](docs/PERFORMANCE_MODE.md) | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+
+---
+
 > **2026-01-30: v2.7.1 テスト安定化・配布品質向上 🔧**
 >
 > 他の環境でもテストが確実に通過するよう**権限問題を修正**しました。
@@ -20,14 +54,6 @@
 > - ワークフローテストをOS一時ディレクトリで実行（権限問題を回避）
 > - 並列テスト実行時の分離を強化
 > - 全775テストが新規インストール環境で通過
->
-> ### クイックインストール
-> ```bash
-> git clone https://github.com/san15/taisun_agent.git
-> cd taisun_agent && npm install && npm run build:all
-> npm test                 # 775テスト全通過
-> npm run taisun:diagnose  # 100/100点で成功
-> ```
 
 ---
 
@@ -279,11 +305,33 @@
 #### Mac / Linux（5分）
 
 ```bash
+# リポジトリをクローン
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
+
+# 依存関係インストール＆ビルド
 npm install
 npm run build:all
+
+# 高速モード有効化（推奨）
+npm run perf:fast
+
+# メモリ対策（長時間セッション向け）
+echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
+source ~/.zshrc
+
+# 診断実行
 npm run taisun:diagnose  # 100/100点で成功
+```
+
+#### アップグレード（既存ユーザー）
+
+```bash
+cd taisun_agent
+git pull origin main
+npm install && npm run build:all
+npm run perf:fast              # 高速モード有効化
+npm run taisun:diagnose        # 100/100点で成功
 ```
 
 #### Windows（10分）
