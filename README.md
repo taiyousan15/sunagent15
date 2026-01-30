@@ -300,65 +300,92 @@
 > **重要**: TAISUN v2は **Claude Code の拡張機能** です。
 > インストール後、このディレクトリで Claude Code を起動すると、82のエージェントと77のスキルが自動的に使えるようになります。
 
-### 1. インストール
+---
+
+### 🆕 新規インストール（初めての方）
 
 #### Mac / Linux（5分）
 
 ```bash
-# リポジトリをクローン
+# 1. リポジトリをクローン
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 
-# 依存関係インストール＆ビルド
+# 2. 依存関係インストール＆ビルド
 npm install
 npm run build:all
 
-# 高速モード有効化（推奨）
+# 3. 高速モード有効化（推奨）
 npm run perf:fast
 
-# メモリ対策（長時間セッション向け）
+# 4. メモリ対策（長時間セッション向け・1回だけ実行）
 echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
 source ~/.zshrc
 
-# 診断実行
-npm run taisun:diagnose  # 100/100点で成功
-```
-
-#### アップグレード（既存ユーザー）
-
-```bash
-cd taisun_agent
-git pull origin main
-npm install && npm run build:all
-npm run perf:fast              # 高速モード有効化
-npm run taisun:diagnose        # 100/100点で成功
+# 5. 診断実行（100/100点で成功）
+npm run taisun:diagnose
 ```
 
 #### Windows（10分）
 
 ```powershell
-# PowerShell または Git Bash を開く
+# 1. リポジトリをクローン
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 
-# Windows セットアップスクリプトを実行
+# 2. Windows セットアップ
 npm run setup:windows
 
-# 指示に従って依存関係をインストール
+# 3. 依存関係インストール＆ビルド
 npm install
+npm run build:all
 
-# ビルド確認（重要！）
-ls dist/  # dist フォルダが存在すればOK
+# 4. 高速モード有効化
+npm run perf:fast
 
-# テスト実行（ログを抑制）
-npm run test:silent  # または npm run test:summary
+# 5. 診断実行
+npm run taisun:diagnose
 ```
 
-> **⚠️ Windows ユーザー向け重要事項**:
-> - `npm test` で大量のエラーが出る場合、`npm run build:all` を実行してください
-> - 13万文字以上のログが出た場合、**Claudeに貼り付けないでください**（API 400エラーの原因）
-> - 必ず `npm run test:summary` で要約のみを取得してください
-> - 詳細: [docs/WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md) の「🚨 緊急: テストで大量のエラーが出る場合」
+> **⚠️ Windows ユーザー向け注意事項**:
+> - `npm test` で大量のエラーが出る場合 → `npm run build:all` を先に実行
+> - 詳細: [docs/WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md)
+
+---
+
+### 🔄 アップグレード（既存ユーザー）
+
+```bash
+# 1. taisun_agent ディレクトリに移動
+cd taisun_agent
+
+# 2. 最新版を取得
+git pull origin main
+
+# 3. 依存関係を更新＆再ビルド
+npm install
+npm run build:all
+
+# 4. 高速モード有効化（推奨）
+npm run perf:fast
+
+# 5. 診断実行（100/100点で成功）
+npm run taisun:diagnose
+```
+
+> **💡 ヒント**: メモリ対策（NODE_OPTIONS）は一度設定すれば、アップグレード時に再設定は不要です。
+
+---
+
+### ❓ トラブルシューティング
+
+| エラー | 解決方法 |
+|-------|---------|
+| `スクリプトが存在しません` | `cd taisun_agent` で正しいディレクトリに移動 |
+| `heap out of memory` | `echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc && source ~/.zshrc` |
+| ビルドエラー | `rm -rf node_modules dist && npm install && npm run build:all` |
+
+詳細: [INSTALL.md](INSTALL.md) | [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
 ### 2. 使い方（超簡単）
 
