@@ -23,6 +23,7 @@
 > | 📊 **dr-synthesize** | 検証・統合→レポート生成 |
 > | 🛠️ **dr-build** | 実装計画をPoC/MVP/Productionに落とし込む |
 > | ⚙️ **dr-mcp-setup** | MCPサーバーのセットアップ支援 |
+> | 📋 **sdd-req100** | EARS準拠の要件定義生成＋自動採点（目標98点） |
 >
 > ### 使い方（超簡単）
 > ```bash
@@ -479,7 +480,7 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 | Component | Count | Description |
 |-----------|-------|-------------|
 | **AI Agents** | 82 | 専門家エージェント (AIT42 +  + Diagnostics) |
-| **Skills** | 82 | マーケティング・インフラ自動化スキル |
+| **Skills** | 83 | マーケティング・インフラ自動化スキル |
 | **Hooks** | 21 | 13層防御システム（21ファイル） |
 | **Commands** | 82 | ショートカットコマンド（OpenCode統合含む） |
 | **MCP Servers** | 36 | 外部サービス連携 |
@@ -649,7 +650,7 @@ VS Code連携による開発支援。
 
 ---
 
-## スキル完全リファレンス（82スキル）
+## スキル完全リファレンス（83スキル）
 
 ### マーケティング・セールス（15スキル）
 
@@ -731,9 +732,9 @@ VS Code連携による開発支援。
 | `video-download` | 動画ダウンロード（YouTube等） | `/video-download` |
 | `video-transcribe` | 文字起こし（ローカルWhisper/OpenAI API） | `/video-transcribe` |
 
-### Deep Research（5スキル）🆕
+### Deep Research & 要件定義（6スキル）🆕
 
-AIによる深層調査・レポート生成システム。
+AIによる深層調査・レポート生成・要件定義システム。
 
 | スキル | 説明 | コマンド |
 |-------|------|---------|
@@ -742,6 +743,7 @@ AIによる深層調査・レポート生成システム。
 | `dr-synthesize` | 検証・統合→レポート・実装計画生成 | `/dr-synthesize [run_path]` |
 | `dr-build` | 実装計画をPoC/MVP/Productionに落とし込む | `/dr-build [plan_path]` |
 | `dr-mcp-setup` | MCPサーバーのセットアップ支援 | `/dr-mcp-setup` |
+| `sdd-req100` | EARS準拠の要件定義生成＋C.U.T.E.自動採点（目標98点） | `/sdd-req100 [spec-slug]` |
 
 **使用例:**
 ```bash
