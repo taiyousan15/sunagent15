@@ -11,11 +11,11 @@
 
 ---
 
-> **2026-01-31: v2.8.0 Deep Research スキル追加 🔬**
+> **2026-01-31: v2.8.0 Deep Research & 要件定義スキル追加 🔬📋**
 >
-> 「〇〇をリサーチして」で深層調査ができる**Deep Research スキル**を追加しました。
+> 「〇〇をリサーチして」で深層調査、「要件定義を作って」でEARS準拠の要件定義が作れるようになりました。
 >
-> ### 新機能
+> ### 新スキル（7個）
 > | スキル | 説明 |
 > |--------|------|
 > | 🔬 **research** | ワンコマンド深層調査（`/research AIエージェントの最新動向`） |
@@ -23,12 +23,23 @@
 > | 📊 **dr-synthesize** | 検証・統合→レポート生成 |
 > | 🛠️ **dr-build** | 実装計画をPoC/MVP/Productionに落とし込む |
 > | ⚙️ **dr-mcp-setup** | MCPサーバーのセットアップ支援 |
-> | 📋 **sdd-req100** | EARS準拠の要件定義生成＋自動採点（目標98点） |
+> | 📋 **sdd-req100** | EARS準拠の要件定義生成＋C.U.T.E.自動採点（目標98点） |
 >
-> ### 使い方（超簡単）
+> ### 新コマンド（2個）
+> | コマンド | 説明 |
+> |----------|------|
+> | `/req100` | spec-slugを自動推論してコマンドを提示 |
+> | `/score-req100` | 既存requirements.mdを再採点 |
+>
+> ### 使い方
 > ```bash
+> # 深層調査
 > /research AIエージェントの最新動向
-> /research 2026年のSaaS市場トレンド
+>
+> # 要件定義（EARS準拠 + 自動採点）
+> /sdd-req100 my-feature
+> /req100                    # spec-slug推論ヘルパー
+> /score-req100 .kiro/specs/my-feature/requirements.md
 > ```
 >
 > ### アップグレード（既存ユーザー）
@@ -39,7 +50,15 @@
 > npm run taisun:diagnose
 > ```
 >
-> 詳細: [research/README.md](research/README.md)
+> ### 新規インストール
+> ```bash
+> git clone https://github.com/san15/taisun_agent.git
+> cd taisun_agent && npm install && npm run build:all
+> npm run perf:fast              # 推奨: 高速モード
+> npm run taisun:diagnose        # 100/100点で成功
+> ```
+>
+> 詳細: [research/README.md](research/README.md) | [.kiro/specs/README.md](.kiro/specs/README.md)
 
 ---
 
@@ -482,7 +501,7 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 | **AI Agents** | 82 | 専門家エージェント (AIT42 +  + Diagnostics) |
 | **Skills** | 83 | マーケティング・インフラ自動化スキル |
 | **Hooks** | 21 | 13層防御システム（21ファイル） |
-| **Commands** | 82 | ショートカットコマンド（OpenCode統合含む） |
+| **Commands** | 84 | ショートカットコマンド（OpenCode統合含む） |
 | **MCP Servers** | 36 | 外部サービス連携 |
 | **MCP Tools** | 227 | 統合ツール群 |
 | **Source Lines** | 11,167 | TypeScript (proxy-mcp) |
