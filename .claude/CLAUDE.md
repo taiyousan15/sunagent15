@@ -483,3 +483,28 @@ taisun_v2/.claude/
 | #622 | 4:52 PM | 🟣 | New memory enhancement task directive added to instruction ledger | ~621 |
 | #605 | 4:26 PM | ✅ | Running summary updated to mark directive fidelity framework as complete | ~410 |
 </claude-mem-context>
+<!-- SDD-REQ100 SOP START -->
+## Spec-Driven Development SOP (Requirements)
+
+### Canonical command (MUST)
+- **When the user asks to create/rewrite requirements, do NOT write requirements directly in chat.**
+- Instead, route to the canonical pipeline command:
+  - `/sdd-req100 <spec-slug> [target-dir(optional)]`
+
+### Defaults / conventions
+- `spec-slug` MUST be kebab-case (e.g. `google-ad-report`).
+- If `target-dir` is omitted, use: `.kiro/specs/<spec-slug>/`
+
+### Team workflow (fast)
+1) If slug is unknown:
+   - `/req100`  → copy the printed `next: ...`
+2) Generate & score:
+   - `/sdd-req100 <spec-slug>`
+3) Re-score anytime:
+   - `/score-req100 .kiro/specs/<spec-slug>/requirements.md`
+
+### Guardrails
+- Keep requirements in files under `.kiro/specs/` as the single source of truth.
+- Avoid "vibe requirements"; always EARS + acceptance tests + scoring loop.
+
+<!-- SDD-REQ100 SOP END -->
