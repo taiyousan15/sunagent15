@@ -39,7 +39,7 @@
       "description": "セールスレター・LPのコピー作成",
       "when_contains_all": ["セールスレター"],
       "when_contains_any": ["作成", "書く", "作って"],
-      "required_skills": ["sales-letter", "taiyo-style"],
+      "required_skills": ["taiyo-style-sales-letter", "taiyo-style"],
       "priority": 80,
       "strict": false
     },
@@ -48,7 +48,7 @@
       "description": "ステップメールシーケンスの作成",
       "when_contains_all": ["ステップメール"],
       "when_contains_any": ["作成", "書く", "作って"],
-      "required_skills": ["step-mail"],
+      "required_skills": ["taiyo-style-step-mail"],
       "priority": 80,
       "strict": false
     },
@@ -57,7 +57,7 @@
       "description": "ビデオセールスレターの台本作成",
       "when_contains_all": [],
       "when_contains_any": ["VSL", "ビデオセールスレター"],
-      "required_skills": ["vsl", "taiyo-style-vsl"],
+      "required_skills": ["taiyo-style-vsl"],
       "priority": 80,
       "strict": false
     },
@@ -66,7 +66,7 @@
       "description": "ランディングページの作成または分析",
       "when_contains_all": [],
       "when_contains_any": ["LP", "ランディングページ"],
-      "required_skills": ["lp-analysis", "lp-generator"],
+      "required_skills": ["lp-analysis", "lp-json-generator"],
       "priority": 70,
       "strict": false
     },
@@ -84,7 +84,7 @@
       "description": "NanoBanana/Geminiによる画像生成",
       "when_contains_all": ["画像", "生成"],
       "when_contains_any": ["NanoBanana", "Gemini", "AI画像"],
-      "required_skills": ["nanobanana-pro", "gemini-image-generator"],
+      "required_skills": ["nanobanana-pro"],
       "priority": 70,
       "strict": false
     },

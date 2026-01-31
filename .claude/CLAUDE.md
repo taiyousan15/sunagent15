@@ -78,9 +78,9 @@
 | YOUTUBE + 教材 + 動画 + 生成 | youtubeschool-creator |
 | YOUTUBE + 動画 + (分析/生成/まとめ) | youtube_channel_summary |
 | スライド + 動画 | youtubeschool-creator |
-| セールスレター | sales-letter, taiyo-style |
-| ステップメール | step-mail |
-| VSL/ビデオセールスレター | vsl, taiyo-style-vsl |
+| セールスレター | taiyo-style-sales-letter, taiyo-style |
+| ステップメール | taiyo-style-step-mail |
+| VSL/ビデオセールスレター | taiyo-style-vsl |
 
 設定ファイル: `.claude/hooks/config/skill-mapping.json`
 
@@ -95,7 +95,7 @@ AIエージェント、MCPツール、マーケティングスキルを完全統
 | Component | Count | Active | Description |
 |-----------|-------|--------|-------------|
 | **Agents** | 82 | 11 | AIT42 + 統合エージェント |
-| **Skills** | 75 | 64 | マーケティング・クリエイティブ・インフラ |
+| **Skills** | 66 | 55 | マーケティング・クリエイティブ・インフラ |
 | **Commands** | 82 | 49 | ショートカットコマンド |
 | **MCP Servers** | 36 | - | 外部サービス連携 |
 | **MCP Tools** | 227 | - | 自動化ツール群 |
@@ -107,7 +107,7 @@ AIエージェント、MCPツール、マーケティングスキルを完全統
 taisun_v2/.claude/
 ├── agents/              # 82 統合エージェント (11 active)
 ├── commands/            # 82 コマンド (49 active)
-├── skills/              # 70 スキル (59 active)
+├── skills/              # 66 スキル (55 active)
 ├── memory/              # 学習・統計システム
 ├── mcp-servers/         # カスタムMCPサーバー (4)
 ├── mcp-tools/           # → taisun MCPツール (227)
@@ -179,22 +179,18 @@ taisun_v2/.claude/
 ### Specialized Tools (16+)
 - Data analyst, Researcher, Automation architect, etc.
 
-## Skill Categories (67 Skills)
+## Skill Categories (66 Skills)
 
-### Marketing & Sales (15)
+### Marketing & Sales (12)
 | Skill | Description |
 |-------|-------------|
 | `copywriting-helper` | コピーライティング支援 |
-| `sales-letter` | セールスレター作成 |
-| `step-mail` | ステップメール作成 |
-| `vsl` | ビデオセールスレター |
 | `launch-video` | ローンチ動画 |
-| `lp-generator` | LP作成 |
 | `lp-analysis` | LP分析・改善 |
 | `lp-design` | LP設計 |
 | `mendan-lp` | 面談LP |
 | `funnel-builder` | ファネル構築 |
-| `customer-support` | カスタマーサポート |
+| `customer-support-120` | カスタマーサポート（120%対応） |
 | `taiyo-style` | 太陽スタイル |
 | `education-framework` | 6つの教育要素 |
 | `line-marketing` | LINEマーケティング |
@@ -208,9 +204,9 @@ taisun_v2/.claude/
 | `note-marketing` | note記事戦略 |
 | `youtube-content` | YouTube動画企画 |
 | `youtube-thumbnail` | サムネイル作成 |
-| `manga-production` | 漫画制作 |
+| `youtube_channel_summary` | YouTubeチャンネル分析 |
+| `ai-manga-generator` | AI漫画制作 |
 | `anime-production` | アニメ制作 |
-| `video-production` | 動画制作 |
 | `diagram-illustration` | 図解作成 |
 | `custom-character` | キャラクター設定 |
 | `sns-marketing` | SNSマーケティング |
@@ -218,25 +214,18 @@ taisun_v2/.claude/
 ### AI Image & Video (5)
 | Skill | Description |
 |-------|-------------|
-| `gemini-image-generator` | Gemini画像生成 |
-| `nanobanana-pro` | NanoBanana Pro |
+| `nanobanana-pro` | NanoBanana Pro画像生成 |
 | `nanobanana-prompts` | プロンプト最適化 |
 | `omnihuman1-video` | AIアバター動画 |
 | `japanese-tts-reading` | 日本語TTS |
+| `gpt-sovits-tts` | GPT-SoVITS音声合成 |
 
-### Video Agent System (10)
+### Video Agent統合 (1)
 | Skill | Description |
 |-------|-------------|
-| `video-policy` | ポリシー管理 |
-| `video-eval` | 評価システム |
-| `video-ci-scheduling` | CI/CDスケジューリング |
-| `video-metrics` | メトリクス収集 |
-| `video-notify` | 通知システム |
-| `video-anomaly` | 異常検知 |
-| `video-dispatch` | ディスパッチ |
-| `video-validate` | バリデーション |
-| `video-guard` | ガード機能 |
-| `video-agent-runbooks` | 運用ガイド |
+| `video-agent` | 動画パイプライン統合（12スキル統合） |
+
+*統合内容: video-download, video-transcribe, video-production, video-policy, video-eval等*
 
 ### Infrastructure (11)
 | Skill | Description |
