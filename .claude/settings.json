@@ -1,5 +1,6 @@
 {
   "alwaysThinkingEnabled": true,
+  "enable_tool_search": true,
   "permissions": {
     "allow": [
       "Bash",
@@ -65,6 +66,16 @@
             "type": "command",
             "command": "node .claude/hooks/definition-lint-gate.js",
             "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Bash|WebFetch|WebSearch|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/realtime-context-monitor.js",
+            "timeout": 3
           }
         ]
       }

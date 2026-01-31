@@ -84,35 +84,34 @@ await memory_add(undefined, 'short-term', {
 ✓ コンテキスト節約
 ```
 
-### ❌ まだ動かないケース
+### ✅ Phase 4: リアルタイム監視 + 自動compact（完了 - 2026-01-31）
 
-#### 1. 自動コンテキスト監視
+```
+✓ Auto Compact Manager（安全設計版）
+  └─ .claude/hooks/auto-compact-manager.js
+  └─ 70%: 警告のみ
+  └─ 80%: 強い警告 + /compact提案
+  └─ 85%: 確認ダイアログ後にcompact推奨
+  └─ 90%: 強制compact警告
 
-```bash
-# コンテキスト70%超過時
+✓ リアルタイム監視フック
+  └─ .claude/hooks/realtime-context-monitor.js
+  └─ Read/Bash/WebFetch/WebSearch/Task後に自動チェック
+  └─ 高コストツールは常時監視
+  └─ 軽量チェック間隔: 5秒
 
-現状:
-⚠️ 警告メッセージのみ表示
-❌ 自動保存は実行されない
-
-必要:
-- Claude CodeのコンテキストAPI統合
-- リアルタイム監視フックの実装
+✓ settings.json統合
+  └─ PostToolUse: realtime-context-monitor.js
 ```
 
-#### 2. 大きなファイル自動保存
+### 📊 閾値設計（安全版）
 
-```bash
-# 50KB超のファイルを読み込んだ時
-
-現状:
-⚠️ アドバイスメッセージのみ
-❌ 自動保存は実行されない
-
-必要:
-- ツール出力インターセプター
-- 自動保存フックの統合
-```
+| 閾値 | アクション | リスク軽減 |
+|------|-----------|-----------|
+| 70% | 警告のみ | 作業継続可能 |
+| 80% | 強い警告 + /compact提案 | ユーザー判断 |
+| 85% | 確認ダイアログ | compact推奨 |
+| 90% | 強制compact警告 | クラッシュ防止 |
 
 ## 🔧 完全自動化への道筋
 

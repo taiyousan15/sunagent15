@@ -11,6 +11,54 @@
 
 ---
 
+> **2026-02-01: v2.9.0 Kindle Content Empire & Video Agent統合 📚🎬**
+>
+> Kindle本→note記事→YouTube動画のマルチプラットフォーム自動展開を支援する要件定義システムを追加しました。
+>
+> ### 新機能
+> | 機能 | 説明 |
+> |------|------|
+> | 📚 **Kindle Content Empire** | Kindle本取得→オリジナル本生成→KDP出品→note記事→YouTube動画の自動化要件定義 |
+> | 🎬 **Video Agent統合** | video-download, video-transcribe等12スキルを1つの`video-agent`に統合 |
+> | 🔍 **VLM画像OCR** | 画像9割のKindle本もQwen-VLで正確に読み取り（要約なし転写） |
+> | 🔐 **Amazon認証自動化** | Cookie-based認証（1年有効）+ TOTP自動化 |
+>
+> ### Kindle Content Empire 100点要件定義
+> `.kiro/specs/kindle-content-empire/requirements.md` に25の機能要件を定義:
+> - REQ-001〜016: Kindle抽出・オリジナル本生成・ePub変換・note記事・YouTube動画
+> - REQ-900〜903: 処理速度30分以内・可用性99%・90日データ保持
+> - REQ-950〜951: APIキー管理・ログマスキング
+> - REQ-960〜962: 構造化ログ・進捗監視・エラーアラート
+>
+> ### 使い方
+> ```bash
+> # 要件定義100点を達成
+> /sdd-req100 kindle-content-empire
+> /score-req100 .kiro/specs/kindle-content-empire/requirements.md
+>
+> # Video Agent統合スキル
+> /video-agent                   # 動画パイプライン全体
+> ```
+>
+> ### アップグレード（既存ユーザー）
+> ```bash
+> cd taisun_agent
+> git pull origin main
+> npm install && npm run build:all
+> npm run perf:fast
+> npm run taisun:diagnose
+> ```
+>
+> ### 新規インストール
+> ```bash
+> git clone https://github.com/san15/taisun_agent.git
+> cd taisun_agent && npm install && npm run build:all
+> npm run perf:fast              # 推奨: 高速モード
+> npm run taisun:diagnose        # 100/100点で成功
+> ```
+
+---
+
 > **2026-01-31: v2.8.0 Deep Research & 要件定義スキル追加 🔬📋**
 >
 > 「〇〇をリサーチして」で深層調査、「要件定義を作って」でEARS準拠の要件定義が作れるようになりました。

@@ -9,9 +9,10 @@ const fs = require('fs');
 const path = require('path');
 
 const CONTEXT_THRESHOLDS = {
-  WARNING: 60,  // 60% - 警告開始
-  CRITICAL: 70, // 70% - 自動保存推奨
-  EMERGENCY: 85 // 85% - 緊急対応必要
+  WARNING: 70,        // 70% - 警告のみ
+  STRONG_WARNING: 80, // 80% - 強い警告 + /compact提案
+  CONFIRM_COMPACT: 85, // 85% - 確認ダイアログ後にcompact
+  FORCE_COMPACT: 90    // 90% - 強制compact（クラッシュ防止）
 };
 
 const FILE_SIZE_THRESHOLDS = {
@@ -43,15 +44,17 @@ async function checkContextUsage() {
 }
 
 /**
- * 閾値レベルを判定
+ * 閾値レベルを判定（安全設計版）
  */
 function getThresholdLevel(percentage) {
-  if (percentage >= CONTEXT_THRESHOLDS.EMERGENCY) {
-    return 'EMERGENCY';
-  } else if (percentage >= CONTEXT_THRESHOLDS.CRITICAL) {
-    return 'CRITICAL';
+  if (percentage >= CONTEXT_THRESHOLDS.FORCE_COMPACT) {
+    return 'FORCE_COMPACT';     // 90%: 強制compact
+  } else if (percentage >= CONTEXT_THRESHOLDS.CONFIRM_COMPACT) {
+    return 'CONFIRM_COMPACT';   // 85%: 確認付きcompact
+  } else if (percentage >= CONTEXT_THRESHOLDS.STRONG_WARNING) {
+    return 'STRONG_WARNING';    // 80%: 強い警告
   } else if (percentage >= CONTEXT_THRESHOLDS.WARNING) {
-    return 'WARNING';
+    return 'WARNING';           // 70%: 警告のみ
   }
   return 'OK';
 }
@@ -89,21 +92,24 @@ function estimateContextUsage() {
 }
 
 /**
- * 警告メッセージを表示
+ * 警告メッセージを表示（安全設計版）
  */
 function suggestCompact(usage) {
-  if (usage.threshold === 'EMERGENCY') {
-    console.log('\n🚨 EMERGENCY: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
-    console.log('   ✅ Phase 3自動保存が有効です');
-    console.log('   📊 大きな出力は自動的に保存されます');
-    console.log('   💡 必要に応じて /compact を実行してください\n');
-  } else if (usage.threshold === 'CRITICAL') {
-    console.log('\n⚠️  CRITICAL: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
-    console.log('   ✅ Phase 3自動保存が動作中');
-    console.log('   📊 大きな出力は自動保存されます\n');
+  if (usage.threshold === 'FORCE_COMPACT') {
+    console.log('\n🆘 FORCE COMPACT: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
+    console.log('   ⚠️  クラッシュ防止のため、自動compactを実行します');
+    console.log('   💡 /compact を今すぐ実行してください\n');
+  } else if (usage.threshold === 'CONFIRM_COMPACT') {
+    console.log('\n🚨 CONFIRM COMPACT: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
+    console.log('   ⚠️  危険レベル - compact推奨');
+    console.log('   💡 /compact を実行することを推奨します\n');
+  } else if (usage.threshold === 'STRONG_WARNING') {
+    console.log('\n🔶 STRONG WARNING: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
+    console.log('   ⚠️  高負荷レベル');
+    console.log('   💡 /compact を実行することを検討してください\n');
   } else if (usage.threshold === 'WARNING') {
-    console.log('\n💡 INFO: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
-    console.log('   📊 Phase 3自動保存により、さらに節約可能\n');
+    console.log('\n⚠️  WARNING: コンテキスト使用率 ' + usage.percentage.toFixed(1) + '%');
+    console.log('   📊 現在は問題ありませんが、監視中です\n');
   }
 }
 
