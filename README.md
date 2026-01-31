@@ -11,6 +11,36 @@
 
 ---
 
+> **2026-01-31: v2.8.0 Deep Research スキル追加 🔬**
+>
+> 「〇〇をリサーチして」で深層調査ができる**Deep Research スキル**を追加しました。
+>
+> ### 新機能
+> | スキル | 説明 |
+> |--------|------|
+> | 🔬 **research** | ワンコマンド深層調査（`/research AIエージェントの最新動向`） |
+> | 🔍 **dr-explore** | 探索・収集フェーズ（evidence.jsonl生成） |
+> | 📊 **dr-synthesize** | 検証・統合→レポート生成 |
+> | 🛠️ **dr-build** | 実装計画をPoC/MVP/Productionに落とし込む |
+> | ⚙️ **dr-mcp-setup** | MCPサーバーのセットアップ支援 |
+>
+> ### 使い方（超簡単）
+> ```bash
+> /research AIエージェントの最新動向
+> /research 2026年のSaaS市場トレンド
+> ```
+>
+> ### アップグレード（既存ユーザー）
+> ```bash
+> cd taisun_agent
+> git pull origin main
+> npm install && npm run build:all
+> npm run taisun:diagnose
+> ```
+>
+> 詳細: [research/README.md](research/README.md)
+
+---
 
 > **2026-01-30: v2.7.2 メモリ最適化・安定性向上 🚀**
 >
@@ -438,7 +468,7 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 │         ┌─────────────────┼─────────────────┐              │
 │         ▼                 ▼                 ▼              │
 │  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐       │
-│  │ 82 Agents   │   │  77 Skills  │   │ 82 Commands │       │
+│  │ 82 Agents   │   │  82 Skills  │   │ 82 Commands │       │
 │  └─────────────┘   └─────────────┘   └─────────────┘       │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
@@ -449,7 +479,7 @@ TAISUN v2は、Claude Codeと連携し、設計から実装、テスト、デプ
 | Component | Count | Description |
 |-----------|-------|-------------|
 | **AI Agents** | 82 | 専門家エージェント (AIT42 +  + Diagnostics) |
-| **Skills** | 77 | マーケティング・インフラ自動化スキル |
+| **Skills** | 82 | マーケティング・インフラ自動化スキル |
 | **Hooks** | 21 | 13層防御システム（21ファイル） |
 | **Commands** | 82 | ショートカットコマンド（OpenCode統合含む） |
 | **MCP Servers** | 36 | 外部サービス連携 |
@@ -495,7 +525,7 @@ memory_search   // コンテンツ検索
 | **Process** | 5 | workflow-coordinator, requirements-elicitation |
 | **** | 6 | -codegen-agent, -pr-agent |
 
-### 4. Skill Library (77 Skills)
+### 4. Skill Library (82 Skills)
 
 #### Marketing & Sales (15)
 - `copywriting-helper` - コピーライティング支援
@@ -619,7 +649,7 @@ VS Code連携による開発支援。
 
 ---
 
-## スキル完全リファレンス（77スキル）
+## スキル完全リファレンス（82スキル）
 
 ### マーケティング・セールス（15スキル）
 
@@ -700,6 +730,25 @@ VS Code連携による開発支援。
 | `video-agent-runbooks` | 運用ガイド・Runbook | `/video-agent-runbooks` |
 | `video-download` | 動画ダウンロード（YouTube等） | `/video-download` |
 | `video-transcribe` | 文字起こし（ローカルWhisper/OpenAI API） | `/video-transcribe` |
+
+### Deep Research（5スキル）🆕
+
+AIによる深層調査・レポート生成システム。
+
+| スキル | 説明 | コマンド |
+|-------|------|---------|
+| `research` | ワンコマンド深層調査（探索→検証→レポート自動生成） | `/research [トピック]` |
+| `dr-explore` | 探索・収集フェーズ（evidence.jsonl生成） | `/dr-explore [topic]` |
+| `dr-synthesize` | 検証・統合→レポート・実装計画生成 | `/dr-synthesize [run_path]` |
+| `dr-build` | 実装計画をPoC/MVP/Productionに落とし込む | `/dr-build [plan_path]` |
+| `dr-mcp-setup` | MCPサーバーのセットアップ支援 | `/dr-mcp-setup` |
+
+**使用例:**
+```bash
+/research AIエージェントの最新動向
+/research 2026年のSaaS市場トレンド
+/dr-explore Claude MCP | depth=deep | lang=ja,en
+```
 
 ### インフラ・自動化（11スキル）
 
