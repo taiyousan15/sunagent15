@@ -6,7 +6,7 @@ Instagram Reels風の多彩なテロップスタイルをRemotionで実装でき
 ## 使用方法
 
 ```
-/テロップ
+/telop
 ```
 
 ---
@@ -211,6 +211,6 @@ Instagram Reels風の多彩なテロップスタイルをRemotionで実装でき
 
 ## 参照
 
-- 詳細仕様: `.claude/skills/テロップ/instructions.md`
+- 詳細仕様: `.claude/skills/telop/instructions.md`
 - 実装例: `my-video/src/AIGoldRush/`
 - 分析元動画: `local-files/videos/instagram_DSdnQeZj5WJ.mp4`
