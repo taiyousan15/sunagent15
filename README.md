@@ -32,9 +32,10 @@
 > git clone https://github.com/san15/taisun_agent.git
 > cd taisun_agent && npm install && npm run build:all
 >
-> # 他のプロジェクトで使う場合もコピー不要
+> # 他のプロジェクトで使う場合はリンクを作成
 > cd ~/your-project
-> claude  # そのまま使える
+> ln -s ~/taisun_agent/.claude .claude
+> claude  # これで全スキルが使える
 > ```
 >
 > ### TAISUNでできないこと（限界）
