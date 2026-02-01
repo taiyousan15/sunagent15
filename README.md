@@ -463,7 +463,36 @@
 ## はじめての方へ
 
 > **重要**: TAISUN v2は **Claude Code の拡張機能** です。
-> インストール後、このディレクトリで Claude Code を起動すると、82のエージェントと77のスキルが自動的に使えるようになります。
+> インストール後、このディレクトリで Claude Code を起動すると、82のエージェントと66のスキルが自動的に使えるようになります。
+
+---
+
+### ⚠️ インストール時の重要な注意
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  taisun_agent は「1回だけ」クローンしてください                  │
+│  プロジェクトごとにコピーする必要はありません                    │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**❌ やってはいけない例:**
+```bash
+cd ~/project-A && git clone https://github.com/san15/taisun_agent.git
+cd ~/project-B && git clone https://github.com/san15/taisun_agent.git  # ← 不要！
+cd ~/project-C && git clone https://github.com/san15/taisun_agent.git  # ← 不要！
+```
+
+**✅ 正しいインストール:**
+```bash
+# ホームディレクトリに1回だけクローン
+cd ~
+git clone https://github.com/san15/taisun_agent.git
+
+# 他のプロジェクトで作業するときもコピー不要
+cd ~/project-A && claude  # そのままClaude Codeを使える
+cd ~/project-B && claude  # taisun_agentは不要
+```
 
 ---
 
@@ -472,7 +501,8 @@
 #### Mac / Linux（5分）
 
 ```bash
-# 1. リポジトリをクローン
+# 1. ホームディレクトリに移動してクローン（重要：1回だけ！）
+cd ~
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 
@@ -487,14 +517,19 @@ npm run perf:fast
 echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
 source ~/.zshrc
 
-# 5. 診断実行（100/100点で成功）
+# 5. 診断実行（98/100点以上で成功）
 npm run taisun:diagnose
+
+# 6. 使い方：taisun_agentディレクトリでClaude Codeを起動
+cd ~/taisun_agent
+claude
 ```
 
 #### Windows（10分）
 
 ```powershell
-# 1. リポジトリをクローン
+# 1. ホームディレクトリに移動してクローン（重要：1回だけ！）
+cd $HOME
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 
@@ -546,16 +581,52 @@ npm run taisun:diagnose
 
 | エラー | 解決方法 |
 |-------|---------|
-| `スクリプトが存在しません` | `cd taisun_agent` で正しいディレクトリに移動 |
+| `スクリプトが存在しません` | `cd ~/taisun_agent` で正しいディレクトリに移動 |
 | `heap out of memory` | `echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc && source ~/.zshrc` |
 | ビルドエラー | `rm -rf node_modules dist && npm install && npm run build:all` |
+| 複数のtaisun_agentがある | 1つだけ残して他は削除（下記参照） |
+
+#### 複数コピーの整理方法
+
+```bash
+# 1. 全てのtaisun_agentを検索
+find ~ -maxdepth 5 -type d -name "taisun_agent" 2>/dev/null
+
+# 2. メイン以外を削除（例）
+rm -rf ~/project-A/taisun_agent
+rm -rf ~/project-B/taisun_agent
+
+# 3. ホームディレクトリに1つだけ残す
+# ~/taisun_agent だけが存在する状態にする
+```
 
 詳細: [INSTALL.md](INSTALL.md) | [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+
+---
+
+### 📁 他のプロジェクトで使う方法
+
+taisun_agentをコピーする必要は**ありません**。
+
+```bash
+# 方法1: taisun_agentディレクトリで作業（推奨）
+cd ~/taisun_agent
+claude
+# → 会話の中で他のプロジェクトのファイルを指定して作業
+
+# 方法2: 任意のプロジェクトで直接Claude Code起動
+cd ~/your-project
+claude
+# → taisun_agentがなくてもClaude Codeは使える
+# → ただしtaisun_agentのスキルを使うには方法1を推奨
+```
+
+---
 
 ### 2. 使い方（超簡単）
 
 ```bash
-cd taisun_agent
+cd ~/taisun_agent
 claude  # Claude Code を起動
 ```
 
