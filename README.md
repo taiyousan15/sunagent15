@@ -821,19 +821,22 @@ claude
 
 ✅ 設定不要、すぐ使える
 
-#### 方法2: シンボリックリンク（他プロジェクトで直接起動したい場合）
+#### 方法2: シンボリックリンク（⭐ 推奨・複数プロジェクト向け）
 
 ```bash
-# 他のプロジェクトに.claudeへのリンクを作成
-cd ~/my-project
+# 新しいプロジェクトフォルダを作成
+mkdir ~/my-new-project
+cd ~/my-new-project
+
+# taisun_agentの.claudeフォルダへリンク作成（1回だけ）
 ln -s ~/taisun_agent/.claude .claude
 
-# これで直接起動できる
-cd ~/my-project
-claude  # ← taisun_agentの全スキルが使える！
+# このフォルダでClaude Codeを起動
+claude  # ← 68スキル・85エージェントが全て使える！
 ```
 
 ✅ プロジェクトディレクトリから直接起動可能
+✅ taisun_agentをアップデートすると自動反映
 ⚠️ 各プロジェクトで1回だけリンク作成が必要
 
 #### 方法3: .claudeフォルダをコピー（独立させたい場合）
@@ -857,6 +860,35 @@ claude
 | 初心者・迷ったら | **方法1**（taisun_agentから作業） |
 | 特定プロジェクトで頻繁に使う | **方法2**（シンボリックリンク） |
 | プロジェクト固有のカスタマイズが必要 | **方法3**（.claudeコピー） |
+
+#### 便利なショートカット設定
+
+毎回リンクを作成するのが面倒な場合、シェルにエイリアスを追加：
+
+```bash
+# ~/.zshrc または ~/.bashrc に追加
+echo 'alias taisun-link="ln -sf ~/taisun_agent/.claude .claude && echo ✅ taisun_agent リンク完了"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+使い方：
+```bash
+cd ~/新しいプロジェクト
+taisun-link   # これだけでOK
+claude        # 全スキルが使える
+```
+
+---
+
+### 📋 クイックリファレンス（早見表）
+
+| やりたいこと | コマンド |
+|-------------|---------|
+| **新規インストール** | `git clone https://github.com/san15/taisun_agent.git && cd taisun_agent && npm install && npm run build:all && npm run perf:fast` |
+| **アップデート** | `cd ~/taisun_agent && git pull origin main && npm install && npm run build:all` |
+| **新プロジェクト作成** | `mkdir 新フォルダ && cd 新フォルダ && ln -s ~/taisun_agent/.claude .claude && claude` |
+| **診断実行** | `npm run taisun:diagnose` |
+| **高速モード有効化** | `npm run perf:fast` |
 
 ---
 
