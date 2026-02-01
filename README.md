@@ -26,17 +26,33 @@
 >
 > **taisun_agentは1つだけ**クローンしてください。プロジェクトごとにコピーする必要はありません。
 >
+> #### 初回インストール（1回だけ）
 > ```bash
-> # 推奨：ホームディレクトリにクローン
+> # 1. ホームディレクトリに移動
 > cd ~
-> git clone https://github.com/san15/taisun_agent.git
-> cd taisun_agent && npm install && npm run build:all
 >
-> # 他のプロジェクトで使う場合はリンクを作成
-> cd ~/your-project
-> ln -s ~/taisun_agent/.claude .claude
-> claude  # これで全スキルが使える
+> # 2. taisun_agentをダウンロード
+> git clone https://github.com/san15/taisun_agent.git
+>
+> # 3. インストール実行
+> cd taisun_agent
+> npm install
+> npm run build:all
 > ```
+>
+> #### 他のプロジェクトで使う場合（毎回）
+> ```bash
+> # 1. 使いたいプロジェクトのフォルダに移動
+> cd ~/your-project
+>
+> # 2. taisun_agentとの接続を作成（1回だけ）
+> ln -s ~/taisun_agent/.claude .claude
+>
+> # 3. Claude Codeを起動
+> claude
+> ```
+>
+> これで68スキル・85エージェントが全て使えます。
 >
 > ### TAISUNでできないこと（限界）
 > - 単独では動作しない（Claude Code必須）
