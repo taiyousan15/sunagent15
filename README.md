@@ -606,20 +606,58 @@ rm -rf ~/project-B/taisun_agent
 
 ### 📁 他のプロジェクトで使う方法
 
-taisun_agentをコピーする必要は**ありません**。
+taisun_agentを丸ごとコピーする必要は**ありません**。以下の3つの方法があります。
+
+#### 方法1: taisun_agentから作業（⭐ 推奨・最も簡単）
 
 ```bash
-# 方法1: taisun_agentディレクトリで作業（推奨）
+# taisun_agentディレクトリでClaude Codeを起動
 cd ~/taisun_agent
 claude
-# → 会話の中で他のプロジェクトのファイルを指定して作業
 
-# 方法2: 任意のプロジェクトで直接Claude Code起動
-cd ~/your-project
-claude
-# → taisun_agentがなくてもClaude Codeは使える
-# → ただしtaisun_agentのスキルを使うには方法1を推奨
+# 会話の中で他のプロジェクトのファイルを指定
+「~/my-project/src/index.ts を編集して」
+「/Users/me/Desktop/project-A/ を分析して」
 ```
+
+✅ 設定不要、すぐ使える
+
+#### 方法2: シンボリックリンク（他プロジェクトで直接起動したい場合）
+
+```bash
+# 他のプロジェクトに.claudeへのリンクを作成
+cd ~/my-project
+ln -s ~/taisun_agent/.claude .claude
+
+# これで直接起動できる
+cd ~/my-project
+claude  # ← taisun_agentの全スキルが使える！
+```
+
+✅ プロジェクトディレクトリから直接起動可能
+⚠️ 各プロジェクトで1回だけリンク作成が必要
+
+#### 方法3: .claudeフォルダをコピー（独立させたい場合）
+
+```bash
+# .claudeフォルダだけコピー（約50MB、全体の1/5）
+cp -r ~/taisun_agent/.claude ~/my-project/.claude
+
+# これで直接起動できる
+cd ~/my-project
+claude
+```
+
+✅ 完全に独立、プロジェクト固有のカスタマイズ可能
+⚠️ taisun_agentをアップデートしても反映されない
+
+#### どの方法を選ぶべき？
+
+| 状況 | 推奨方法 |
+|------|---------|
+| 初心者・迷ったら | **方法1**（taisun_agentから作業） |
+| 特定プロジェクトで頻繁に使う | **方法2**（シンボリックリンク） |
+| プロジェクト固有のカスタマイズが必要 | **方法3**（.claudeコピー） |
 
 ---
 
