@@ -11,6 +11,36 @@
 
 ---
 
+> **2026-02-01: v2.9.1 ドキュメント整合性修正 🔧**
+>
+> 第三者配布時の信頼性向上のため、ドキュメントと実際のスキル構成を完全に同期しました。
+>
+> ### 修正内容
+> | 項目 | 説明 |
+> |------|------|
+> | 📝 **削除済みスキル参照修正** | sales-letter, step-mail, vsl等の参照を正しいスキル名に更新 |
+> | 🎬 **Video Agent統合反映** | 12個の個別スキル → `video-agent` 統合をドキュメントに反映 |
+> | 📊 **スキル数修正** | 83 → 66（実際のアクティブスキル数） |
+> | 🌐 **フォルダ名英語化** | `テロップ` → `telop`（クロスプラットフォーム対応） |
+>
+> ### アップグレード（既存ユーザー）
+> ```bash
+> cd taisun_agent
+> git pull origin main
+> npm install && npm run build:all
+> npm run taisun:diagnose        # 98/100点以上で成功
+> ```
+>
+> ### 新規インストール（5分）
+> ```bash
+> git clone https://github.com/san15/taisun_agent.git
+> cd taisun_agent && npm install && npm run build:all
+> npm run perf:fast              # 推奨: 高速モード
+> npm run taisun:diagnose        # 98/100点以上で成功
+> ```
+
+---
+
 > **2026-02-01: v2.9.0 Kindle Content Empire & Video Agent統合 📚🎬**
 >
 > Kindle本→note記事→YouTube動画のマルチプラットフォーム自動展開を支援する要件定義システムを追加しました。
