@@ -480,142 +480,112 @@
 ## はじめての方へ
 
 > **重要**: TAISUN v2は **Claude Code の拡張機能** です。
-> インストール後、このディレクトリで Claude Code を起動すると、82のエージェントと66のスキルが自動的に使えるようになります。
+> インストール後、68のスキルと85のエージェントが自動的に使えるようになります。
 
 ---
 
-### ⚠️ インストール時の重要な注意
+## 🚀 インストール・アップデート・使い方ガイド
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  taisun_agent は「1回だけ」クローンしてください                  │
-│  プロジェクトごとにコピーする必要はありません                    │
-└─────────────────────────────────────────────────────────────────┘
-```
+### 📦 Step 1: 新規インストール（初回のみ・5分）
 
-**❌ やってはいけない例:**
+#### Mac / Linux
+
+**以下を丸ごとコピーしてターミナルに貼り付け：**
+
 ```bash
-cd ~/project-A && git clone https://github.com/san15/taisun_agent.git
-cd ~/project-B && git clone https://github.com/san15/taisun_agent.git  # ← 不要！
-cd ~/project-C && git clone https://github.com/san15/taisun_agent.git  # ← 不要！
+cd ~ && git clone https://github.com/san15/taisun_agent.git && cd taisun_agent && npm install && npm run build:all && npm run perf:fast && npm run taisun:diagnose
 ```
 
-**✅ 正しいインストール:**
-```bash
-# ホームディレクトリに1回だけクローン
-cd ~
-git clone https://github.com/san15/taisun_agent.git
+**インストール完了！** 98点以上が表示されれば成功です。
 
-# 他のプロジェクトで作業するときもコピー不要
-cd ~/project-A && claude  # そのままClaude Codeを使える
-cd ~/project-B && claude  # taisun_agentは不要
+#### Windows
+
+**以下を丸ごとコピーしてPowerShellに貼り付け：**
+
+```powershell
+cd $HOME; git clone https://github.com/san15/taisun_agent.git; cd taisun_agent; npm run setup:windows; npm install; npm run build:all; npm run perf:fast; npm run taisun:diagnose
 ```
 
 ---
 
-### 🆕 新規インストール（初めての方）
+### 🔄 Step 2: アップデート（最新版にする）
 
-#### Mac / Linux（5分）
+**以下を丸ごとコピーしてターミナルに貼り付け：**
 
 ```bash
-# 1. ホームディレクトリに移動してクローン（重要：1回だけ！）
-cd ~
-git clone https://github.com/san15/taisun_agent.git
-cd taisun_agent
+cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+```
 
-# 2. 依存関係インストール＆ビルド
-npm install
-npm run build:all
+**これだけで最新版になります。**
 
-# 3. 高速モード有効化（推奨）
-npm run perf:fast
+---
 
-# 4. メモリ対策（長時間セッション向け・1回だけ実行）
-echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
-source ~/.zshrc
+### 📁 Step 3: 他のプロジェクトで使う
 
-# 5. 診断実行（98/100点以上で成功）
-npm run taisun:diagnose
+taisun_agentを別のプロジェクトでも使いたい場合の手順です。
 
-# 6. 使い方：taisun_agentディレクトリでClaude Codeを起動
-cd ~/taisun_agent
+#### パターンA: 既存のプロジェクトフォルダで使う
+
+**例：`~/Desktop/my-project` で使いたい場合**
+
+```bash
+cd ~/Desktop/my-project && ln -s ~/taisun_agent/.claude .claude && echo "✅ 完了！"
+```
+
+↑ フォルダ名を自分のものに変えて、丸ごとコピペ
+
+**その後、起動：**
+```bash
 claude
 ```
 
-#### Windows（10分）
+#### パターンB: 新しいプロジェクトを作って使う
 
-```powershell
-# 1. ホームディレクトリに移動してクローン（重要：1回だけ！）
-cd $HOME
-git clone https://github.com/san15/taisun_agent.git
-cd taisun_agent
+**例：`~/Desktop/新プロジェクト` を作って使いたい場合**
 
-# 2. Windows セットアップ
-npm run setup:windows
-
-# 3. 依存関係インストール＆ビルド
-npm install
-npm run build:all
-
-# 4. 高速モード有効化
-npm run perf:fast
-
-# 5. 診断実行
-npm run taisun:diagnose
+```bash
+mkdir -p ~/Desktop/新プロジェクト && cd ~/Desktop/新プロジェクト && ln -s ~/taisun_agent/.claude .claude && echo "✅ 完了！"
 ```
 
-> **⚠️ Windows ユーザー向け注意事項**:
-> - `npm test` で大量のエラーが出る場合 → `npm run build:all` を先に実行
-> - 詳細: [docs/WINDOWS_SETUP.md](docs/WINDOWS_SETUP.md)
+↑ フォルダ名を自分のものに変えて、丸ごとコピペ
+
+**その後、起動：**
+```bash
+claude
+```
+
+#### パターンC: 今いるフォルダで使う
+
+すでに `cd` でプロジェクトフォルダに移動済みの場合：
+
+```bash
+ln -s ~/taisun_agent/.claude .claude && echo "✅ 完了！"
+```
+
+↑ これだけでOK
 
 ---
 
-### 🔄 アップグレード（既存ユーザー）
+### 📋 コピペ用テンプレート集
 
-```bash
-# 1. taisun_agent ディレクトリに移動
-cd taisun_agent
-
-# 2. 最新版を取得
-git pull origin main
-
-# 3. 依存関係を更新＆再ビルド
-npm install
-npm run build:all
-
-# 4. 高速モード有効化（推奨）
-npm run perf:fast
-
-# 5. 診断実行（100/100点で成功）
-npm run taisun:diagnose
-```
-
-> **💡 ヒント**: メモリ対策（NODE_OPTIONS）は一度設定すれば、アップグレード時に再設定は不要です。
+| やりたいこと | コピペするコマンド |
+|-------------|-------------------|
+| **新規インストール** | `cd ~ && git clone https://github.com/san15/taisun_agent.git && cd taisun_agent && npm install && npm run build:all && npm run perf:fast` |
+| **アップデート** | `cd ~/taisun_agent && git pull origin main && npm install && npm run build:all` |
+| **既存フォルダで使う** | `cd フォルダのパス && ln -s ~/taisun_agent/.claude .claude` |
+| **新フォルダを作って使う** | `mkdir -p フォルダのパス && cd フォルダのパス && ln -s ~/taisun_agent/.claude .claude` |
+| **今いるフォルダで使う** | `ln -s ~/taisun_agent/.claude .claude` |
+| **診断実行** | `cd ~/taisun_agent && npm run taisun:diagnose` |
 
 ---
 
 ### ❓ トラブルシューティング
 
-| エラー | 解決方法 |
-|-------|---------|
-| `スクリプトが存在しません` | `cd ~/taisun_agent` で正しいディレクトリに移動 |
+| エラー | 解決方法（コピペ用） |
+|-------|---------------------|
 | `heap out of memory` | `echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc && source ~/.zshrc` |
-| ビルドエラー | `rm -rf node_modules dist && npm install && npm run build:all` |
-| 複数のtaisun_agentがある | 1つだけ残して他は削除（下記参照） |
-
-#### 複数コピーの整理方法
-
-```bash
-# 1. 全てのtaisun_agentを検索
-find ~ -maxdepth 5 -type d -name "taisun_agent" 2>/dev/null
-
-# 2. メイン以外を削除（例）
-rm -rf ~/project-A/taisun_agent
-rm -rf ~/project-B/taisun_agent
-
-# 3. ホームディレクトリに1つだけ残す
-# ~/taisun_agent だけが存在する状態にする
-```
+| ビルドエラー | `cd ~/taisun_agent && rm -rf node_modules dist && npm install && npm run build:all` |
+| `command not found: claude` | Claude Code CLIをインストール: https://claude.ai/code |
 
 詳細: [INSTALL.md](INSTALL.md) | [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
@@ -820,96 +790,7 @@ cat .kiro/specs/my-feature/critique.md
 
 ---
 
-### 📁 他のプロジェクトで使う方法
-
-taisun_agentを丸ごとコピーする必要は**ありません**。以下の3つの方法があります。
-
-#### 方法1: taisun_agentから作業（⭐ 推奨・最も簡単）
-
-```bash
-# taisun_agentディレクトリでClaude Codeを起動
-cd ~/taisun_agent
-claude
-
-# 会話の中で他のプロジェクトのファイルを指定
-「~/my-project/src/index.ts を編集して」
-「/Users/me/Desktop/project-A/ を分析して」
-```
-
-✅ 設定不要、すぐ使える
-
-#### 方法2: シンボリックリンク（⭐ 推奨・複数プロジェクト向け）
-
-```bash
-# 新しいプロジェクトフォルダを作成
-mkdir ~/my-new-project
-cd ~/my-new-project
-
-# taisun_agentの.claudeフォルダへリンク作成（1回だけ）
-ln -s ~/taisun_agent/.claude .claude
-
-# このフォルダでClaude Codeを起動
-claude  # ← 68スキル・85エージェントが全て使える！
-```
-
-✅ プロジェクトディレクトリから直接起動可能
-✅ taisun_agentをアップデートすると自動反映
-⚠️ 各プロジェクトで1回だけリンク作成が必要
-
-#### 方法3: .claudeフォルダをコピー（独立させたい場合）
-
-```bash
-# .claudeフォルダだけコピー（約50MB、全体の1/5）
-cp -r ~/taisun_agent/.claude ~/my-project/.claude
-
-# これで直接起動できる
-cd ~/my-project
-claude
-```
-
-✅ 完全に独立、プロジェクト固有のカスタマイズ可能
-⚠️ taisun_agentをアップデートしても反映されない
-
-#### どの方法を選ぶべき？
-
-| 状況 | 推奨方法 |
-|------|---------|
-| 初心者・迷ったら | **方法1**（taisun_agentから作業） |
-| 特定プロジェクトで頻繁に使う | **方法2**（シンボリックリンク） |
-| プロジェクト固有のカスタマイズが必要 | **方法3**（.claudeコピー） |
-
-#### 便利なショートカット設定
-
-毎回リンクを作成するのが面倒な場合、シェルにエイリアスを追加：
-
-```bash
-# ~/.zshrc または ~/.bashrc に追加
-echo 'alias taisun-link="ln -sf ~/taisun_agent/.claude .claude && echo ✅ taisun_agent リンク完了"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-使い方：
-```bash
-cd ~/新しいプロジェクト
-taisun-link   # これだけでOK
-claude        # 全スキルが使える
-```
-
----
-
-### 📋 クイックリファレンス（早見表）
-
-| やりたいこと | コマンド |
-|-------------|---------|
-| **新規インストール** | `git clone https://github.com/san15/taisun_agent.git && cd taisun_agent && npm install && npm run build:all && npm run perf:fast` |
-| **アップデート** | `cd ~/taisun_agent && git pull origin main && npm install && npm run build:all` |
-| **新プロジェクト作成** | `mkdir 新フォルダ && cd 新フォルダ && ln -s ~/taisun_agent/.claude .claude && claude` |
-| **診断実行** | `npm run taisun:diagnose` |
-| **高速モード有効化** | `npm run perf:fast` |
-
----
-
-### 2. 使い方（超簡単）
+### 使い方（超簡単）
 
 ```bash
 cd ~/taisun_agent
