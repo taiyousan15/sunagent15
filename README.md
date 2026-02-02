@@ -478,7 +478,7 @@
 
 ---
 
-## 🚀 インストール・アップデート・使い方ガイド
+## 🚀 セットアップガイド（コピペするだけ！）
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -489,145 +489,75 @@
 
 ---
 
-### 🔌 方法A: Plugin形式（推奨・最も簡単）
+### 📦 Step 1: インストール（初回のみ）
 
-Claude Code v2.1.0以降で使用可能。Claude Codeで以下を実行：
+Claude Codeのチャットに**以下を丸ごとコピペ**：
+
+```
+以下のコマンドを順番に実行して：
+cd ~
+git clone https://github.com/san15/taisun_agent.git
+cd taisun_agent
+npm install
+npm run build:all
+npm run taisun:diagnose
+```
+
+**完了の目安**: 「98/100点」以上が表示されれば成功
+
+> ⚠️ 「already exists」エラーが出た場合は既にインストール済みです。以下でアップデート：
+> ```
+> 以下のコマンドを実行して：
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+> ```
+
+---
+
+### 📁 Step 2: プロジェクトで使えるようにする
+
+使いたいプロジェクトのフォルダでClaude Codeを起動し、**以下を丸ごとコピペ**：
+
+```
+以下のコマンドを実行して：
+ln -s ~/taisun_agent/.claude .claude && ln -s ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
+```
+
+**完了の目安**: 「✅ 完了」と表示され、フォルダに`.claude`と`.mcp.json`が見える
+
+---
+
+### ✅ Step 3: 動作確認
+
+```
+taisun:diagnose もう一回実行して
+```
+
+**完了の目安**: 「98/100点」以上で全項目正常
+
+---
+
+### 🎉 これで完了！
+
+**68スキル・85エージェント・227 MCPツール** が使えるようになりました。
+
+普通に日本語で話しかけるだけで全機能が使えます：
+- 「セールスレターを書いて」
+- 「LP分析して」
+- 「YouTubeサムネイルを作って」
+
+---
+
+### 🔌 上級者向け: Plugin形式
+
+Claude Code v2.1.0以降で使用可能：
 
 ```bash
 /plugin marketplace add san15/taisun_agent
 /plugin install taisun-agent@taisun-agent
 ```
 
-**または** `~/.claude/settings.json`に追加：
-
-```json
-{
-  "extraKnownMarketplaces": {
-    "taisun-agent": {
-      "source": {
-        "source": "github",
-        "repo": "san15/taisun_agent"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "taisun-agent@taisun-agent": true
-  }
-}
-```
-
 **アップデート：** `/plugin update taisun-agent`
 
----
-
-### 📦 方法B: 自然言語でインストール / アップデート
-
-**Claude Codeを起動して、以下を丸ごとコピペするだけ：**
-
-```
-taisun_agentをインストールまたはアップデートして
-```
-
-これだけで：
-- **初回の場合** → 自動でクローン＆インストール
-- **既にある場合** → 自動でアップデート（git pull）
-- 最後に診断して「98/100点」以上で成功
-
-> 💡 **裏側で何が起きているか：**
-> ```
-> # 初回の場合
-> cd ~ && git clone https://github.com/san15/taisun_agent.git
-> cd taisun_agent && npm install && npm run build:all && npm run perf:fast
->
-> # 「already exists」エラーが出たら自動でアップデートに切り替わる
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all
-> ```
-
----
-
-### 📁 Step 2: 別のプロジェクトで使う
-
-taisun_agentは**1回インストールするだけ**で、どのプロジェクトでも使えます。
-
-#### 手順
-
-1. **使いたいプロジェクトフォルダでClaude Codeを起動**
-
-2. **以下を丸ごとコピペ：**
-
-```
-このフォルダでtaisun_agentを使えるようにして
-```
-
-3. **「完了」と表示されたら、そのまま使えます**
-
-> 💡 **裏側で何が起きているか：**
-> ```bash
-> ln -s ~/taisun_agent/.claude .claude
-> ln -s ~/taisun_agent/.mcp.json .mcp.json
-> ```
-> **重要**: `.claude`と`.mcp.json`の**両方**をリンクしないとMCPサーバーが使えません。
-
-#### 手動で設定する場合
-
-```bash
-cd ~/your-project
-ln -s ~/taisun_agent/.claude .claude
-ln -s ~/taisun_agent/.mcp.json .mcp.json
-```
-
-#### 例：「my-project」フォルダで使いたい場合
-
-```
-1. Finderで「my-project」フォルダを開く
-2. 右クリック →「フォルダに新規ターミナル」またはVS Codeで開く
-3. claude と入力してClaude Codeを起動
-4. 「このフォルダでtaisun_agentを使えるようにして」と入力
-5. 完了！68スキル + 227 MCPツールが使える
-```
-
----
-
-### 🎉 Step 3: 使ってみる
-
-セットアップ完了後は、**普通に日本語で話しかけるだけ**で全機能が使えます。
-
-#### 使用例
-
-| こう言うだけ | 自動で実行される |
-|-------------|-----------------|
-| 「セールスレターを書いて」 | 太陽スタイルのセールスレター作成 |
-| 「ステップメールを作って」 | 6通構成のステップメール作成 |
-| 「LP分析して」 | 成約率改善の分析レポート |
-| 「このコードをレビューして」 | 85エージェントによるコードレビュー |
-| 「YouTubeサムネイルを作って」 | CTR最適化されたサムネイル設計 |
-| 「Kindle本の企画を考えて」 | 出版企画・構成案の作成 |
-
-**特別なコマンドは不要。日本語で普通に話すだけでOKです。**
-
----
-
-### 📋 早見表（Claude Codeにコピペ用）
-
-| やりたいこと | Claude Codeに貼り付ける |
-|-------------|------------------------|
-| **インストール / アップデート** | `taisun_agentをインストールまたはアップデートして` |
-| **このフォルダで使う** | `このフォルダでtaisun_agentを使えるようにして（.claudeと.mcp.json両方）` |
-| **診断する** | `taisun_agentの診断を実行して` |
-| **クリーンインストール** | `taisun_agentをクリーンインストールして（node_modules削除から）` |
-
-#### 手動コマンド（ターミナル用）
-
-```bash
-# インストール
-cd ~ && git clone https://github.com/san15/taisun_agent.git
-cd taisun_agent && npm install && npm run build:all
-
-# 別プロジェクトで使う（両方必須！）
-cd ~/your-project
-ln -s ~/taisun_agent/.claude .claude
-ln -s ~/taisun_agent/.mcp.json .mcp.json
-```
 
 ---
 
