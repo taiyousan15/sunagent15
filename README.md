@@ -486,63 +486,112 @@
 
 ## 🚀 インストール・アップデート・使い方ガイド
 
-### 📦 Step 1: 新規インストール（初回のみ・5分）
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  全ての操作は「Claude Codeのチャットにコピペ」するだけ！             │
+│  ターミナル操作は不要です                                           │
+└─────────────────────────────────────────────────────────────────────┘
+```
 
-Claude Codeのチャットに**以下を丸ごとコピペ**してください：
+---
+
+### 📦 Step 1: 新規インストール（初回のみ）
+
+**Claude Codeを起動して、以下を丸ごとコピペ：**
 
 ```
 以下のコマンドを実行して：
 cd ~ && git clone https://github.com/san15/taisun_agent.git && cd taisun_agent && npm install && npm run build:all && npm run perf:fast && npm run taisun:diagnose
 ```
 
+**完了の目安：** 「98/100点」以上が表示されれば成功です。
+
 > **⚠️ 「already exists」エラーが出た場合：**
-> 既にインストール済みです。Step 2（アップデート）を実行してください。
+> 既にインストール済みです。→ **Step 2（アップデート）に進んでください**
 
 ---
 
 ### 🔄 Step 2: アップデート（最新版にする）
 
-Claude Codeのチャットに**以下を丸ごとコピペ**してください：
+**Claude Codeのチャットに以下を丸ごとコピペ：**
 
 ```
 以下のコマンドを実行して：
 cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
 ```
 
+**完了の目安：** 「Already up to date」または新しいバージョン情報が表示されます。
+
 ---
 
-### 📁 Step 3: 他のプロジェクトで使う
+### 📁 Step 3: 別のプロジェクトで使う
 
-使いたいプロジェクトフォルダでClaude Codeを起動して、**以下を丸ごとコピペ**してください：
+taisun_agentは**1回インストールするだけ**で、どのプロジェクトでも使えます。
+
+#### 手順
+
+1. **使いたいプロジェクトフォルダでClaude Codeを起動**
+
+2. **以下を丸ごとコピペ：**
 
 ```
 以下のコマンドを実行して：
 ln -s ~/taisun_agent/.claude .claude && echo "✅ 完了！"
 ```
 
-これで68スキル・85エージェントが使えるようになります。
+3. **「✅ 完了！」と表示されたら、そのまま使えます**
+
+#### 例：「my-project」フォルダで使いたい場合
+
+```
+1. Finderで「my-project」フォルダを開く
+2. 右クリック →「フォルダに新規ターミナル」またはVS Codeで開く
+3. claude と入力してClaude Codeを起動
+4. 上記のコマンドをコピペ
+5. 完了！普通に会話するだけで68スキルが使える
+```
+
+---
+
+### 🎉 Step 4: 使ってみる
+
+セットアップ完了後は、**普通に日本語で話しかけるだけ**で全機能が使えます。
+
+#### 使用例
+
+| こう言うだけ | 自動で実行される |
+|-------------|-----------------|
+| 「セールスレターを書いて」 | 太陽スタイルのセールスレター作成 |
+| 「ステップメールを作って」 | 6通構成のステップメール作成 |
+| 「LP分析して」 | 成約率改善の分析レポート |
+| 「このコードをレビューして」 | 85エージェントによるコードレビュー |
+| 「YouTubeサムネイルを作って」 | CTR最適化されたサムネイル設計 |
+| 「Kindle本の企画を考えて」 | 出版企画・構成案の作成 |
+
+**特別なコマンドは不要。日本語で普通に話すだけでOKです。**
 
 ---
 
 ### 📋 早見表（Claude Codeにコピペ用）
 
-| やりたいこと | Claude Codeに貼り付ける文 |
-|-------------|--------------------------|
-| **インストール** | `以下のコマンドを実行して： cd ~ && git clone https://github.com/san15/taisun_agent.git && cd taisun_agent && npm install && npm run build:all` |
+| やりたいこと | Claude Codeに貼り付ける |
+|-------------|------------------------|
+| **新規インストール** | `以下のコマンドを実行して： cd ~ && git clone https://github.com/san15/taisun_agent.git && cd taisun_agent && npm install && npm run build:all && npm run perf:fast` |
 | **アップデート** | `以下のコマンドを実行して： cd ~/taisun_agent && git pull origin main && npm install && npm run build:all` |
 | **このフォルダで使う** | `以下のコマンドを実行して： ln -s ~/taisun_agent/.claude .claude` |
-| **診断** | `以下のコマンドを実行して： cd ~/taisun_agent && npm run taisun:diagnose` |
+| **診断する** | `以下のコマンドを実行して： cd ~/taisun_agent && npm run taisun:diagnose` |
 
 ---
 
-### ❓ トラブルシューティング
+### ❓ よくある質問・トラブルシューティング
 
-| エラー | 解決方法 |
-|-------|---------|
-| `already exists` | 既にインストール済み → アップデート（Step 2）を実行 |
-| `heap out of memory` | `echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc && source ~/.zshrc` |
-| ビルドエラー | `cd ~/taisun_agent && rm -rf node_modules dist && npm install && npm run build:all` |
-| `command not found: claude` | Claude Code CLIをインストール: https://claude.ai/code |
+| 状況 | 対処法 |
+|------|-------|
+| 「already exists」エラー | 既にインストール済み → Step 2（アップデート）を実行 |
+| 「heap out of memory」エラー | Claude Codeに貼り付け： `以下のコマンドを実行して： echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc && source ~/.zshrc` |
+| ビルドエラー | Claude Codeに貼り付け： `以下のコマンドを実行して： cd ~/taisun_agent && rm -rf node_modules dist && npm install && npm run build:all` |
+| 「command not found: claude」 | Claude Code CLIをインストール: https://claude.ai/code |
+| スキルが使えない | Step 3のシンボリックリンク作成を実行したか確認 |
 
 詳細: [INSTALL.md](INSTALL.md) | [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
