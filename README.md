@@ -11,6 +11,37 @@
 
 ---
 
+> **2026-02-02: v2.9.3 Mac/Windows両対応 & SDD完全版 🖥️**
+>
+> Mac/Windows両方で確実に動作するセットアップガイドと、Spec-Driven Development (SDD) の完全版を追加しました。
+>
+> ### 新機能
+> | 機能 | 説明 |
+> |------|------|
+> | 🪟 **Windows完全対応** | 開発者モード/管理者権限/コピー方式の3つの方法を提供 |
+> | 🍎 **Mac/Windows統一ガイド** | 両OS向けの明確なインストール・アップデート手順 |
+> | 📋 **SDD完全版** | 8つの新スキル（design/tasks/threat/slo/runbook/adr/guardrails/full） |
+> | 🎯 **成熟度レベル** | L1-L5の5段階で仕様の完成度を管理 |
+>
+> ### 新規SDDスキル（8個）
+> | スキル | コマンド | 説明 |
+> |--------|---------|------|
+> | sdd-design | `/sdd-design <slug>` | C4モデル設計書 |
+> | sdd-tasks | `/sdd-tasks <slug>` | Kiro形式タスク分解 |
+> | sdd-threat | `/sdd-threat <slug>` | STRIDE脅威モデル |
+> | sdd-slo | `/sdd-slo <slug>` | SLO/SLI/SLA定義 |
+> | sdd-runbook | `/sdd-runbook <slug>` | インシデント対応 |
+> | sdd-adr | `/sdd-adr "<title>" <slug>` | 技術決定記録(ADR) |
+> | sdd-guardrails | `/sdd-guardrails <slug>` | AIガードレール |
+> | sdd-full | `/sdd-full <slug>` | 全成果物一括生成 |
+>
+> ### アップグレード
+> ```bash
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+> ```
+
+---
+
 > **2026-02-01: v2.9.2 企業向けプレゼン資料 & インストールガイド改善 📊**
 >
 > Deep Researchを活用した企業向けプレゼン資料の自動生成機能と、正しいインストール方法のガイドを追加しました。
@@ -478,7 +509,7 @@
 
 ---
 
-## 🚀 セットアップガイド（コピペするだけ！）
+## 🚀 セットアップガイド（Mac / Windows 両対応）
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -488,6 +519,8 @@
 ```
 
 ---
+
+## 🍎 Mac ユーザー
 
 ### 📦 Step 1: インストール（初回のみ）
 
@@ -505,15 +538,14 @@ npm run taisun:diagnose
 
 **完了の目安**: 「98/100点」以上が表示されれば成功
 
-> ⚠️ 「already exists」エラーが出た場合は既にインストール済みです。以下でアップデート：
-> ```
-> 以下のコマンドを実行して：
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
-> ```
+### 🔄 アップデート（Macユーザー）
 
----
+```
+以下のコマンドを実行して：
+cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+```
 
-### 📁 Step 2: プロジェクトで使えるようにする
+### 📁 プロジェクトで使えるようにする（Mac）
 
 使いたいプロジェクトのフォルダでClaude Codeを起動し、**以下を丸ごとコピペ**：
 
@@ -526,7 +558,72 @@ ln -s ~/taisun_agent/.claude .claude && ln -s ~/taisun_agent/.mcp.json .mcp.json
 
 ---
 
-### ✅ Step 3: 動作確認
+## 🪟 Windows ユーザー
+
+### 📦 Step 1: インストール（初回のみ）
+
+Claude Codeのチャットに**以下を丸ごとコピペ**：
+
+```
+以下のコマンドを順番に実行して：
+cd ~
+git clone https://github.com/san15/taisun_agent.git
+cd taisun_agent
+npm install
+npm run build:all
+npm run taisun:diagnose
+```
+
+**完了の目安**: 「98/100点」以上が表示されれば成功
+
+### 🔄 アップデート（Windowsユーザー）
+
+```
+以下のコマンドを実行して：
+cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+```
+
+### 📁 プロジェクトで使えるようにする（Windows）
+
+**⚠️ 重要: Windowsではシンボリックリンクの設定が必要です**
+
+#### 方法A: 開発者モード有効化（推奨）
+
+1. **Windowsの設定を開く**
+   - 設定 → 更新とセキュリティ → 開発者向け → **開発者モード ON**
+
+2. Claude Codeで以下をコピペ：
+```
+以下のコマンドを実行して：
+export MSYS=winsymlinks:nativestrict && ln -s ~/taisun_agent/.claude .claude && ln -s ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
+```
+
+#### 方法B: 管理者コマンドプロンプト使用
+
+1. **管理者としてコマンドプロンプトを開く**
+   - スタートメニュー → 「cmd」を検索 → 右クリック → **管理者として実行**
+
+2. 以下を実行（`your-project`は実際のパスに置き換え）：
+```cmd
+cd C:\Users\YourName\your-project
+mklink /D .claude C:\Users\YourName\taisun_agent\.claude
+mklink .mcp.json C:\Users\YourName\taisun_agent\.mcp.json
+```
+
+#### 方法C: フォルダをコピー（最も確実）
+
+シンボリックリンクがうまくいかない場合：
+
+```
+以下のコマンドを実行して：
+cp -r ~/taisun_agent/.claude .claude && cp ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
+```
+
+> **注意**: この方法ではアップデート時に再度コピーが必要です
+
+---
+
+## ✅ 動作確認（Mac / Windows 共通）
 
 ```
 taisun:diagnose もう一回実行して
@@ -536,7 +633,7 @@ taisun:diagnose もう一回実行して
 
 ---
 
-### 🎉 これで完了！
+## 🎉 これで完了！
 
 **68スキル・85エージェント・227 MCPツール** が使えるようになりました。
 
@@ -547,9 +644,9 @@ taisun:diagnose もう一回実行して
 
 ---
 
-### 🔌 上級者向け: Plugin形式
+## 🔌 上級者向け: Plugin形式
 
-Claude Code v2.1.0以降で使用可能：
+Claude Code v2.1.0以降で使用可能（Mac / Windows 共通）：
 
 ```bash
 /plugin marketplace add san15/taisun_agent
@@ -563,13 +660,32 @@ Claude Code v2.1.0以降で使用可能：
 
 ### ❓ よくある質問・トラブルシューティング
 
+#### 共通の問題
+
 | 状況 | 解決方法 |
 |------|---------|
-| 「already exists」エラー | 正常です！Claude Codeが自動でアップデートに切り替えます |
+| 「already exists」エラー | 正常です！アップデートコマンドを実行してください |
 | 「heap out of memory」エラー | `メモリ設定を最適化して（NODE_OPTIONS 8GB）` |
 | ビルドエラー | `taisun_agentをクリーンインストールして` |
 | 「command not found: claude」 | まずClaude Code CLIをインストール: https://claude.ai/code |
 | スキルが使えない | `このフォルダでtaisun_agentを使えるようにして` |
+
+#### 🪟 Windows特有の問題
+
+| 状況 | 解決方法 |
+|------|---------|
+| `.claude`フォルダが見えない | 方法B（管理者コマンドプロンプト）または方法C（コピー）を試す |
+| 「シンボリックリンクの作成に失敗」 | 開発者モードを有効にするか、管理者権限で実行 |
+| `ln -s`が動かない | `export MSYS=winsymlinks:nativestrict`を先に実行 |
+| パスに日本語が含まれる | 英語のみのパスにtaisun_agentをインストール |
+| 改行コードエラー | `git config core.autocrlf false`を実行してから再clone |
+
+#### 🍎 Mac特有の問題
+
+| 状況 | 解決方法 |
+|------|---------|
+| 権限エラー | `chmod -R 755 ~/taisun_agent` を実行 |
+| Xcode要求 | `xcode-select --install` を実行 |
 
 #### 「Invalid API key - Please run /login」エラー
 
