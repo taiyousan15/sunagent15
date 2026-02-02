@@ -22,21 +22,24 @@
 > | 🔍 **Deep Research統合** | 競合調査・市場分析を自動化してプレゼンに反映 |
 > | 📖 **できること/できないこと明確化** | システムの限界を正直に文書化 |
 >
-> ### 重要：正しいインストール方法（Claude Codeチャットにコピペ）
+> ### 重要：正しいインストール方法
 >
 > **taisun_agentは1つだけ**インストール。プロジェクトごとにコピーする必要はありません。
 >
-> #### インストール / アップデート
-> Claude Codeを起動して、以下をコピペ：
+> #### 方法1: Plugin形式（推奨・最も簡単）
+> ```bash
+> /plugin marketplace add san15/taisun_agent
+> /plugin install taisun-agent@taisun-agent
+> ```
+> アップデート: `/plugin update taisun-agent`
+>
+> #### 方法2: 自然言語でインストール
+> Claude Codeで以下をコピペ：
 > ```
 > taisun_agentをインストールまたはアップデートして
 > ```
-> - 初回 → 自動でクローン＆インストール
-> - 既にある場合 → 自動でアップデート
-> - 「already exists」エラーも自動対処
 >
 > #### 他のプロジェクトで使う場合
-> 使いたいフォルダでClaude Codeを起動して、以下をコピペ：
 > ```
 > このフォルダでtaisun_agentを使えるようにして
 > ```
