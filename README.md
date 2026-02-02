@@ -1237,6 +1237,58 @@ AIによる深層調査・レポート生成・要件定義システム。
 /dr-explore Claude MCP | depth=deep | lang=ja,en
 ```
 
+### 📊 リサーチ・キーワード抽出スキル 🆕
+
+**APIキー不要版**と**API版（高精度）**の2種類を用意。他人にシステムを渡すときは、APIキー不要版をすぐに使えます。
+
+#### すぐに使えるスキル（APIキー設定不要）
+
+| スキル | 説明 | コマンド |
+|-------|------|---------|
+| `research-free` | WebSearch/WebFetchのみでリサーチ | `/research-free [トピック]` |
+| `keyword-free` | WebSearchのみでキーワード抽出 | `/keyword-free [キーワード]` |
+
+```bash
+# 例
+/research-free AIエージェントの最新動向
+/research-free Next.js 15 新機能 --depth=quick
+
+/keyword-free 投資信託
+/keyword-free プログラミング --type=longtail
+```
+
+> **ポイント**: Claude Codeをインストールすれば**すぐ使えます**。APIキーの設定は不要です。
+
+#### 高精度版（APIキー設定が必要）
+
+| スキル | 説明 | コマンド |
+|-------|------|---------|
+| `mega-research` | 6つのAPIを統合した深層リサーチ | `/mega-research [トピック]` |
+| `keyword-mega-extractor` | 検索ボリューム・競合度付きキーワード分析 | `/keyword-mega-extractor [キーワード]` |
+
+```bash
+# 例
+/mega-research AIエージェント市場の最新動向 --mode=deep
+/keyword-mega-extractor 転職 --type=buying
+```
+
+> **必要なAPIキー**: 使用するには以下のAPIキーを`~/.zshrc`または`.env`に設定してください。
+> - Tavily: https://tavily.com/
+> - SerpAPI: https://serpapi.com/
+> - Brave Search: https://brave.com/search/api/
+> - NewsAPI: https://newsapi.org/
+> - Perplexity: https://perplexity.ai/settings/api
+
+#### 比較表
+
+| 機能 | APIキー不要版 | API版（高精度） |
+|------|-------------|----------------|
+| **配布** | そのまま動作 ✅ | APIキー設定必要 |
+| **検索精度** | 良好 | 高精度 |
+| **検索速度** | 標準 | 高速（並列） |
+| **検索ボリューム** | 推定のみ | 正確なデータ |
+| **必要なもの** | Claude Codeのみ | 各種APIキー |
+
 ### インフラ・自動化（11スキル）
 
 | スキル | 説明 | コマンド |
