@@ -112,8 +112,6 @@ taisun_v2/.claude/
 ├── mcp-servers/         # カスタムMCPサーバー (4)
 ├── mcp-tools/           # → taisun MCPツール (227)
 ├── hooks/               # 8層防御システム (21ファイル)
-├── content-reference/   # → -taiyo/content
-├── video-agent-reference/ # → video-agent
 ├── CLAUDE.md            # このファイル
 └── settings.json        # 設定
 ```
