@@ -484,7 +484,38 @@
 
 ---
 
-### 📦 Step 1: インストール / アップデート（これ1つでOK！）
+### 🔌 方法A: Plugin形式（推奨・最も簡単）
+
+Claude Code v2.1.0以降で使用可能。Claude Codeで以下を実行：
+
+```bash
+/plugin marketplace add san15/taisun_agent
+/plugin install taisun-agent@taisun-agent
+```
+
+**または** `~/.claude/settings.json`に追加：
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "taisun-agent": {
+      "source": {
+        "source": "github",
+        "repo": "san15/taisun_agent"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "taisun-agent@taisun-agent": true
+  }
+}
+```
+
+**アップデート：** `/plugin update taisun-agent`
+
+---
+
+### 📦 方法B: 自然言語でインストール / アップデート
 
 **Claude Codeを起動して、以下を丸ごとコピペするだけ：**
 
