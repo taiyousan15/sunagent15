@@ -40,11 +40,13 @@
 > ```
 >
 > #### 他のプロジェクトで使う場合
+> ```bash
+> ln -s ~/taisun_agent/.claude .claude
+> ln -s ~/taisun_agent/.mcp.json .mcp.json
 > ```
-> このフォルダでtaisun_agentを使えるようにして
-> ```
+> **重要**: 両方のリンクが必要です（MCPサーバーを使うため）
 >
-> これで68スキル・85エージェントが全て使えます。
+> これで68スキル・85エージェント・227 MCPツールが全て使えます。
 >
 > ### TAISUNでできないこと（限界）
 > - 単独では動作しない（Claude Code必須）
@@ -560,10 +562,19 @@ taisun_agentは**1回インストールするだけ**で、どのプロジェク
 3. **「完了」と表示されたら、そのまま使えます**
 
 > 💡 **裏側で何が起きているか：**
-> ```
+> ```bash
 > ln -s ~/taisun_agent/.claude .claude
+> ln -s ~/taisun_agent/.mcp.json .mcp.json
 > ```
-> これでtaisun_agentの68スキル・85エージェントがこのフォルダでも使えるようになります。
+> **重要**: `.claude`と`.mcp.json`の**両方**をリンクしないとMCPサーバーが使えません。
+
+#### 手動で設定する場合
+
+```bash
+cd ~/your-project
+ln -s ~/taisun_agent/.claude .claude
+ln -s ~/taisun_agent/.mcp.json .mcp.json
+```
 
 #### 例：「my-project」フォルダで使いたい場合
 
@@ -572,7 +583,7 @@ taisun_agentは**1回インストールするだけ**で、どのプロジェク
 2. 右クリック →「フォルダに新規ターミナル」またはVS Codeで開く
 3. claude と入力してClaude Codeを起動
 4. 「このフォルダでtaisun_agentを使えるようにして」と入力
-5. 完了！普通に会話するだけで68スキルが使える
+5. 完了！68スキル + 227 MCPツールが使える
 ```
 
 ---
@@ -601,9 +612,22 @@ taisun_agentは**1回インストールするだけ**で、どのプロジェク
 | やりたいこと | Claude Codeに貼り付ける |
 |-------------|------------------------|
 | **インストール / アップデート** | `taisun_agentをインストールまたはアップデートして` |
-| **このフォルダで使う** | `このフォルダでtaisun_agentを使えるようにして` |
+| **このフォルダで使う** | `このフォルダでtaisun_agentを使えるようにして（.claudeと.mcp.json両方）` |
 | **診断する** | `taisun_agentの診断を実行して` |
 | **クリーンインストール** | `taisun_agentをクリーンインストールして（node_modules削除から）` |
+
+#### 手動コマンド（ターミナル用）
+
+```bash
+# インストール
+cd ~ && git clone https://github.com/san15/taisun_agent.git
+cd taisun_agent && npm install && npm run build:all
+
+# 別プロジェクトで使う（両方必須！）
+cd ~/your-project
+ln -s ~/taisun_agent/.claude .claude
+ln -s ~/taisun_agent/.mcp.json .mcp.json
+```
 
 ---
 
