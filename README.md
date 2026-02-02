@@ -609,13 +609,39 @@ taisun_agentは**1回インストールするだけ**で、どのプロジェク
 
 ### ❓ よくある質問・トラブルシューティング
 
-| 状況 | Claude Codeに貼り付ける |
-|------|------------------------|
+| 状況 | 解決方法 |
+|------|---------|
 | 「already exists」エラー | 正常です！Claude Codeが自動でアップデートに切り替えます |
 | 「heap out of memory」エラー | `メモリ設定を最適化して（NODE_OPTIONS 8GB）` |
 | ビルドエラー | `taisun_agentをクリーンインストールして` |
 | 「command not found: claude」 | まずClaude Code CLIをインストール: https://claude.ai/code |
 | スキルが使えない | `このフォルダでtaisun_agentを使えるようにして` |
+
+#### 「Invalid API key - Please run /login」エラー
+
+**原因**: MCPサーバーが環境変数を読み込めていない
+
+**解決策**: `~/.zshrc`に以下を追加して`source ~/.zshrc`を実行:
+
+```bash
+export OPENAI_API_KEY="sk-xxxxxxxxxxxx"
+export TAVILY_API_KEY="tvly-xxxxxxxxxxxx"
+export FIGMA_API_KEY="figd_xxxxxxxxxxxx"
+```
+
+または`~/.claude/settings.json`に追加:
+```json
+{
+  "env": {
+    "OPENAI_API_KEY": "sk-xxxxxxxxxxxx",
+    "TAVILY_API_KEY": "tvly-xxxxxxxxxxxx"
+  }
+}
+```
+
+詳細: [docs/API_KEY_TROUBLESHOOTING.md](docs/API_KEY_TROUBLESHOOTING.md)
+
+---
 
 詳細: [INSTALL.md](INSTALL.md) | [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
