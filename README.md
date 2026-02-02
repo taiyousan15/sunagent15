@@ -1289,6 +1289,69 @@ AIによる深層調査・レポート生成・要件定義システム。
 | **検索ボリューム** | 推定のみ | 正確なデータ |
 | **必要なもの** | Claude Codeのみ | 各種APIキー |
 
+### 🔍 追加MCP（無料）
+
+APIキー不要で使える追加のMCPサーバー。
+
+| MCP | 費用 | 用途 | 状態 |
+|-----|------|------|------|
+| `open-websearch` | 無料 | DuckDuckGo/Bing/Brave検索 | ✅ 有効（設定不要） |
+| `twitter-client` | 無料 | Twitter/Xツイート取得・検索 | ⚠️ 要設定（下記参照） |
+| `playwright` | 無料 | ブラウザ自動化 | ✅ 有効（設定不要） |
+
+#### 🐦 Twitter/X MCP の設定方法
+
+Twitter機能を使うにはCookie認証が必要です（APIキー不要・無料）。
+
+**Step 1: Cookieを取得**
+
+1. **Chrome/Edgeで X.com にログイン**
+2. **F12キーでDevToolsを開く**
+3. **「Application」タブ → 「Cookies」→ 「https://x.com」をクリック**
+4. **以下の3つの値をコピー**:
+
+| Name | 説明 |
+|------|------|
+| `auth_token` | 認証トークン（約40文字） |
+| `ct0` | CSRFトークン（約100文字） |
+| `twid` | ユーザーID（`u%3D数字`形式） |
+
+**Step 2: .envに設定**
+
+プロジェクトの`.env`ファイルに以下を追加（値は自分のものに置き換え）:
+
+```bash
+TWITTER_COOKIES=["auth_token=あなたのauth_token; Domain=.twitter.com", "ct0=あなたのct0; Domain=.twitter.com", "twid=あなたのtwid; Domain=.twitter.com"]
+```
+
+**Step 3: MCPを有効化**
+
+`.mcp.json`の`twitter-client`セクションで`"disabled": false`に変更:
+
+```json
+"twitter-client": {
+  ...
+  "disabled": false,  // ← trueからfalseに変更
+  ...
+}
+```
+
+**Step 4: Claude Codeを再起動**
+
+```bash
+# Ctrl+C で終了後、再度起動
+claude
+```
+
+**使用例:**
+```
+「このツイートの内容を教えて: https://x.com/username/status/123456789」
+「"AI Agent" に関する最新ツイートを10件検索して」
+「DuckDuckGoで "Claude Code MCP" を検索して」
+```
+
+> **⚠️ 注意**: Cookie情報は**絶対に他人と共有しないでください**。GitHubにプッシュされる`.env.example`にはプレースホルダーのみ含まれ、実際の値は含まれません。
+
 ### インフラ・自動化（11スキル）
 
 | スキル | 説明 | コマンド |

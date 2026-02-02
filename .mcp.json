@@ -103,6 +103,26 @@
       "disabled": false,
       "description": "Memory Service MCP - Automatic context memory for AI. 75% token reduction, graph DB with 30x query performance.",
       "category": "memory"
+    },
+    "open-websearch": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["open-websearch-mcp"],
+      "disabled": false,
+      "description": "Open WebSearch MCP - DuckDuckGo/Bing/Brave検索（APIキー不要・無料）",
+      "category": "search"
+    },
+    "twitter-client": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@enescakir/twitter-mcp"],
+      "env": {
+        "AUTH_METHOD": "cookies",
+        "TWITTER_COOKIES": "${TWITTER_COOKIES}"
+      },
+      "disabled": true,
+      "description": "Twitter/X Client - ツイート取得・検索（Cookie認証設定後に有効化）",
+      "category": "sns-research"
     }
   }
 }
