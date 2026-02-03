@@ -1,5 +1,5 @@
 #!/bin/bash
-# TAISUN Agent v2.5.0 - Installation Script
+# TAISUN Agent v2.10.0 - Installation Script
 #
 # Usage: ./scripts/install.sh
 #
@@ -11,8 +11,8 @@
 set -e
 
 echo "========================================"
-echo "  TAISUN Agent v2.5.0 Installation"
-echo "  7-Layer Fidelity Defense System"
+echo "  TAISUN Agent v2.10.0 Installation"
+echo "  13-Layer Fidelity Defense System"
 echo "========================================"
 echo ""
 
@@ -32,7 +32,7 @@ echo "1. Installing npm dependencies..."
 npm install
 
 echo ""
-echo "2. Setting up 7-Layer Defense System..."
+echo "2. Setting up 13-Layer Defense System..."
 
 # Make hooks executable
 chmod +x .claude/hooks/*.sh 2>/dev/null || true
@@ -90,10 +90,16 @@ if [ -d "$SOURCE_SKILLS" ]; then
         "sdd-threat"
         "gpt-researcher"
         "research"
+        "research-free"
+        "mega-research"
         "dual-ai-review"
         "taiyo-analyzer"
         "lp-analysis"
         "nanobanana-pro"
+        "apify-research"
+        "video-agent"
+        "taiyo-style-lp"
+        "taiyo-style-sales-letter"
     )
 
     INSTALLED=0
@@ -121,11 +127,11 @@ echo "4. Verifying installation..."
 VERSION=$(cat package.json | grep '"version"' | head -1 | cut -d'"' -f4)
 echo "   - Version: $VERSION"
 
-# Check settings.json for 7-layer defense
-if grep -q "7-Layer Defense" .claude/settings.json 2>/dev/null; then
-    echo "   - 7-Layer Defense: configured"
+# Check settings.json for 13-layer defense
+if grep -q "13-Layer Defense\|7-Layer Defense" .claude/settings.json 2>/dev/null; then
+    echo "   - 13-Layer Defense: configured"
 else
-    echo "   - 7-Layer Defense: NOT configured (check .claude/settings.json)"
+    echo "   - 13-Layer Defense: NOT configured (check .claude/settings.json)"
 fi
 
 # Check CLAUDE.md for contract
@@ -162,7 +168,7 @@ echo "========================================"
 echo "  Installation Complete!"
 echo "========================================"
 echo ""
-echo "7-Layer Defense System:"
+echo "13-Layer Defense System:"
 echo "  Layer 0: CLAUDE.md Contract (absolute rules)"
 echo "  Layer 1: SessionStart State Injection"
 echo "  Layer 2: Permission Gate (phase restrictions)"
@@ -170,6 +176,12 @@ echo "  Layer 3: Read-before-Write enforcement"
 echo "  Layer 4: Baseline Lock (script protection)"
 echo "  Layer 5: Skill Evidence (skill usage tracking)"
 echo "  Layer 6: Deviation Approval (pre-approval required)"
+echo "  Layer 7: Agent Enforcement (complex task agent)"
+echo "  Layer 8: Copy Safety (unicode/marker detection)"
+echo "  Layer 9: Input Sanitizer (injection prevention)"
+echo "  Layer 10: Skill Auto-Select (task-based skill)"
+echo "  Layer 11: Definition Lint (workflow validation)"
+echo "  Layer 12: Context Quality (quality guidance)"
 echo ""
 echo "Features:"
 echo "  - Physical blocking (exit code 2)"
@@ -181,7 +193,16 @@ echo "Installed Skills (available in any project):"
 echo "  /sdd-req100  - 100点満点の要件定義を作成"
 echo "  /sdd-full    - 完全なSDD (設計書一式) を作成"
 echo "  /research    - Deep Research"
+echo "  /research-free - APIキー不要リサーチ"
+echo "  /mega-research - 6API統合リサーチ"
+echo "  /apify-research - SNS/EC/検索スクレイピング"
+echo "  /video-agent - 動画パイプライン"
 echo "  /dual-ai-review - AI Review"
+echo ""
+echo "New in v2.10.0:"
+echo "  - defer_loading: コンテキスト70%削減"
+echo "  - MCPプリセット: ./scripts/switch-mcp.sh [preset]"
+echo "  - コスト警告: API消費MCPの事前警告"
 echo ""
 echo "Next steps:"
 echo "  1. Read .claude/CLAUDE.md for the contract"

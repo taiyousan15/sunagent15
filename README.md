@@ -11,6 +11,42 @@
 
 ---
 
+> **2026-02-03: v2.10.0 defer_loading最適化 & システム強化 🚀**
+>
+> Context消費を70%削減する`defer_loading`最適化と、研究ツール・パイプラインスキルを大幅に強化しました。
+>
+> ### 新機能
+> | 機能 | 説明 |
+> |------|------|
+> | ⚡ **defer_loading統合** | MCPを必要時のみロード（コンテキスト70%削減） |
+> | 🔍 **Apify MCP追加** | SNS/EC/検索エンジンスクレイピング対応 |
+> | 💰 **コスト警告システム** | API消費MCPの事前警告フック |
+> | 🎯 **スキルマッピング拡張** | 10→19マッピング（自動スキル選択強化） |
+> | 📋 **MCPプリセット** | marketing/video/research/developmentなど6プリセット |
+>
+> ### 新規スキル・コマンド
+> | スキル/コマンド | 説明 |
+> |----------------|------|
+> | `/marketing-full` | マーケティング統合パイプライン（要件定義→LP→セールスレター→画像） |
+> | `/video-course` | 動画コース作成パイプライン |
+> | `/sdd-full-pipeline` | SDD完全パイプライン（8フェーズ） |
+> | `apify-research` | ApifyによるSNS/検索/ECスクレイピング |
+>
+> ### MCPプリセット切り替え
+> ```bash
+> ./scripts/switch-mcp.sh marketing     # マーケティング向け
+> ./scripts/switch-mcp.sh video         # 動画制作向け
+> ./scripts/switch-mcp.sh research      # リサーチ向け
+> ./scripts/switch-mcp.sh full-optimized # フル構成（defer_loading最適化）
+> ```
+>
+> ### アップグレード
+> ```bash
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+> ```
+
+---
+
 > **2026-02-02: v2.9.3 Mac/Windows両対応 & SDD完全版 🖥️**
 >
 > Mac/Windows両方で確実に動作するセットアップガイドと、Spec-Driven Development (SDD) の完全版を追加しました。
