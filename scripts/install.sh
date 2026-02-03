@@ -68,7 +68,54 @@ for hook in "${REQUIRED_HOOKS[@]}"; do
 done
 
 echo ""
-echo "3. Verifying installation..."
+echo "3. Installing Claude Code Skills to global directory..."
+
+# Install skills to ~/.claude/skills/
+TARGET_SKILLS="$HOME/.claude/skills"
+SOURCE_SKILLS=".claude/skills"
+
+if [ -d "$SOURCE_SKILLS" ]; then
+    mkdir -p "$TARGET_SKILLS"
+
+    # Skills to install globally
+    SKILLS_TO_INSTALL=(
+        "sdd-req100"
+        "sdd-adr"
+        "sdd-design"
+        "sdd-full"
+        "sdd-guardrails"
+        "sdd-runbook"
+        "sdd-slo"
+        "sdd-tasks"
+        "sdd-threat"
+        "gpt-researcher"
+        "research"
+        "dual-ai-review"
+        "taiyo-analyzer"
+        "lp-analysis"
+        "nanobanana-pro"
+    )
+
+    INSTALLED=0
+    for skill in "${SKILLS_TO_INSTALL[@]}"; do
+        if [ -d "$SOURCE_SKILLS/$skill" ]; then
+            if [ ! -d "$TARGET_SKILLS/$skill" ] || [ "$SOURCE_SKILLS/$skill/SKILL.md" -nt "$TARGET_SKILLS/$skill/SKILL.md" ] 2>/dev/null; then
+                cp -R "$SOURCE_SKILLS/$skill" "$TARGET_SKILLS/"
+                echo "   - $skill: installed"
+                ((INSTALLED++))
+            else
+                echo "   - $skill: already up to date"
+            fi
+        fi
+    done
+
+    echo "   Total skills installed/updated: $INSTALLED"
+else
+    echo "   Warning: Skills directory not found"
+fi
+
+echo ""
+echo "4. Verifying installation..."
 
 # Check version
 VERSION=$(cat package.json | grep '"version"' | head -1 | cut -d'"' -f4)
@@ -97,7 +144,7 @@ fi
 
 # Test hook execution
 echo ""
-echo "4. Testing hooks..."
+echo "5. Testing hooks..."
 if echo '{"source":"test","cwd":"'$(pwd)'"}' | node .claude/hooks/workflow-sessionstart-injector.js 2>/dev/null; then
     echo "   - workflow-sessionstart-injector.js: OK"
 else
@@ -129,6 +176,12 @@ echo "  - Physical blocking (exit code 2)"
 echo "  - .workflow_state.json state management"
 echo "  - SESSION_HANDOFF.md auto-generation"
 echo "  - mistakes.md violation logging"
+echo ""
+echo "Installed Skills (available in any project):"
+echo "  /sdd-req100  - 100点満点の要件定義を作成"
+echo "  /sdd-full    - 完全なSDD (設計書一式) を作成"
+echo "  /research    - Deep Research"
+echo "  /dual-ai-review - AI Review"
 echo ""
 echo "Next steps:"
 echo "  1. Read .claude/CLAUDE.md for the contract"
