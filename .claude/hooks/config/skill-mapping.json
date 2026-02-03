@@ -1,7 +1,7 @@
 {
   "_comment": "タスク種別からスキルを自動マッピングする設定ファイル",
-  "_version": "1.0.0",
-  "_updated": "2026-01-19",
+  "_version": "2.0.0",
+  "_updated": "2026-02-03",
 
   "mappings": [
     {
@@ -35,6 +35,54 @@
       "strict": true
     },
     {
+      "name": "要件定義",
+      "description": "SDD要件定義100シートによる要件整理",
+      "when_contains_all": ["要件定義"],
+      "when_contains_any": ["システム", "開発", "プロジェクト"],
+      "required_skills": ["sdd-req100"],
+      "priority": 85,
+      "strict": false
+    },
+    {
+      "name": "リサーチ（無料）",
+      "description": "APIキー不要の統合リサーチ",
+      "when_contains_all": ["リサーチ"],
+      "when_contains_any": ["調べて", "調査"],
+      "required_skills": ["research-free"],
+      "priority": 70,
+      "strict": false
+    },
+    {
+      "name": "深層リサーチ（GPT Researcher）",
+      "description": "GPT Researcherによる深層調査",
+      "when_contains_all": [],
+      "when_contains_any": ["深層リサーチ", "詳細調査", "徹底調査"],
+      "required_skills": ["gpt-researcher"],
+      "cost_warning": true,
+      "priority": 90,
+      "strict": false
+    },
+    {
+      "name": "メガリサーチ",
+      "description": "6API統合の最強リサーチ",
+      "when_contains_all": [],
+      "when_contains_any": ["mega-research", "メガリサーチ", "完全調査"],
+      "required_skills": ["mega-research"],
+      "cost_warning": true,
+      "priority": 95,
+      "strict": false
+    },
+    {
+      "name": "SNSスクレイピング（Apify）",
+      "description": "ApifyによるSNS/EC/検索スクレイピング",
+      "when_contains_all": [],
+      "when_contains_any": ["Instagram", "Twitter", "TikTok", "Amazon", "スクレイピング"],
+      "required_skills": ["apify-research"],
+      "cost_warning": true,
+      "priority": 85,
+      "strict": false
+    },
+    {
       "name": "セールスレター作成",
       "description": "セールスレター・LPのコピー作成",
       "when_contains_all": ["セールスレター"],
@@ -66,8 +114,44 @@
       "description": "ランディングページの作成または分析",
       "when_contains_all": [],
       "when_contains_any": ["LP", "ランディングページ"],
-      "required_skills": ["lp-analysis", "lp-json-generator"],
+      "required_skills": ["lp-analysis", "taiyo-style-lp"],
       "priority": 70,
+      "strict": false
+    },
+    {
+      "name": "画像生成（NanoBanana）",
+      "description": "NanoBanana/Geminiによる画像生成",
+      "when_contains_all": [],
+      "when_contains_any": ["画像生成", "NanoBanana", "Gemini画像"],
+      "required_skills": ["nanobanana-pro"],
+      "priority": 70,
+      "strict": false
+    },
+    {
+      "name": "コードレビュー",
+      "description": "コード品質レビュー",
+      "when_contains_all": [],
+      "when_contains_any": ["コードレビュー", "code review", "レビューして"],
+      "required_skills": ["code-review"],
+      "priority": 75,
+      "strict": false
+    },
+    {
+      "name": "TDD開発",
+      "description": "テスト駆動開発",
+      "when_contains_all": [],
+      "when_contains_any": ["TDD", "テスト駆動", "テストファースト"],
+      "required_skills": ["tdd"],
+      "priority": 80,
+      "strict": false
+    },
+    {
+      "name": "動画パイプライン",
+      "description": "Video Agent OSによる動画生成",
+      "when_contains_all": ["動画", "生成"],
+      "when_contains_any": ["パイプライン", "自動生成"],
+      "required_skills": ["video-agent"],
+      "priority": 85,
       "strict": false
     },
     {
@@ -80,15 +164,6 @@
       "strict": false
     },
     {
-      "name": "画像生成（NanoBanana）",
-      "description": "NanoBanana/Geminiによる画像生成",
-      "when_contains_all": ["画像", "生成"],
-      "when_contains_any": ["NanoBanana", "Gemini", "AI画像"],
-      "required_skills": ["nanobanana-pro"],
-      "priority": 70,
-      "strict": false
-    },
-    {
       "name": "セキュリティスキャン",
       "description": "Trivyによるセキュリティ脆弱性スキャン",
       "when_contains_all": [],
@@ -96,6 +171,15 @@
       "required_skills": ["security-scan-trivy"],
       "priority": 80,
       "strict": true
+    },
+    {
+      "name": "マーケティングフルパイプライン",
+      "description": "要件定義→LP→セールスレター→画像の統合パイプライン",
+      "when_contains_all": ["マーケティング", "フル"],
+      "when_contains_any": ["パイプライン", "統合", "キャンペーン"],
+      "required_skills": ["sdd-req100", "taiyo-style-lp", "taiyo-style-sales-letter", "nanobanana-pro"],
+      "priority": 90,
+      "strict": false
     }
   ],
 

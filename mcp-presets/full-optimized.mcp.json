@@ -1,5 +1,5 @@
 {
-  "_comment": "TAISUN v2.1 - defer_loading最適化版（コンテキスト70%削減）",
+  "_comment": "フル構成（defer_loading最適化版） - コンテキスト70%削減",
   "mcpServers": {
     "_comment_core": "=== 常時ロード（コア3個） ===",
 
@@ -64,7 +64,6 @@
       "disabled": false,
       "defer_loading": true,
       "search_keywords": ["research", "調査", "リサーチ", "レポート"],
-      "cost_warning": true,
       "description": "深層リサーチ（APIコスト発生）",
       "category": "research"
     },
@@ -127,7 +126,6 @@
       "disabled": false,
       "defer_loading": true,
       "search_keywords": ["scrape", "SNS", "Instagram", "Twitter", "Amazon"],
-      "cost_warning": true,
       "description": "SNS/検索/ECスクレイピング",
       "category": "research"
     },
@@ -141,7 +139,6 @@
       "disabled": false,
       "defer_loading": true,
       "search_keywords": ["tavily", "AI検索", "web検索"],
-      "cost_warning": true,
       "description": "AI特化検索エンジン",
       "category": "search"
     },
