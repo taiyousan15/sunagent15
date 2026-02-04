@@ -7,6 +7,29 @@
 
 ---
 
+## [2.11.0] - 2026-02-04
+
+### 🎉 追加 (Added)
+
+#### Agent Trace統合（新機能）
+AI生成コードの帰属追跡システムを導入:
+- `agent-trace` スキル - トレース管理・統計・レポート生成
+- `.claude/lib/trace-store.ts` - Agent Trace仕様（v0.1.0）準拠ライブラリ
+- `.claude/hooks/agent-trace-capture.js` - PostToolUseフック（自動記録）
+- 全Edit/Write/NotebookEdit操作を自動追跡
+- AI/人間の貢献率を可視化
+- コンプライアンス対応レポート生成
+
+**期待効果**:
+- デバッグ時間短縮: 30-50%
+- コードレビュー効率化: 20-30%
+- 監査対応工数削減: 40-60%
+
+**関連ドキュメント**:
+- `docs/AGENT_TRACE_INTEGRATION_PROPOSAL.md`
+
+---
+
 ## [2.10.1] - 2026-02-04
 
 ### 🎉 追加 (Added)

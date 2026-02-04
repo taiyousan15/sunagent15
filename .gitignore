@@ -57,6 +57,9 @@ temp/
 # Memory storage (M3)
 .taisun/
 
+# Agent Trace (local traces, not committed)
+.agent-trace/
+
 # Document exports
 docs/exports/
 # Mac duplicate files

@@ -67,6 +67,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-trace-capture.js",
+            "timeout": 3
+          }
+        ]
       }
     ],
     "SessionEnd": [
