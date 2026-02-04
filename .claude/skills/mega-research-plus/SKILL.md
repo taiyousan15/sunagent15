@@ -215,19 +215,42 @@ Claude Code組み込みのWebSearchツールを直接使用
 
 ## 環境変数
 
+APIキーは **`.env`ファイル**で安全に管理してください（`.gitignore`に含まれています）。
+
+### 設定方法
+
+1. プロジェクトルートの`.env`ファイルを編集:
+
 ```bash
-# ~/.zshrc または .env に追加
+# Research & Search APIs (mega-research-plus)
+TAVILY_API_KEY=your-tavily-api-key
+SERPAPI_KEY=your-serpapi-key
+BRAVE_SEARCH_API_KEY=your-brave-api-key
+NEWSAPI_KEY=your-newsapi-key
+PERPLEXITY_API_KEY=your-perplexity-api-key
 
-# === API Keys ===
-export TAVILY_API_KEY="your-tavily-api-key"
-export SERPAPI_KEY="your-serpapi-key"
-export BRAVE_API_KEY="your-brave-api-key"
-export NEWSAPI_KEY="your-newsapi-key"
-export PERPLEXITY_API_KEY="your-perplexity-api-key"
-
-# === Twitter (Cookie認証) ===
-export TWITTER_COOKIES='["auth_token=your-auth-token; Domain=.twitter.com", "ct0=your-ct0; Domain=.twitter.com", "twid=u=your-twid; Domain=.twitter.com"]'
+# Twitter/X Cookie認証
+TWITTER_AUTH_TOKEN=your-auth-token
+TWITTER_CT0=your-ct0
+TWITTER_TWID=your-twid
 ```
+
+2. または `.env.example` をコピーして編集:
+
+```bash
+cp .env.example .env
+# 実際のAPIキーを入力
+```
+
+### APIキー取得先
+
+| API | URL | 無料枠 |
+|-----|-----|--------|
+| Tavily | https://tavily.com/ | 1,000 req/month |
+| SerpAPI | https://serpapi.com/ | 100 req/month |
+| Brave Search | https://brave.com/search/api/ | 2,000 req/month |
+| NewsAPI | https://newsapi.org/ | 100 req/day |
+| Perplexity | https://www.perplexity.ai/settings/api | 課金制 |
 
 ## 出力形式
 

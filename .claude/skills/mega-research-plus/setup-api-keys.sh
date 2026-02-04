@@ -3,71 +3,96 @@
 # ===========================================
 # Research API Keys Setup Script
 # ===========================================
-# このスクリプトを実行してAPIキーを設定してください
+# このスクリプトはAPIキーを.envファイルに追加します
 # 実行方法: bash setup-api-keys.sh
 # ===========================================
 
 echo "================================================"
 echo "  Research API Keys Setup"
 echo "================================================"
+echo ""
+echo "このスクリプトは.envファイルにAPIキーを追加します。"
+echo "（.envは.gitignoreに含まれているため安全です）"
+echo ""
+
+# プロジェクトルートを検出
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+ENV_FILE="$PROJECT_ROOT/.env"
+
+echo "設定ファイル: $ENV_FILE"
+echo ""
 
 # 確認
-read -p "APIキーを~/.zshrcに追加しますか？ (y/n): " confirm
+read -p ".envファイルにAPIキーを追加しますか？ (y/n): " confirm
 if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
     echo "キャンセルしました"
     exit 0
 fi
 
+# .envファイルが存在しない場合は作成
+if [[ ! -f "$ENV_FILE" ]]; then
+    echo "# TAISUN v2 Environment Configuration" > "$ENV_FILE"
+    echo "✓ .envファイルを作成しました"
+fi
+
 # バックアップ
-cp ~/.zshrc ~/.zshrc.backup.$(date +%Y%m%d_%H%M%S)
-echo "✓ ~/.zshrc のバックアップを作成しました"
+cp "$ENV_FILE" "$ENV_FILE.backup.$(date +%Y%m%d_%H%M%S)"
+echo "✓ .envのバックアップを作成しました"
 
-# APIキー設定を追加
-cat >> ~/.zshrc << 'EOF'
+echo ""
+echo "APIキーを入力してください（Enterでスキップ）:"
+echo ""
 
-# ===========================================
-# RESEARCH API KEYS (mega-research-plus)
-# ===========================================
+# Tavily
+read -p "Tavily API Key (https://tavily.com/): " TAVILY_KEY
+if [[ -n "$TAVILY_KEY" ]]; then
+    # 既存のキーを削除して追加
+    grep -v "^TAVILY_API_KEY=" "$ENV_FILE" > "$ENV_FILE.tmp" && mv "$ENV_FILE.tmp" "$ENV_FILE"
+    echo "TAVILY_API_KEY=$TAVILY_KEY" >> "$ENV_FILE"
+    echo "  ✓ Tavily API Key を設定しました"
+fi
 
-# Tavily API（AI検索特化）- 1,000 req/month (Free)
-export TAVILY_API_KEY="your-tavily-api-key"
+# SerpAPI
+read -p "SerpAPI Key (https://serpapi.com/): " SERPAPI_KEY
+if [[ -n "$SERPAPI_KEY" ]]; then
+    grep -v "^SERPAPI_KEY=" "$ENV_FILE" > "$ENV_FILE.tmp" && mv "$ENV_FILE.tmp" "$ENV_FILE"
+    echo "SERPAPI_KEY=$SERPAPI_KEY" >> "$ENV_FILE"
+    echo "  ✓ SerpAPI Key を設定しました"
+fi
 
-# SerpAPI（Google検索結果取得）- 100 req/month (Free)
-export SERPAPI_KEY="your-serpapi-key"
+# Brave
+read -p "Brave Search API Key (https://brave.com/search/api/): " BRAVE_KEY
+if [[ -n "$BRAVE_KEY" ]]; then
+    grep -v "^BRAVE_SEARCH_API_KEY=" "$ENV_FILE" > "$ENV_FILE.tmp" && mv "$ENV_FILE.tmp" "$ENV_FILE"
+    echo "BRAVE_SEARCH_API_KEY=$BRAVE_KEY" >> "$ENV_FILE"
+    echo "  ✓ Brave Search API Key を設定しました"
+fi
 
-# Brave Search API - 2,000 req/month (Free)
-export BRAVE_API_KEY="your-brave-api-key"
+# NewsAPI
+read -p "NewsAPI Key (https://newsapi.org/): " NEWS_KEY
+if [[ -n "$NEWS_KEY" ]]; then
+    grep -v "^NEWSAPI_KEY=" "$ENV_FILE" > "$ENV_FILE.tmp" && mv "$ENV_FILE.tmp" "$ENV_FILE"
+    echo "NEWSAPI_KEY=$NEWS_KEY" >> "$ENV_FILE"
+    echo "  ✓ NewsAPI Key を設定しました"
+fi
 
-# NewsAPI（ニュース集約）- 100 req/day (Free)
-export NEWSAPI_KEY="your-newsapi-key"
-
-# Perplexity API（AI検索）- 課金制
-export PERPLEXITY_API_KEY="your-perplexity-api-key"
-
-# Twitter/X Cookies (Cookie認証)
-export TWITTER_COOKIES='["auth_token=your-auth-token; Domain=.twitter.com", "ct0=your-ct0; Domain=.twitter.com", "twid=u=your-twid; Domain=.twitter.com"]'
-EOF
-
-echo "✓ APIキーを~/.zshrcに追加しました"
-
-# 現在のシェルに反映
-source ~/.zshrc 2>/dev/null
+# Perplexity
+read -p "Perplexity API Key (https://perplexity.ai/settings/api): " PERPLEXITY_KEY
+if [[ -n "$PERPLEXITY_KEY" ]]; then
+    grep -v "^PERPLEXITY_API_KEY=" "$ENV_FILE" > "$ENV_FILE.tmp" && mv "$ENV_FILE.tmp" "$ENV_FILE"
+    echo "PERPLEXITY_API_KEY=$PERPLEXITY_KEY" >> "$ENV_FILE"
+    echo "  ✓ Perplexity API Key を設定しました"
+fi
 
 echo ""
 echo "================================================"
 echo "  セットアップ完了！"
 echo "================================================"
 echo ""
-echo "設定されたAPIキー:"
-echo "  ✓ Tavily API"
-echo "  ✓ SerpAPI"
-echo "  ✓ Brave Search API"
-echo "  ✓ NewsAPI"
-echo "  ✓ Perplexity API"
-echo "  ✓ Twitter Cookies"
+echo "設定ファイル: $ENV_FILE"
 echo ""
-echo "新しいターミナルを開くか、以下を実行してください:"
-echo "  source ~/.zshrc"
+echo "注意: .envファイルは.gitignoreに含まれているため、"
+echo "      GitHubにプッシュされません（安全）。"
 echo ""
 echo "使い方:"
 echo "  /mega-research-plus AIエージェント市場 --mode=deep"
