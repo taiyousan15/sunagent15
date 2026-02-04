@@ -1,3 +1,14 @@
+---
+name: sales-systems
+description: |
+  VSL・セミナー・個別相談のセールスシステム設計スキル。
+  Use when: (1) user says「VSL台本」「セミナー台本」「個別相談トーク」,
+  (2) user wants sales presentation scripts,
+  (3) user mentions「クロージング」「セールスシナリオ」.
+  Do NOT use for: 文章のセールスレター（taiyo-style-sales-letterを使用）、
+  ステップメール（taiyo-style-step-mailを使用）。
+---
+
 # セールスシステムスキル
 
 ## When to Use

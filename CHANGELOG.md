@@ -7,6 +7,72 @@
 
 ---
 
+## [2.10.1] - 2026-02-04
+
+### 🎉 追加 (Added)
+
+#### 新スキル追加
+- `mega-research-plus` - 8つの検索ソース（Tavily/SerpAPI/Brave/NewsAPI/Perplexity/Twitter/DuckDuckGo/WebSearch）統合リサーチ
+- `note-research` - note.comリサーチツール（非公式API + MCP + WebSearch）
+- `pdf-processing` - 包括的PDF処理スキル
+- `skill-validator` - Anthropicベストプラクティスに基づくスキル検証
+
+#### 新エージェント追加
+- `-coordinator-agent` - コーディネーター
+- `-codegen-agent` - コード生成
+- `-issue-agent` - Issue管理
+- `-pr-agent` - PR管理
+- `-review-agent` - コードレビュー
+- `-deployment-agent` - デプロイメント
+- `meta-ads-agent` - Meta広告管理
+
+#### 新コマンド追加
+- `-agent`, `-auto`, `-init`, `-status`, `-todos`
+- `meta-ads`, `meta-ads-full`
+
+#### Meta広告スキル追加
+- `meta-ads-analyze` - 広告分析
+- `meta-ads-bulk` - 一括操作
+- `meta-ads-competitors` - 競合分析
+- `meta-ads-creative` - クリエイティブ生成
+- `meta-ads-optimize` - 最適化
+
+### 🔧 修正 (Fixed)
+
+#### スキルYAMLフロントマター修正
+32個のスキルにYAMLフロントマターを追加し、Claude Codeのスキルリストに正しく表示されるよう修正:
+- `anime-production`, `custom-character`, `diagram-illustration`
+- `doc-convert-pandoc`, `docker-mcp-ops`, `dual-ai-review`
+- `education-framework`, `funnel-builder`, `gpt-sovits-tts`
+- `kindle-publishing`, `line-marketing`, `lp-design`
+- `lp-json-generator`, `mega-research`, `note-marketing`
+- `notion-knowledge-mcp`, `omnihuman1-video`, `pdf-automation-gotenberg`
+- `postgres-mcp-analyst`, `research-cited-report`, `sales-systems`
+- `security-scan-trivy`, `sns-marketing`, `sns-patterns`
+- `taiyo-style`, `telop`, `unified-notifications-apprise`
+- `unified-research`, `youtube-content`, `youtube-thumbnail`
+- `youtube_channel_summary`
+
+#### 存在しないMCPパッケージ参照の削除
+- `~/.claude/skills/agentic-vision/references/mcp_servers.json` を削除
+- グローバルスキル `agentic-vision` のSKILL.mdから非存在パッケージ参照を削除
+  - 削除理由: `@anthropic/mcp-glm-vision`等のパッケージはnpmに存在しない
+  - Anthropicの公式パッケージは`@anthropic-ai/*`名前空間を使用
+
+### 📖 ドキュメント (Documentation)
+
+#### Kindle AI表紙テンプレート作成
+- `kindle_ai_anime_cover_template.md` - 5スタイルの包括的デザインパターン
+- `kindle_cover_templates.json` - プログラム利用向けJSON形式
+- `kindle_ai_prompts.txt` - 15個の画像生成プロンプト
+
+### 🔒 セキュリティ (Security)
+
+- 存在しないnpmパッケージへの参照を削除（インストール時エラー防止）
+- Claude APIドキュメントのtool-search-tool機能を分析・適用検討
+
+---
+
 ## [2.4.1] - 2026-01-18
 
 ### 🎉 追加 (Added)

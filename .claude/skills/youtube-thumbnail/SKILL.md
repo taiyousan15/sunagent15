@@ -1,3 +1,14 @@
+---
+name: youtube-thumbnail
+description: |
+  YouTubeサムネイル作成ガイド。NanoBanana Pro + Canvaで高CTRサムネ制作。
+  Use when: (1) user says「サムネイル作成」「YouTubeサムネ」「クリック率向上」,
+  (2) user wants YouTube thumbnail design,
+  (3) user mentions「CTR改善」「サムネデザイン」.
+  Do NOT use for: 動画本編制作（video-agentを使用）、
+  台本作成（youtube-contentを使用）。
+---
+
 # YouTubeサムネイル作成ガイド - NanoBanana Pro完全マニュアル
 
 ## 概要

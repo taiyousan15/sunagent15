@@ -1,3 +1,14 @@
+---
+name: gpt-sovits-tts
+description: |
+  GPT-SoVITS v2による高品質音声クローニング・TTSシステム。
+  Use when: (1) user says「音声クローン」「声を合成」「ナレーション生成」,
+  (2) user wants voice cloning or custom TTS,
+  (3) user mentions「GPT-SoVITS」「声質コピー」.
+  Do NOT use for: 標準TTS（japanese-tts-readingを使用）、
+  動画編集（video-agentを使用）。
+---
+
 # GPT-SoVITS TTS スキル
 
 高品質な音声クローニング・TTS（Text-to-Speech）システム。

@@ -1,6 +1,11 @@
 ---
 name: notion-knowledge-mcp
-description: Notion MCPを使って社内ナレッジ検索/追記/整理を行う。議事録や調査結果をNotionに残す時に使う。
+description: |
+  Notion MCPを使って社内ナレッジ検索/追記/整理を実行。
+  Use when: (1) user says「Notionに保存」「ナレッジ検索」「議事録をNotionに」,
+  (2) user wants to interact with Notion workspace,
+  (3) user mentions「Notionページ」「ナレッジベース」.
+  Do NOT use for: 一般的なメモ作成、ファイル管理（filesystemを使用）。
 ---
 
 # Notion MCP Knowledge Ops

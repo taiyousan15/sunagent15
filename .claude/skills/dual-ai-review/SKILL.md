@@ -1,3 +1,14 @@
+---
+name: dual-ai-review
+description: |
+  2つの独立したAIエージェントによるコードレビュー（Evaluator-Optimizer）。
+  Use when: (1) user says「デュアルAI」「二重チェック」「厳格レビュー」,
+  (2) user wants high-quality code verification,
+  (3) user mentions「セキュリティレビュー」「実装検証」.
+  Do NOT use for: 通常のコードレビュー（code-reviewerを使用）、
+  セキュリティスキャン（security-scan-trivyを使用）。
+---
+
 # Dual-AI Review Skill
 
 2つの独立したAIエージェントがコード変更をレビューするスキル。

@@ -1,6 +1,14 @@
 ---
 name: mega-research
-description: 6つの検索API（Tavily/SerpAPI/Brave/NewsAPI/Reddit/Perplexity）を統合した最強リサーチシステム。深層調査から出典付きレポート生成まで自動実行。
+description: |
+  6つの検索API（Tavily/SerpAPI/Brave/NewsAPI/Reddit/Perplexity）を統合した最強リサーチシステム。
+  深層調査から出典付きレポート生成まで自動実行。
+  Use when: (1) user says「徹底調査」「深層リサーチ」「完全調査」「mega-research」,
+  (2) user needs multi-source research with citations,
+  (3) user wants market analysis, competitor research, or trend analysis,
+  (4) user mentions「出典付き」「クロス検証」「複数ソース」.
+  Do NOT use for: simple fact-checking (use research-free), single-source lookups,
+  or when API keys are not configured.
 argument-hint: "[トピック] [--mode=deep|quick|news|trend]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python:*, node:*)
 model: opus
@@ -296,3 +304,40 @@ export PERPLEXITY_API_KEY="pplx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 - `keyword-mega-extractor` - キーワード抽出
 - `gpt-researcher` - 自律型深層リサーチ
 - `research-cited-report` - 出典付きレポート
+
+## トラブルシューティング
+
+### よくあるエラーと対処法
+
+#### Error: API key not found
+**原因**: 環境変数が設定されていない
+**対処**:
+```bash
+# 環境変数を確認
+echo $TAVILY_API_KEY
+echo $SERPAPI_KEY
+
+# 未設定なら追加
+export TAVILY_API_KEY="tvly-xxxxx"
+```
+
+#### Error: Rate limit exceeded
+**原因**: API呼び出し回数制限を超過
+**対処**:
+- deep modeは1日5回程度に抑える
+- quick modeを使用する
+- 60秒待ってリトライ
+
+#### Error: No results found
+**原因**: クエリが曖昧または専門的すぎる
+**対処**:
+- より具体的なキーワードを使用
+- 英語でも検索を試す
+- quick modeで部分検索
+
+#### Error: Timeout
+**原因**: API応答が遅い（Perplexity等）
+**対処**:
+- `--mode=quick`で高速検索
+- 特定APIをスキップ
+- ネットワーク接続を確認

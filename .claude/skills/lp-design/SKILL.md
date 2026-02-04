@@ -1,3 +1,14 @@
+---
+name: lp-design
+description: |
+  ランディングページの設計・構成スキル。オプトイン/セールス/漫画LPに対応。
+  Use when: (1) user says「LP設計」「ランディングページ」「漫画LP」,
+  (2) user wants landing page structure,
+  (3) user mentions「オプトインLP」「セールスLP」「LP構成」.
+  Do NOT use for: LP分析（lp-analysisを使用）、
+  LPのコピーライティング（taiyo-style-lpを使用）。
+---
+
 # ランディングページ設計スキル
 
 ## When to Use

@@ -1,6 +1,11 @@
 ---
 name: unified-notifications-apprise
-description: Appriseで通知チャネルを統一し、ワークフローの最後を確実に人へ届ける設計にする時に使う。
+description: |
+  Appriseで通知チャネル（Email/Discord/Slack等）を統一化。ワークフロー完了通知。
+  Use when: (1) user says「通知設定」「Apprise」「複数チャネル通知」,
+  (2) user wants unified notification system,
+  (3) user mentions「ワークフロー通知」「Discord通知」「エスカレーション」.
+  Do NOT use for: 単発メール送信、Slack単体設定。
 ---
 
 # Unified Notifications (Apprise)

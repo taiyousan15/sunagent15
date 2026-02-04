@@ -5,6 +5,17 @@
 
   "mappings": [
     {
+      "name": "PDF処理・読み取り",
+      "description": "PDF文書の読み取り、テキスト抽出、分析を自動実行",
+      "when_contains_all": [],
+      "when_contains_any": [".pdf", "PDF", "hubfs", "resources.anthropic.com", "PDFを読んで", "ドキュメントを分析"],
+      "when_url_pattern": "\\.(pdf|PDF)$|hubfs/.*\\.pdf",
+      "required_skills": ["pdf-processing"],
+      "priority": 95,
+      "strict": false,
+      "auto_download": true
+    },
+    {
       "name": "YouTubeSchool 教材動画生成（限定トリガー）",
       "description": "YouTubeチャンネルの動画を分析し、日本語教材動画を生成する",
       "when_contains_all": ["YOUTUBE", "教材", "動画", "生成"],
@@ -179,6 +190,60 @@
       "when_contains_any": ["パイプライン", "統合", "キャンペーン"],
       "required_skills": ["sdd-req100", "taiyo-style-lp", "taiyo-style-sales-letter", "nanobanana-pro"],
       "priority": 90,
+      "strict": false
+    },
+    {
+      "name": "Meta広告管理",
+      "description": "Meta広告（Facebook/Instagram）のキャンペーン管理",
+      "when_contains_all": [],
+      "when_contains_any": ["Meta広告", "Facebook広告", "Instagram広告", "FB広告", "IG広告"],
+      "required_skills": ["meta-ads"],
+      "priority": 85,
+      "strict": false
+    },
+    {
+      "name": "Meta広告分析",
+      "description": "Meta広告のパフォーマンス分析",
+      "when_contains_all": ["広告", "分析"],
+      "when_contains_any": ["Meta", "Facebook", "Instagram", "ROAS", "CPA"],
+      "required_skills": ["meta-ads-analyze"],
+      "priority": 85,
+      "strict": false
+    },
+    {
+      "name": "Meta広告クリエイティブ",
+      "description": "Meta広告用クリエイティブ生成",
+      "when_contains_all": ["広告", "クリエイティブ"],
+      "when_contains_any": ["Meta", "Facebook", "Instagram", "生成", "作成"],
+      "required_skills": ["meta-ads-creative", "nanobanana-pro", "taiyo-style-headline"],
+      "priority": 85,
+      "strict": false
+    },
+    {
+      "name": "Meta広告最適化",
+      "description": "Meta広告の自動最適化",
+      "when_contains_all": ["広告", "最適化"],
+      "when_contains_any": ["Meta", "Facebook", "Instagram", "予算", "入札"],
+      "required_skills": ["meta-ads-optimize"],
+      "priority": 85,
+      "strict": false
+    },
+    {
+      "name": "Meta広告バルク入稿",
+      "description": "Meta広告の大量入稿",
+      "when_contains_all": [],
+      "when_contains_any": ["バルク入稿", "一括入稿", "大量入稿", "バルクアップロード"],
+      "required_skills": ["meta-ads-bulk"],
+      "priority": 85,
+      "strict": false
+    },
+    {
+      "name": "広告競合分析",
+      "description": "競合広告の分析（Ad Library）",
+      "when_contains_all": ["競合", "広告"],
+      "when_contains_any": ["分析", "調査", "Ad Library"],
+      "required_skills": ["meta-ads-competitors"],
+      "priority": 80,
       "strict": false
     }
   ],

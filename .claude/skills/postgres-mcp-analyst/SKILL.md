@@ -1,6 +1,11 @@
 ---
 name: postgres-mcp-analyst
-description: PostgreSQL MCPでスキーマ確認とread-only分析を行う。集計・意思決定資料が必要な時に使う。
+description: |
+  PostgreSQL MCPでスキーマ確認とread-only分析を実行。
+  Use when: (1) user says「DB分析」「SQLで集計」「PostgresSQL確認」,
+  (2) user wants database analysis or reports,
+  (3) user mentions「意思決定資料」「データ集計」「スキーマ確認」.
+  Do NOT use for: DB更新・書き込み操作、マイグレーション。
 ---
 
 # PostgreSQL MCP Analyst

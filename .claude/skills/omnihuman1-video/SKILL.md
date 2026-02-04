@@ -1,3 +1,14 @@
+---
+name: omnihuman1-video
+description: |
+  OmniHuman1によるAIアバター・リップシンク動画生成ガイド。
+  Use when: (1) user says「AIアバター」「リップシンク」「OmniHuman」,
+  (2) user wants talking head videos from images,
+  (3) user mentions「アバター動画」「1枚の画像から動画」.
+  Do NOT use for: 実写動画編集（video-agentを使用）、
+  アニメ制作（anime-productionを使用）。
+---
+
 # OmniHuman1 AIアバター動画制作ガイド
 
 ## 概要

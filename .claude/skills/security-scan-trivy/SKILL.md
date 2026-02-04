@@ -1,6 +1,12 @@
 ---
 name: security-scan-trivy
-description: Trivyで依存関係/コンテナの脆弱性をスキャンし、重大度順に潰す。リリース前チェックで使う。
+description: |
+  Trivyで依存関係/コンテナの脆弱性をスキャン。リリース前セキュリティチェック。
+  Use when: (1) user says「脆弱性スキャン」「セキュリティチェック」「Trivy」,
+  (2) user wants vulnerability scanning,
+  (3) user mentions「依存関係チェック」「コンテナスキャン」「CVE」.
+  Do NOT use for: コードレビュー（code-reviewerを使用）、
+  セキュリティ設計（security-architectを使用）。
 ---
 
 # Trivy Security Scan
