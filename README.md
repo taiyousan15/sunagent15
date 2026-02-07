@@ -609,8 +609,10 @@ npm run taisun:diagnose
 
 ```
 以下のコマンドを実行して：
-cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
 ```
+
+> **スキル自動更新**: `anime-slide-generator`、`nanobanana-pro`、`agentic-vision`などのグローバルスキルは `npm run setup` で自動的に最新版に更新されます。
 
 ### 📁 プロジェクトで使えるようにする（Mac）
 
@@ -650,8 +652,10 @@ npm run taisun:diagnose
 
 ```
 以下のコマンドを実行して：
-cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
 ```
+
+> **スキル自動更新**: `anime-slide-generator`、`nanobanana-pro`、`agentic-vision`などのグローバルスキルは `npm run setup` で自動的に最新版に更新されます。
 
 ### 📁 プロジェクトで使えるようにする（Windows）
 
@@ -736,7 +740,9 @@ taisun:diagnose もう一回実行して
 | **dual-ai-review** | `/dual-ai-review` | AI二重レビュー |
 | **taiyo-analyzer** | `/taiyo-analyzer` | 太陽スタイル品質分析 |
 | **lp-analysis** | `/lp-analysis` | LP成約率改善分析 |
-| **nanobanana-pro** | `/nanobanana-pro` | AI画像生成 |
+| **nanobanana-pro** | `/nanobanana-pro` | AI画像生成（無料・ブラウザ自動化） |
+| **agentic-vision** | `/agentic-vision` | 画像・動画分析（無料・Gemini 3 Flash） |
+| **anime-slide-generator** | `/anime-slide-generator` | アニメ風スライド生成（Mac/Win/Linux対応） |
 
 ### 別プロジェクトでの使用
 

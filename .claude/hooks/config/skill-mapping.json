@@ -5,6 +5,30 @@
 
   "mappings": [
     {
+      "name": "Instagram Shorts動画生成（MANDATORY）",
+      "description": "Instagram Shorts/Reels/縦型動画の完全自動生成パイプライン",
+      "when_contains_all": [],
+      "when_contains_any": [
+        "Instagram動画", "Shorts動画", "Reels動画", "縦型動画",
+        "ショート動画を作", "動画生成", "動画を作って",
+        "認知バイアス動画", "マーケティング動画", "行動経済学動画",
+        "instagram-shorts", "インスタ動画", "TikTok動画"
+      ],
+      "required_skills": ["instagram-shorts-generator"],
+      "skill_path": "/Users/matsumototoshihiko/Desktop/dev/instagramshort/instagram-shorts-skill",
+      "priority": 100,
+      "strict": true,
+      "mandatory_phases": [
+        "Phase 1: RESEARCH (Plus Deep Research)",
+        "Phase 2: SCRIPT (Ollama qwen2.5:32b)",
+        "Phase 3: ASSETS (FlowImage + Fish Audio)",
+        "Phase 4: COMPOSE (Remotion)",
+        "Phase 5: QUALITY (3段階検査)"
+      ],
+      "quality_checks_required": true,
+      "output_dir_fixed": "/Users/matsumototoshihiko/Desktop/dev/instagramshort/instagram-shorts-skill/output/"
+    },
+    {
       "name": "PDF処理・読み取り",
       "description": "PDF文書の読み取り、テキスト抽出、分析を自動実行",
       "when_contains_all": [],
