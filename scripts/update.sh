@@ -114,6 +114,7 @@ if [ -d "$SOURCE_SKILLS" ]; then
         "nanobanana-pro"
         "agentic-vision"
         "anime-slide-generator"
+        "world-research"
         "apify-research"
         "video-agent"
         "taiyo-style-lp"
