@@ -331,10 +331,10 @@ export function generateTestFixtures(): {
       'ait42-coordinator': 'Implement a complete user management feature',
     },
     sampleSkillArgs: {
-      'sales-letter': '--product "Online Course" --target "Entrepreneurs"',
-      'step-mail': '--theme "Fitness Program" --days 7',
+      'taiyo-style-sales-letter': '--product "Online Course" --target "Entrepreneurs"',
+      'taiyo-style-step-mail': '--theme "Fitness Program" --days 7',
       'lp-analysis': 'https://example.com/landing-page',
-      'customer-support': 'Customer inquiry about order status',
+      'customer-support-120': 'Customer inquiry about order status',
       'nanobanana-prompts': 'YouTube thumbnail for AI tutorial',
       'security-scan-trivy': '',
       'japanese-tts-reading': '"こんにちは、世界"',
