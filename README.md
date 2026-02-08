@@ -39,6 +39,8 @@
 >
 > ### インストール・アップデート
 >
+> #### 通常アップデート（taisun_agentフォルダで作業中の場合）
+>
 > **Mac:**
 > ```bash
 > cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
@@ -49,10 +51,46 @@
 > cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
 > ```
 >
-> **初回インストール（Mac / Windows 共通）:**
+> #### 別フォルダからのアップデート / 他人への配布時
+>
+> **重要**: Claude Code内から別フォルダのtaisun_agentを更新すると、13層防御システム（Layer 6: Deviation Approval Guard）が`npm install`をブロックします。
+> 以下の手順で**新しいターミナルウィンドウ**を開いて実行してください。
+>
+> **Mac（別ターミナルで実行）:**
+> ```bash
+> # ターミナル.app を新しく開いて以下を実行（Claude Code内ではなく通常のターミナル）
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> ```
+>
+> **Mac（任意のパスにインストールした場合）:**
+> ```bash
+> # /path/to/taisun_agent を実際のパスに置き換え
+> cd /path/to/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> ```
+>
+> **Windows（別PowerShellで実行）:**
+> ```powershell
+> # 新しいPowerShellウィンドウを開いて以下を実行
+> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> ```
+>
+> **Windows（任意のパスにインストールした場合）:**
+> ```powershell
+> # C:\path\to\taisun_agent を実際のパスに置き換え
+> cd C:\path\to\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> ```
+>
+> #### 初回インストール（Mac / Windows 共通）
 > ```
 > npx github:san15/jsystem2026
 > ```
+>
+> #### トラブルシューティング
+> | 症状 | 原因 | 解決策 |
+> |------|------|--------|
+> | `npm install`がブロックされる | Claude Code内から別プロジェクトフォルダを操作 | 新しいターミナルウィンドウで実行 |
+> | `permission denied` | 権限不足 | Mac: `chmod -R u+w ~/taisun_agent` / Windows: 管理者PowerShellで実行 |
+> | `git pull`で競合 | ローカル変更あり | `git stash && git pull origin main && git stash pop` |
 
 ---
 
