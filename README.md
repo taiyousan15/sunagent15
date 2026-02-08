@@ -41,6 +41,21 @@
 > | Auto-compact 70% | 25%早期コンパクション |
 > | エージェント要約ルール | 出力50-80%削減 |
 >
+> ### アップグレード（既存ユーザー）
+> ```bash
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose
+> ```
+> **Context Guard追加インストール:**
+> ```bash
+> git clone https://github.com/san15/jsystem2026.git /tmp/context-guard
+> bash /tmp/context-guard/context-guard/install.sh
+> ```
+> **MCP手動追加:**
+> ```bash
+> claude mcp add praetorian -- npx -y claude-praetorian-mcp
+> claude mcp add claude-historian -- npx -y claude-historian-mcp
+> ```
+>
 > 詳細: [Context Guard リポジトリ](https://github.com/san15/jsystem2026) / [包括的調査レポート](https://github.com/san15/jsystem2026/blob/main/CONTEXT_MANAGEMENT_RESEARCH_REPORT.md)
 
 ---
