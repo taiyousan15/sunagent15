@@ -43,16 +43,10 @@
 >
 > ### アップグレード（2026-02-08 更新: Mac / Windows 両対応）
 >
-> ターミナルにコピー＆ペーストして Enter を押すだけで完了します。
+> ターミナルに以下をコピー＆ペーストするだけで完了します。
 >
-> **Mac / Linux:**
-> ```bash
-> curl -sL https://raw.githubusercontent.com/san15/jsystem2026/main/context-guard/install-all.sh | bash
 > ```
->
-> **Windows（PowerShell）:**
-> ```powershell
-> irm https://raw.githubusercontent.com/san15/jsystem2026/main/context-guard/install-all.ps1 | iex
+> npx github:san15/jsystem2026
 > ```
 >
 > 完了後、ターミナルと Claude Code を再起動してください。
