@@ -43,21 +43,19 @@
 >
 > ### アップグレード（2026-02-08 更新: Mac / Windows 両対応）
 >
-> Claude Code のチャットにコピー＆ペーストするだけで完了します。
+> **ターミナルで直接実行してください**（Claude Code のチャットではセキュリティ上ブロックされます）
 >
-> **Mac / Linux:**
-> ```
-> 以下のコマンドを順番に実行して v2.12.0 にアップグレードしてください:
+> **Mac / Linux（ターミナル.app / iTerm2）:**
+> ```bash
 > rm -rf /tmp/context-guard && git clone https://github.com/san15/jsystem2026.git /tmp/context-guard && bash /tmp/context-guard/context-guard/install.sh && claude mcp add praetorian -- npx -y claude-praetorian-mcp && claude mcp add claude-historian -- npx -y claude-historian-mcp
-> 完了したらターミナルと Claude Code を再起動してください。
 > ```
 >
-> **Windows:**
-> ```
-> 以下のコマンドを順番に実行して v2.12.0 にアップグレードしてください:
+> **Windows（PowerShell）:**
+> ```powershell
 > Remove-Item -Recurse -Force $env:TEMP\context-guard -ErrorAction SilentlyContinue; git clone https://github.com/san15/jsystem2026.git $env:TEMP\context-guard; $sk = Join-Path $env:USERPROFILE '.claude\skills\strategic-compact'; New-Item -ItemType Directory -Force -Path $sk | Out-Null; Copy-Item "$env:TEMP\context-guard\context-guard\skills\*" -Destination $sk -Force; setx CLAUDE_AUTOCOMPACT_PCT_OVERRIDE 70; claude mcp add praetorian -- npx -y claude-praetorian-mcp; claude mcp add claude-historian -- npx -y claude-historian-mcp
-> 完了したらターミナルと Claude Code を再起動してください。
 > ```
+>
+> 完了後、ターミナルと Claude Code を再起動してください。
 >
 > 詳細: [Context Guard リポジトリ](https://github.com/san15/jsystem2026) / [包括的調査レポート](https://github.com/san15/jsystem2026/blob/main/CONTEXT_MANAGEMENT_RESEARCH_REPORT.md)
 
