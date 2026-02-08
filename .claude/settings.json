@@ -34,7 +34,28 @@
         ]
       }
     ],
-    "UserPromptSubmit": [],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/skill-usage-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-enforcement-guard.js",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -52,6 +73,26 @@
           {
             "type": "command",
             "command": "node .claude/hooks/unified-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/deviation-approval-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-enforcement-guard.js",
             "timeout": 3
           }
         ]
