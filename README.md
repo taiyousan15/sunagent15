@@ -8,47 +8,64 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-775%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
+[![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
 
 ---
 
-> **2026-02-08: v2.12.1 World Research & 13層防御完全化 🌐🛡️**
+> **2026-02-09: v2.12.2 World Research v2.0 - 6層133ソース総合リサーチシステム**
 >
-> 全世界SNS横断リサーチスキルと、Layer 5/6/7フック登録による13層防御完全化を実施しました。
+> world-researchスキルを v1.0（SNS特化20+ソース）から v2.0（論文〜SNS完全網羅133ソース）に大幅拡張しました。
+> Integration Testsのスキル名不一致も修正し、775テスト全パスを確認済みです。
 >
-> ### 新機能
-> | 機能 | 説明 |
-> |------|------|
-> | 🌐 **world-research** | 20+プラットフォーム横断リサーチ（X/Reddit/YouTube/note/Bilibili/知乎/小红書等） |
-> | 🛡️ **Layer 5 登録** | skill-usage-guard（スキル自動検出・マッピング） |
-> | 🛡️ **Layer 6 登録** | deviation-approval-guard（危険操作の検出・ブロック） |
-> | 🛡️ **Layer 7 登録** | agent-enforcement-guard（複雑タスクでTask tool強制） |
+> ### world-research v2.0 の6層アーキテクチャ
+> | Layer | カテゴリ | ソース数 | 主要ソース |
+> |-------|---------|---------|-----------|
+> | 1 | 学術論文 | 9 | Arxiv, Papers with Code, OpenReview, Google Scholar, Semantic Scholar, Connected Papers, DBLP, ACL Anthology |
+> | 2 | キュレーション | 19 | HF Daily Papers, @_akhaliq, Alpha Signal, The Batch, Import AI, Yannic Kilcher等 |
+> | 3 | テックブログ | 18 | Lil'Log, Distill, Jay Alammar, Karpathy, Raschka, Chip Huyen, 企業研究ブログ10社 |
+> | 4 | 実装エコシステム | 51 | HF Hub, awesome-*リポ13個, エージェントFW17個, MLOps12個, 教育9個 |
+> | 5 | SNS | 22 | X, Reddit, YouTube, note, Bilibili, 知乎, 小红書, Medium, Qiita, Zenn等 |
+> | 6 | コミュニティ | 14 | Discord 8サーバー, Slack 3, GitHub Discussions, Stack Overflow |
 >
-> ### world-research の使い方
+> ### 検索モード
 > ```bash
-> /world-research キーワード=Claude Code                    # 全SNS横断検索
-> /world-research キーワード=AIエージェント プラットフォーム=X,Reddit,note  # プラットフォーム指定
-> /world-research キーワード=MCP Server モード=deep          # 深層調査（gpt-researcher統合）
+> /world-research キーワード=Claude Code                              # 全層横断検索
+> /world-research キーワード=ReAct Agent モード=academic               # 学術論文検索
+> /world-research キーワード=multi-agent LLM モード=survey トラック=agent  # 論文サーベイ
+> /world-research キーワード=RAG pipeline モード=ecosystem              # 実装エコシステム調査
+> /world-research キーワード=MCP Server モード=deep                    # 深層調査（gpt-researcher統合）
+> /world-research キーワード=生成AI 地域=日本,中国,米国                  # 地域別比較
 > ```
 >
-> ### インストール・アップデート（Mac / Windows 共通）
+> ### インストール・アップデート
 >
-> **Step 1:** ターミナルを開く（Mac: ターミナル.app / Windows: PowerShell）
->
-> **Step 2:** 以下をコピーして貼り付け → Enter
-> ```
-> npx github:san15/jsystem2026
-> ```
->
-> **Step 3:** TAISUNを更新
+> **Mac:**
 > ```bash
-> # Mac
 > cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> ```
 >
-> # Windows (PowerShell)
+> **Windows (PowerShell):**
+> ```powershell
 > cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
 > ```
 >
-> **Step 4:** ターミナルと Claude Code を再起動
+> **初回インストール（Mac / Windows 共通）:**
+> ```
+> npx github:san15/jsystem2026
+> ```
+
+---
+
+> **2026-02-08: v2.12.1 World Research & 13層防御完全化**
+>
+> 全世界SNS横断リサーチスキル（v1.0）と、Layer 5/6/7フック登録による13層防御完全化を実施しました。
+>
+> | 機能 | 説明 |
+> |------|------|
+> | world-research v1.0 | 20+プラットフォーム横断リサーチ |
+> | Layer 5 登録 | skill-usage-guard（スキル自動検出・マッピング） |
+> | Layer 6 登録 | deviation-approval-guard（危険操作の検出・ブロック） |
+> | Layer 7 登録 | agent-enforcement-guard（複雑タスクでTask tool強制） |
 
 ---
 
@@ -812,7 +829,7 @@ taisun:diagnose もう一回実行して
 | **nanobanana-pro** | `/nanobanana-pro` | AI画像生成（無料・ブラウザ自動化） |
 | **agentic-vision** | `/agentic-vision` | 画像・動画分析（無料・Gemini 3 Flash） |
 | **anime-slide-generator** | `/anime-slide-generator` | アニメ風スライド生成（Mac/Win/Linux対応） |
-| **world-research** | `/world-research` | 全世界SNS横断リサーチ（20+プラットフォーム・日英中3言語） |
+| **world-research** | `/world-research` | 6層133ソース総合リサーチ（論文/キュレーション/ブログ/実装/SNS/コミュニティ・日英中3言語） |
 
 ### 別プロジェクトでの使用
 
