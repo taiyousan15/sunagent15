@@ -33,6 +33,7 @@
 > | 2 | 自動コンパクション 70% | デフォルト95%→70%で早期発動 |
 > | 3 | Praetorian MCP | トークン90%+圧縮 |
 > | 4 | Claude Historian MCP | 過去セッション検索 |
+> | 5 | リサーチ委譲ルール | 並列Webリクエストの連鎖失敗を防止 |
 >
 > 詳細: [Context Guard リポジトリ](https://github.com/san15/jsystem2026)
 
