@@ -41,17 +41,29 @@
 > | Auto-compact 70% | 25%早期コンパクション |
 > | エージェント要約ルール | 出力50-80%削減 |
 >
-> ### アップグレード（1コマンドで完了）
+> ### アップグレード
 >
-> **Mac / Linux:**
+> **Step 1: TAISUN 本体を更新**
 > ```bash
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run taisun:diagnose && git clone https://github.com/san15/jsystem2026.git /tmp/context-guard 2>/dev/null; bash /tmp/context-guard/context-guard/install.sh && claude mcp add praetorian -- npx -y claude-praetorian-mcp && claude mcp add claude-historian -- npx -y claude-historian-mcp && echo "✅ v2.12.0 アップグレード完了"
+> cd ~/taisun_agent
+> git pull origin main
+> npm install
+> npm run build:all
 > ```
 >
-> **Windows (PowerShell):**
-> ```powershell
-> cd ~/taisun_agent; git pull origin main; npm install; npm run build:all; npm run taisun:diagnose; git clone https://github.com/san15/jsystem2026.git $env:TEMP/context-guard 2>$null; node -e "const fs=require('fs'),p=require('path'),h=require('os').homedir();const sk=p.join(h,'.claude','skills','strategic-compact');fs.mkdirSync(sk,{recursive:true});['suggest-compact.sh','check-agent-count.sh','check-claudemd-size.sh'].forEach(f=>{const s=p.join($env:TEMP,'context-guard','context-guard','skills',f);if(fs.existsSync(s))fs.copyFileSync(s,p.join(sk,f))});console.log('Scripts installed')"; claude mcp add praetorian -- npx -y claude-praetorian-mcp; claude mcp add claude-historian -- npx -y claude-historian-mcp; echo "✅ v2.12.0 アップグレード完了"
+> **Step 2: Context Guard をインストール**
+> ```bash
+> git clone https://github.com/san15/jsystem2026.git /tmp/context-guard
+> bash /tmp/context-guard/context-guard/install.sh
 > ```
+>
+> **Step 3: MCP サーバー追加（初回のみ）**
+> ```bash
+> claude mcp add praetorian -- npx -y claude-praetorian-mcp
+> claude mcp add claude-historian -- npx -y claude-historian-mcp
+> ```
+>
+> **対応OS:** Mac / Linux はそのまま実行。Windows は Git Bash または WSL で実行。
 >
 > 詳細: [Context Guard リポジトリ](https://github.com/san15/jsystem2026) / [包括的調査レポート](https://github.com/san15/jsystem2026/blob/main/CONTEXT_MANAGEMENT_RESEARCH_REPORT.md)
 
