@@ -358,7 +358,7 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
       startWorkflow('test_parallel_v1', false);
 
       // 並列実行開始
-      let result = transitionToNextPhase();
+      transitionToNextPhase();
       let status = getStatus();
 
       const parallelExecution = status.state?.parallelExecutions![0];
@@ -370,7 +370,7 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
 
       // 最初のフェーズ完了
       fs.writeFileSync(path.join(TEST_FILES_DIR, 'a.txt'), 'done');
-      result = transitionToNextPhase();
+      transitionToNextPhase();
       status = getStatus();
 
       expect(status.state?.parallelExecutions![0].completedPhases).toContain(
@@ -380,7 +380,7 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
 
       // 2番目のフェーズ完了
       fs.writeFileSync(path.join(TEST_FILES_DIR, 'b.txt'), 'done');
-      result = transitionToNextPhase();
+      transitionToNextPhase();
       status = getStatus();
 
       expect(status.state?.parallelExecutions![0].completedPhases).toHaveLength(

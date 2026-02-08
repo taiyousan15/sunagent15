@@ -17,7 +17,6 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { execSync } from 'child_process';
 
 // テスト用ディレクトリ
 const TEST_DIR = path.join(__dirname, '../fixtures/workflow-fidelity');
@@ -42,11 +41,13 @@ afterAll(() => {
 });
 
 describe('Workflow Fidelity Guard', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let stateManager: any;
 
   beforeEach(() => {
     // workflow-state-manager をリロード
     jest.resetModules();
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     stateManager = require(STATE_MANAGER_PATH);
 
     // テスト用ディレクトリをクリーン
@@ -295,10 +296,12 @@ allowed_deviations_policy:
 });
 
 describe('State Version', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let stateManager: any;
 
   beforeEach(() => {
     jest.resetModules();
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     stateManager = require(STATE_MANAGER_PATH);
   });
 
