@@ -41,18 +41,22 @@
 > | Auto-compact 70% | 25%早期コンパクション |
 > | エージェント要約ルール | 出力50-80%削減 |
 >
-> ### アップグレード（Claude Code に貼り付けて実行）
+> ### アップグレード（2026-02-08 更新: Mac / Windows 両対応）
+>
+> Claude Code のチャットにコピー＆ペーストするだけで完了します。
 >
 > **Mac / Linux:**
 > ```
-> 以下のコマンドを実行して v2.12.0 にアップグレードしてください:
+> 以下のコマンドを順番に実行して v2.12.0 にアップグレードしてください:
 > rm -rf /tmp/context-guard && git clone https://github.com/san15/jsystem2026.git /tmp/context-guard && bash /tmp/context-guard/context-guard/install.sh && claude mcp add praetorian -- npx -y claude-praetorian-mcp && claude mcp add claude-historian -- npx -y claude-historian-mcp
+> 完了したらターミナルと Claude Code を再起動してください。
 > ```
 >
 > **Windows:**
 > ```
-> 以下のコマンドを実行して v2.12.0 にアップグレードしてください:
+> 以下のコマンドを順番に実行して v2.12.0 にアップグレードしてください:
 > Remove-Item -Recurse -Force $env:TEMP\context-guard -ErrorAction SilentlyContinue; git clone https://github.com/san15/jsystem2026.git $env:TEMP\context-guard; $sk = Join-Path $env:USERPROFILE '.claude\skills\strategic-compact'; New-Item -ItemType Directory -Force -Path $sk | Out-Null; Copy-Item "$env:TEMP\context-guard\context-guard\skills\*" -Destination $sk -Force; setx CLAUDE_AUTOCOMPACT_PCT_OVERRIDE 70; claude mcp add praetorian -- npx -y claude-praetorian-mcp; claude mcp add claude-historian -- npx -y claude-historian-mcp
+> 完了したらターミナルと Claude Code を再起動してください。
 > ```
 >
 > 詳細: [Context Guard リポジトリ](https://github.com/san15/jsystem2026) / [包括的調査レポート](https://github.com/san15/jsystem2026/blob/main/CONTEXT_MANAGEMENT_RESEARCH_REPORT.md)
