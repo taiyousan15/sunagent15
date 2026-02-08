@@ -13,45 +13,28 @@
 
 > **2026-02-08: v2.12.0 Context Guard統合 - コンテキスト枯渇防止システム 🛡️**
 >
-> 世界規模の調査（SNS・論文・コミュニティ・MCPマーケット）に基づき、Claude Codeのコンテキストウィンドウ枯渇を防止する**9つの対策**を統合しました。
+> Claude Code の `Conversation too long` エラーを防止するシステムを統合しました。
 >
-> ### 新機能
-> | 機能 | 説明 |
-> |------|------|
-> | 🛡️ **自動コンパクション70%** | デフォルト95%→70%で早期発動（`CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=70`） |
-> | 📊 **ツールコール監視** | 30回で警告、80回で危険アラート（PIDバグ修正済み） |
-> | 🤖 **エージェント数制御** | 同時3個超でリアルタイム警告 |
-> | 📏 **CLAUDE.md サイズ監視** | 20KB超で自動警告（起動コスト抑制） |
-> | 🗜️ **Praetorian MCP** | TOON圧縮で90%+トークン節約 |
-> | 🔍 **Claude Historian MCP** | 過去セッション検索で再調査不要 |
-> | 🔎 **MCP Tool Search確認** | 起動時トークン87%削減（66K→8.5K） |
+> ### インストール・アップデート（Mac / Windows 共通）
 >
-> ### インストール
-> ```bash
-> git clone https://github.com/san15/jsystem2026.git
-> cd jsystem2026
-> bash context-guard/install.sh
-> ```
+> **Step 1:** ターミナルを開く（Mac: ターミナル.app / Windows: PowerShell）
 >
-> ### 対策効果
-> | 対策 | 削減効果 |
-> |------|---------|
-> | MCP Tool Search | 起動時87%削減 |
-> | Praetorian MCP | ランタイム90%+削減 |
-> | Auto-compact 70% | 25%早期コンパクション |
-> | エージェント要約ルール | 出力50-80%削減 |
->
-> ### アップグレード（2026-02-08 更新: Mac / Windows 両対応）
->
-> ターミナルに以下をコピー＆ペーストするだけで完了します。
->
+> **Step 2:** 以下をコピーして貼り付け → Enter
 > ```
 > npx github:san15/jsystem2026
 > ```
 >
-> 完了後、ターミナルと Claude Code を再起動してください。
+> **Step 3:** ターミナルと Claude Code を再起動
 >
-> 詳細: [Context Guard リポジトリ](https://github.com/san15/jsystem2026) / [包括的調査レポート](https://github.com/san15/jsystem2026/blob/main/CONTEXT_MANAGEMENT_RESEARCH_REPORT.md)
+> ### 何がインストールされるか
+> | # | 内容 | 効果 |
+> |---|------|------|
+> | 1 | 監視スクリプト 3つ | ツールコール・エージェント数・CLAUDE.mdサイズを監視 |
+> | 2 | 自動コンパクション 70% | デフォルト95%→70%で早期発動 |
+> | 3 | Praetorian MCP | トークン90%+圧縮 |
+> | 4 | Claude Historian MCP | 過去セッション検索 |
+>
+> 詳細: [Context Guard リポジトリ](https://github.com/san15/jsystem2026)
 
 ---
 
