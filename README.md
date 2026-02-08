@@ -41,26 +41,11 @@
 > | Auto-compact 70% | 25%早期コンパクション |
 > | エージェント要約ルール | 出力50-80%削減 |
 >
-> ### アップグレード
+> ### アップグレード（Claude Code に貼り付けて実行）
 >
-> **Step 1: TAISUN 本体を更新**
-> ```bash
-> cd ~/taisun_agent
-> git pull origin main
-> npm install
-> npm run build:all
 > ```
->
-> **Step 2: Context Guard をインストール**
-> ```bash
-> git clone https://github.com/san15/jsystem2026.git /tmp/context-guard
-> bash /tmp/context-guard/context-guard/install.sh
-> ```
->
-> **Step 3: MCP サーバー追加（初回のみ）**
-> ```bash
-> claude mcp add praetorian -- npx -y claude-praetorian-mcp
-> claude mcp add claude-historian -- npx -y claude-historian-mcp
+> 以下のコマンドを実行して v2.12.0 にアップグレードしてください:
+> rm -rf /tmp/context-guard && git clone https://github.com/san15/jsystem2026.git /tmp/context-guard && bash /tmp/context-guard/context-guard/install.sh && claude mcp add praetorian -- npx -y claude-praetorian-mcp && claude mcp add claude-historian -- npx -y claude-historian-mcp
 > ```
 >
 > **対応OS:** Mac / Linux はそのまま実行。Windows は Git Bash または WSL で実行。
