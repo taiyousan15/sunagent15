@@ -11,6 +11,47 @@
 
 ---
 
+> **2026-02-08: v2.12.1 World Research & 13層防御完全化 🌐🛡️**
+>
+> 全世界SNS横断リサーチスキルと、Layer 5/6/7フック登録による13層防御完全化を実施しました。
+>
+> ### 新機能
+> | 機能 | 説明 |
+> |------|------|
+> | 🌐 **world-research** | 20+プラットフォーム横断リサーチ（X/Reddit/YouTube/note/Bilibili/知乎/小红書等） |
+> | 🛡️ **Layer 5 登録** | skill-usage-guard（スキル自動検出・マッピング） |
+> | 🛡️ **Layer 6 登録** | deviation-approval-guard（危険操作の検出・ブロック） |
+> | 🛡️ **Layer 7 登録** | agent-enforcement-guard（複雑タスクでTask tool強制） |
+>
+> ### world-research の使い方
+> ```bash
+> /world-research キーワード=Claude Code                    # 全SNS横断検索
+> /world-research キーワード=AIエージェント プラットフォーム=X,Reddit,note  # プラットフォーム指定
+> /world-research キーワード=MCP Server モード=deep          # 深層調査（gpt-researcher統合）
+> ```
+>
+> ### インストール・アップデート（Mac / Windows 共通）
+>
+> **Step 1:** ターミナルを開く（Mac: ターミナル.app / Windows: PowerShell）
+>
+> **Step 2:** 以下をコピーして貼り付け → Enter
+> ```
+> npx github:san15/jsystem2026
+> ```
+>
+> **Step 3:** TAISUNを更新
+> ```bash
+> # Mac
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+>
+> # Windows (PowerShell)
+> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> ```
+>
+> **Step 4:** ターミナルと Claude Code を再起動
+
+---
+
 > **2026-02-08: v2.12.0 Context Guard統合 - コンテキスト枯渇防止システム 🛡️**
 >
 > Claude Code の `Conversation too long` エラーを防止するシステムを統合しました。
@@ -640,7 +681,7 @@ npm run taisun:diagnose
 cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
 ```
 
-> **スキル自動更新**: `anime-slide-generator`、`nanobanana-pro`、`agentic-vision`などのグローバルスキルは `npm run setup` で自動的に最新版に更新されます。
+> **スキル自動更新**: `world-research`、`anime-slide-generator`、`nanobanana-pro`、`agentic-vision`などのグローバルスキルは `npm run setup` で自動的に最新版に更新されます。
 
 ### 📁 プロジェクトで使えるようにする（Mac）
 
@@ -683,7 +724,7 @@ npm run taisun:diagnose
 cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
 ```
 
-> **スキル自動更新**: `anime-slide-generator`、`nanobanana-pro`、`agentic-vision`などのグローバルスキルは `npm run setup` で自動的に最新版に更新されます。
+> **スキル自動更新**: `world-research`、`anime-slide-generator`、`nanobanana-pro`、`agentic-vision`などのグローバルスキルは `npm run setup` で自動的に最新版に更新されます。
 
 ### 📁 プロジェクトで使えるようにする（Windows）
 
@@ -771,6 +812,7 @@ taisun:diagnose もう一回実行して
 | **nanobanana-pro** | `/nanobanana-pro` | AI画像生成（無料・ブラウザ自動化） |
 | **agentic-vision** | `/agentic-vision` | 画像・動画分析（無料・Gemini 3 Flash） |
 | **anime-slide-generator** | `/anime-slide-generator` | アニメ風スライド生成（Mac/Win/Linux対応） |
+| **world-research** | `/world-research` | 全世界SNS横断リサーチ（20+プラットフォーム・日英中3言語） |
 
 ### 別プロジェクトでの使用
 
