@@ -47,6 +47,22 @@ const COMPLEX_TASK_PATTERNS = [
   /(?:CI|CD|パイプライン)(?:を)?(?:設定|構築)/gi,
   /(?:Docker|Kubernetes|K8s)/gi,
   /デプロイ(?:設定|自動化)/gi,
+
+  // マルチメディア・動画パイプラインタスク
+  /(?:インタラクティブ)?動画(?:を)?(?:生成|作成|制作)/gi,
+  /(?:VSL|ビデオセールスレター)(?:を)?(?:作|生成)/gi,
+  /TTS(?:音声)?(?:を)?(?:生成|作成)/gi,
+  /音声(?:を)?(?:生成|合成|作成)/gi,
+  /画像(?:を)?(?:一括|バッチ|大量に)?生成/gi,
+  /(?:Remotion|リモーション)(?:で)?(?:動画|ビデオ)/gi,
+  /ナレーション(?:を)?(?:生成|録音|作成)/gi,
+  /(?:Fish\s*Audio|Style-Bert)/gi,
+  /分岐(?:動画|VSL|コンテンツ)/gi,
+
+  // 品質検証パイプライン
+  /(?:品質|クオリティ)(?:チェック|検証|検査)/gi,
+  /(?:agentic.vision|ビジュアルQA)/gi,
+  /(?:OCR|テキスト検証|日本語検証)/gi,
 ];
 
 // 除外パターン（単純タスク）
@@ -168,6 +184,14 @@ async function main() {
       console.log('  - test-generator: テスト作成');
       console.log('  - code-reviewer: コードレビュー');
       console.log('  - security-scanner: セキュリティスキャン');
+      console.log('  - frontend-developer: フロントエンド実装');
+      console.log('');
+      console.log('マルチメディア・動画スキル:');
+      console.log('  - interactive-video-platform: インタラクティブ動画');
+      console.log('  - nanobanana-pro: AI画像生成');
+      console.log('  - agentic-vision: 画像品質検証');
+      console.log('  - japanese-text-verifier: 日本語テキスト検証');
+      console.log('  - video-agent: 動画パイプライン');
       console.log('');
       console.log('Task toolでエージェントを呼び出さない場合、');
       console.log('3ファイル以上の編集時にブロックされます。');

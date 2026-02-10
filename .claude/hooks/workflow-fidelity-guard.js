@@ -32,7 +32,28 @@ const DANGEROUS_BASH_PATTERNS = [
   /python.*create_video\.py/,
   /python.*generate_video\.py/,
   /rm\s+-rf/,
-  /rm\s+-r/
+  /rm\s+-r/,
+
+  // TTS: macOS say コマンドは品質不足（Fish Audio/Style-Bert-VITS2を使うべき）
+  /\bsay\s+-v\b/,
+  /\bsay\s+.*-o\b/,
+
+  // パイプライン代替: 静的HTML/CSSで動画パイプラインを代替しようとするパターン
+  /generate-tts\.sh/,  // macOS sayベースのTTSスクリプト
+];
+
+// 警告のみのパターン（ブロックはしないが注意喚起）
+const WARN_BASH_PATTERNS = [
+  {
+    pattern: /\bsay\s+/,
+    message: '【警告】macOS say コマンドを検出。商用品質のTTSには Fish Audio または Style-Bert-VITS2 を使用してください。',
+    suggestion: 'interactive-video-platform スキルのTTSパイプライン（Fish Audio）を使用してください。'
+  },
+  {
+    pattern: /npm\s+run\s+dev|next\s+dev|next\s+build/,
+    message: '【確認】Next.js 静的サイトを構築中。動画パイプライン（Remotion）が必要な場合はスキルを確認してください。',
+    suggestion: 'インタラクティブ動画の場合は interactive-video-platform スキルの Remotion パイプラインを使用してください。'
+  }
 ];
 
 // 新規スクリプト作成パターン（ブロック対象）
@@ -223,6 +244,16 @@ function evaluatePreToolUse(toolName, toolInput, state, isStrict, cwd) {
           result.suggestion = 'まず `npm run workflow:start -- <workflow_id> --strict` を実行してワークフローを開始してください。';
           return result;
         }
+      }
+    }
+
+    // 警告パターンのチェック（ブロックはしない）
+    for (const { pattern, message, suggestion } of WARN_BASH_PATTERNS) {
+      if (pattern.test(command)) {
+        result.warning = true;
+        result.reason = message;
+        result.suggestion = suggestion;
+        return result;
       }
     }
   }
