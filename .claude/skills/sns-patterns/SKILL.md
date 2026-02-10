@@ -6,6 +6,7 @@ description: |
   (2) user needs platform-specific content strategy,
   (3) user mentions「炎上対策」「SNSリスク」「投稿パターン」.
   Do NOT use for: SNS分析レポート作成、広告運用設定。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # SNSパターンナレッジ

@@ -1,6 +1,7 @@
 ---
 name: nanobanana-prompts
 description: NanoBanana（Google Gemini画像生成）向けの高品質プロンプトを生成。画像生成、編集、フェイススワップ、背景変更、キャラクター一貫性のプロンプト作成を支援。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # NanoBanana Pro Prompt Engineer

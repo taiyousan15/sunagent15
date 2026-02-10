@@ -6,6 +6,7 @@ author: TAISUN
 category: marketing
 tags: [rewrite, optimization, taiyo-style, copywriting]
 dependencies: [taiyo-analyzer]
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # 太陽 Rewriter Skill

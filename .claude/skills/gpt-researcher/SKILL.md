@@ -1,6 +1,7 @@
 ---
 name: gpt-researcher
 description: Use this skill for comprehensive research tasks requiring deep investigation, multiple source validation, and citation-backed reports. Triggers on keywords like "research", "investigate", "deep dive", "comprehensive analysis", "literature review", or when needing validated, sourced information.
+allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 ---
 
 # GPT Researcher - Autonomous Deep Research

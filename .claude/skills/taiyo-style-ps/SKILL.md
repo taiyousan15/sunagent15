@@ -6,6 +6,7 @@ author: TAISUN
 category: marketing
 tags: [ps, postscript, taiyo-style, closing]
 dependencies: [taiyo-analyzer]
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # Taiyo Style P.S. Skill

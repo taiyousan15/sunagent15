@@ -5,6 +5,7 @@ version: "1.0.0"
 author: TAISUN
 category: marketing-analysis
 tags: [copywriting, analysis, scoring, taiyo-style, optimization]
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # 太陽 Analyzer Skill

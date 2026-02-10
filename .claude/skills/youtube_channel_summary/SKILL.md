@@ -7,6 +7,7 @@ description: |
   (3) user mentions「動画トレンド」「コンテンツ戦略」.
   Do NOT use for: 単発の動画ダウンロード（video-downloadを使用）、
   サムネイル作成（youtube-thumbnailを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 ---
 
 # YouTube Channel Summary Skill

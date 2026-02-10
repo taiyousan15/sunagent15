@@ -7,6 +7,7 @@ description: |
   (3) user mentions「エビデンス」「レポート作成」「出典明記」.
   Do NOT use for: 簡易調査（research-freeを使用）、
   徹底調査（mega-researchを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 ---
 
 # Research: Cited Report

@@ -7,6 +7,7 @@ description: |
   (3) user mentions「章立て」「目次作成」「Kindle構成」.
   Do NOT use for: ブログ記事（note-marketingを使用）、
   セールスレター（taiyo-styleを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # Kindle出版スキル

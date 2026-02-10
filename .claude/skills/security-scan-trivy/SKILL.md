@@ -7,6 +7,7 @@ description: |
   (3) user mentions「依存関係チェック」「コンテナスキャン」「CVE」.
   Do NOT use for: コードレビュー（code-reviewerを使用）、
   セキュリティ設計（security-architectを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Trivy Security Scan

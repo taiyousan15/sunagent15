@@ -6,6 +6,7 @@ author: TAISUN
 category: marketing
 tags: [lp, landing-page, taiyo-style, conversion-optimization]
 dependencies: [taiyo-analyzer]
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # Taiyo Style LP Skill

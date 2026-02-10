@@ -1,6 +1,7 @@
 ---
 name: qdrant-memory
 description: Use this skill for semantic search, long-term memory storage, and RAG (Retrieval Augmented Generation). Enables vector-based knowledge retrieval and persistent memory across sessions.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Qdrant Vector Memory

@@ -1,3 +1,11 @@
+---
+name: apify-research
+description: Apify MCP経由でSNS・検索エンジン・ECサイトから構造化データを自動抽出する高度なリサーチスキル。
+allowed-tools: Read, Bash, Grep, Glob, WebFetch, WebSearch
+model: sonnet
+argument-hint: "<platform> <query> [--format=json|csv] [--limit=100]"
+---
+
 # Apify Research Skill
 
 高度なウェブスクレイピング・SNSデータ抽出スキル。

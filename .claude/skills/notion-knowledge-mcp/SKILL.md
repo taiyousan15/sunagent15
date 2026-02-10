@@ -6,6 +6,7 @@ description: |
   (2) user wants to interact with Notion workspace,
   (3) user mentions「Notionページ」「ナレッジベース」.
   Do NOT use for: 一般的なメモ作成、ファイル管理（filesystemを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Notion MCP Knowledge Ops

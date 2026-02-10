@@ -7,6 +7,7 @@ description: |
   (3) user mentions「CTR改善」「サムネデザイン」.
   Do NOT use for: 動画本編制作（video-agentを使用）、
   台本作成（youtube-contentを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # YouTubeサムネイル作成ガイド - NanoBanana Pro完全マニュアル

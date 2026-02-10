@@ -7,6 +7,7 @@ description: |
   (3) user mentions「ファクトチェック」「情報収集」.
   Do NOT use for: APIキー不要の簡易調査（research-freeを使用）、
   最強の徹底調査（mega-researchを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 ---
 
 # Unified Research Skill

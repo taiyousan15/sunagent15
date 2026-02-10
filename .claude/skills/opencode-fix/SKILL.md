@@ -1,3 +1,10 @@
+---
+name: opencode-fix
+description: OpenCodeのバグ修正支援。mistakes.md参照・最小差分・大出力はmemory_add退避のワークフロー。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+model: sonnet
+---
+
 # OpenCode バグ修正支援
 
 mistakes.md参照・最小差分・大出力はmemory_add退避のバグ修正スキルです。

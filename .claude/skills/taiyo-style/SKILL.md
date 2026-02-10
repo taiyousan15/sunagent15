@@ -8,6 +8,7 @@ description: |
   (3) user mentions「セールスレター」「ステップメール」「LP」「コピーライティング」.
   Do NOT use for: 技術ドキュメント、ニュース記事、学術論文、
   SNS投稿（sns-marketingスキルを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # 太陽スタイル・コピーライティングスキル

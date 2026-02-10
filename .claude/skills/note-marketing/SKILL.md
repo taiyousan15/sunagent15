@@ -6,6 +6,7 @@ description: |
   (2) user wants to create content for note.com,
   (3) user mentions「有料note」「リードマグネット」「コンテンツ戦略」.
   Do NOT use for: ブログ記事一般（SEO目的）、SNS投稿（sns-marketingを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # note記事マーケティングスキル

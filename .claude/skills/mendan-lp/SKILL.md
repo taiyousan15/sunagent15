@@ -1,6 +1,7 @@
 ---
 name: mendan-lp
 description: 面談申込率50%を実現する面談LPを4つの型（ストーリー型、タイムライン型、Q&A型、神話崩し型）から選択して作成。高額商品のセールスに最適化。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # 面談LP作成スキル

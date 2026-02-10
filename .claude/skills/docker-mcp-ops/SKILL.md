@@ -7,6 +7,7 @@ description: |
   (3) user mentions「docker-compose」「サービス再起動」.
   Do NOT use for: Dockerファイル作成（一般開発）、
   セキュリティスキャン（security-scan-trivyを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Docker MCP Ops

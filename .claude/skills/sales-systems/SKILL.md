@@ -7,6 +7,7 @@ description: |
   (3) user mentions「クロージング」「セールスシナリオ」.
   Do NOT use for: 文章のセールスレター（taiyo-style-sales-letterを使用）、
   ステップメール（taiyo-style-step-mailを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # セールスシステムスキル

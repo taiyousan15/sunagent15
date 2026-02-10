@@ -7,6 +7,7 @@ description: |
   (3) user mentions「請求書PDF」「レポートPDF化」「Gotenberg」.
   Do NOT use for: PDF読み取り（pdf-processingを使用）、
   ドキュメント変換（doc-convert-pandocを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # PDF Automation (Gotenberg)

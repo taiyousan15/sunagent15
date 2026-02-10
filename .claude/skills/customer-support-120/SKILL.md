@@ -6,6 +6,7 @@ author: TAISUN
 category: marketing
 tags: [customer-support, copywriting, taiyo-style, education, high-satisfaction]
 dependencies: [taiyo-analyzer]
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # Customer Support 120% Skill

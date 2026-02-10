@@ -7,6 +7,7 @@ description: |
   (3) user mentions「納品形式」「フォーマット変換」「Pandoc」.
   Do NOT use for: PDF変換（pdf-automation-gotenbergを使用）、
   コンテンツ作成（copywriting-helperを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Pandoc Document Conversion
