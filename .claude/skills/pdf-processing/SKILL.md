@@ -13,6 +13,7 @@ tools:
   - Read
   - Bash
   - WebFetch
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # PDF Processing Guide

@@ -7,6 +7,7 @@ description: |
   (3) user mentions「6つの教育」「14日間シナリオ」.
   Do NOT use for: 単発のセールスコピー（taiyo-styleを使用）、
   技術ドキュメント。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # 6つの教育要素フレームワーク

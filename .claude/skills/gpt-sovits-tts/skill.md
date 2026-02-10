@@ -7,6 +7,7 @@ description: |
   (3) user mentions「GPT-SoVITS」「声質コピー」.
   Do NOT use for: 標準TTS（japanese-tts-readingを使用）、
   動画編集（video-agentを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # GPT-SoVITS TTS スキル

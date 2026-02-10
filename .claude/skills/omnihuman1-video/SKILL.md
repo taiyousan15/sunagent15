@@ -7,6 +7,7 @@ description: |
   (3) user mentions「アバター動画」「1枚の画像から動画」.
   Do NOT use for: 実写動画編集（video-agentを使用）、
   アニメ制作（anime-productionを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # OmniHuman1 AIアバター動画制作ガイド

@@ -7,6 +7,7 @@ description: |
   (3) user mentions「Kindle→LINE」「note→VSL」「集客→販売」.
   Do NOT use for: 単体LP作成（lp-designを使用）、
   単体ステップメール（taiyo-style-step-mailを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # Funnel Builder (統合ファネル構築)

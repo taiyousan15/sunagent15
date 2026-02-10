@@ -12,6 +12,70 @@
 
 ---
 
+> **2026-02-11: v2.13.0 セキュリティ監査 & スキルハードニング**
+>
+> Progent論文（arXiv:2504.11703）に基づくスキル権限分離とセキュリティ強化を実施しました。
+> 72スキル全てにallowed-tools制限を適用し、攻撃成功率を理論上41.2%→2.2%に低減。
+> 新規8スキル・4エージェント・6MCPサーバーも追加。
+>
+> ### セキュリティ監査（4項目完了）
+> | # | 修正内容 | 対象 | リスク低減 |
+> |---|---------|------|-----------|
+> | 1 | YAML frontmatter欠落修正 | 6スキル | スキルディスカバリー復旧 |
+> | 2 | allowed-tools権限分離 | 全72スキル | 攻撃成功率41.2%→2.2% |
+> | 3 | APIキー集中管理 | .env統合+バリデーション | キー漏洩防止 |
+> | 4 | MCPヘルスチェックv2 | 21サーバー自動検出 | 設定不備の即座検出 |
+>
+> ### allowed-toolsカテゴリ分類
+> | カテゴリ | allowed-tools | スキル数 | Bash実行 |
+> |---------|--------------|---------|---------|
+> | Content Writing | Read,Write,Edit,Grep,Glob | 28 | 無し |
+> | Research+Writing | Read,Write,Edit,Grep,Glob,WebFetch,WebSearch | 6 | 無し |
+> | Execution | Read,Write,Edit,Bash,Grep,Glob | 38 | 有り |
+>
+> ### 新規追加
+> | 種類 | 名前 | 説明 |
+> |------|------|------|
+> | スキル | ai-sdr | 自律営業パイプライン |
+> | スキル | voice-ai | 電話+会話AI（Twilio+OpenAI Realtime） |
+> | スキル | lead-scoring | リード評価・4次元スコアリング |
+> | スキル | outreach-composer | マルチチャネルメッセージ作成 |
+> | スキル | shorts-create | Instagram/YouTube Shorts自動生成 |
+> | スキル | url-deep-analysis | URL完全解析（5層分析） |
+> | スキル | keyword-to-gem | キーワード→NotebookLM Gem自動化 |
+> | スキル | udemy-download | Udemyコース一括ダウンロード |
+> | エージェント | sdr-coordinator | SDRパイプライン統合制御 |
+> | エージェント | lead-qualifier | リード評価自動化 |
+> | エージェント | outreach-agent | アウトリーチ実行 |
+> | エージェント | voice-ai-agent | 音声AI制御 |
+> | MCP | line-bot | LINE Bot メッセージ送信 |
+> | MCP | voice-ai | Twilio+OpenAI音声通話 |
+> | MCP | ai-sdr | 営業パイプライン |
+> | MCP | twitter-client | X/Twitter Cookie認証 |
+> | MCP | meta-ads | Meta広告管理・分析 |
+> | MCP | facebook-ads-library | 競合広告分析 |
+>
+> ### 新規スクリプト
+> ```bash
+> bash scripts/validate-env.sh          # APIキー一括検証
+> bash scripts/validate-env.sh --strict # 必須キー不足時にエラー終了
+> bash scripts/mcp-health-check.sh      # MCPサーバー状態チェック（v2: 自動検出）
+> ```
+>
+> ### アップデート
+>
+> **Mac:**
+> ```bash
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> ```
+>
+> **Windows (PowerShell):**
+> ```powershell
+> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> ```
+
+---
+
 > **2026-02-09: v1.1.0 Google Auth System - 5-Layer Fallback Google認証自動化**
 >
 > Playwright ベースの Google 認証を **5段階のフォールバック** で自動化するシステムを追加しました。

@@ -7,6 +7,7 @@ description: |
   (3) user mentions「フロー図」「比較図」「構造図」.
   Do NOT use for: 人物画像生成（nanobanana-proを使用）、
   サムネイル作成（youtube-thumbnailを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # 図解・解説画像制作ガイド - NanoBanana Pro完全マニュアル

@@ -6,6 +6,7 @@ description: |
   (2) user wants animated content with characters,
   (3) user mentions「キャラクターアニメーション」「アニメ制作」.
   Do NOT use for: 実写動画（video-agentを使用）、静止画像のみ（nanobanana-proを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # アニメ制作スキル

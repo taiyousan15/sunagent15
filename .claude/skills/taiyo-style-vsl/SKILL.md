@@ -6,6 +6,7 @@ author: TAISUN
 category: marketing
 tags: [vsl, video-sales-letter, taiyo-style, script]
 dependencies: [taiyo-analyzer]
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # Taiyo Style VSL Skill

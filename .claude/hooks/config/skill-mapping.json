@@ -137,10 +137,66 @@
     },
     {
       "name": "VSL台本作成",
-      "description": "ビデオセールスレターの台本作成",
+      "description": "ビデオセールスレターの台本作成（テキストのみ）",
       "when_contains_all": [],
-      "when_contains_any": ["VSL", "ビデオセールスレター"],
+      "when_contains_any": ["VSL台本", "VSLスクリプト", "ビデオセールスレター台本"],
       "required_skills": ["taiyo-style-vsl"],
+      "priority": 75,
+      "strict": false
+    },
+    {
+      "name": "インタラクティブ動画プラットフォーム（MANDATORY）",
+      "description": "視聴者の選択で分岐するインタラクティブVSL動画の生成パイプライン",
+      "when_contains_all": [],
+      "when_contains_any": [
+        "インタラクティブ動画", "分岐動画", "対話型VSL", "選択式動画",
+        "interactive-video", "VSL動画を生成", "VSLプラットフォーム",
+        "VSL動画", "インタラクティブVSL", "動画プラットフォーム"
+      ],
+      "required_skills": ["interactive-video-platform"],
+      "priority": 100,
+      "strict": true,
+      "mandatory_phases": [
+        "Phase 2a: IMAGE (NanoBanana Pro / flow-image)",
+        "Phase 2b: QA (agentic-vision 品質チェック)",
+        "Phase 2c: TEXT_VERIFY (japanese-text-verifier)",
+        "Phase 2d: TTS (Fish Audio)",
+        "Phase 2e: COMPOSE (Remotion)"
+      ],
+      "mandatory_tools": {
+        "tts": ["fish-audio", "style-bert-vits2"],
+        "tts_forbidden": ["say -v", "macOS say"],
+        "image_qa": ["agentic-vision"],
+        "text_verify": ["japanese-text-verifier"],
+        "composition": ["remotion"]
+      },
+      "quality_checks_required": true
+    },
+    {
+      "name": "TTS音声生成（Fish Audio）",
+      "description": "高品質日本語TTS音声生成。macOS sayは使用禁止",
+      "when_contains_all": [],
+      "when_contains_any": [
+        "TTS", "音声生成", "ナレーション音声", "Fish Audio",
+        "テキスト読み上げ", "音声合成"
+      ],
+      "required_skills": ["interactive-video-platform"],
+      "priority": 85,
+      "strict": true,
+      "mandatory_tools": {
+        "tts": ["fish-audio", "style-bert-vits2"],
+        "tts_forbidden": ["say -v", "macOS say", "say コマンド"]
+      }
+    },
+    {
+      "name": "AI画像品質検証（agentic-vision）",
+      "description": "AI生成画像の品質検証パイプライン",
+      "when_contains_all": [],
+      "when_contains_any": [
+        "画像品質チェック", "画像検証", "ビジュアルQA",
+        "agentic-vision", "画像スコアリング"
+      ],
+      "required_skills": ["agentic-vision"],
       "priority": 80,
       "strict": false
     },
@@ -267,6 +323,43 @@
       "when_contains_all": ["競合", "広告"],
       "when_contains_any": ["分析", "調査", "Ad Library"],
       "required_skills": ["meta-ads-competitors"],
+      "priority": 80,
+      "strict": false
+    },
+    {
+      "name": "Voice AI 通話",
+      "description": "Twilio + OpenAI Realtime APIによる音声AI通話",
+      "when_contains_all": [],
+      "when_contains_any": ["電話", "架電", "通話", "Voice AI", "音声AI通話", "Twilio"],
+      "required_skills": ["voice-ai"],
+      "cost_warning": true,
+      "priority": 85,
+      "strict": false
+    },
+    {
+      "name": "AI SDR 営業パイプライン",
+      "description": "自律営業AIパイプライン（リード管理・スコアリング・アウトリーチ）",
+      "when_contains_all": [],
+      "when_contains_any": ["SDR", "営業パイプライン", "リード管理", "自律営業", "営業AI"],
+      "required_skills": ["ai-sdr"],
+      "priority": 85,
+      "strict": false
+    },
+    {
+      "name": "リードスコアリング",
+      "description": "4次元リードスコアリングエンジン",
+      "when_contains_all": [],
+      "when_contains_any": ["リードスコア", "リード評価", "スコアリング", "リード分類"],
+      "required_skills": ["lead-scoring"],
+      "priority": 80,
+      "strict": false
+    },
+    {
+      "name": "アウトリーチメッセージ作成",
+      "description": "マルチチャネルアウトリーチメッセージの作成・送信",
+      "when_contains_all": [],
+      "when_contains_any": ["アウトリーチ", "フォローアップメール", "フォローアップメッセージ"],
+      "required_skills": ["outreach-composer"],
       "priority": 80,
       "strict": false
     }

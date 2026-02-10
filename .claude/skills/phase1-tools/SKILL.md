@@ -1,3 +1,10 @@
+---
+name: phase1-tools
+description: TAISUN v2のドキュメント処理・開発ツール基盤。Pandoc/Marp/Gotenberg/Stirling-PDFによる変換・PDF操作。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+model: sonnet
+---
+
 # Phase 1 Execution Foundation Tools
 
 Document processing and development tools for TAISUN v2.

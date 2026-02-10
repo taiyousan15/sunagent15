@@ -56,14 +56,30 @@
 **違反はexit code 2でブロックされます。**
 
 ### 7. スキル自動マッピング
-| トリガー | 必須スキル |
-|----------|------------|
-| YOUTUBE + 教材 + 動画 | youtubeschool-creator |
-| セールスレター | taiyo-style-sales-letter |
-| ステップメール | taiyo-style-step-mail |
-| VSL（台本のみ） | taiyo-style-vsl |
-| インタラクティブ動画 + 分岐動画 + VSL動画生成 | **interactive-video-platform** |
-| Instagram + Shorts | instagram-shorts-generator |
+| トリガー | 必須スキル | strict |
+|----------|------------|--------|
+| YOUTUBE + 教材 + 動画 | youtubeschool-creator | Yes |
+| セールスレター | taiyo-style-sales-letter | No |
+| ステップメール | taiyo-style-step-mail | No |
+| VSL台本 | taiyo-style-vsl | No |
+| Instagram + Shorts | shorts-create | Yes |
+| **インタラクティブ動画/分岐動画/VSL動画** | **interactive-video-platform** | **Yes** |
+| **TTS/音声生成/ナレーション** | **interactive-video-platform** | **Yes** |
+| **画像品質チェック/ビジュアルQA** | **agentic-vision** | **No** |
+| **電話/架電/通話/Voice AI** | **voice-ai** | **No** |
+| **SDR/営業パイプライン/リード管理** | **ai-sdr** | **No** |
+| **リードスコアリング/リード評価** | **lead-scoring** | **No** |
+| **アウトリーチ/メッセージ送信** | **outreach-composer** | **No** |
+| **URL分析/サイト解析/ページ構造/リンク抽出** | **url-deep-analysis** | **No** |
+
+#### マルチメディアパイプライン必須フェーズ（interactive-video-platform）
+```
+Phase 2a: IMAGE → NanoBanana Pro / flow-image
+Phase 2b: QA → agentic-vision 品質チェック
+Phase 2c: TEXT_VERIFY → japanese-text-verifier
+Phase 2d: TTS → Fish Audio（macOS say 禁止）
+Phase 2e: COMPOSE → Remotion
+```
 
 ### 8. インタラクティブ動画 必須ワークフロー（絶対遵守）
 
@@ -123,10 +139,10 @@
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Agents | 82 | `/agent-catalog` で詳細確認 |
-| Skills | 66 | `/skill-catalog` で詳細確認 |
+| Agents | 86 | `/agent-catalog` で詳細確認 |
+| Skills | 71 | `/skill-catalog` で詳細確認 |
 | Commands | 82 | ショートカットコマンド |
-| MCP Servers | 6 | filesystem, pexels, pixabay, puppeteer, browser-use, playwright |
+| MCP Servers | 8 | filesystem, pexels, pixabay, puppeteer, browser-use, playwright, voice-ai, ai-sdr |
 
 ---
 

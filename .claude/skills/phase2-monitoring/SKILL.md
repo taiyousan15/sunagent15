@@ -1,3 +1,10 @@
+---
+name: phase2-monitoring
+description: Prometheus+Grafana+Loki+Alertmanagerによるオブザーバビリティ基盤の構築・管理。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+model: sonnet
+---
+
 # Phase 2 Monitoring Stack
 
 Prometheus + Grafana + Loki + Alertmanager によるオブザーバビリティ基盤。

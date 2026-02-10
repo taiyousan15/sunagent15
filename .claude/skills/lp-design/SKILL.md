@@ -7,6 +7,7 @@ description: |
   (3) user mentions「オプトインLP」「セールスLP」「LP構成」.
   Do NOT use for: LP分析（lp-analysisを使用）、
   LPのコピーライティング（taiyo-style-lpを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # ランディングページ設計スキル

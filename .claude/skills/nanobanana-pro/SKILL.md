@@ -1,6 +1,7 @@
 ---
 name: gemini-image-generator
 description: Generate images using Google Gemini NanoBanana via browser automation. Use this skill for general-purpose AI image generation from text prompts. Includes persistent authentication, automatic environment setup, and reference image support for style matching.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Gemini Image Generator

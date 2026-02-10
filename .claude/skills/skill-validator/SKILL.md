@@ -9,6 +9,7 @@ metadata:
   version: "1.0.0"
   author: TAISUN
   based-on: Anthropic Complete Guide to Building Skills for Claude (Jan 2026)
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Skill Validator

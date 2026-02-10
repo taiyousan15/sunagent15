@@ -6,6 +6,7 @@ description: |
   (2) user wants unified notification system,
   (3) user mentions「ワークフロー通知」「Discord通知」「エスカレーション」.
   Do NOT use for: 単発メール送信、Slack単体設定。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Unified Notifications (Apprise)

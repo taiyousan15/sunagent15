@@ -7,6 +7,7 @@ description: |
   (3) user mentions「参考画像と同じスタイル」「テキスト差し替え」.
   Do NOT use for: ゼロからの画像生成（nanobanana-proを使用）、
   LP設計（lp-designを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # LP JSON Generator

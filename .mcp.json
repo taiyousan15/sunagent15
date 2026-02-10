@@ -46,6 +46,37 @@
       "category": "messaging"
     },
 
+    "voice-ai": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["mcp-servers/voice-ai-mcp-server/dist/index.js"],
+      "env": {
+        "TWILIO_ACCOUNT_SID": "${TWILIO_ACCOUNT_SID}",
+        "TWILIO_AUTH_TOKEN": "${TWILIO_AUTH_TOKEN}",
+        "TWILIO_PHONE_NUMBER": "${TWILIO_PHONE_NUMBER}",
+        "OPENAI_REALTIME_API_KEY": "${OPENAI_REALTIME_API_KEY}",
+        "OPENAI_REALTIME_MODEL": "${OPENAI_REALTIME_MODEL}",
+        "VOICE_WEBHOOK_PORT": "${VOICE_WEBHOOK_PORT}",
+        "VOICE_WEBHOOK_BASE_URL": "${VOICE_WEBHOOK_BASE_URL}"
+      },
+      "disabled": true,
+      "defer_loading": true,
+      "search_keywords": ["voice", "電話", "通話", "架電", "Twilio", "音声AI", "リアルタイム"],
+      "cost_warning": true,
+      "description": "Voice AI MCP - Twilio + OpenAI Realtime 音声通話AI",
+      "category": "voice"
+    },
+    "ai-sdr": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["mcp-servers/ai-sdr-mcp-server/dist/index.js"],
+      "disabled": true,
+      "defer_loading": true,
+      "search_keywords": ["SDR", "営業", "リード", "スコアリング", "アウトリーチ", "パイプライン", "フォローアップ"],
+      "description": "AI SDR MCP - 自律営業パイプライン（リード管理・スコアリング・アウトリーチ）",
+      "category": "sales"
+    },
+
     "_comment_deferred": "=== 遅延ロード（12個） ===",
 
     "youtube": {
@@ -239,6 +270,23 @@
       "search_keywords": ["obsidian", "ノート", "知識", "vault", "LP知識"],
       "description": "Obsidian LP知識管理 - ノート読み書き・検索",
       "category": "knowledge"
+    },
+
+    "_comment_sns_research": "=== SNSリサーチ ===",
+
+    "twitter-client": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "agent-twitter-client-mcp"],
+      "env": {
+        "AUTH_METHOD": "cookies",
+        "TWITTER_COOKIES": "${TWITTER_COOKIES}"
+      },
+      "disabled": false,
+      "defer_loading": true,
+      "search_keywords": ["twitter", "X", "ツイート", "SNS", "トレンド"],
+      "description": "Twitter/X Client - ツイート検索・取得・投稿（Cookie認証）",
+      "category": "sns-research"
     }
   }
 }

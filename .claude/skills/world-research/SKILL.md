@@ -15,6 +15,7 @@ description: >
   トリガー: 「世界リサーチ」「SNSリサーチ」「キーワード検索」「グローバル検索」「世界中で調べて」
          「論文検索」「学術リサーチ」「ペーパーサーチ」「最新研究」「アカデミックリサーチ」
          「暗号通貨リサーチ」「クリプトリサーチ」「仮想通貨調査」「DeFi調査」「オンチェーン分析」
+allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 ---
 
 # World Research - 全世界総合リサーチシステム v2.0
@@ -84,8 +85,9 @@ description: >
 │  └──────────────────────────────────────────────────────────────────────┘  │
 │                                                                            │
 │  ✅ APIキー不要（基本機能）    ✅ gpt-researcher統合（深層調査）          │
-│  ✅ 日英中3言語対応            ✅ 50+プラットフォーム横断                  │
-│  ✅ 学術論文〜SNSまで完全網羅  ✅ 6層リサーチアーキテクチャ               │
+│  ✅ 5API統合（高精度検索強化）  ✅ 50+プラットフォーム横断                 │
+│  ✅ 日英中3言語対応            ✅ 6層リサーチアーキテクチャ               │
+│  ✅ 学術論文〜SNSまで完全網羅  ✅ Tavily/SerpAPI/Brave/NewsAPI/Perplexity │
 └────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -1728,8 +1730,15 @@ https://github.com/search?q=MEV+bot&type=repositories&s=stars
 | **academic** | Layer 1-2特化（Arxiv/S2/PwC + キュレーション） | 論文サーベイ |
 | **survey** | academic + Layer 3（ブログ解説）+ 研究トラック分析 | 研究動向レポート |
 | **ecosystem** | Layer 4特化（GitHub/HF/フレームワーク比較） | 実装調査 |
+<<<<<<< HEAD
 | **crypto** | Layer 7-10特化（オンチェーン/API/トレーディング/ニュース） | 暗号通貨調査 |
 | **crypto-deep** | crypto + Layer 5-6（SNS/コミュニティ）+ gpt-researcher | 暗号通貨包括調査 |
+=======
+| **api-quick** | Tavily + Brave API（高速API検索） | 高精度ファクトチェック |
+| **api-deep** | 全5API + クロス検証 + 6層検索 | 徹底調査・出典付きレポート |
+| **api-news** | NewsAPI + Perplexity | ニュース・トレンド特化 |
+| **api-trend** | Brave + NewsAPI + Perplexity | トレンド分析・市場調査 |
+>>>>>>> 8677f4ae478c391e8e8c80004ceb6206a740cb87
 
 ### 実行フロー（5 API統合版）
 
@@ -2149,6 +2158,7 @@ API別の特徴活用:
 | `OPENAI_API_KEY` | OpenAI | gpt-researcher連携（deepモード時） | deepモード時 |
 
 > **quick/standard/academicモードはAPIキー不要**（WebSearch + WebFetch + 非公式APIのみ）
+<<<<<<< HEAD
 > APIキーがある場合は自動的に追加ソースとして活用される。
 
 ### 各APIの詳細実装・統合フロー
@@ -2157,6 +2167,155 @@ API別の特徴活用:
 > - 各APIのcurlコマンド・bash関数 → [API実行プロシージャ（実装詳細）](#api実行プロシージャ実装詳細)
 > - 10ステップ統合フロー → [実行フロー（5 API統合版）](#実行フロー5-api統合版)
 > - 4つの実行パターン → [統合実行パターン](#統合実行パターン)
+=======
+> **api-*モードは.envの5APIキーが必要**（下記「API強化リサーチ」セクション参照）
+
+---
+
+## API強化リサーチ（5API統合）
+
+### 概要
+
+`.env` に設定された5つの検索APIを使用して、WebSearch/WebFetchに加えて高精度な検索を実行。
+既存の6層アーキテクチャと組み合わせることで、133+ソースの完全網羅型リサーチを実現。
+
+### API一覧
+
+| API | 特徴 | 用途 | 環境変数 | 月間制限 |
+|-----|------|------|---------|---------|
+| **Tavily** | AI検索特化、高精度 | セマンティック検索、事実確認 | `TAVILY_API_KEY` | 1,000 |
+| **SerpAPI** | Google検索結果取得 | SERP分析、競合調査 | `SERPAPI_API_KEY` | 100 |
+| **Brave Search** | プライバシー重視、広範囲 | 一般Web検索 | `BRAVE_API_KEY` | 2,000 |
+| **NewsAPI** | ニュース集約 | 最新ニュース、トレンド | `NEWS_API_KEY` | 100/日 |
+| **Perplexity** | AI検索+要約 | 要約生成、引用付き回答 | `PERPLEXITY_API_KEY` | 課金制 |
+
+### API呼び出しテンプレート
+
+#### Tavily API（AI検索特化）
+
+```bash
+curl -X POST "https://api.tavily.com/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "api_key": "'"${TAVILY_API_KEY}"'",
+    "query": "'"${QUERY}"'",
+    "search_depth": "advanced",
+    "include_answer": true,
+    "include_raw_content": true,
+    "max_results": 10
+  }'
+```
+
+#### SerpAPI（Google検索結果）
+
+```bash
+curl "https://serpapi.com/search.json?engine=google&q=${QUERY}&api_key=${SERPAPI_API_KEY}&num=10"
+```
+
+#### Brave Search（広範囲Web検索）
+
+```bash
+curl "https://api.search.brave.com/res/v1/web/search?q=${QUERY}" \
+  -H "Accept: application/json" \
+  -H "X-Subscription-Token: ${BRAVE_API_KEY}"
+```
+
+#### NewsAPI（ニュース集約）
+
+```bash
+curl "https://newsapi.org/v2/everything?q=${QUERY}&apiKey=${NEWS_API_KEY}&sortBy=publishedAt&pageSize=10"
+```
+
+#### Perplexity API（AI要約）
+
+```bash
+curl -X POST "https://api.perplexity.ai/chat/completions" \
+  -H "Authorization: Bearer ${PERPLEXITY_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "llama-3.1-sonar-large-128k-online",
+    "messages": [{"role": "user", "content": "'"${QUERY}"'についての最新情報を要約してください。出典URLも含めてください。"}]
+  }'
+```
+
+### 環境変数設定
+
+```bash
+# .env に以下を設定（.gitignoreに含まれているため安全）
+TAVILY_API_KEY=tvly-xxxxxxxxxxxxxxxxxxxxxxxx
+SERPAPI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+BRAVE_API_KEY=BSAxxxxxxxxxxxxxxxxxxxxxxxx
+NEWS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+PERPLEXITY_API_KEY=pplx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**APIキー取得先**:
+- Tavily: https://tavily.com/
+- SerpAPI: https://serpapi.com/
+- Brave: https://brave.com/search/api/
+- NewsAPI: https://newsapi.org/
+- Perplexity: https://www.perplexity.ai/settings/api
+
+### API強化モード実行フロー
+
+```
+入力: /world-research キーワード=AI Agent モード=api-deep
+
+Step 1: キーワード展開（既存処理）
+  AI Agent → AI Agent, AIエージェント, AI智能体, #AIAgent
+
+Step 2: API並列検索（新規）
+  ├── Tavily: "AI Agent" search_depth=advanced（10件）
+  ├── SerpAPI: "AI Agent 2026" Google上位（10件）
+  ├── Brave: "AI Agent" 広範囲Web（20件）
+  ├── NewsAPI: "AI Agent" 最新ニュース（10件）
+  └── Perplexity: "AI Agent最新動向" AI要約
+
+Step 3: 6層横断検索（既存処理、APIと並列実行）
+  ├── Layer 1: 学術論文（Arxiv/S2/PwC...）
+  ├── Layer 2: キュレーション（HF Daily Papers...）
+  ├── Layer 3: テックブログ
+  ├── Layer 4: 実装エコシステム
+  ├── Layer 5: SNS横断
+  └── Layer 6: コミュニティ
+
+Step 4: 統合・クロス検証
+  ├── API結果 + 6層結果の重複排除
+  ├── 信頼度スコアリング（複数ソース確認で加点）
+  └── 矛盾情報の検出・フラグ付け
+
+Step 5: 統合レポート出力
+  ├── エグゼクティブサマリー（Perplexity AI要約ベース）
+  ├── 6層別詳細結果
+  ├── API検索による追加インサイト
+  └── 出典一覧（全ソースURL付き）
+```
+
+### スコアリングアルゴリズム（API結果統合時）
+
+```
+信頼度スコア =
+  (ドメイン権威度 × 0.3) +
+  (情報鮮度 × 0.2) +
+  (クロス検証率 × 0.3) +
+  (引用数 × 0.2)
+
+ドメイン権威度:
+  .gov, .edu     → 100
+  主要メディア     → 90
+  専門サイト       → 80
+  一般サイト       → 60
+  フォーラム       → 40
+```
+
+### レート制限とベストプラクティス
+
+1. **api-deepは1日5回程度に抑える**（SerpAPI月100回制限）
+2. **api-quickは日常使い可能**（Tavily/Brave合計3,000回/月）
+3. **api-newsは日100回まで**（NewsAPI制限）
+4. **並列実行時は1秒間隔を空ける**（レート制限回避）
+5. **結果は複数ソースで確認された情報を優先**
+>>>>>>> 8677f4ae478c391e8e8c80004ceb6206a740cb87
 
 ---
 

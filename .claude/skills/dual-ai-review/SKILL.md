@@ -7,6 +7,7 @@ description: |
   (3) user mentions「セキュリティレビュー」「実装検証」.
   Do NOT use for: 通常のコードレビュー（code-reviewerを使用）、
   セキュリティスキャン（security-scan-trivyを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Dual-AI Review Skill

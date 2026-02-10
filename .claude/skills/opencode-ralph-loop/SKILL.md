@@ -1,3 +1,10 @@
+---
+name: opencode-ralph-loop
+description: OpenCode反復開発支援。opt-in設計で仕様確定済みタスクの自動反復実行を管理。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+model: sonnet
+---
+
 # OpenCode Ralph Loop - 反復開発支援
 
 **opt-in、既定OFF、乱用禁止**の反復開発スキルです。

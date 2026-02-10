@@ -1,3 +1,10 @@
+---
+name: opencode-setup
+description: OpenCode/OMOのセットアップ確認と導入ガイド。CLI確認・設定ファイル推奨値の提示。
+allowed-tools: Read, Bash, Grep, Glob
+model: haiku
+---
+
 # OpenCode/OMO セットアップ確認と導入ガイド
 
 opt-in設計のセットアップ支援スキルです。

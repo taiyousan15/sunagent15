@@ -1,6 +1,7 @@
 ---
 name: figma-design
 description: Use this skill when working with Figma designs to generate code. Converts Figma layouts, components, and styles into production-ready code. Triggers on keywords like "Figma", "design to code", "implement this design", or when referencing Figma file URLs.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Figma Design-to-Code

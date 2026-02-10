@@ -1,6 +1,7 @@
 ---
 name: hierarchical-memory
 description: Hierarchical memory architecture combining short-term, long-term, and episodic memory layers. Based on Mem0 research showing 26% accuracy improvement. Use for persistent knowledge, context management, and RAG optimization.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Hierarchical Memory System

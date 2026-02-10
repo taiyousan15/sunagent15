@@ -1,6 +1,7 @@
 ---
 name: japanese-tts-reading
 description: 日本語テキストを音声に変換するTTS（Text-to-Speech）スキル。ナレーション原稿の読み上げ、コンテンツの音声化、アクセシビリティ対応に使用。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Japanese TTS Reading Skill

@@ -1,6 +1,7 @@
 ---
 name: agentic-vision
 description: Gemini 3 FlashのAgentic Vision機能を活用した高度な画像・動画分析スキル。構図分析、色彩分析、テキストOCR、要素検出、品質評価を自動化。市場分析、競合調査、Kindle表紙分析に最適。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Agentic Vision - 最強の視覚AI分析スキル

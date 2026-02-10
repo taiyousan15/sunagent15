@@ -1,6 +1,6 @@
-# world-research v2.0
+# world-research v2.0 + 5API統合
 
-全世界総合リサーチシステム。6層アーキテクチャで論文からSNSまで完全網羅。
+全世界総合リサーチシステム。6層アーキテクチャ + 5API統合で論文からSNSまで完全網羅。
 
 ## 6層構造
 - Layer 1: 学術論文（Arxiv/PwC/OpenReview/Scholar/S2/Connected Papers/DBLP/ACL）
@@ -10,10 +10,18 @@
 - Layer 5: SNS（X/Reddit/YouTube/note/Bilibili/知乎/小红書/Medium/Qiita/Zenn）
 - Layer 6: コミュニティ（Discord/Slack/GitHub Discussions/Stack Overflow/HN）
 
-## モード
-quick | standard | deep | academic | survey | ecosystem
+## 統合API（5API）
+- Tavily（AI検索特化・高精度）
+- SerpAPI（Google検索結果取得）
+- Brave Search（広範囲Web検索）
+- NewsAPI（ニュース集約）
+- Perplexity（AI検索+要約）
 
-gpt-researcher統合。詳細は SKILL.md を参照。
+## モード
+基本: quick | standard | deep | academic | survey | ecosystem
+API強化: api-quick | api-deep | api-news | api-trend
+
+gpt-researcher統合 + 5API統合。詳細は SKILL.md を参照。
 
 ## 統合スキル
 - note-research: note.com非公式API + WebSearch/WebFetchでゼロコストリサーチ

@@ -1,6 +1,7 @@
 ---
 name: anime-slide-generator
 description: アニメ風イラスト付きの日本語スライドを自動生成。NanoBanana Proで背景画像を生成し、Pillowで日本語テキストをオーバーレイ。PDF出力対応。Mac/Windows/Linux対応。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Anime Slide Generator

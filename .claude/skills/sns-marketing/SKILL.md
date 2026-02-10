@@ -7,6 +7,7 @@ description: |
   (3) user mentions「認知拡大」「リード獲得」「SNS戦略」.
   Do NOT use for: SNSパターン参照のみ（sns-patternsを使用）、
   単発投稿作成（copywriting-helperを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # SNS Marketing Operational Skill System

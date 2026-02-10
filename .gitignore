@@ -6,6 +6,7 @@ node_modules/
 .env.local
 .env.*.local
 .env.tools
+.claude/.env
 
 # MCP overlay configs (contain secrets/enabled status)
 config/proxy-mcp/internal-mcps.local.json

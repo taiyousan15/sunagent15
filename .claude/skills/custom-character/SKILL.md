@@ -7,6 +7,7 @@ description: |
   (3) user mentions「表情バリエーション」「ポーズ違い」.
   Do NOT use for: ゼロからのキャラ生成（nanobanana-proを使用）、
   アニメ動画制作（anime-productionを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # カスタムキャラクターガイド

@@ -7,6 +7,7 @@ description: |
   (3) user mentions「Reels」「TikTok」「Shorts」「縦型動画」.
   Do NOT use for: 動画編集全般（video-productionを使用）、
   アニメ制作（anime-productionを使用）。
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # テロップスキル (Telop Skill)

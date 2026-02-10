@@ -7,6 +7,7 @@ description: |
   (3) user mentions「長尺動画」「YouTubeコンテンツ」.
   Do NOT use for: チャンネル分析（youtube-channel-summaryを使用）、
   サムネイル作成（youtube-thumbnailを使用）。
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # YouTubeコンテンツスキル
