@@ -221,6 +221,24 @@
       "search_keywords": ["競合", "ad library", "広告ライブラリ", "競合分析"],
       "description": "Facebook Ad Library - 競合広告分析",
       "category": "marketing"
+    },
+
+    "_comment_knowledge": "=== 知識管理システム ===",
+
+    "obsidian": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@cyanheads/obsidian-mcp-server"],
+      "env": {
+        "OBSIDIAN_API_KEY": "${OBSIDIAN_API_KEY}",
+        "OBSIDIAN_API_PORT": "27124",
+        "OBSIDIAN_VAULT_PATH": "~/Documents/ObsidianVaults/LP-Knowledge-System"
+      },
+      "disabled": false,
+      "defer_loading": true,
+      "search_keywords": ["obsidian", "ノート", "知識", "vault", "LP知識"],
+      "description": "Obsidian LP知識管理 - ノート読み書き・検索",
+      "category": "knowledge"
     }
   }
 }

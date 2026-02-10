@@ -61,8 +61,61 @@
 | YOUTUBE + 教材 + 動画 | youtubeschool-creator |
 | セールスレター | taiyo-style-sales-letter |
 | ステップメール | taiyo-style-step-mail |
-| VSL | taiyo-style-vsl |
+| VSL（台本のみ） | taiyo-style-vsl |
+| インタラクティブ動画 + 分岐動画 + VSL動画生成 | **interactive-video-platform** |
 | Instagram + Shorts | instagram-shorts-generator |
+
+### 8. インタラクティブ動画 必須ワークフロー（絶対遵守）
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  インタラクティブ動画を作成する際は、以下の全工程を必ず実行する    │
+│  CSSベースの簡易ビジュアルでの代替は禁止                           │
+│  各レイヤーのスキップは禁止                                         │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+| Layer | 工程 | モデル/ツール | 状態 |
+|-------|------|--------------|------|
+| 1 | 台本生成 | Claude Opus + taiyo-style-vsl + taiyo-analyzer (80点以上) | **MANDATORY** |
+| 2a | 4K画像生成 | flow-image (NanoBanana Pro / Google Imagen 3) | **MANDATORY** |
+| 2b | 画像品質検証 | agentic-vision (Gemini 3 Flash, 7/10以上) | **MANDATORY** |
+| 2c | 日本語テキスト検証 | japanese-text-verifier (manga-ocr, ratio ≥ 0.3) | **MANDATORY** |
+| 2d | TTS音声生成 | Fish Audio API (**voice IDはユーザー手動指定**) | **MANDATORY** |
+| 2e | 動画合成 | Remotion (4K画像+テロップ+Ken Burns+感情エフェクト) | **MANDATORY** |
+| 3 | インタラクティブプレイヤー | HTML/JS 分岐プレイヤー | **MANDATORY** |
+| 4a | デプロイ | Vercel | **MANDATORY** |
+| 4b | 最終QA | Playwright MCP + agentic-vision | **MANDATORY** |
+
+**違反例（禁止行為）**:
+- flow-imageを使わずCSSグラデーションだけで動画を生成
+- Fish Audioのvoice IDを勝手に選択（ユーザー確認必須）
+- agentic-visionの品質チェックをスキップ
+- Remotionを使わず別の方法で動画生成
+- **text_preprocessor.pyを使わずにTTS送信（数字読み間違いの原因）**
+
+### 9. TTS数字読み前処理（絶対遵守）
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  Fish Audio APIにテキストを送信する前に、必ず                        │
+│  text_preprocessor.py で数字→ひらがな変換を実行すること              │
+│  前処理なしでのTTS送信は禁止                                        │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+| 入力 | 正しい読み | NG読み |
+|------|-----------|--------|
+| 1000万 | いっせんまん | せんまん |
+| 3000万 | さんぜんまん | さんせんまん |
+| 8000億 | はっせんおく | はちせんおく |
+| 1億 | いちおく | - |
+| 1兆 | いっちょう | いちちょう |
+| 300万 | さんびゃくまん | さんひゃくまん |
+| 600万 | ろっぴゃくまん | ろくひゃくまん |
+| 800万 | はっぴゃくまん | はちひゃくまん |
+
+**使い方**: `scripts/text_preprocessor.py` の `JapaneseTextPreprocessor.preprocess()` を呼び出す
 
 ---
 

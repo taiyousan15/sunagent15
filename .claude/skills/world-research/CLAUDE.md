@@ -14,3 +14,10 @@
 quick | standard | deep | academic | survey | ecosystem
 
 gpt-researcher統合。詳細は SKILL.md を参照。
+
+## 統合スキル
+- note-research: note.com非公式API + WebSearch/WebFetchでゼロコストリサーチ
+
+## APIキー (.env)
+Tavily / SerpAPI / Brave Search / NewsAPI / Perplexity が設定済み。
+.envパス: プロジェクトルート or ~/Desktop/開発2026/リサーチ専門/.env or ~/taisun_agent/.env

@@ -139,4 +139,20 @@
 
 ---
 
+## 2026-02-09 Mistake: tts-number-reading-1000man
+- **Symptom**: 「1000万円」が「せんまんえん」と読まれた（正しくは「いっせんまんえん」）
+- **Root cause 1**: `text_preprocessor.py` の正規表現 `(\d)?千(万|億|兆)` が漢字「千」しかマッチせず、アラビア数字「1000万」を処理できなかった
+- **Root cause 2**: `text_preprocessor.py` がTTS送信時に呼び出されていなかった（前処理パイプラインが未接続）
+- **Where it happened**: interactive-vsl-v2 の TTS音声生成（Fish Audio API送信前）
+- **Fix**:
+  - `text_preprocessor.py` を修正: `([\d,]+)(万|億|兆)` パターンで1000万/3000万/8000億等を正しく変換
+  - `_number_to_reading()` メソッドを追加: 千(いっせん/さんぜん/はっせん)・百(さんびゃく/ろっぴゃく/はっぴゃく)・十の位を完全対応
+- **Prevention**:
+  - [ ] TTS音声生成前に **必ず** `text_preprocessor.py` で前処理を実行する
+  - [ ] 「1000万」「3000億」等の数字+大単位パターンは前処理結果を目視確認する
+  - [ ] Fish Audio APIにテキストを送信する前に、数字→ひらがな変換が完了していることを検証する
+- **Related constraints**: SKILL.md / CLAUDE.md にTTS前処理の必須ルールを追加済み
+
+---
+
 *このファイルは違反検出時に自動更新されます*
