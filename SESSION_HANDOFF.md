@@ -5,9 +5,22 @@
 **最終更新**: 2026-02-11
 **作業ディレクトリ**: /Users/matsumototoshihiko/taisun_agent
 
-## 直近の完了作業: ローカルI2V vs fal.ai比較テスト
+## 直近の完了作業: LINE AI Agent 統合リサーチ完了
 
-### 完了済み (2026-02-11)
+### 完了済み (2026-02-11) - LINE AI Agent 統合リサーチ
+- **目的**: LINEから「アプリ作って」等のメッセージでAIがコード実行・ツール使用・成果物をLINEで返すシステム
+- **リサーチ規模**: 6エージェント × 2ラウンド（OpenClaw+MCP、AWS Security、ビジネスモデル、日本市場、技術検証、50ユースケース）
+- **推奨アーキテクチャ**: Hybrid Option 3 (Claude Agent SDK + OpenClaw)
+  - LINE → API Gateway → Lambda (200ms応答) → SQS → ECS Fargate (Claude Agent SDK) → Push Message
+- **CRITICAL制約**: LINE Webhook 2秒タイムアウト → 非同期パターン必須
+- **AWS構成**: VPC + Public/Private Subnets、Lambda + SQS + ECS Fargate
+- **コスト**: $190-340/月(50ユーザー) ～ $1,145-2,695/月(500ユーザー)
+- **50ユースケース**: 7カテゴリ（収益High 23件/Medium 22件/Low 5件）
+- **Praetorian保存先**: `cpt_1770725168008_kuha4` (統合レポート)
+- **次のアクション**: Phase 1 MVP実装（GitHub Issues作成 → Lambda + SQS + ECS Fargate構築）
+- **ユーザー指示**: 全作業でgit push + ログ + Issue作成を毎回実施
+
+### 完了済み (2026-02-11) - ローカルI2V vs fal.ai比較テスト
 - ローカルCogVideoX-5B I2V テスト: M4 Max MPSで実行不可（5-7.5h/clip推定）
 - fal.ai MiniMax Hailuo I2V テスト: 4.2分、$0.28/clip、3.5MB
 - 比較テストログ: `docs/logs/2026-02-11_local-i2v-vs-falai-test.md`
