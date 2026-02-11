@@ -1730,15 +1730,12 @@ https://github.com/search?q=MEV+bot&type=repositories&s=stars
 | **academic** | Layer 1-2特化（Arxiv/S2/PwC + キュレーション） | 論文サーベイ |
 | **survey** | academic + Layer 3（ブログ解説）+ 研究トラック分析 | 研究動向レポート |
 | **ecosystem** | Layer 4特化（GitHub/HF/フレームワーク比較） | 実装調査 |
-<<<<<<< HEAD
 | **crypto** | Layer 7-10特化（オンチェーン/API/トレーディング/ニュース） | 暗号通貨調査 |
 | **crypto-deep** | crypto + Layer 5-6（SNS/コミュニティ）+ gpt-researcher | 暗号通貨包括調査 |
-=======
 | **api-quick** | Tavily + Brave API（高速API検索） | 高精度ファクトチェック |
 | **api-deep** | 全5API + クロス検証 + 6層検索 | 徹底調査・出典付きレポート |
 | **api-news** | NewsAPI + Perplexity | ニュース・トレンド特化 |
 | **api-trend** | Brave + NewsAPI + Perplexity | トレンド分析・市場調査 |
->>>>>>> 8677f4ae478c391e8e8c80004ceb6206a740cb87
 
 ### 実行フロー（5 API統合版）
 
@@ -2158,8 +2155,8 @@ API別の特徴活用:
 | `OPENAI_API_KEY` | OpenAI | gpt-researcher連携（deepモード時） | deepモード時 |
 
 > **quick/standard/academicモードはAPIキー不要**（WebSearch + WebFetch + 非公式APIのみ）
-<<<<<<< HEAD
 > APIキーがある場合は自動的に追加ソースとして活用される。
+> **api-*モードは.envの5APIキーが必要**（下記「API強化リサーチ」セクション参照）
 
 ### 各APIの詳細実装・統合フロー
 
@@ -2167,7 +2164,6 @@ API別の特徴活用:
 > - 各APIのcurlコマンド・bash関数 → [API実行プロシージャ（実装詳細）](#api実行プロシージャ実装詳細)
 > - 10ステップ統合フロー → [実行フロー（5 API統合版）](#実行フロー5-api統合版)
 > - 4つの実行パターン → [統合実行パターン](#統合実行パターン)
-=======
 > **api-*モードは.envの5APIキーが必要**（下記「API強化リサーチ」セクション参照）
 
 ---
