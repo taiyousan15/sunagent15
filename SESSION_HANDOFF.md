@@ -5,9 +5,17 @@
 **最終更新**: 2026-02-11
 **作業ディレクトリ**: /Users/matsumototoshihiko/taisun_agent
 
-## 直近の完了作業: LINE AI Agent 統合リサーチ完了
+## 直近の完了作業: sns-research2026 リポジトリ作成
 
-### 完了済み (2026-02-11) - LINE AI Agent 統合リサーチ
+### 完了済み (2026-02-11) - sns-research2026 GitHub リポジトリ作成
+- **リポジトリ**: https://github.com/san15/sns-research2026
+- **内容**: taisun_agentのSNSリサーチ関連13スキルを独立リポジトリ化
+- **ファイル数**: 40ファイル（11,209行）
+- **対応SNS**: X/IG/YT/TikTok/note/Reddit/LinkedIn/Medium/Bilibili/知乎/小红書（11プラットフォーム）
+- **GitHub Issues**: 5件作成（スクレイピング基盤/トレンド検知/競合分析/レポート生成/センチメント分析）
+- **ログ**: `docs/logs/2026-02-11_sns-research2026-setup.md`（sns-research2026リポ内）
+
+### 完了済み (2026-02-11) - LINE AI Agent 統合リサーチ + GitHub Issues
 - **目的**: LINEから「アプリ作って」等のメッセージでAIがコード実行・ツール使用・成果物をLINEで返すシステム
 - **リサーチ規模**: 6エージェント × 2ラウンド（OpenClaw+MCP、AWS Security、ビジネスモデル、日本市場、技術検証、50ユースケース）
 - **推奨アーキテクチャ**: Hybrid Option 3 (Claude Agent SDK + OpenClaw)
@@ -17,7 +25,8 @@
 - **コスト**: $190-340/月(50ユーザー) ～ $1,145-2,695/月(500ユーザー)
 - **50ユースケース**: 7カテゴリ（収益High 23件/Medium 22件/Low 5件）
 - **Praetorian保存先**: `cpt_1770725168008_kuha4` (統合レポート)
-- **次のアクション**: Phase 1 MVP実装（GitHub Issues作成 → Lambda + SQS + ECS Fargate構築）
+- **GitHub Issues**: #284-#289（Phase 1-6、6件作成済み）
+- **次のアクション**: Phase 1 MVP実装開始（Issue #284）
 - **ユーザー指示**: 全作業でgit push + ログ + Issue作成を毎回実施
 
 ### 完了済み (2026-02-11) - ローカルI2V vs fal.ai比較テスト
