@@ -81,3 +81,6 @@ test-results.txt
 output/
 resource_audit_*.json
 unused_resources_report.json
+
+# Large binary files (GitHub 100MB limit)
+完成版.pdf
