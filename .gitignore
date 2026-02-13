@@ -72,6 +72,11 @@ test-results.txt
 .workflow_state.json
 .agent_usage_state.json
 
+# Auto-backup system (session-specific data)
+.backups/
+.workflow_state_backups/
+.backup_logs/
+
 # Browser profiles and virtual environments (large cache files)
 .claude/skills/*/data/browser_profile/
 .claude/skills/*/.venv/
