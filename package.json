@@ -111,6 +111,7 @@
     "@types/supertest": "^6.0.3",
     "dotenv": "^16.3.1",
     "express": "^5.2.1",
+    "kuromoji": "^0.1.2",
     "supertest": "^7.1.4",
     "yaml": "^2.3.4"
   },

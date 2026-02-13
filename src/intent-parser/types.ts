@@ -56,6 +56,10 @@ export enum IntentType {
   SKILL_LIST = 'SKILL_LIST',
   SKILL_EXECUTE = 'SKILL_EXECUTE',
 
+  // Security & Performance
+  SECURITY_RISK = 'SECURITY_RISK',
+  PERFORMANCE_IMPACT = 'PERFORMANCE_IMPACT',
+
   // Misc
   QUESTION = 'QUESTION',
   CONFIRMATION = 'CONFIRMATION',
@@ -171,4 +175,61 @@ export interface ContextSource {
   workflowStateExists: boolean;
   baselineFiles: string[];
   currentPhase?: string;
+}
+
+/**
+ * 実行履歴レコード
+ */
+export interface ExecutionRecord {
+  timestamp: number;
+  toolName: string;
+  intent: string;
+  riskLevel: RiskLevel;
+  wasBlocked: boolean;
+  wasApproved: boolean;
+  features: FeatureVector;
+}
+
+/**
+ * 22次元特徴量ベクトル（0-1正規化）
+ */
+export interface FeatureVector {
+  // ツール種別（5）
+  toolEdit: number;
+  toolWrite: number;
+  toolBash: number;
+  toolRead: number;
+  toolSkill: number;
+  // ファイル属性（5）
+  fileExists: number;
+  fileBaseline: number;
+  fileJs: number;
+  fileTs: number;
+  fileMd: number;
+  // コンテキスト（3）
+  ctxSessionHandoff: number;
+  ctxLateNight: number;
+  ctxRecentErrors: number;
+  // Intent属性（4）
+  intentConfidence: number;
+  intentWorkflowReuse: number;
+  intentSkill: number;
+  intentExistingFile: number;
+  // コマンドパターン（3）
+  cmdRm: number;
+  cmdSudo: number;
+  cmdInstall: number;
+  // ユーザー履歴（2）
+  histApprovalRate: number;
+  histErrorRate: number;
+}
+
+/**
+ * ML予測結果
+ */
+export interface MLPrediction {
+  riskLevel: RiskLevel;
+  confidence: number;
+  method: 'bayes' | 'tree' | 'rule';
+  processingTimeMs: number;
 }

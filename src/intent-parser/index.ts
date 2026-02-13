@@ -20,6 +20,14 @@ export { ConfidenceScorer, getConfidenceScorer } from './engines/confidence-scor
 // Classifiers
 export { ALL_PATTERNS, PATTERN_COUNT } from './classifiers/patterns';
 export { IntentClassifier, getIntentClassifier } from './classifiers/intent-classifier';
+export { FeatureExtractor, getFeatureExtractor } from './classifiers/feature-extractor';
+export { NaiveBayesClassifier, getNaiveBayes, resetNaiveBayes } from './classifiers/naive-bayes';
+export { DecisionTreeClassifier, getDecisionTree, resetDecisionTree } from './classifiers/decision-tree';
+export { MLRiskClassifier, getMLRiskClassifier, resetMLRiskClassifier } from './classifiers/ml-risk-classifier';
+
+// Storage
+export { ExecutionHistory, getExecutionHistory, resetExecutionHistory } from './storage/execution-history';
+export { FeedbackLoop, getFeedbackLoop, resetFeedbackLoop } from './storage/feedback-loop';
 
 // Integrations
 export { HookIntegration, getHookIntegration } from './integrations/hook-integration';
