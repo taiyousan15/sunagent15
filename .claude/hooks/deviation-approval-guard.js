@@ -57,6 +57,12 @@ const APPROVAL_REQUIRED_PATTERNS = {
 };
 
 async function main() {
+  // 環境変数チェック: TAISUN_OVERRIDE_ALL が設定されている場合は全て許可
+  if (process.env.TAISUN_OVERRIDE_ALL === 'true' || process.env.TAISUN_OVERRIDE_ALL === '1') {
+    process.exit(0);
+    return;
+  }
+
   let input = {};
 
   try {
@@ -83,7 +89,7 @@ async function main() {
     return;
   }
 
-  const result = evaluateDeviation(toolName, toolInput, state, cwd);
+  const result = await evaluateDeviation(toolName, toolInput, state, cwd);
 
   if (result.requiresApproval) {
     // 既に承認済みかチェック
@@ -111,13 +117,93 @@ async function main() {
   process.exit(0);
 }
 
-function evaluateDeviation(toolName, toolInput, state, cwd) {
+async function evaluateDeviation(toolName, toolInput, state, cwd) {
+  const startTime = Date.now();
   const result = {
     requiresApproval: false,
     reason: '',
     suggestion: '',
     deviationId: ''
   };
+
+  // ===== Phase 3: Intent Parser 完全統合 =====
+  // unified-guard.js から performIntentCheck を呼び出し
+  const unifiedGuard = require('./unified-guard.js');
+  const intentResult = await unifiedGuard.performIntentCheck(toolName, toolInput);
+
+  // Intent 検出時の承認スキップ設定（Phase 3 拡張）
+  const skipApprovalIntents = {
+    'SKILL_INVOCATION': {
+      requiresApproval: false,
+      reason: 'Skill tool invocation - trusted context',
+      skipLayers: [2, 3, 4, 6],
+      intentConfidence: intentResult.confidence,
+      isFalsePositiveAvoided: true,
+    },
+    'WORKFLOW_REUSE': {
+      requiresApproval: false,
+      reason: 'Workflow reuse pattern detected',
+      skipLayers: [3, 4],
+      intentConfidence: intentResult.confidence,
+      isFalsePositiveAvoided: true,
+    },
+    'EXISTING_FILE_REFERENCE': {
+      requiresApproval: false,
+      reason: 'File existence verified',
+      skipLayers: [3, 4],
+      fileVerified: true,
+      intentConfidence: intentResult.confidence,
+      isFalsePositiveAvoided: true,
+    },
+    'SESSION_CONTINUATION': {
+      requiresApproval: false,
+      reason: 'Session continuation pattern',
+      skipLayers: [1],
+      intentConfidence: intentResult.confidence,
+      isFalsePositiveAvoided: true,
+    },
+    'EXISTING_FILE_EDIT': {
+      requiresApproval: false,
+      reason: 'Editing existing file - baseline registered',
+      skipLayers: [4],
+      intentConfidence: intentResult.confidence,
+      isFalsePositiveAvoided: true,
+    },
+  };
+
+  if (skipApprovalIntents[intentResult.intent]) {
+    const skipConfig = skipApprovalIntents[intentResult.intent];
+    const processingTimeMs = Date.now() - startTime;
+
+    // Phase 3: メトリクス記録
+    const metrics = {
+      intent: intentResult.intent,
+      confidence: intentResult.confidence,
+      skipLayers: skipConfig.skipLayers,
+      processingTimeMs,
+      timestamp: new Date().toISOString(),
+      toolName,
+    };
+
+    // メトリクス記録（オプション - metrics-collector.js が存在する場合）
+    try {
+      const metricsCollector = require('./metrics-collector.js');
+      metricsCollector.recordEvent({
+        eventType: 'DEVIATION_APPROVAL_SKIP',
+        ...metrics,
+      });
+    } catch (e) {
+      // metrics-collector.js がない場合は無視
+    }
+
+    return {
+      ...skipConfig,
+      metrics,
+      processingTimeMs,
+    };
+  }
+
+  // ===== 既存のロジック =====
 
   // Bashコマンドの評価
   if (toolName === 'Bash') {
