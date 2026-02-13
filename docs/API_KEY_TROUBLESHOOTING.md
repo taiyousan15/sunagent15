@@ -4,6 +4,27 @@
 
 ---
 
+## ⚠️ 「OAuth token has expired」と表示された場合
+
+エラーに **「OAuth token has expired」「Please run /login」** と出ているときは、**ターミナルで `/login` は使えません**（zsh がファイルとして解釈し `no such file or directory` になります）。
+
+**ターミナルで実行する正しいコマンド:**
+
+```bash
+claude logout
+claude login
+```
+
+または API キーを直接設定する（推奨）:
+
+```bash
+# ~/.zshrc に追加
+export ANTHROPIC_API_KEY="sk-ant-api03-xxxxxxxxxxxxxxxxxxxx"
+source ~/.zshrc
+```
+
+---
+
 ## クイック診断
 
 ```bash
@@ -50,6 +71,8 @@ claude() {
 ```
 
 #### 解決策C: 再ログイン
+
+**注意**: 「Please run /login」の `/login` は Claude Code の**チャット内**で打つスラッシュコマンドです。ターミナルでは次のコマンドを使います。
 
 ```bash
 claude logout
