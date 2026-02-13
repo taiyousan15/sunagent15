@@ -25,10 +25,14 @@ const DEFAULT_COST_TABLE: Record<ModelType, ModelCost> = {
   'claude-opus': { inputPerMillion: 5, outputPerMillion: 25, cachedInputPerMillion: 0.5 },
   'claude-sonnet': { inputPerMillion: 3, outputPerMillion: 15, cachedInputPerMillion: 0.3 },
   'claude-haiku': { inputPerMillion: 1, outputPerMillion: 5, cachedInputPerMillion: 0.1 },
+  'claude-opus-4-6': { inputPerMillion: 15, outputPerMillion: 75, cachedInputPerMillion: 1.5 },
+  'claude-sonnet-4-5': { inputPerMillion: 3, outputPerMillion: 15, cachedInputPerMillion: 0.3 },
+  'claude-haiku-4-5': { inputPerMillion: 1, outputPerMillion: 5, cachedInputPerMillion: 0.08 },
   'ollama-qwen3-coder': { inputPerMillion: 0, outputPerMillion: 0 },
   'ollama-glm4': { inputPerMillion: 0, outputPerMillion: 0 },
   'openrouter-free': { inputPerMillion: 0, outputPerMillion: 0 },
   'gpt53-codex': { inputPerMillion: 1.25, outputPerMillion: 10 },
+  'codex-cli': { inputPerMillion: 0, outputPerMillion: 0 },
 }
 
 const DEFAULT_BUDGET: BudgetConfig = {

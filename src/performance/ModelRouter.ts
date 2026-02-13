@@ -16,10 +16,10 @@ const OLLAMA_HEALTH_TIMEOUT_MS = 2000
 const OLLAMA_DEFAULT_URL = 'http://localhost:11434'
 
 const DEFAULT_FALLBACK_CHAIN: readonly ModelType[] = [
-  'claude-opus',
-  'claude-sonnet',
-  'gpt53-codex',
-  'claude-haiku',
+  'claude-opus-4-6',
+  'claude-sonnet-4-5',
+  'codex-cli',
+  'claude-haiku-4-5',
   'ollama-qwen3-coder',
   'openrouter-free',
 ]
@@ -28,31 +28,31 @@ const DEFAULT_ROUTING_RULES: readonly RoutingRule[] = [
   {
     taskComplexity: 'trivial',
     preferredModel: 'ollama-qwen3-coder',
-    fallbackModels: ['claude-haiku', 'openrouter-free'],
+    fallbackModels: ['claude-haiku-4-5', 'openrouter-free'],
     maxCostPerRequest: 0.01,
   },
   {
     taskComplexity: 'simple',
-    preferredModel: 'claude-haiku',
+    preferredModel: 'claude-haiku-4-5',
     fallbackModels: ['ollama-qwen3-coder', 'openrouter-free'],
     maxCostPerRequest: 0.05,
   },
   {
     taskComplexity: 'moderate',
-    preferredModel: 'claude-sonnet',
-    fallbackModels: ['claude-haiku', 'ollama-qwen3-coder'],
+    preferredModel: 'claude-sonnet-4-5',
+    fallbackModels: ['claude-haiku-4-5', 'ollama-qwen3-coder'],
     maxCostPerRequest: 0.20,
   },
   {
     taskComplexity: 'complex',
-    preferredModel: 'claude-sonnet',
-    fallbackModels: ['claude-opus', 'claude-haiku'],
+    preferredModel: 'claude-sonnet-4-5',
+    fallbackModels: ['claude-opus-4-6', 'claude-haiku-4-5'],
     maxCostPerRequest: 0.50,
   },
   {
     taskComplexity: 'expert',
-    preferredModel: 'claude-opus',
-    fallbackModels: ['claude-sonnet'],
+    preferredModel: 'claude-opus-4-6',
+    fallbackModels: ['claude-sonnet-4-5'],
     maxCostPerRequest: 2.00,
   },
 ]
@@ -64,10 +64,14 @@ const MODEL_PROVIDER_MAP: Record<ModelType, ProviderType> = {
   'claude-opus': 'anthropic-max',
   'claude-sonnet': 'anthropic-api',
   'claude-haiku': 'anthropic-api',
+  'claude-opus-4-6': 'anthropic-max',
+  'claude-sonnet-4-5': 'anthropic-api',
+  'claude-haiku-4-5': 'anthropic-api',
   'ollama-qwen3-coder': 'ollama',
   'ollama-glm4': 'ollama',
   'openrouter-free': 'openrouter',
   'gpt53-codex': 'openai',
+  'codex-cli': 'openai',
 }
 
 const CODING_TASK_TYPES: readonly string[] = [

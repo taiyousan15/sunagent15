@@ -12,9 +12,11 @@
 export type ModelType =
   | 'opus' | 'sonnet' | 'haiku'
   | 'claude-opus' | 'claude-sonnet' | 'claude-haiku'
+  | 'claude-opus-4-6' | 'claude-sonnet-4-5' | 'claude-haiku-4-5'
   | 'ollama-qwen3-coder' | 'ollama-glm4'
   | 'openrouter-free'
-  | 'gpt53-codex';
+  | 'gpt53-codex'
+  | 'codex-cli';
 
 /**
  * Provider type for LLM routing
