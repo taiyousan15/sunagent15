@@ -19,6 +19,26 @@
 7. Definition Lint Hard Gate（誤定義のままstart/resume禁止）
 8. Large Output Sink（大出力はmemory_addへ退避）
 
+## コンテキスト最適化 (v2.16.0)
+
+セッション開始時のコンテキスト消費を大幅に削減：
+
+| 項目 | Before | After | 削減 |
+|------|--------|-------|------|
+| プロジェクト skills | 110 | 43 | -67 |
+| プロジェクト commands | 107 | 9 | -98 |
+| グローバル skills | 58 | 0 | -58 |
+| グローバル commands | 24 | 0 | -24 |
+| グローバル MCP | 7 | 4 | -3 |
+
+削除したMCPサーバー: filesystem（Read/Write/Globで代替）、pixabay（pexelsと重複）、puppeteer（playwrightと重複）
+
+アーカイブ先:
+- `backup-skills-archived/` — プロジェクトskills
+- `backup-commands-archived/` — プロジェクトcommands
+- `~/backup-global-skills-archived/` — グローバルskills
+- `~/backup-global-commands-archived/` — グローバルcommands
+
 ## 実行設定
 
 - 実行に必要な設定は `.claude/settings.json`（純JSON）にのみ置く
@@ -28,4 +48,3 @@
 
 - 作業開始前に `npm run guard:verify` を実行し、PASSまで作業開始禁止
 - hooks/state/validator を触る場合は、必ず direct test を追加する
-

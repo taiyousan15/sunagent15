@@ -201,16 +201,6 @@
       "description": "複雑な推論タスク用",
       "category": "reasoning"
     },
-    "puppeteer": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
-      "disabled": false,
-      "defer_loading": true,
-      "search_keywords": ["puppeteer", "screenshot"],
-      "description": "Puppeteer（レガシー）",
-      "category": "browser-automation"
-    },
     "mcp-memory-service": {
       "type": "stdio",
       "command": "npx",
