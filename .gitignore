@@ -87,5 +87,11 @@ output/
 resource_audit_*.json
 unused_resources_report.json
 
+# Removed submodule directories (do not re-add)
+taisun_agent/
+
+# Google Auth browser profile (large cache, 959MB)
+google-auth-system/
+
 # Large binary files (GitHub 100MB limit)
 完成版.pdf

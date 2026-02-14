@@ -20,6 +20,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { readStdin } = require('./utils/read-stdin');
 
 // 検証対象ファイルパターン
 const TARGET_PATTERNS = [
@@ -308,27 +309,6 @@ function parseSimpleYaml(content) {
   }
 
   return Object.keys(result).length > 0 ? result : null;
-}
-
-function readStdin(timeout = 1000) {
-  return new Promise((resolve) => {
-    let data = '';
-    let resolved = false;
-
-    const finish = () => {
-      if (!resolved) {
-        resolved = true;
-        resolve(data);
-      }
-    };
-
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', (chunk) => { data += chunk; });
-    process.stdin.on('end', finish);
-    setTimeout(finish, timeout);
-
-    if (process.stdin.isTTY) finish();
-  });
 }
 
 // ===== Phase 7: Definition Lint Hard Gate API =====

@@ -88,16 +88,6 @@
         ]
       },
       {
-        "matcher": "Bash|Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .claude/hooks/deviation-approval-guard.js",
-            "timeout": 3
-          }
-        ]
-      },
-      {
         "matcher": "Write|Edit|Task",
         "hooks": [
           {

@@ -12,6 +12,88 @@
 
 ---
 
+> **2026-02-14: v2.15.0 リポジトリリファクタリング & 軽量化（-807MB / -11,163行）**
+>
+> リポジトリの大規模リファクタリングを実施。壊れたサブモジュール（807MB）の削除、未使用パッケージ43個の整理、
+> Hookシステムの共通化・分割を行い、コードベースを大幅に軽量化しました。
+>
+> ### Phase 1: リポジトリクリーンアップ
+> | # | 実施内容 | 効果 |
+> |---|---------|------|
+> | 1 | 壊れたサブモジュール `taisun_agent/` 削除 | **-807MB** |
+> | 2 | 未使用npmパッケージ3個削除（@anthropic-ai/sdk, @langchain/core, @langchain/langgraph） | package.json軽量化 |
+> | 3 | `google-auth-system/` を.gitignore追加 | 959MBの追跡防止 |
+> | 4 | `hooks.disabled.local/`（旧ガードコピー38ファイル）削除 | 混乱防止 |
+> | 5 | `deviation-approval-guard.js` 完全削除 | ファイル新規作成ブロック解消 |
+>
+> ### Phase 2: readStdin() 共通化
+> | # | 実施内容 | 効果 |
+> |---|---------|------|
+> | 1 | 7つのHookから重複関数を抽出 | `utils/read-stdin.js` に統合 |
+> | 2 | 対象: unified-guard, definition-lint-gate, skill-usage-guard, workflow-sessionstart-injector, agent-enforcement-guard, session-handoff-generator, model-auto-switch | DRY原則適用 |
+>
+> ### Phase 3: workflow-state-manager.js 分割
+> | # | 実施内容 | 効果 |
+> |---|---------|------|
+> | 1 | 1,019行のモノリスをFacadeパターンで4モジュールに分割 | 保守性向上 |
+> | 2 | `utils/state-core.js`（188行）: 状態管理コア | 単一責任 |
+> | 3 | `utils/baseline-manager.js`（144行）: ベースライン・Read履歴 | 単一責任 |
+> | 4 | `utils/evidence-capture.js`（153行）: 証跡キャプチャ | 単一責任 |
+> | 5 | `utils/skill-lifecycle.js`（520行）: スキルライフサイクル | 単一責任 |
+> | 6 | 40個のexport全て後方互換維持 | 既存コード変更不要 |
+>
+> ### アップデート
+>
+> **Mac:**
+> ```bash
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> ```
+>
+> **Windows (PowerShell):**
+> ```powershell
+> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> ```
+
+---
+
+> **2026-02-13: v2.14.0 LLM Auto-Switch & Intent Parser統合 & メトリクスシステム**
+>
+> タスク複雑度に応じたモデル自動切替、Intent ParserとModelRouterの統合、
+> Stage 1メトリクス収集システム、自動バックアップのlaunchd統合を実装しました。
+>
+> ### 主要機能
+> | # | 機能 | 説明 |
+> |---|------|------|
+> | 1 | LLM Auto-Switch v2.0 | タスク複雑度ベースのモデル自動切替（Haiku/Sonnet/Opus） |
+> | 2 | Intent Parser統合 | ユーザー意図の自動解析とModelRouterとのセッション統合 |
+> | 3 | Stage 1 メトリクスシステム | 収集・集計・レポート生成の完全実装 |
+> | 4 | 自動バックアップ launchd統合 | 5分ごと自動バックアップ + ログイン時復旧チェック |
+> | 5 | 開発コマンド過剰ブロック解消 | npm install/test/build を自動許可に修正 |
+> | 6 | URL Learning Pipeline | URL分析結果の学習・蓄積パイプライン |
+>
+> ### 新規追加ファイル
+> | 種類 | 内容 |
+> |------|------|
+> | src/intent-parser/ | Intent Parser本体 + 分類器 + ストレージ |
+> | src/unified-hooks/ | 統合Hookシステム |
+> | cli/ | CLIジェネレーター |
+> | scripts/launchd/ | macOS launchd自動バックアップ設定 |
+> | tests/ | Intent Parser + Unified Hooksのテスト群 |
+>
+> ### アップデート
+>
+> **Mac:**
+> ```bash
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> ```
+>
+> **Windows (PowerShell):**
+> ```powershell
+> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> ```
+
+---
+
 > **2026-02-11: v2.13.0 セキュリティ監査 & スキルハードニング**
 >
 > Progent論文（arXiv:2504.11703）に基づくスキル権限分離とセキュリティ強化を実施しました。

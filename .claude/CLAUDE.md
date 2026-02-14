@@ -58,7 +58,7 @@
 ### 7. スキル自動マッピング
 | トリガー | 必須スキル | strict |
 |----------|------------|--------|
-| YOUTUBE + 教材 + 動画 | youtubeschool-creator | Yes |
+| YOUTUBE + 教材 + 動画 | video-course | No |
 | セールスレター | taiyo-style-sales-letter | No |
 | ステップメール | taiyo-style-step-mail | No |
 | VSL台本 | taiyo-style-vsl | No |
@@ -139,8 +139,8 @@ Phase 2e: COMPOSE → Remotion
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Agents | 86 | `/agent-catalog` で詳細確認 |
-| Skills | 71 | `/skill-catalog` で詳細確認 |
+| Agents | 14 | `/agent-catalog` で詳細確認 |
+| Skills | 60 | `/skill-catalog` で詳細確認 |
 | Commands | 82 | ショートカットコマンド |
 | MCP Servers | 8 | filesystem, pexels, pixabay, puppeteer, browser-use, playwright, voice-ai, ai-sdr |
 

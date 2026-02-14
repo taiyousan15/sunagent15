@@ -18,6 +18,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { readStdin } = require('./utils/read-stdin');
 
 // エージェント使用を要求する複雑タスクパターン
 const COMPLEX_TASK_PATTERNS = [
@@ -239,27 +240,6 @@ async function main() {
   }
 
   process.exit(0);
-}
-
-function readStdin(timeout = 1000) {
-  return new Promise((resolve) => {
-    let data = '';
-    let resolved = false;
-
-    const finish = () => {
-      if (!resolved) {
-        resolved = true;
-        resolve(data);
-      }
-    };
-
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', (chunk) => { data += chunk; });
-    process.stdin.on('end', finish);
-    setTimeout(finish, timeout);
-
-    if (process.stdin.isTTY) finish();
-  });
 }
 
 main().catch(() => process.exit(0));

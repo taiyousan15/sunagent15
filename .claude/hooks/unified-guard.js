@@ -21,6 +21,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { readStdin } = require('./utils/read-stdin');
 
 // === キャッシュシステム ===
 const CACHE = {
@@ -380,28 +381,6 @@ function outputWarning(result) {
     }
   };
   console.log(JSON.stringify(output));
-}
-
-// === ユーティリティ ===
-function readStdin(timeout = 500) {
-  return new Promise((resolve) => {
-    let data = '';
-    let resolved = false;
-
-    const finish = () => {
-      if (!resolved) {
-        resolved = true;
-        resolve(data);
-      }
-    };
-
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', (chunk) => { data += chunk; });
-    process.stdin.on('end', finish);
-    setTimeout(finish, timeout);
-
-    if (process.stdin.isTTY) finish();
-  });
 }
 
 // CLI として実行された場合のみ main() を呼ぶ

@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const stateManager = require('./workflow-state-manager.js');
+const { readStdin } = require('./utils/read-stdin');
 
 async function main() {
   let input = {};
@@ -150,27 +151,6 @@ function findSessionHandoffs(cwd) {
   } catch (e) {}
 
   return [...new Set(handoffs)].slice(0, 5);
-}
-
-function readStdin(timeout = 1000) {
-  return new Promise((resolve) => {
-    let data = '';
-    let resolved = false;
-
-    const finish = () => {
-      if (!resolved) {
-        resolved = true;
-        resolve(data);
-      }
-    };
-
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', (chunk) => { data += chunk; });
-    process.stdin.on('end', finish);
-    setTimeout(finish, timeout);
-
-    if (process.stdin.isTTY) finish();
-  });
 }
 
 main().catch(() => process.exit(0));

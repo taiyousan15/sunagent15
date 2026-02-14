@@ -15,6 +15,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const { readStdin } = require('./utils/read-stdin')
 
 const DATA_DIR = path.join(__dirname, 'data')
 const RECOMMENDATION_PATH = path.join(DATA_DIR, 'model-recommendation.json')
@@ -182,24 +183,6 @@ function logMetric(data) {
   } catch {
     // ignore
   }
-}
-
-function readStdin(timeout = 1000) {
-  return new Promise((resolve) => {
-    let data = ''
-    let resolved = false
-    const finish = () => {
-      if (!resolved) {
-        resolved = true
-        resolve(data)
-      }
-    }
-    process.stdin.setEncoding('utf8')
-    process.stdin.on('data', (chunk) => { data += chunk })
-    process.stdin.on('end', finish)
-    setTimeout(finish, timeout)
-    if (process.stdin.isTTY) finish()
-  })
 }
 
 async function main() {
