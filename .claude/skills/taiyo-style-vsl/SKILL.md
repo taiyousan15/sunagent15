@@ -1,6 +1,6 @@
 ---
 name: taiyo-style-vsl
-description: 太陽スタイル完全準拠のVSL（ビデオセールスレター）台本作成。15章構造×心理トリガー×感情曲線で視聴完了率・成約率を最大化。
+description: Taiyo-style VSL script creation
 version: "1.0.0"
 author: TAISUN
 category: marketing

@@ -1,8 +1,9 @@
 ---
 name: opencode-fix
-description: OpenCodeのバグ修正支援。mistakes.md参照・最小差分・大出力はmemory_add退避のワークフロー。
+description: OpenCode bug fix workflow
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
+disable-model-invocation: true
 ---
 
 # OpenCode バグ修正支援

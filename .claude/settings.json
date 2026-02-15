@@ -1,5 +1,18 @@
 {
   "alwaysThinkingEnabled": true,
+  "disabledMcpServers": [
+    "figma",
+    "qdrant",
+    "chroma",
+    "n8n-mcp",
+    "meta-ads",
+    "facebook-ads-library",
+    "obsidian",
+    "twitter-client",
+    "mcp-memory-service",
+    "sequential-thinking",
+    "pexels"
+  ],
   "permissions": {
     "allow": [
       "Bash",
@@ -83,6 +96,16 @@
           {
             "type": "command",
             "command": "node .claude/hooks/unified-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/deviation-approval-guard.js",
             "timeout": 3
           }
         ]

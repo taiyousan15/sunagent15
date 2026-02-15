@@ -1,6 +1,6 @@
 ---
 name: note-research
-description: note.comのリサーチツール - 非公式API + MCP + WebSearchでゼロコストリサーチ
+description: note.com research tool
 disable-model-invocation: false
 allowed-tools:
   - Bash

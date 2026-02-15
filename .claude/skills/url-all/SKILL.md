@@ -1,6 +1,6 @@
 ---
 name: url-all
-description: "URL完全把握システム v3。サイトの内容を深く理解・記録し、技術構造も完全解析。全分析をローカルOllamaモデルで実行。"
+description: Full URL analysis and extraction
 argument-hint: "<URL> [--mode=quick|standard|deep|competitive|seo|audit|links] [--depth=1|2|3]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, node:*, chmod:*, cat:*), mcp__playwright__*
 model: sonnet

@@ -1,10 +1,8 @@
 ---
 name: keyword-to-gem
-description: |
-  キーワード入力だけでSNS横断検索→NotebookLM投入→Gem作成まで完全自動化。
-  トリガー: 「〇〇をNotebookLMにまとめて」「〇〇のGemを作って」「〇〇を自動収集」
-  「keyword-to-gem」「キーワードからGem」
+description: Auto Gem creation from keywords
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+disable-model-invocation: true
 ---
 
 # Keyword-to-Gem - 完全自動ナレッジ生成パイプライン

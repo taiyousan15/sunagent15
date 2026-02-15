@@ -1,6 +1,6 @@
 ---
 name: taiyo-style-ps
-description: 太陽スタイル完全準拠の追伸（P.S.）生成。成約率を最後の一押しで最大化する追伸パターン集。
+description: Taiyo-style P.S. generation
 version: "1.0.0"
 author: TAISUN
 category: marketing

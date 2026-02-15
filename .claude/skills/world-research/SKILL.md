@@ -1,6 +1,6 @@
 ---
 name: world-research
-description: >
+description: Global SNS/academic cross-search
   全世界SNS・学術論文・コミュニティ横断キーワード検索リサーチスキル。
   【SNS層】X/Reddit/YouTube/Instagram/TikTok/note.com/Bilibili/Zhihu/小红書/WeChat/Weibo/Medium/Naver等
   【学術層】Arxiv/Papers with Code/OpenReview/Google Scholar/Semantic Scholar/Connected Papers/DBLP/ACL Anthology
@@ -16,6 +16,7 @@ description: >
          「論文検索」「学術リサーチ」「ペーパーサーチ」「最新研究」「アカデミックリサーチ」
          「暗号通貨リサーチ」「クリプトリサーチ」「仮想通貨調査」「DeFi調査」「オンチェーン分析」
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
+disable-model-invocation: true
 ---
 
 # World Research - 全世界総合リサーチシステム v2.0

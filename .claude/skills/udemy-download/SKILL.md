@@ -1,9 +1,10 @@
 ---
 name: udemy-download
-description: Udemyコースダウンローダー。動画・字幕・アセット・クイズを一括ダウンロード。Bearer Token認証対応。
+description: Download Udemy courses with auth
 argument-hint: "<COURSE_URL> [--quality=720|1080] [--captions] [--assets] [--chapter=1-3]"
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 model: sonnet
+disable-model-invocation: true
 ---
 
 # udemy-download - Udemyコースダウンローダー

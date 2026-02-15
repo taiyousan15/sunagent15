@@ -1,8 +1,9 @@
 ---
 name: opencode-ralph-loop
-description: OpenCode反復開発支援。opt-in設計で仕様確定済みタスクの自動反復実行を管理。
+description: OpenCode iterative dev support
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
+disable-model-invocation: true
 ---
 
 # OpenCode Ralph Loop - 反復開発支援

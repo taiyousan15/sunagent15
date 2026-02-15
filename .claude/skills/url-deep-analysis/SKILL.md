@@ -1,14 +1,6 @@
 ---
 name: url-deep-analysis
-description: |
-  任意のURLを完全解析するディープ分析スキル。HTML構造、CSS、デザイン、全リンク、コンテンツを5層で分析。
-  Playwright MCP + WebFetch + WebSearch を統合した多層解析エンジン。
-  Use when: (1) user says「URLを分析」「サイト解析」「ページ構造」「LP分析」「デザイン分析」,
-  (2) user wants to understand page structure, design patterns, or content architecture,
-  (3) user provides a URL and wants deep analysis,
-  (4) user says「リンク抽出」「CSS分析」「サイトマップ」「競合サイト分析」.
-  Do NOT use for: simple page reading (use WebFetch), image analysis (use agentic-vision),
-  or marketing copy analysis (use lp-analysis).
+description: Deep URL structure analysis
 argument-hint: "<URL> [--depth=1|2|3] [--mode=full|structure|design|content|links]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python3:*, node:*), mcp__playwright__*
 model: sonnet

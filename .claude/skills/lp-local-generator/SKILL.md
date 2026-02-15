@@ -1,11 +1,12 @@
 ---
 name: lp-local-generator
-description: ローカルLLM（Ollama）+ RAG（ChromaDB）によるLPセクション単位生成。コスト0円で太陽スタイル準拠のLPコピーを生成し、taiyo-analyzerで品質評価。70点未満は自動再生成。
+description: Local LLM LP section generator
 version: "1.0.0"
 author: TAISUN
 category: marketing-generation
 tags: [lp, local-llm, ollama, rag, chromadb, taiyo-style, generation]
 dependencies: [taiyo-analyzer]
+disable-model-invocation: true
 ---
 
 # LP Local Generator Skill

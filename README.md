@@ -12,6 +12,60 @@
 
 ---
 
+> **2026-02-15: v2.17.0 コンテキスト最適化 Tier 1 完了（-28〜43K tokens）**
+>
+> コンテキストウィンドウの初期消費量を **67-90K → 40K以下** に削減。セッション持続時間を30分→120分+に延長。
+>
+> ### 実装内容
+> | # | タスク | 内容 | 効果 |
+> |---|--------|------|------|
+> | T1.1 | スキル説明文最適化 | 99スキルを英語38文字以内に統一 | ~8-12K token削減 |
+> | T1.2 | disable-model-invocation | 60+低頻度スキルにコンテキスト除外設定 | ~5-10K token削減 |
+> | T1.3 | MCP選択的無効化 | 11サーバーを無効化 | ~5-8K token削減 |
+> | T1.4 | CLAUDE.md 3層分割 | 213行→55行（L1/L2/L3構成） | ~10-13K token削減 |
+> | T1.5 | 検証スクリプト | スキル品質チェック自動化 | 品質保証 |
+> | T1.6 | MCPプリセット | development/marketing/research 3プロファイル | 運用効率化 |
+> | T1.7 | Doc Optimizer | CLAUDE.md 3層構造バリデーション | 継続検証 |
+> | T1.8 | 統合バリデーション | 全タスクの総合検証 | 品質確認 |
+>
+> ### 他プロジェクトへの適用手順
+>
+> **1. スキル最適化（T1.1 + T1.2）:**
+> ```bash
+> # DESCRIPTION_MAP を対象プロジェクトに合わせて編集後:
+> python3 scripts/optimize-skills.py
+> bash scripts/verify-skill-warehouse.sh  # 検証
+> ```
+>
+> **2. MCP無効化（T1.3）:**
+> ```bash
+> # プリセット適用（development / marketing / research）:
+> bash scripts/apply-mcp-preset.sh development
+> # またはsettings.jsonに手動でdisabledMcpServersを追加
+> ```
+>
+> **3. CLAUDE.md 3層分割（T1.4）:**
+> - L1: `.claude/CLAUDE.md`（≤100行、コアルールのみ）
+> - L2: `.claude/rules/CLAUDE-L2.md`（防御層、マッピング）
+> - L3: `.claude/rules/CLAUDE-L3.md`（専門ワークフロー）
+> ```bash
+> python3 scripts/doc-optimizer.py  # 構造検証
+> ```
+>
+> ### アップデート
+>
+> **Mac:**
+> ```bash
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> ```
+>
+> **Windows (PowerShell):**
+> ```powershell
+> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> ```
+
+---
+
 > **2026-02-14: v2.15.0 リポジトリリファクタリング & 軽量化（-807MB / -11,163行）**
 >
 > リポジトリの大規模リファクタリングを実施。壊れたサブモジュール（807MB）の削除、未使用パッケージ43個の整理、

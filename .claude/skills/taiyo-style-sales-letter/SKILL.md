@@ -1,6 +1,6 @@
 ---
 name: taiyo-style-sales-letter
-description: 太陽スタイル完全準拠のセールスレター作成。176パターン・80項目チェックリスト・taiyo-analyzer連携による品質保証付き。
+description: Taiyo-style sales letter creation
 version: "1.0.0"
 author: TAISUN
 category: marketing

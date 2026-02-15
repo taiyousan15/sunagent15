@@ -1,13 +1,8 @@
 ---
 name: voice-ai
-description: |
-  電話+会話AIオーケストレーションスキル。Twilio + OpenAI Realtime APIで音声対話を実現。
-  Use when: (1) user says「電話」「コール」「Voice AI」「音声通話」,
-  (2) user wants automated phone calls or voice conversations,
-  (3) user mentions「アウトバウンド」「インバウンド」「自動架電」「IVR」.
-  Do NOT use for: テキストチャット（LINEはline-marketingを使用）、
-  TTS音声ファイル生成（interactive-video-platformを使用）。
+description: Voice AI phone call orchestration
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+disable-model-invocation: true
 ---
 
 # Voice AI スキル
