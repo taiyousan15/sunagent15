@@ -51,5 +51,5 @@ Before starting work:
 ## Detailed References
 
 For detailed rules, mappings, and expert workflows:
-- **L2** (defense layers, skill mapping, guidelines): `.claude/rules/CLAUDE-L2.md`
-- **L3** (specialized workflows, audio preprocessing): `.claude/rules/CLAUDE-L3.md`
+- **L2** (defense layers, skill mapping, guidelines): `.claude/references/CLAUDE-L2.md`
+- **L3** (specialized workflows, audio preprocessing): `.claude/references/CLAUDE-L3.md`

@@ -4,7 +4,7 @@ L3層のエキスパート向け情報を表示します。
 
 ## 実行手順
 
-1. `.claude/rules/CLAUDE-L3.md` を読み込む
+1. `.claude/references/CLAUDE-L3.md` を読み込む
 2. 内容をユーザーに要約表示する
 
 ## 表示内容
@@ -18,7 +18,7 @@ L3層のエキスパート向け情報を表示します。
 
 ### ファイルパス
 ```
-.claude/rules/CLAUDE-L3.md
+.claude/references/CLAUDE-L3.md
 ```
 
 ### 出力フォーマット
