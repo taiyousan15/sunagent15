@@ -81,17 +81,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .claude/hooks/unified-guard.js",
-            "timeout": 3
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit",
+        "matcher": "Write|Edit|Bash",
         "hooks": [
           {
             "type": "command",
@@ -139,6 +129,16 @@
             "type": "command",
             "command": "node .claude/hooks/agent-trace-capture.js",
             "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/compact-optimizer.js",
+            "timeout": 2
           }
         ]
       }
