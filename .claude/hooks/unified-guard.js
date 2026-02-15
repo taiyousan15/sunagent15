@@ -251,6 +251,21 @@ async function main() {
   const toolInput = input.tool_input || {};
   const cwd = input.cwd || process.cwd();
 
+  // === Bootstrap Safe Mode ===
+  // .workflow_state.json が存在しない = ワークフロー未開始（新規インストール等）
+  // → 危険パターン検出のみ実行し、ワークフロー系チェックはスキップ
+  const workflowStateExists = fs.existsSync(path.join(cwd, '.workflow_state.json'));
+  if (!workflowStateExists) {
+    // 最低限の安全チェック（rm -rf等）のみ実行
+    const quickResult = performQuickChecks(toolName, toolInput);
+    if (quickResult.blocked) {
+      outputBlock(quickResult);
+      process.exit(2);
+    }
+    process.exit(0);
+    return;
+  }
+
   // PHASE 1: Intent Parser チェック (confidence >= 85% で layer skip)
   const intentCheck = await performIntentCheck(toolName, toolInput);
 

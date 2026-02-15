@@ -50,6 +50,12 @@ async function main() {
     process.exit(0); // 非ブロッキング
   }
 
+  // Bootstrap Safe Mode: ワークフロー未開始ならスキップ
+  const cwd = input.cwd || process.cwd();
+  if (!fs.existsSync(path.join(cwd, '.workflow_state.json'))) {
+    process.exit(0);
+  }
+
   const tool = input.tool || '';
   const params = input.params || {};
   

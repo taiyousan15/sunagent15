@@ -82,6 +82,13 @@ async function main() {
   const hookEvent = input.hook_event || 'PreToolUse';
   const cwd = input.cwd || process.cwd();
 
+  // Bootstrap Safe Mode: ワークフロー未開始ならスキップ
+  const workflowStatePath = path.join(cwd, '.workflow_state.json');
+  if (!fs.existsSync(workflowStatePath)) {
+    process.exit(0);
+    return;
+  }
+
   // ワークフロー状態を読み込み
   const state = stateManager.loadState(cwd);
   const isStrict = state?.meta?.strict ?? false;

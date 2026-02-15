@@ -145,6 +145,12 @@ async function main() {
   const toolName = input.tool_name || '';
   const toolInput = input.tool_input || {};
 
+  // Bootstrap Safe Mode: ワークフロー未開始ならスキップ
+  if (!fs.existsSync(path.join(cwd, '.workflow_state.json'))) {
+    process.exit(0);
+    return;
+  }
+
   let state = loadState(cwd);
 
   // Task tool使用を記録
