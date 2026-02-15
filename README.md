@@ -172,12 +172,12 @@
 >
 > **Mac:**
 > ```bash
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 > ```
 >
 > **Windows (PowerShell):**
 > ```powershell
-> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup
 > ```
 
 ---
@@ -216,12 +216,12 @@
 >
 > **Mac:**
 > ```bash
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 > ```
 >
 > **Windows (PowerShell):**
 > ```powershell
-> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup
 > ```
 
 ---
@@ -254,12 +254,12 @@
 >
 > **Mac:**
 > ```bash
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 > ```
 >
 > **Windows (PowerShell):**
 > ```powershell
-> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup
 > ```
 
 ---
@@ -318,12 +318,12 @@
 >
 > **Mac:**
 > ```bash
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 > ```
 >
 > **Windows (PowerShell):**
 > ```powershell
-> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup
 > ```
 
 ---
@@ -447,12 +447,12 @@
 >
 > **Mac:**
 > ```bash
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 > ```
 >
 > **Windows (PowerShell):**
 > ```powershell
-> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup
 > ```
 >
 > #### 別フォルダからのアップデート / 他人への配布時
@@ -463,25 +463,25 @@
 > **Mac（別ターミナルで実行）:**
 > ```bash
 > # ターミナル.app を新しく開いて以下を実行（Claude Code内ではなく通常のターミナル）
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 > ```
 >
 > **Mac（任意のパスにインストールした場合）:**
 > ```bash
 > # /path/to/taisun_agent を実際のパスに置き換え
-> cd /path/to/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> cd /path/to/taisun_agent && git pull origin main && npm run taisun:setup
 > ```
 >
 > **Windows（別PowerShellで実行）:**
 > ```powershell
 > # 新しいPowerShellウィンドウを開いて以下を実行
-> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup
 > ```
 >
 > **Windows（任意のパスにインストールした場合）:**
 > ```powershell
 > # C:\path\to\taisun_agent を実際のパスに置き換え
-> cd C:\path\to\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> cd C:\path\to\taisun_agent; git pull origin main; npm run taisun:setup
 > ```
 >
 > #### 初回インストール（Mac / Windows 共通）
@@ -1137,7 +1137,7 @@ npm run taisun:diagnose
 
 ```
 以下のコマンドを実行して：
-cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 ```
 
 > **スキル自動更新**: `world-research`、`anime-slide-generator`、`nanobanana-pro`、`agentic-vision`などのグローバルスキルは `npm run setup` で自動的に最新版に更新されます。
@@ -1180,7 +1180,7 @@ npm run taisun:diagnose
 
 ```
 以下のコマンドを実行して：
-cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 ```
 
 > **スキル自動更新**: `world-research`、`anime-slide-generator`、`nanobanana-pro`、`agentic-vision`などのグローバルスキルは `npm run setup` で自動的に最新版に更新されます。
@@ -1335,7 +1335,7 @@ Claude Code v2.1.0以降で使用可能（Mac / Windows 共通）：
 
 | 状況 | 解決方法 |
 |------|---------|
-| 権限エラー | `chmod -R 755 ~/taisun_agent` を実行 |
+| 権限エラー | Mac: `chmod -R 755 ~/taisun_agent` / Windows: 管理者PowerShellで再実行 |
 | Xcode要求 | `xcode-select --install` を実行 |
 
 #### 「Invalid API key - Please run /login」エラー
