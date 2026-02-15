@@ -16,7 +16,6 @@ description: Global SNS/academic cross-search
          「論文検索」「学術リサーチ」「ペーパーサーチ」「最新研究」「アカデミックリサーチ」
          「暗号通貨リサーチ」「クリプトリサーチ」「仮想通貨調査」「DeFi調査」「オンチェーン分析」
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
-disable-model-invocation: true
 ---
 
 # World Research - 全世界総合リサーチシステム v2.0
