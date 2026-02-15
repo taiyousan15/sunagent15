@@ -113,15 +113,18 @@
 >
 > ### アップデート（2026-02-15）
 >
-> **Mac:**
+> **Mac / Linux:**
 > ```bash
-> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> cd ~/taisun_agent && git pull origin main && npm run taisun:setup
 > ```
 >
 > **Windows (PowerShell):**
 > ```powershell
-> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup
 > ```
+>
+> > **Note**: `npm run taisun:setup` は `npm install` → `build:all` → `chmod`（Mac/Linuxのみ自動スキップ）→ `taisun:diagnose` を一括実行します。
+> > Windows環境では `chmod` は自動的にスキップされます。
 
 ---
 
