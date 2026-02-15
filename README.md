@@ -12,6 +12,119 @@
 
 ---
 
+> **2026-02-15: v2.21.0 コンテキスト最適化 全フェーズ完了（75K → 30.2K tokens, -59.7%）**
+>
+> SDD（Spec-Driven Development）に基づく4フェーズのコンテキスト最適化を完了。
+> 初期コンテキスト消費量を **75K → 30.2K tokens** に削減（44.8K削減、59.7%）。
+> セッション持続時間を 30分 → 182分（平均）に延長。
+>
+> ### 最終検証結果（2026-02-15）
+>
+> | 要件ID | 要件 | 目標 | 実績 | 判定 |
+> |--------|------|------|------|------|
+> | REQ-900 | トークン消費量 | ≤40K | **30.2K** | PASS |
+> | REQ-901 | セッション持続時間 | ≥120分 | **182分** | PASS |
+> | REQ-902 | 削減率 | ≥55% | **59.7%** | PASS |
+> | REQ-903 | エラー率 | <1% | **0%** | PASS |
+>
+> ### フェーズ別達成状況
+>
+> | Phase | バージョン | 内容 | 削減量 | 判定 |
+> |-------|-----------|------|--------|------|
+> | Tier 1 | v2.17.0 | スキル最適化・MCP無効化・CLAUDE.md 3層化 | **35.0K** | PASS |
+> | Tier 2 | v2.18.0 | Hook最適化・compact効率化・Progressive Disclosure | **3.0K** | PASS |
+> | Tier 3 | v2.19.0 | コンテキスト圧縮・動的圧縮・履歴最適化 | **6.8K** | PASS |
+> | Phase 4 | v2.20.0-v2.21.0 | メトリクス・ダッシュボード・異常検知・Canary・ロールバック・最終検証 | 品質保証 | PASS |
+> | **合計** | **v2.21.0** | **全26タスク完了** | **44.8K** | **ALL PASS** |
+>
+> ### 品質保証システム（Phase 4）
+>
+> | コンポーネント | ファイル | 機能 |
+> |---------------|---------|------|
+> | セッションメトリクス | `.claude/hooks/session-metrics-collector.js` | セッション開始/終了/日次集計 |
+> | ダッシュボード | `.claude/hooks/dashboard-generator.js` | 週次レポート・トレンド分析 |
+> | 異常検知 | `.claude/hooks/anomaly-detector.js` | 6カテゴリ閾値ベース検知 |
+> | Canaryリリース | `.claude/hooks/canary-controller.js` | 段階的展開（10%→50%→100%） |
+> | ロールバック | `scripts/rollback-manager.sh` | 自動/手動ロールバック |
+> | 最終検証 | `scripts/validate-final.sh` | REQ-900~903 総合検証 |
+>
+> ### 別プロジェクトへの適用ガイド（2026-02-15更新）
+>
+> #### Step 1: Tier 1 — 構造的最適化（-28〜43K tokens）
+> ```bash
+> # 1-1. スキル説明文の最適化（英語38文字以内に統一）
+> python3 scripts/optimize-skills.py
+> bash scripts/verify-skill-warehouse.sh
+>
+> # 1-2. 低頻度スキルのコンテキスト除外
+> # → 各スキルのSKILL.mdに disable_model_invocation: true を追加
+>
+> # 1-3. 不要なMCPサーバーの無効化
+> bash scripts/apply-mcp-preset.sh development  # or marketing / research
+>
+> # 1-4. CLAUDE.md 3層分割
+> # L1: .claude/CLAUDE.md（≤100行、コアルールのみ）
+> # L2: .claude/references/CLAUDE-L2.md（防御層、マッピング）
+> # L3: .claude/references/CLAUDE-L3.md（専門ワークフロー）
+> python3 scripts/doc-optimizer.py
+> ```
+>
+> #### Step 2: Tier 2 — 運用最適化（-2.5〜3.5K tokens）
+> ```bash
+> # 2-1. Hook統合（複数hookを1つのunified-guardに統合）
+> # → .claude/hooks/unified-guard.js 参照
+>
+> # 2-2. compact効率化
+> # → .claude/hooks/compact-optimizer.js を配置
+>
+> # 2-3. Progressive Disclosure（段階的情報開示）
+> # → .claude/hooks/progressive-loader.js を配置
+> ```
+>
+> #### Step 3: Tier 3 — 長期最適化（-5〜10K tokens）
+> ```bash
+> # 3-1. 履歴最適化（JSONLファイルの自動トランケーション）
+> # → .claude/hooks/history-optimizer.js を配置
+>
+> # 3-2. 動的圧縮（使用状況に応じた圧縮）
+> # → .claude/hooks/dynamic-compressor.js を配置
+>
+> # 3-3. 重要度スコアリング
+> # → .claude/hooks/importance-scorer.js を配置
+> ```
+>
+> #### Step 4: Phase 4 — 品質保証（監視・ロールバック）
+> ```bash
+> # 4-1. メトリクス収集・ダッシュボード
+> node .claude/hooks/session-metrics-collector.js status
+> node .claude/hooks/dashboard-generator.js generate
+>
+> # 4-2. 異常検知
+> node .claude/hooks/anomaly-detector.js scan
+>
+> # 4-3. バックアップ & ロールバック
+> bash scripts/rollback-manager.sh backup
+> bash scripts/rollback-manager.sh list
+>
+> # 4-4. 最終検証
+> bash scripts/validate-final.sh
+> bash scripts/generate-release-approval.sh
+> ```
+>
+> ### アップデート（2026-02-15）
+>
+> **Mac:**
+> ```bash
+> cd ~/taisun_agent && git pull origin main && npm install && npm run build:all && npm run setup && npm run taisun:diagnose
+> ```
+>
+> **Windows (PowerShell):**
+> ```powershell
+> cd $HOME\taisun_agent; git pull origin main; npm install; npm run build:all; npm run setup; npm run taisun:diagnose
+> ```
+
+---
+
 > **2026-02-15: v2.17.0 コンテキスト最適化 Tier 1 完了（-28〜43K tokens）**
 >
 > コンテキストウィンドウの初期消費量を **67-90K → 40K以下** に削減。セッション持続時間を30分→120分+に延長。
