@@ -12,6 +12,20 @@
 
 ---
 
+> **2026-02-16: v2.23.0 world-research スキル公開**
+>
+> | 変更 | 内容 |
+> |------|------|
+> | world-research 公開 | `disable-model-invocation: true` を削除し、他ユーザーも利用可能に |
+> | 対象機能 | API不要の6層リサーチ（学術論文・キュレーション・テックブログ・実装エコシステム・SNS・コミュニティ） |
+> | 必要ツール | WebSearch / WebFetch のみ（Claude Code標準搭載） |
+> | オプションAPI | Tavily / SerpAPI / Brave Search / NewsAPI / Perplexity（設定すれば精度向上） |
+>
+> ```bash
+> # 更新方法
+> npm run taisun:setup
+> ```
+
 > **2026-02-15: v2.22.0 診断100点達成 + Windows完全対応 + コンテキスト最適化全フェーズ完了**
 >
 > ### taisun:diagnose 100/100点
