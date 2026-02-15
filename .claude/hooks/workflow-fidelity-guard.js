@@ -189,10 +189,16 @@ function evaluatePreToolUse(toolName, toolInput, state, isStrict, cwd) {
     const contractValidation = stateManager.validateIntentContract(cwd);
 
     if (!contractValidation.valid) {
-      result.blocked = true;
-      result.reason = `【安全停止】Intent Contract が未確定です（意図乖離防止のため停止）。`;
-      result.suggestion = buildIntentContractBlockMessage(contractValidation);
-      return result;
+      // not_found = 新規インストール時。ブロックせず警告のみ（循環依存防止）
+      if (contractValidation.reason === 'not_found') {
+        result.warning = true;
+        result.reason = `Intent Contract が未作成です。/workflow-start で作成を推奨します。`;
+      } else {
+        result.blocked = true;
+        result.reason = `【安全停止】Intent Contract が未確定です（意図乖離防止のため停止）。`;
+        result.suggestion = buildIntentContractBlockMessage(contractValidation);
+        return result;
+      }
     }
   }
 
