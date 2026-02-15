@@ -12,6 +12,92 @@
 
 ---
 
+> **2026-02-16: v2.24.0 Bootstrap Safe Mode + インストール/アップデート手順整備**
+>
+> ### Bootstrap Safe Mode（Hook安全起動）
+>
+> | 変更 | 内容 |
+> |------|------|
+> | Bootstrap Safe Mode | `.workflow_state.json` 未作成時、ワークフロー系Hookを全スキップ |
+> | 対象Hook | unified-guard / deviation-approval-guard / agent-enforcement-guard / workflow-fidelity-guard |
+> | 効果 | 新規インストール・他プロジェクトでのセットアップ時にHookがブロックしなくなった |
+> | 安全性 | `rm -rf` 等の危険コマンド検出は常に有効（スキップされない） |
+>
+> ### Mac / Windows インストール・アップデート手順
+>
+> #### 新規インストール（Mac）
+>
+> ```bash
+> # 1. リポジトリをクローン
+> git clone https://github.com/san15/taisun_agent.git ~/taisun_agent
+> cd ~/taisun_agent
+>
+> # 2. セットアップ（依存関係 + Hook + スキル + エージェント一括）
+> npm run taisun:setup
+>
+> # 3. 動作確認（100点であればOK）
+> npm run taisun:diagnose
+>
+> # 4. 他プロジェクトで使う場合（シンボリックリンク）
+> cd ~/your-project
+> ln -s ~/taisun_agent/.claude .claude
+> ln -s ~/taisun_agent/.mcp.json .mcp.json
+> ```
+>
+> #### 新規インストール（Windows - PowerShell）
+>
+> ```powershell
+> # 1. リポジトリをクローン
+> git clone https://github.com/san15/taisun_agent.git $HOME\taisun_agent
+> cd $HOME\taisun_agent
+>
+> # 2. セットアップ
+> npm run taisun:setup
+>
+> # 3. 動作確認
+> npm run taisun:diagnose
+>
+> # 4. 他プロジェクトで使う場合（シンボリックリンク、管理者権限で実行）
+> cd $HOME\your-project
+> New-Item -ItemType SymbolicLink -Path .claude -Target $HOME\taisun_agent\.claude
+> New-Item -ItemType SymbolicLink -Path .mcp.json -Target $HOME\taisun_agent\.mcp.json
+> ```
+>
+> #### アップデート（Mac）
+>
+> ```bash
+> cd ~/taisun_agent
+> git pull origin main
+> npm run taisun:setup
+> npm run taisun:diagnose   # 100点を確認
+> ```
+>
+> #### アップデート（Windows - PowerShell）
+>
+> ```powershell
+> cd $HOME\taisun_agent
+> git pull origin main
+> npm run taisun:setup
+> npm run taisun:diagnose   # 100点を確認
+> ```
+>
+> #### シンボリックリンクで引き継がれるもの
+>
+> | カテゴリ | パス | 引き継ぎ |
+> |---------|------|---------|
+> | スキル（101個） | `.claude/skills/` | 自動 |
+> | エージェント（96個） | `.claude/agents/` | 自動 |
+> | コマンド（82個） | `.claude/commands/` | 自動 |
+> | Hook（13層防御） | `.claude/hooks/` | 自動 |
+> | ルール | `.claude/rules/` | 自動 |
+> | CLAUDE.md | `.claude/CLAUDE.md` | 自動 |
+> | MCP設定 | `.mcp.json` | 自動 |
+> | 環境変数 `.env` | プロジェクトルート | **手動コピー必要** |
+> | `node_modules` | プロジェクトルート | **各プロジェクトで `npm install`** |
+> | `.workflow_state.json` | プロジェクトルート | **プロジェクト固有**（`/workflow-start`で生成） |
+>
+> **注意**: Windowsのシンボリックリンク作成には管理者権限が必要です。PowerShellを「管理者として実行」してください。
+
 > **2026-02-16: v2.23.0 world-research スキル公開**
 >
 > | 変更 | 内容 |
@@ -2149,15 +2235,38 @@ mcp__taisun-proxy__system_health()
 
 ```bash
 # Clone repository
-git clone https://github.com/san15/taisun_agent.git
-cd taisun_agent
+git clone https://github.com/san15/taisun_agent.git ~/taisun_agent
+cd ~/taisun_agent
 
-# Install dependencies
-npm install
+# Setup (dependencies + hooks + skills + agents)
+npm run taisun:setup
 
-# Setup environment
-cp .env.example .env
-# Edit .env with your API keys
+# Verify (should be 100/100)
+npm run taisun:diagnose
+```
+
+> **Windows (PowerShell)**:
+> ```powershell
+> git clone https://github.com/san15/taisun_agent.git $HOME\taisun_agent
+> cd $HOME\taisun_agent
+> npm run taisun:setup
+> npm run taisun:diagnose
+> ```
+
+#### Use in Other Projects (Symlink)
+
+```bash
+# Mac/Linux
+cd ~/your-project
+ln -s ~/taisun_agent/.claude .claude
+ln -s ~/taisun_agent/.mcp.json .mcp.json
+```
+
+```powershell
+# Windows (Administrator PowerShell)
+cd $HOME\your-project
+New-Item -ItemType SymbolicLink -Path .claude -Target $HOME\taisun_agent\.claude
+New-Item -ItemType SymbolicLink -Path .mcp.json -Target $HOME\taisun_agent\.mcp.json
 ```
 
 ### Verification
