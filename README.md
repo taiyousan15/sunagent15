@@ -34,22 +34,14 @@
 >
 > ### アップデート手順
 >
-> #### アップデート（Mac）
->
+> **Mac:**
 > ```bash
-> cd ~/taisun_agent
-> git pull origin main
-> npm run taisun:setup
-> npm run taisun:diagnose   # 100点を確認
+> cd ~/taisun_agent && git pull origin main && npm run taisun:setup && npm run taisun:diagnose
 > ```
 >
-> #### アップデート（Windows - PowerShell）
->
+> **Windows (PowerShell):**
 > ```powershell
-> cd $HOME\taisun_agent
-> git pull origin main
-> npm run taisun:setup
-> npm run taisun:diagnose   # 100点を確認
+> cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup; npm run taisun:diagnose
 > ```
 >
 > ---
