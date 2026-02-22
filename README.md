@@ -12,6 +12,48 @@
 
 ---
 
+> **2026-02-22: v2.25.0 Hook Advisory-only + AGENTS.md 自己改善ループ**
+>
+> ### Hook システム: Advisory-only モードへ移行
+>
+> | 変更 | 内容 |
+> |------|------|
+> | `deviation-approval-guard.js` | exit(2) → exit(0)（警告のみ、ブロックなし） |
+> | `agent-enforcement-guard.js` | exit(2) → exit(0)（警告のみ、ブロックなし） |
+> | `definition-lint-gate.js` | exit(2) → exit(0)（警告のみ、ブロックなし） |
+> | 理由 | 他プロジェクトのシンボリックリンク運用時に意図しないブロックが発生していたため |
+> | 安全性 | `unified-guard`（rm -rf / mkfs / dd / fork bomb検出）は引き続きブロック有効 |
+>
+> ### AGENTS.md: クロスセッション自己改善ループ
+>
+> | 変更 | 内容 |
+> |------|------|
+> | `AGENTS.md` 新設 | セッション横断の教訓・知見を蓄積するログファイル |
+> | `/learn` コマンド | 非自明な問題解決後に教訓を自動キャプチャ |
+> | 参照タイミング | セッション開始時に自動ロード（`CLAUDE.md` 経由） |
+>
+> ### アップデート手順
+>
+> #### アップデート（Mac）
+>
+> ```bash
+> cd ~/taisun_agent
+> git pull origin main
+> npm run taisun:setup
+> npm run taisun:diagnose   # 100点を確認
+> ```
+>
+> #### アップデート（Windows - PowerShell）
+>
+> ```powershell
+> cd $HOME\taisun_agent
+> git pull origin main
+> npm run taisun:setup
+> npm run taisun:diagnose   # 100点を確認
+> ```
+>
+> ---
+>
 > **2026-02-16: v2.24.0 Bootstrap Safe Mode + インストール/アップデート手順整備**
 >
 > ### Bootstrap Safe Mode（Hook安全起動）
