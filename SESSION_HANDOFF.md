@@ -2,8 +2,8 @@
 
 > **CRITICAL**: 次のセッションは必ずこのファイルを読んでから作業を開始すること
 
-**最終更新**: 2026-02-13T16:13:23.448Z
-**作業ディレクトリ**: /Users/matsumototoshihiko/Desktop/開発2026/taisun_agent2026
+**最終更新**: 2026-02-16T20:01:15.718Z
+**作業ディレクトリ**: /Users/matsumototoshihiko/taisun_agent
 
 ## 既存スクリプト（MUST READ）
 
@@ -13,24 +13,23 @@
 └─────────────────────────────────────────────────────────┘
 ```
 
-- `agent_os/runner.py` (7.0KB, 2026/2/11 10:41:06)
-- `dist/scripts/run-benchmarks 2.js` (9.5KB, 2026/2/14 0:45:16)
-- `dist/scripts/run-benchmarks.js` (9.5KB, 2026/2/14 0:45:16)
-- `generate_10_slides.py` (2.3KB, 2026/2/4 12:27:57)
-- `generate_full_guide.py` (5.0KB, 2026/2/4 15:04:15)
-- `generate_install_slides.py` (2.7KB, 2026/2/4 13:55:56)
-- `scripts/ollama-process-transcript 2.sh` (6.2KB, 2026/2/11 10:41:06)
-- `scripts/ollama-process-transcript.sh` (6.2KB, 2026/2/11 10:41:06)
-- `taisun_agent/agent_os/runner.py` (7.0KB, 2026/1/24 16:22:42)
-- `taisun_agent/scripts/ollama-process-transcript.sh` (6.2KB, 2026/1/24 16:22:42)
+- `agent_os/runner.py` (7.0KB, 2026/2/16 7:20:42)
+- `dist/scripts/run-benchmarks.js` (9.5KB, 2026/2/17 4:17:33)
+- `generate_10_slides.py` (2.3KB, 2026/2/16 7:20:42)
+- `generate_full_guide.py` (5.0KB, 2026/2/16 7:20:42)
+- `generate_install_slides.py` (2.7KB, 2026/2/16 7:20:42)
+- `scripts/generate-release-approval.sh` (11.4KB, 2026/2/16 7:20:42)
+- `scripts/ollama-process-transcript.sh` (6.2KB, 2026/2/16 7:20:42)
+- `scripts/text_preprocessor.py` (11.2KB, 2026/2/16 7:20:42)
+- `tests/test_runner_retry_stop.py` (1.9KB, 2026/2/16 7:20:42)
 
 ## ワークフロー定義
 
-- `config/workflows/content_creation_v1 2.json`
 - `config/workflows/content_creation_v1.json`
-- `config/workflows/priority_based_v1 2.json`
 - `config/workflows/priority_based_v1.json`
-- `config/workflows/sdr_pipeline_v1 2.json`
+- `config/workflows/sdr_pipeline_v1.json`
+- `config/workflows/software_development_v1.json`
+- `config/workflows/video_generation_v1.json`
 
 ## 次のセッションへの指示
 

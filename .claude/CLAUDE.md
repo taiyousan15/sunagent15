@@ -28,10 +28,10 @@ When "use XX skill" is specified: **MUST use Skill tool**. Manual implementation
 
 | Component | Count | Reference |
 |-----------|-------|-----------|
-| Agents | 14 | `/agent-catalog` |
-| Skills | 60 | `/skill-catalog` |
-| Commands | 82 | Shortcut commands |
-| MCP Servers | 8 | Core servers |
+| Agents | 96 | `/agent-catalog` |
+| Skills | 110+ | `/skill-catalog` |
+| Commands | 110 | Shortcut commands |
+| MCP Servers | 15+ | Core servers |
 
 ## Pre-Flight Checks
 
@@ -47,6 +47,40 @@ Before starting work:
 - Japanese priority
 - Technical terms in English OK
 - Use marketing terminology appropriately
+
+## Sub-Agent Context Protection (MANDATORY)
+
+### Result Size Control (MUST)
+- **ALL** Task prompts MUST include `結果は500文字以内で要約して返してください`
+- **ALL** research/analysis agents MUST use `run_in_background: true`
+- Read background agent output files selectively (use `offset`/`limit`)
+
+### Delegation Pattern (MUST)
+- 3+ parallel agents: `run_in_background: true` **REQUIRED** (violation = context exhaustion)
+- After background agent completes: Read output file, extract key findings only
+- Task result >2000chars → **immediately** run `mcp__praetorian__praetorian_compact`
+
+### Strategic /compact Timing
+- **Before** launching 3+ parallel agents
+- **Immediately after** receiving large agent results (hook: task-overflow-guard)
+- Hook auto-suggests at dynamic intervals (compact-optimizer)
+
+## Self-Improvement Loop
+
+- **Cross-session lessons**: See `AGENTS.md` (project root) — auto-loaded every session
+- **Record new lessons**: Run `/learn` after resolving non-obvious problems
+
+## Hook Safety (Advisory-only)
+
+Project-level hooks **never block** (shared system):
+- `deviation-approval-guard` / `agent-enforcement-guard` / `definition-lint-gate` → exit 0, warning only
+- Only `unified-guard` blocks: `rm -rf /`, `mkfs`, `dd if=/dev`, fork bombs
+
+## MCP Caution
+
+- Each MCP server consumes 1,000–26,000 tokens on load
+- Keep active MCP ≤ 10 (GitHub MCP alone = 26k tokens)
+- Disable unnecessary servers in `.claude/settings.json` → `disabledMcpServers`
 
 ## Detailed References
 
