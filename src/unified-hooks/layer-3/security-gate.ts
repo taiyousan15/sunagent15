@@ -123,7 +123,7 @@ export class SecurityGate {
       { pattern: /sk-[a-zA-Z0-9]{20,}/,reason: 'OpenAI API Key' },
       { pattern: /AIza[a-zA-Z0-9_-]{35}/,reason: 'Google API Key' },
       { pattern: /[a-zA-Z0-9]{32}-us[0-9]{1,2}/,reason: 'Mailchimp API Key' },
-      { pattern: /xox[baprs]-[a-zA-Z0-9-]+/, pattern: 'Slack Token' },
+      { pattern: /xox[baprs]-[a-zA-Z0-9-]+/, reason: 'Slack Token' },
       { pattern: /ghp_[a-zA-Z0-9]{36}/, reason: 'GitHub Personal Access Token' },
     ];
 

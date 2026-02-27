@@ -12,5 +12,5 @@
     "noImplicitAny": false
   },
   "include": ["src/**/*", "tests/**/*", "scripts/**/*"],
-  "exclude": ["node_modules", "dist", "packages"]
+  "exclude": ["node_modules", "dist", "packages", "src/app", "src/components", "src/lib"]
 }
