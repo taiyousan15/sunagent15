@@ -5,7 +5,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Import as any due to CommonJS module
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const metricsCollector = require('../../.claude/hooks/metrics-collector') as any;
 
 describe('metrics-collector', () => {

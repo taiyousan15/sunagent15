@@ -5,9 +5,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Import as any due to CommonJS modules
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const metricsCollector = require('../../.claude/hooks/metrics-collector') as any;
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { aggregateMetrics, getDateString } = require('../../.claude/hooks/metrics-aggregator') as any;
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { generateReport } = require('../../.claude/hooks/generate-metrics-report') as any;
 
 const HOOKS_DATA_DIR = path.join(__dirname, '../../.claude/hooks/data');
