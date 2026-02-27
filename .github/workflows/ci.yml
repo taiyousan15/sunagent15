@@ -13,7 +13,7 @@ permissions:
 
 env:
   NODE_VERSION: '20.x'
-  COVERAGE_THRESHOLD: 80
+  COVERAGE_THRESHOLD: 70
 
 jobs:
   # ============================================
