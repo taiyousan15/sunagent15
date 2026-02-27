@@ -21,6 +21,7 @@ export class InjectionDetector {
       /`.*`/,
       /\$\(.*\)/,
       /&&\s*curl/,
+      /&&\s*rm\s+-rf/,
       /;\s*wget/,
       />\s*\/dev\/null.*&/,
     ];

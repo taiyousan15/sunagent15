@@ -115,12 +115,21 @@ export function loadSkillDefinition(skillName: string): SkillDefinition | null {
   // Parse YAML frontmatter
   const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
   if (frontmatterMatch) {
-    const frontmatter = yaml.parse(frontmatterMatch[1]);
-    return {
-      name: frontmatter.name || skillName,
-      description: frontmatter.description || '',
-      instructions: content.replace(/^---\n[\s\S]*?\n---\n/, ''),
-    };
+    try {
+      const frontmatter = yaml.parse(frontmatterMatch[1]);
+      return {
+        name: frontmatter.name || skillName,
+        description: frontmatter.description || '',
+        instructions: content.replace(/^---\n[\s\S]*?\n---\n/, ''),
+      };
+    } catch {
+      // Skip files with invalid YAML frontmatter, return content as instructions
+      return {
+        name: skillName,
+        description: '',
+        instructions: content,
+      };
+    }
   }
 
   return {

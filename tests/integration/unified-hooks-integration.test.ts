@@ -135,7 +135,7 @@ describe('Unified Hook Architecture - Integration', () => {
         const event: HookEvent = {
           timestamp: Date.now(),
           toolName: 'Read',
-          toolInput: { file_path: `/path/to/file${i % 10}.ts` },
+          toolInput: { file_path: `/path/to/file${i % 67}.ts` },
           phase: 'PreToolUse',
           cwd: process.cwd(),
         };

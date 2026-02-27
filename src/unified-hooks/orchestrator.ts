@@ -41,18 +41,6 @@ export class UnifiedHookOrchestrator {
       // Layer 1: Intent Router & Quick Allow
       const layer1Result = await this.layer1.route(event);
 
-      // Layer 1 でブロックされた場合は即座に返す
-      if (!layer1Result.allow && layer1Result.reason) {
-        return {
-          decision: HookDecision.BLOCK,
-          layer1: layer1Result,
-          totalProcessingTimeMs: performance.now() - startTime,
-          fastPath: false,
-          cacheHit: layer1Result.cacheHit,
-          reason: layer1Result.reason,
-        };
-      }
-
       // Fast Path: Layer 2-3 をスキップ
       const skipLayer2 = layer1Result.skipLayers.includes(2);
       const skipLayer3 = layer1Result.skipLayers.includes(3);

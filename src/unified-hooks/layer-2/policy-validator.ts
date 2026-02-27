@@ -84,7 +84,7 @@ export class PolicyValidator {
     const text = JSON.stringify(event.toolInput).toLowerCase();
 
     // インタラクティブ動画 / VSL
-    if (text.includes('interactive') || text.includes('分岐') || text.includes('vsl')) {
+    if (text.includes('interactive') || text.includes('インタラクティブ') || text.includes('分岐') || text.includes('vsl')) {
       requirements.push({
         skillName: 'interactive-video-platform',
         strict: true,

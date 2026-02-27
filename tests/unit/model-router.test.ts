@@ -60,8 +60,8 @@ describe('ModelRouter', () => {
 
   describe('getFallbackModel', () => {
     it('should return next model in fallback chain', () => {
-      const fallback = router.getFallbackModel('claude-opus')
-      expect(fallback).toBe('claude-sonnet')
+      const fallback = router.getFallbackModel('claude-opus-4-6')
+      expect(fallback).toBe('claude-sonnet-4-5')
     })
 
     it('should return null for last model in chain', () => {

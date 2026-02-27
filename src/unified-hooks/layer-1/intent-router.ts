@@ -183,6 +183,9 @@ export class IntentRouter {
    * 読み取り専用コマンドかどうか判定
    */
   private isReadOnlyCommand(command: string): boolean {
+    // Commands with chaining operators are never read-only
+    if (/[;&|]/.test(command)) return false;
+
     const readOnlyCommands = [
       /^ls(\s|$)/,
       /^cat(\s|$)/,
