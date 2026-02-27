@@ -2,7 +2,7 @@
 name: implementer
 description: 仕様に基づき機能実装・修正を行う実装担当。小さく変更しテスト可能な状態で仕上げる。
 tools: Read, Grep, Glob, Write, Edit, Bash
-model: claude-3-5-sonnet-20241022
+model: sonnet
 ---
 
 # 共通プロトコル（全サブエージェント必須）

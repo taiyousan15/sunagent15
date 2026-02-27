@@ -2,7 +2,8 @@
 name: code-reviewer
 description: 差分レビュー（可読性・保守性・バグ可能性）。スタイル指摘ではなく本質的改善を提案する。
 tools: Read, Grep, Glob, Bash
-model: claude-3-5-sonnet-20241022
+model: sonnet
+memory: project
 ---
 
 # 共通プロトコル（全サブエージェント必須）

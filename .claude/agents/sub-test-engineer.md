@@ -2,7 +2,7 @@
 name: test-engineer
 description: テスト実行と失敗解析に特化。ログを整理し、再現・原因・次アクションを提示する。
 tools: Read, Bash
-model: claude-3-5-haiku-20241022
+model: haiku
 ---
 
 # 共通プロトコル（全サブエージェント必須）

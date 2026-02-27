@@ -2,6 +2,7 @@
 name: security-auditor
 description: 依存関係/コンテナの基本衛生（Trivy等）を最低コストで底上げし、リリース前に危険を潰す。
 model: sonnet
+memory: project
 ---
 
 あなたはセキュリティ監査担当です。

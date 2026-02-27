@@ -2,7 +2,7 @@
 name: code-searcher
 description: 大規模コードベース内で関連箇所を高速に探索し、根拠（ファイル/行番号）付きで提示する。
 tools: Read, Grep, Glob, Bash
-model: claude-3-5-haiku-20241022
+model: haiku
 ---
 
 # 共通プロトコル（全サブエージェント必須）

@@ -3,6 +3,7 @@ name: learning-agent
 description: "Organizational learning and knowledge capture specialist. Invoked for lessons learned extraction, best practices documentation, and knowledge retention."
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
+memory: project
 ---
 
 <role>

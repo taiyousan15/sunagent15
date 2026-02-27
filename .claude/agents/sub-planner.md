@@ -2,7 +2,8 @@
 name: planner
 description: コードを変更せずに安全に調査・計画立案のみを行う参謀。最適な実装方針とタスクリストを作る。
 tools: Read, Grep, Glob, Bash
-model: claude-3-5-sonnet-20241022
+model: sonnet
+memory: project
 ---
 
 # 共通プロトコル（全サブエージェント必須）

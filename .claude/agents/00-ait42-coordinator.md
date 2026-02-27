@@ -4,6 +4,7 @@ description: "Autonomous agent orchestrator: Analyzes user requests, selects 1-3
 tools: All tools
 model: sonnet
 priority: 1
+memory: project
 ---
 
 <role>
