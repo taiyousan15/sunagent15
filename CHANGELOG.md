@@ -7,6 +7,128 @@
 
 ---
 
+## [2.26.0] - 2026-02-27
+
+### 🔧 修正 (Fixed)
+
+#### プランモード自動起動防止
+- `~/.claude/rules/no-plan-mode.md` を追加
+- Claudeが自動的にプランモード（`EnterPlanMode`）に入るのを防止
+- ユーザーが明示的に「プランモードで」と指示した場合のみ使用
+- 複雑なタスクはTodoWriteで進捗管理（プランモード不要）
+
+---
+
+## [2.25.0] - 2026-02-22
+
+### ✨ 追加 (Added)
+
+#### Hook Advisory-only モードへ移行
+| 変更 | 内容 |
+|------|------|
+| `deviation-approval-guard.js` | exit(2) → exit(0)（警告のみ、ブロックなし） |
+| `agent-enforcement-guard.js` | exit(2) → exit(0)（警告のみ、ブロックなし） |
+| `definition-lint-gate.js` | exit(2) → exit(0)（警告のみ、ブロックなし） |
+| 理由 | 他プロジェクトのシンボリックリンク運用時に意図しないブロックが発生していたため |
+| 安全性 | `unified-guard`（rm -rf / mkfs / dd / fork bomb検出）は引き続きブロック有効 |
+
+#### AGENTS.md: クロスセッション自己改善ループ
+- `AGENTS.md` 新設 — セッション横断の教訓・知見を蓄積するログファイル
+- `/learn` コマンド — 非自明な問題解決後に教訓を自動キャプチャ
+- セッション開始時に自動ロード（`CLAUDE.md` 経由）
+
+---
+
+## [2.24.0] - 2026-02-16
+
+### ✨ 追加 (Added)
+
+#### Bootstrap Safe Mode（Hook安全起動）
+| 変更 | 内容 |
+|------|------|
+| Bootstrap Safe Mode | `.workflow_state.json` 未作成時、ワークフロー系Hookを全スキップ |
+| 対象Hook | unified-guard / deviation-approval-guard / agent-enforcement-guard / workflow-fidelity-guard |
+| 効果 | 新規インストール・他プロジェクトでのセットアップ時にHookがブロックしなくなった |
+| 安全性 | `rm -rf` 等の危険コマンド検出は常に有効（スキップされない） |
+
+---
+
+## [2.23.0] - 2026-02-16
+
+### ✨ 追加 (Added)
+
+- `world-research` スキル公開（`disable-model-invocation: true` を削除）
+- API不要の6層リサーチ（学術論文・キュレーション・テックブログ・実装エコシステム・SNS・コミュニティ）
+- 必要ツール: WebSearch / WebFetch のみ（Claude Code標準搭載）
+
+---
+
+## [2.22.0] - 2026-02-15
+
+### 🎉 追加 (Added)
+
+#### taisun:diagnose 100/100点達成
+| 項目 | スコア |
+|------|--------|
+| 13層防御システム | 13/13 |
+| Hooks設定 | 4/4 |
+| スキル | 101個 |
+| エージェント | 96個 |
+| MCPツール | 248個 |
+| **総合スコア** | **100/100点** |
+
+#### コンテキスト最適化 最終結果（75K → 30.2K tokens, -59.7%）
+SDD（Spec-Driven Development）に基づく4フェーズのコンテキスト最適化完了。
+
+---
+
+## [2.17.0] - 2026-02-15
+
+### 🔧 修正 (Fixed)
+
+#### コンテキスト最適化 Tier 1（-28〜43K tokens）
+| # | タスク | 効果 |
+|---|--------|------|
+| T1.1 | スキル説明文最適化（英語38文字以内） | ~8-12K token削減 |
+| T1.2 | disable-model-invocation（60+低頻度スキル） | ~5-10K token削減 |
+| T1.3 | MCP選択的無効化（11サーバー） | ~5-8K token削減 |
+| T1.4 | CLAUDE.md 3層分割（213行→55行） | ~10-13K token削減 |
+
+---
+
+## [2.15.0] - 2026-02-14
+
+### 🔧 修正 (Fixed)
+
+- 壊れたサブモジュール（807MB）削除
+- 未使用npmパッケージ43個整理
+- Hookシステムの共通化・分割（readStdin() を `utils/read-stdin.js` に統合）
+- `workflow-state-manager.js`（1,019行）をFacadeパターンで4モジュールに分割
+
+---
+
+## [2.14.0] - 2026-02-13
+
+### ✨ 追加 (Added)
+
+- LLM Auto-Switch v2.0（タスク複雑度ベースのモデル自動切替）
+- Intent Parser統合
+- Stage 1 メトリクスシステム（収集・集計・レポート生成）
+- 自動バックアップ launchd統合（5分ごと）
+- URL Learning Pipeline
+
+---
+
+## [2.13.0] - 2026-02-11
+
+### 🔒 セキュリティ (Security)
+
+- 全72スキルにallowed-tools権限分離適用（攻撃成功率41.2%→2.2%）
+- APIキー集中管理（.env統合+バリデーション）
+- MCPヘルスチェックv2（21サーバー自動検出）
+
+---
+
 ## [2.11.0] - 2026-02-04
 
 ### 🎉 追加 (Added)
