@@ -184,8 +184,8 @@ export class ContextResolver {
    * @returns スキル名、検出されなければ undefined
    */
   private detectSkillRequest(text: string): string | undefined {
-    const skillPattern = /([a-z\-]+)(スキル|skill)/i;
-    const slashPattern = /\/([a-z\-]+)/;
+    const skillPattern = /([a-z-]+)(スキル|skill)/i;
+    const slashPattern = /\/([a-z-]+)/;
 
     const skillMatch = text.match(skillPattern);
     if (skillMatch) {

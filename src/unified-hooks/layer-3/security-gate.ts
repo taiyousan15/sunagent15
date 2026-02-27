@@ -149,7 +149,7 @@ export class SecurityGate {
 
     const dangerousPatterns = [
       { pattern: /rm\s+-rf\s+\//, reason: 'ルートディレクトリの削除' },
-      { pattern: /:\(\)\{\s*:\|\:&\s*\};:/, reason: 'Fork Bomb' },
+      { pattern: /:\(\)\{\s*:\|:&\s*\};:/, reason: 'Fork Bomb' },
       { pattern: /dd\s+if=\/dev\/zero/, reason: 'ディスク破壊' },
     ];
 

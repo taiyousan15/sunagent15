@@ -19,14 +19,14 @@ export const WORKFLOW_PATTERNS: Pattern[] = [
   },
   {
     name: 'SKILL_INVOCATION',
-    regex: /([a-z\-]+)スキルを?(使って|使用して|利用して|で)/,
+    regex: /([a-z-]+)スキルを?(使って|使用して|利用して|で)/,
     intent: IntentType.SKILL_INVOCATION,
     confidence: 98,
     examples: ['lp-full-generationスキルを使って', 'taiyo-analyzerスキルで'],
   },
   {
     name: 'EXISTING_FILE_REFERENCE',
-    regex: /(既存の|このファイル|そのファイル|([a-zA-Z0-9_\-\.\/]+\.(ts|js|md|json))を?)(編集|修正|変更|更新)/,
+    regex: /(既存の|このファイル|そのファイル|([a-zA-Z0-9_./-]+\.(ts|js|md|json))を?)(編集|修正|変更|更新)/,
     intent: IntentType.EXISTING_FILE_REFERENCE,
     confidence: 90,
     examples: ['既存のファイルを編集', 'app.tsを修正', 'README.mdを更新'],
@@ -60,7 +60,7 @@ export const FILE_PATTERNS: Pattern[] = [
   },
   {
     name: 'FILE_READ',
-    regex: /([a-zA-Z0-9_\-\.\/]+\.(ts|js|tsx|jsx|json|md|txt|yml|yaml|css|scss|html))を?(読んで|確認して|見て|表示して)/,
+    regex: /([a-zA-Z0-9_./-]+\.(ts|js|tsx|jsx|json|md|txt|yml|yaml|css|scss|html))を?(読んで|確認して|見て|表示して)/,
     intent: IntentType.FILE_READ,
     confidence: 85,
     examples: ['app.tsを読んで', 'README.mdを確認して'],
@@ -235,7 +235,7 @@ export const AGENT_PATTERNS: Pattern[] = [
   },
   {
     name: 'SKILL_EXECUTE',
-    regex: /^\/([a-z\-]+)/,
+    regex: /^\/([a-z-]+)/,
     intent: IntentType.SKILL_EXECUTE,
     confidence: 95,
     examples: ['/lp-full-generation', '/taiyo-analyzer'],

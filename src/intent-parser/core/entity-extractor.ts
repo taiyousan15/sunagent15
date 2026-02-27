@@ -18,7 +18,7 @@ export class EntityExtractor {
    * @returns スキル名エンティティ配列
    */
   async extractSkills(text: string): Promise<Entity[]> {
-    const skillPattern = /([a-z\-]+)(スキル|skill)/gi;
+    const skillPattern = /([a-z-]+)(スキル|skill)/gi;
     const entities: Entity[] = [];
     let match: RegExpExecArray | null;
 
@@ -35,7 +35,7 @@ export class EntityExtractor {
     }
 
     // / で始まるスキル呼び出しも検出
-    const slashPattern = /\/([a-z\-]+)/gi;
+    const slashPattern = /\/([a-z-]+)/gi;
     let slashMatch: RegExpExecArray | null;
 
     while ((slashMatch = slashPattern.exec(text)) !== null) {
@@ -60,7 +60,7 @@ export class EntityExtractor {
    * @returns ファイルパスエンティティ配列
    */
   extractFilePaths(text: string): Entity[] {
-    const filePattern = /([a-zA-Z0-9_\-\.\/]+\.(ts|js|tsx|jsx|json|md|txt|yml|yaml|css|scss|html))/gi;
+    const filePattern = /([a-zA-Z0-9_./-]+\.(ts|js|tsx|jsx|json|md|txt|yml|yaml|css|scss|html))/gi;
     const entities: Entity[] = [];
     let match: RegExpExecArray | null;
 

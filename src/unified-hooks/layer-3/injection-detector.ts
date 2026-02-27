@@ -71,7 +71,7 @@ export class InjectionDetector {
   detectPathTraversal(filePath: string): SecurityThreat | null {
     const traversalPatterns = [
       /\.\.\//,
-      /\.\.\\\\,
+      /\.\.\\\\/,
       /%2e%2e%2f/i,
       /%2e%2e%5c/i,
     ];
