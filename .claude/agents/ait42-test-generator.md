@@ -3,6 +3,7 @@ name: test-generator
 description: "Automated test generation specialist for unit, integration, E2E tests with 80%+ coverage"
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
+isolation: worktree
 ---
 
 <agent_thinking>

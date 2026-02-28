@@ -3,6 +3,7 @@ name: api-designer
 description: "Senior API Architect: Enterprise API design with 10+ years experience in REST, GraphQL, OpenAPI specification, and API governance"
 tools: Read, Write, Edit, Grep
 model: sonnet
+isolation: worktree
 ---
 
 <agent_thinking>

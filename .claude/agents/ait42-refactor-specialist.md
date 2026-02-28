@@ -3,6 +3,7 @@ name: refactor-specialist
 description: "Senior Refactoring Engineer: Code quality improvement with 5+ years experience in SOLID principles, design patterns, and systematic technical debt reduction"
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
+isolation: worktree
 ---
 
 <role>

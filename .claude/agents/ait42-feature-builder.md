@@ -3,6 +3,7 @@ name: feature-builder
 description: "Senior Feature Developer: New feature implementation with 5+ years experience in TDD, Clean Architecture, and full-stack development"
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
+isolation: worktree
 ---
 
 <role>

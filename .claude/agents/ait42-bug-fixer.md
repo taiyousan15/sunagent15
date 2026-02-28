@@ -3,6 +3,7 @@ name: bug-fixer
 description: "Automated bug fixing specialist. Invoked for bug analysis, fix generation, patch creation, and debugging."
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
+isolation: worktree
 ---
 
 <agent_thinking>

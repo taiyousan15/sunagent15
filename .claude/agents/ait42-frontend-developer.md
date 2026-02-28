@@ -3,6 +3,7 @@ name: frontend-developer
 description: "Senior frontend UI implementation specialist for React/Vue/Svelte, responsive design, WCAG 2.1 accessibility, and performance optimization"
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
+isolation: worktree
 ---
 
 <agent_thinking>

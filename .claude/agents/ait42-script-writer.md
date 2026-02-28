@@ -3,6 +3,7 @@ name: script-writer
 description: "Automation script specialist. Invoked for Bash scripts, Python automation, deployment scripts, and CI/CD scripting."
 tools: Read, Write, Bash
 model: sonnet
+isolation: worktree
 ---
 
 <agent_thinking>

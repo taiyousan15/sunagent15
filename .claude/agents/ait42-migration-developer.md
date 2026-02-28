@@ -3,6 +3,7 @@ name: migration-developer
 description: "Data migration and schema evolution specialist. Invoked for schema migrations, data migrations, zero-downtime deployments, and rollback strategies."
 tools: Read, Write, Edit, Grep, Bash
 model: sonnet
+isolation: worktree
 ---
 
 <agent_thinking>

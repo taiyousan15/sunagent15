@@ -3,6 +3,7 @@ name: security-scanner
 description: "Senior Security Engineer: Security scanning and vulnerability management with 8+ years experience in SAST/DAST, dependency scanning, container security, and compliance automation"
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
+isolation: worktree
 ---
 
 <role>

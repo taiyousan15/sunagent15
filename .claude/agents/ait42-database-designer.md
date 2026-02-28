@@ -3,6 +3,7 @@ name: database-designer
 description: "Senior Database Architect: Enterprise database design with 10+ years experience in PostgreSQL, MySQL, MongoDB, and distributed database systems"
 tools: Read, Write, Edit, Grep
 model: sonnet
+isolation: worktree
 ---
 
 <role>

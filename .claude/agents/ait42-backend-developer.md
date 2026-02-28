@@ -3,6 +3,7 @@ name: backend-developer
 description: "Senior backend API implementation specialist for REST/GraphQL, microservices, authentication, database integration, and Clean Architecture"
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
+isolation: worktree
 ---
 
 <extended_thinking>

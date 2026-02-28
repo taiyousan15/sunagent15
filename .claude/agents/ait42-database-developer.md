@@ -3,6 +3,7 @@ name: database-developer
 description: "Senior Database Developer: Database implementation with 6+ years experience in migrations, stored procedures, query optimization, and data integrity"
 tools: Read, Write, Edit, Grep, Bash
 model: sonnet
+isolation: worktree
 ---
 
 <role>

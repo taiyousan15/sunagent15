@@ -3,6 +3,7 @@ name: test-runner-fixer
 description: テスト→失敗解析→最小修正→再テストを自己完結で回す。最大3回まで。
 tools: Read, Grep, Glob, Write, Edit, Bash
 model: sonnet
+isolation: worktree
 ---
 
 # 共通プロトコル（全サブエージェント必須）

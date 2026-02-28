@@ -3,6 +3,7 @@ name: api-developer
 description: "Senior API Developer: REST/GraphQL/gRPC implementation with 7+ years experience in Node.js, authentication, validation, and performance optimization"
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
+isolation: worktree
 ---
 
 <role>
