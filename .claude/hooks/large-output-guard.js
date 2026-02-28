@@ -18,6 +18,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const PROJECT_DIR = process.cwd();
+
 // 設定
 const CONFIG = {
   charThreshold: 6000,    // 文字数しきい値
@@ -108,46 +110,29 @@ async function main() {
     return;
   }
 
-  // 警告を出力
-  console.log('');
-  console.log('=== LARGE OUTPUT GUARD ===');
-  console.log('');
-  console.log('**大きな出力が検出されました**');
-  console.log('');
-  console.log(`ソース: ${source}`);
-  console.log(`文字数: ${charCount.toLocaleString()} 文字`);
-  console.log(`行数: ${lineCount.toLocaleString()} 行`);
-  console.log('');
+  // 詳細をJSONファイルに退避
+  const detailFile = path.join(PROJECT_DIR, '.claude/hooks/data/large-output-detail.json');
+  try {
+    const dir = path.dirname(detailFile);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(detailFile, JSON.stringify({
+      timestamp: new Date().toISOString(),
+      source,
+      charCount,
+      lineCount,
+      exceedsCharThreshold,
+      exceedsLineThreshold,
+      recommendation: 'Praetorian compactまたはmemory_addで保存してからコンテキストに含めてください'
+    }, null, 2));
+  } catch (e) { /* ignore */ }
 
-  if (exceedsCharThreshold) {
-    console.log(`⚠ 文字数しきい値超過: ${charCount} >= ${CONFIG.charThreshold}`);
-  }
-  if (exceedsLineThreshold) {
-    console.log(`⚠ 行数しきい値超過: ${lineCount} >= ${CONFIG.lineThreshold}`);
-  }
+  // stderr: 人間向け表示
+  console.error(`\x1b[33m[Large Output] ${source} (${charCount.toLocaleString()}chars/${lineCount}lines) - 詳細: .claude/hooks/data/large-output-detail.json\x1b[0m`);
 
-  console.log('');
-  console.log('**推奨アクション:**');
-  console.log('');
-  console.log('1. memory_add を使用して出力を保存してください:');
-  console.log('   ```');
-  console.log('   MCPSearch → select:mcp__taisun-proxy__memory_add');
-  console.log('   mcp__taisun-proxy__memory_add({');
-  console.log('     title: "出力のタイトル",');
-  console.log('     content: "出力内容の要約",');
-  console.log('     type: "discovery" | "change" | "decision"');
-  console.log('   })');
-  console.log('   ```');
-  console.log('');
-  console.log('2. または、要約を作成してからコンテキストに含めてください');
-  console.log('');
-  console.log('**理由:**');
-  console.log('- コンテキストウィンドウを効率的に使用するため');
-  console.log('- 重要な情報をセッション間で保持するため');
-  console.log('- 後で参照できるよう記録を残すため');
-  console.log('');
-  console.log('=== END LARGE OUTPUT GUARD ===');
-  console.log('');
+  // stdout: AI向け1行指示（コンテキストに注入される）
+  console.log(`[Large Output] ${source}(${charCount}chars/${lineCount}lines) -> Praetorian compactで保存推奨`);
 
   // 警告のみ（ブロックしない）
   process.exit(0);

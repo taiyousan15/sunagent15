@@ -208,4 +208,17 @@
 
 ---
 
+## 2026-02-27 Mistake: skill-ignored-in-gem-prompt-creation (Gemプロンプト作成でスキル無視)
+- **Symptom**: 「deep-research と genre-research スキルを参考にしてプロンプトを作成して」という指示を無視し、Claude の知識のみで 99 個の Gemini Gem プロンプト (.md ファイル) を生成した
+- **Root cause**: スキル指示の確認が不十分。ユーザーが指定スキルのパスを伝える前に、すでに手動でプロンプト生成を完了してしまっていた
+- **Where it happened**: gems_batch/002-100.md の生成時
+- **Impact**: 自動化スクリプト (auto_create_gems.py) がすでに Gem を Gemini に登録中（最大 100 個）。リサーチなしのプロンプトが登録されている
+- **Fix**: deep-research スキルを使い「Gemini Gems 効果的プロンプト 日本市場」を調査。改善版プロンプトを別途作成する
+- **Prevention**:
+  - [ ] プロンプト/コンテンツ生成前に必ずスキル指定の有無を確認する
+  - [ ] 「〇〇スキルを参考にして」という指示はスキル指定として扱い、Skill ツールで呼び出す
+  - [ ] スキルパスが示された場合は、そのスキルの SKILL.md を Read してから作業を開始する
+
+---
+
 *このファイルは違反検出時に自動更新されます*

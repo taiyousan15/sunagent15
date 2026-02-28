@@ -79,62 +79,41 @@ async function main() {
   const hasAnyRequirement = hasExplicitSkills || hasAutoMappedSkills || requiresSameWorkflow;
 
   if (hasAnyRequirement) {
-    context.push('');
-    context.push('=== SKILL USAGE GUARD (v3.0) ===');
-    context.push('');
+    // v3.1: コンテキスト最適化 - stdoutは最小限、詳細はJSONファイルに書き出し
+    const detailData = {
+      timestamp: new Date().toISOString(),
+      autoMapped: autoMappedSkills.map(m => ({
+        name: m.name,
+        description: m.description,
+        required_skills: m.required_skills,
+        strict: m.strict || false,
+        skill_path: m.skill_path || null
+      })),
+      explicit: [...new Set(detectedSkills)],
+      requiresSameWorkflow
+    };
 
-    // 自動マッピングされたスキル（最優先）
-    if (hasAutoMappedSkills) {
-      context.push('**MANDATORY: タスク種別から必須スキルが自動検出されました**');
-      context.push('');
-      autoMappedSkills.forEach(mapping => {
-        context.push(`【${mapping.name}】`);
-        context.push(`  説明: ${mapping.description}`);
-        context.push(`  必須スキル: ${mapping.required_skills.join(', ')}`);
-        if (mapping.skill_path) {
-          context.push(`  スキルパス: ${mapping.skill_path}`);
-        }
-        if (mapping.strict) {
-          context.push(`  **STRICT MODE**: このスキルを使わない実装はブロックされます`);
-        }
-        context.push('');
-      });
-      context.push('**WARNING**: 上記スキルを呼び出さずに手動実装することは禁止です。');
-      context.push('必ず Skill ツールまたは /スキル名 コマンドを使用してください。');
-      context.push('');
-    }
+    // 詳細をJSONファイルに書き出し（AIがReadで参照可能）
+    const detailPath = path.join(__dirname, 'data', 'skill-guard-detail.json');
+    try {
+      const dataDir = path.join(__dirname, 'data');
+      if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+      fs.writeFileSync(detailPath, JSON.stringify(detailData, null, 2));
+    } catch (e) { /* ignore */ }
 
-    // 明示的に指定されたスキル
-    if (hasExplicitSkills) {
-      context.push('**MANDATORY: ユーザーが明示的に指定したスキル**');
-      context.push('');
-      context.push('検出されたスキル:');
-      [...new Set(detectedSkills)].forEach(skill => {
-        context.push(`  - ${skill}`);
-      });
-      context.push('');
-      context.push('**WARNING**: 上記スキルを呼び出さずに手動実装することは禁止です。');
-      context.push('必ず Skill ツールまたは /スキル名 コマンドを使用してください。');
-      context.push('');
-    }
+    // stdoutには1-3行の圧縮サマリーのみ出力
+    const allSkills = [
+      ...autoMappedSkills.flatMap(m => m.required_skills),
+      ...new Set(detectedSkills)
+    ];
+    const uniqueSkills = [...new Set(allSkills)];
+    const strictSkills = autoMappedSkills.filter(m => m.strict);
+
+    context.push(`[Skill Guard] 必須: ${uniqueSkills.join(', ')}${strictSkills.length > 0 ? ' (STRICT)' : ''} | Skill tool必須、手動実装禁止`);
 
     if (requiresSameWorkflow) {
-      context.push('**CRITICAL: 「同じワークフロー」の指示を検出しました**');
-      context.push('');
-      context.push('以下の手順を必ず実行してください:');
-      context.push('1. 既存のスクリプト/ワークフローファイルを特定する');
-      context.push('2. Read ツールでそのファイルの内容を確認する');
-      context.push('3. 確認した内容を元に作業を進める');
-      context.push('4. 新しいスクリプトを作成する場合は、ユーザーに確認を取る');
-      context.push('');
-      context.push('**禁止事項**:');
-      context.push('- 既存ファイルを確認せずに新しいスクリプトを作成すること');
-      context.push('- 「シンプルにする」「最適化する」と称して異なる実装をすること');
-      context.push('');
+      context.push(`[Skill Guard] 同一ワークフロー指示あり → 既存ファイルをRead後に作業`);
     }
-
-    context.push('=== END SKILL USAGE GUARD ===');
-    context.push('');
   }
 
   // スキル要求を .workflow_state.json に記録
@@ -192,6 +171,13 @@ async function main() {
 
 /**
  * タスク種別からスキルを自動マッピング
+ * v4.0: triggers形式 + skills配列（複数スキル同時発動）対応
+ *
+ * マッピング形式:
+ *   triggers: 部分一致キーワード配列（いずれかがヒットでマッチ）
+ *   skill:    単一スキル名（従来形式）
+ *   skills:   複数スキル名配列（全スキル同時発動）
+ *   mode:     "first"（最初のマッチで停止）or "all"（該当スキル全発動）
  */
 function detectAutoMappedSkills(prompt) {
   const mappings = loadSkillMappings();
@@ -206,38 +192,67 @@ function detectAutoMappedSkills(prompt) {
   const matched = [];
 
   for (const mapping of mappings.mappings) {
-    const { when_contains_all, when_contains_any, priority } = mapping;
+    const { triggers, when_contains_all, when_contains_any, priority } = mapping;
+    let isMatch = false;
 
-    // when_contains_all: 全てのキーワードが含まれている必要がある
-    let allMatch = true;
-    if (when_contains_all && when_contains_all.length > 0) {
-      for (const keyword of when_contains_all) {
-        const normalizedKeyword = caseInsensitive ? keyword.toUpperCase() : keyword;
-        if (!normalizedPrompt.includes(normalizedKeyword)) {
-          allMatch = false;
+    // triggers形式: いずれかのキーワードが部分一致でマッチ
+    if (triggers && triggers.length > 0) {
+      for (const trigger of triggers) {
+        const normalizedTrigger = caseInsensitive ? trigger.toUpperCase() : trigger;
+        if (normalizedPrompt.includes(normalizedTrigger)) {
+          isMatch = true;
           break;
         }
       }
     }
 
-    if (!allMatch) continue;
+    // when_contains_all / when_contains_any 形式（後方互換）
+    if (!isMatch && (when_contains_all || when_contains_any)) {
+      let allMatch = true;
+      if (when_contains_all && when_contains_all.length > 0) {
+        for (const keyword of when_contains_all) {
+          const normalizedKeyword = caseInsensitive ? keyword.toUpperCase() : keyword;
+          if (!normalizedPrompt.includes(normalizedKeyword)) {
+            allMatch = false;
+            break;
+          }
+        }
+      }
 
-    // when_contains_any: いずれかのキーワードが含まれている必要がある
-    let anyMatch = false;
-    if (!when_contains_any || when_contains_any.length === 0) {
-      anyMatch = true; // anyが指定されていなければOK
-    } else {
-      for (const keyword of when_contains_any) {
-        const normalizedKeyword = caseInsensitive ? keyword.toUpperCase() : keyword;
-        if (normalizedPrompt.includes(normalizedKeyword)) {
+      if (allMatch) {
+        let anyMatch = false;
+        if (!when_contains_any || when_contains_any.length === 0) {
           anyMatch = true;
-          break;
+        } else {
+          for (const keyword of when_contains_any) {
+            const normalizedKeyword = caseInsensitive ? keyword.toUpperCase() : keyword;
+            if (normalizedPrompt.includes(normalizedKeyword)) {
+              anyMatch = true;
+              break;
+            }
+          }
         }
+        isMatch = allMatch && anyMatch;
       }
     }
 
-    if (allMatch && anyMatch) {
-      matched.push({ ...mapping, matchedPriority: priority || 0 });
+    if (isMatch) {
+      // skills配列またはskill単体からrequired_skillsを構築
+      const required_skills = mapping.skills
+        ? [...mapping.skills]
+        : (mapping.skill ? [mapping.skill] : []);
+
+      matched.push({
+        ...mapping,
+        name: mapping.description || mapping.skill || 'unknown',
+        required_skills,
+        matchedPriority: priority || 0
+      });
+
+      // mode: "all" でなければ最初のマッチで停止
+      if (mapping.mode !== 'all') {
+        break;
+      }
     }
   }
 

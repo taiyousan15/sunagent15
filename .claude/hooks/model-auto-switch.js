@@ -23,35 +23,41 @@ const LOG_PATH = path.join(DATA_DIR, 'model-switch.log')
 
 // Claude Code で使用可能なモデル短縮名
 // Task ツールの model パラメータ: 'opus' | 'sonnet' | 'haiku'
+// litellmModel: LiteLLM proxy 経由で呼び出す外部モデル
 const ROUTING_RULES = [
   {
     complexity: 'trivial',
     taskModel: 'haiku',
     claudeCodeModel: 'haiku',
+    litellmModel: null,
     description: '挨拶・確認・単純応答',
   },
   {
     complexity: 'simple',
     taskModel: 'haiku',
     claudeCodeModel: 'haiku',
+    litellmModel: null,
     description: '検索・一覧表示・状況確認',
   },
   {
     complexity: 'moderate',
     taskModel: 'sonnet',
     claudeCodeModel: 'sonnet',
+    litellmModel: null,
     description: 'ファイル修正・関数追加・テスト作成',
   },
   {
     complexity: 'complex',
     taskModel: 'sonnet',
     claudeCodeModel: 'sonnet',
+    litellmModel: 'minimax-m2-5',
     description: '新機能実装・API構築・マルチファイル変更',
   },
   {
     complexity: 'expert',
     taskModel: 'opus',
     claudeCodeModel: 'opus',
+    litellmModel: 'minimax-m2-5',
     description: 'アーキテクチャ設計・セキュリティ監査・大規模リファクタリング',
   },
 ]
@@ -221,6 +227,7 @@ async function main() {
     confidence: Math.round(confidence * 100),
     taskModel: recommendation.taskModel,
     claudeCodeModel: recommendation.claudeCodeModel,
+    litellmModel: recommendation.litellmModel,
     description: recommendation.description,
     reason,
     previousModel: previous ? previous.taskModel : null,

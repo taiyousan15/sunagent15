@@ -165,17 +165,6 @@
         ]
       }
     ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/matsumototoshihiko/X記事投稿システム/xxxx2026/scripts/auto-commit.sh",
-            "timeout": 15
-          }
-        ]
-      }
-    ]
+    "Stop": []
   }
 }

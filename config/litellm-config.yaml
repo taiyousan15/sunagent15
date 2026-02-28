@@ -43,6 +43,13 @@ model_list:
       api_key: os.environ/OPENROUTER_API_KEY
       max_tokens: 4096
 
+  - model_name: minimax-m2-5
+    litellm_params:
+      model: openai/MiniMax-M2.5
+      api_base: https://api.minimax.io/v1
+      api_key: os.environ/MINIMAX_API_KEY
+      max_tokens: 40960
+
 litellm_settings:
   fallbacks:
     - claude-sonnet:
@@ -54,6 +61,10 @@ litellm_settings:
         - ollama-qwen3-coder
         - openrouter-free
     - gpt53-codex:
+        - minimax-m2-5
+        - claude-sonnet
+    - minimax-m2-5:
+        - gpt53-codex
         - claude-sonnet
 
   cache: true

@@ -11,16 +11,17 @@
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
-> インストールするだけで 101スキル・96エージェント・110コマンド が使えるようになります。
+> インストールするだけで 101スキル・96エージェント・190+コマンド が使えるようになります。
 
 ---
 
 ## 📋 最新バージョン
 
-**v2.26.0** (2026-02-27) — プランモード自動起動防止ルール追加
+**v2.27.0** (2026-02-28) — スラッシュコマンド大幅拡充 + サブエージェント永続メモリ
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.27.0 | 2026-02-28 | スラッシュコマンド 110→190+に拡充 / サブエージェント永続メモリ実装 / task-overflow-guard追加 |
 | v2.26.0 | 2026-02-27 | プランモード自動起動防止ルール追加 (`no-plan-mode.md`) |
 | v2.25.0 | 2026-02-22 | Hook Advisory-only化 + AGENTS.md 自己改善ループ |
 | v2.24.0 | 2026-02-16 | Bootstrap Safe Mode + Mac/Windows インストール手順整備 |
@@ -147,9 +148,10 @@ YouTubeサムネイルを作って
 |---------|----|----|
 | スキル | 101個 | mega-research, taiyo-style-lp, sdd-full, world-research |
 | エージェント | 96個 | planner, code-reviewer, security-reviewer, tdd-guide |
-| コマンド | 110個 | /learn, /research, /sdd-full, /summarize |
-| Hookシステム | 13層 | 危険コマンド防止・セッション継続・自動バックアップ |
+| コマンド | 190+個 | /learn, /research, /sdd-full, /summarize, /-*, /-* |
+| Hookシステム | 14層 | 危険コマンド防止・セッション継続・自動バックアップ・タスク結果オーバーフロー防止 |
 | MCPサーバー | 15+ | playwright, pexels, claude-historian, praetorian |
+| 永続メモリ | 6エージェント | ait42-coordinator, code-reviewer, planner, security-auditor 等 |
 
 ### 主要スキル一覧
 

@@ -20,8 +20,8 @@ const path = require('path');
 const PROJECT_DIR = process.cwd();
 
 const CONFIG = {
-  sessionCompactMinutes: 30,
-  toolCallThreshold: 50,
+  sessionCompactMinutes: 20,
+  toolCallThreshold: 30,
   cooldownMs: 120000,
   stateFile: path.join(PROJECT_DIR, '.claude/temp/compact-optimizer-state.json'),
   metricsFile: path.join(PROJECT_DIR, '.claude/hooks/data/compact-metrics.jsonl'),
@@ -104,21 +104,25 @@ function shouldSuggestCompact(state) {
   const sessionMin = getSessionMinutes(state);
   const inCooldown = (now - state.lastCompactSuggestion) < CONFIG.cooldownMs;
 
+  // 動的閾値（提案ごとに倍増される）
+  const timeThreshold = state.dynamicTimeThreshold || CONFIG.sessionCompactMinutes;
+  const callThreshold = state.dynamicCallThreshold || CONFIG.toolCallThreshold;
+
   if (inCooldown) return { suggest: false, reason: 'cooldown' };
 
-  if (sessionMin >= CONFIG.sessionCompactMinutes) {
+  if (sessionMin >= timeThreshold) {
     return {
       suggest: true,
       reason: 'time',
-      detail: `セッション経過: ${sessionMin.toFixed(0)}分 (閾値: ${CONFIG.sessionCompactMinutes}分)`
+      detail: `セッション経過: ${sessionMin.toFixed(0)}分 (閾値: ${timeThreshold}分)`
     };
   }
 
-  if (state.toolCallCount >= CONFIG.toolCallThreshold) {
+  if (state.toolCallCount >= callThreshold) {
     return {
       suggest: true,
       reason: 'tool_calls',
-      detail: `ツールコール: ${state.toolCallCount}回 (閾値: ${CONFIG.toolCallThreshold}回)`
+      detail: `ツールコール: ${state.toolCallCount}回 (閾値: ${callThreshold}回)`
     };
   }
 
@@ -136,6 +140,8 @@ function outputSuggestion(check, state) {
   console.error('\x1b[36m│  推奨: /compact を実行してコンテキスト整理    │\x1b[0m');
   console.error('\x1b[36m└────────────────────────────────────────────────┘\x1b[0m');
   console.error('');
+  // stdout: AI向け指示（コンテキストに注入）
+  console.log('[Compact] /compact前にPraetorian compactで重要情報を保存してください');
 }
 
 async function main() {
@@ -152,7 +158,9 @@ async function main() {
       console.log(`Tool calls: ${state.toolCallCount}`);
       console.log(`Compact suggestions: ${state.suggestedAt.length}`);
       console.log(`Compact count: ${state.compactCount}`);
-      console.log(`Next suggestion at: ${CONFIG.sessionCompactMinutes} min or ${CONFIG.toolCallThreshold} calls`);
+      const dynTime = state.dynamicTimeThreshold || CONFIG.sessionCompactMinutes;
+      const dynCalls = state.dynamicCallThreshold || CONFIG.toolCallThreshold;
+      console.log(`Next suggestion at: ${dynTime} min or ${dynCalls} calls`);
       process.exit(0);
       return;
     }
@@ -193,6 +201,12 @@ async function main() {
       outputSuggestion(check, state);
 
       state.lastCompactSuggestion = Date.now();
+      // 閾値を倍増して次回提案を延伸（永久true問題の防止）
+      const prevTime = state.dynamicTimeThreshold || CONFIG.sessionCompactMinutes;
+      const prevCalls = state.dynamicCallThreshold || CONFIG.toolCallThreshold;
+      state.dynamicTimeThreshold = prevTime * 2;
+      state.dynamicCallThreshold = prevCalls + CONFIG.toolCallThreshold;
+
       state.suggestedAt.push({
         at: Date.now(),
         reason: check.reason,

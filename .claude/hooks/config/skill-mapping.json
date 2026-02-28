@@ -106,13 +106,14 @@
       "description": "太陽スタイルLP"
     },
     {
-      "triggers": ["リサーチ", "調査", "深掘り"],
-      "skill": "research",
+      "triggers": ["ディープリサーチ", "深層リサーチ", "徹底リサーチ", "本格リサーチ", "深層調査", "deep research", "最強リサーチ", "徹底調査", "完全リサーチ"],
+      "skills": ["world-research", "mega-research-plus", "unified-research", "research-free", "research"],
       "strict": false,
-      "description": "深層調査リサーチ"
+      "description": "全リサーチスキル統合ディープリサーチ（5スキル同時発動）",
+      "mode": "all"
     },
     {
-      "triggers": ["世界リサーチ", "SNSリサーチ", "グローバル検索"],
+      "triggers": ["世界リサーチ", "SNSリサーチ", "グローバル検索", "論文検索", "学術リサーチ"],
       "skill": "world-research",
       "strict": false,
       "description": "全世界SNS・学術論文横断検索"
@@ -124,10 +125,10 @@
       "description": "複数リサーチAPI統合"
     },
     {
-      "triggers": ["最強リサーチ", "徹底調査"],
-      "skill": "mega-research-plus",
+      "triggers": ["リサーチ", "調査", "深掘り"],
+      "skill": "research",
       "strict": false,
-      "description": "8ソース統合最強リサーチ"
+      "description": "基本リサーチ（簡易調査）"
     }
   ],
   "notes": [
