@@ -43,6 +43,39 @@ model_list:
       api_key: os.environ/OPENROUTER_API_KEY
       max_tokens: 4096
 
+  # ── OpenRouter経由 Claude（Anthropic直接より安い） ──
+  - model_name: claude-sonnet-4-6
+    litellm_params:
+      model: openrouter/anthropic/claude-sonnet-4-6
+      api_key: os.environ/OPENROUTER_API_KEY
+      max_tokens: 16384
+
+  - model_name: claude-opus-4-6
+    litellm_params:
+      model: openrouter/anthropic/claude-opus-4-6
+      api_key: os.environ/OPENROUTER_API_KEY
+      max_tokens: 16384
+
+  # ── OpenRouter経由 格安モデル ──
+  - model_name: deepseek
+    litellm_params:
+      model: openrouter/deepseek/deepseek-chat
+      api_key: os.environ/OPENROUTER_API_KEY
+      max_tokens: 8192
+
+  - model_name: glm5
+    litellm_params:
+      model: openrouter/z-ai/glm-5
+      api_key: os.environ/OPENROUTER_API_KEY
+      max_tokens: 8192
+
+  # ── Groq（無料枠あり・超高速） ──
+  - model_name: groq-scout
+    litellm_params:
+      model: groq/meta-llama/llama-4-scout-17b-16e-instruct
+      api_key: os.environ/GROQ_API_KEY
+      max_tokens: 8192
+
   - model_name: minimax-m2-5
     litellm_params:
       model: openai/MiniMax-M2.5
@@ -66,6 +99,18 @@ litellm_settings:
     - minimax-m2-5:
         - gpt53-codex
         - claude-sonnet
+    - claude-sonnet-4-6:
+        - claude-sonnet
+        - deepseek
+    - claude-opus-4-6:
+        - claude-sonnet-4-6
+        - claude-sonnet
+    - deepseek:
+        - groq-scout
+        - openrouter-free
+    - groq-scout:
+        - deepseek
+        - openrouter-free
 
   cache: true
   cache_params:
