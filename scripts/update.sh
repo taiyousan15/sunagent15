@@ -1,193 +1,202 @@
 #!/bin/bash
-# TAISUN Agent v2.11.0 - Update Script
+# TAISUN Agent - Update Script
 #
 # Usage: ./scripts/update.sh
 #
 # This script:
-# 1. Pulls latest changes
+# 1. Pulls latest changes from origin/main
 # 2. Updates npm dependencies
-# 3. Updates global skills
-# 4. Verifies 13-Layer Defense System
+# 3. Rebuilds MCP servers (dist/)
+# 4. Updates ALL skill symlinks in ~/.claude/skills/
+# 5. Updates agent symlinks in ~/.claude/agents/
+# 6. Verifies the installation
 
 set -e
 
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
+
 echo "========================================"
-echo "  TAISUN Agent v2.11.0 Update"
-echo "  13-Layer Fidelity Defense System"
+echo "  TAISUN Agent v${VERSION} Update"
 echo "========================================"
 echo ""
 
 # Check if git repo
-if [ ! -d ".git" ]; then
-    echo "Error: Not a git repository"
+if [ ! -d "$REPO_DIR/.git" ]; then
+    echo "[ERROR] Not a git repository: $REPO_DIR"
     echo "Please run from the taisun_agent directory"
     exit 1
 fi
 
-echo "1. Checking current version..."
-CURRENT_VERSION=$(cat package.json | grep '"version"' | head -1 | cut -d'"' -f4)
-echo "   Current: $CURRENT_VERSION"
+cd "$REPO_DIR"
 
-echo ""
-echo "2. Pulling latest changes..."
+# ─────────────────────────────────────────
+# Step 1: Pull latest changes
+# ─────────────────────────────────────────
+echo "1. Pulling latest changes..."
+CURRENT_VERSION=$VERSION
+
 git fetch origin
 git pull origin main --ff-only || {
-    echo "Warning: Could not fast-forward. Manual merge may be needed."
+    echo "  [WARN] Could not fast-forward. Manual merge may be needed."
+    echo "         Run: git pull origin main"
 }
 
-echo ""
-echo "3. Updating dependencies..."
-npm install
+NEW_VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
+echo "  [OK] $CURRENT_VERSION -> $NEW_VERSION"
 
 echo ""
-echo "4. Setting up 7-Layer Defense System..."
 
-# Make hooks executable
-chmod +x .claude/hooks/*.sh 2>/dev/null || true
-chmod +x .claude/hooks/*.js 2>/dev/null || true
+# ─────────────────────────────────────────
+# Step 2: Update npm dependencies
+# ─────────────────────────────────────────
+echo "2. Updating npm dependencies..."
+npm install --silent
+echo "  [OK] npm install complete"
 
-# Create required directories
-mkdir -p .claude/temp
-mkdir -p .taisun/memory
+echo ""
 
-# List of required hook files
-REQUIRED_HOOKS=(
-    "auto-memory-saver.js"
-    "session-continue-guard.js"
-    "skill-usage-guard.js"
-    "file-creation-guard.js"
-    "workflow-state-manager.js"
-    "workflow-fidelity-guard.js"
-    "deviation-approval-guard.js"
-    "workflow-sessionstart-injector.js"
-    "session-handoff-generator.js"
-    "violation-recorder.js"
-    "workflow-guard-bash.sh"
-    "workflow-guard-write.sh"
-)
+# ─────────────────────────────────────────
+# Step 3: Rebuild MCP servers
+# ─────────────────────────────────────────
+echo "3. Rebuilding MCP servers (dist/)..."
 
-echo "   Checking hooks..."
-MISSING=0
-for hook in "${REQUIRED_HOOKS[@]}"; do
-    if [ -f ".claude/hooks/$hook" ]; then
-        echo "   - $hook: OK"
-    else
-        echo "   - $hook: MISSING"
-        MISSING=$((MISSING + 1))
-    fi
-done
+if npm run build 2>/dev/null; then
+    echo "  [OK] Main build complete"
+else
+    echo "  [WARN] Main build had issues — continuing"
+fi
 
-if [ $MISSING -gt 0 ]; then
-    echo ""
-    echo "Warning: $MISSING hook files are missing"
-    echo "Some defense features may not work correctly"
+if [ -f "mcp-servers/voice-ai-mcp-server/package.json" ]; then
+    (cd mcp-servers/voice-ai-mcp-server && npm install --silent && npm run build 2>/dev/null) && \
+        echo "  [OK] voice-ai MCP rebuilt" || \
+        echo "  [WARN] voice-ai MCP build failed (requires TWILIO keys)"
+fi
+
+if [ -f "mcp-servers/ai-sdr-mcp-server/package.json" ]; then
+    (cd mcp-servers/ai-sdr-mcp-server && npm install --silent && npm run build 2>/dev/null) && \
+        echo "  [OK] ai-sdr MCP rebuilt" || \
+        echo "  [WARN] ai-sdr MCP build failed"
+fi
+
+if [ -f "mcp-servers/line-bot-mcp-server/package.json" ]; then
+    (cd mcp-servers/line-bot-mcp-server && npm install --silent && npm run build 2>/dev/null) && \
+        echo "  [OK] line-bot MCP rebuilt" || \
+        echo "  [WARN] line-bot MCP build failed (requires LINE keys)"
 fi
 
 echo ""
-echo "5. Updating Claude Code Skills..."
 
-# Install skills to ~/.claude/skills/
+# ─────────────────────────────────────────
+# Step 4: Update ALL skill symlinks
+# ─────────────────────────────────────────
+echo "4. Updating skill symlinks in ~/.claude/skills/..."
+
 TARGET_SKILLS="$HOME/.claude/skills"
-SOURCE_SKILLS=".claude/skills"
+SOURCE_SKILLS="$REPO_DIR/.claude/skills"
+
+mkdir -p "$TARGET_SKILLS"
 
 if [ -d "$SOURCE_SKILLS" ]; then
-    mkdir -p "$TARGET_SKILLS"
-
-    # Skills to install globally
-    SKILLS_TO_INSTALL=(
-        "sdd-req100"
-        "sdd-adr"
-        "sdd-design"
-        "sdd-full"
-        "sdd-guardrails"
-        "sdd-runbook"
-        "sdd-slo"
-        "sdd-tasks"
-        "sdd-threat"
-        "gpt-researcher"
-        "research"
-        "research-free"
-        "mega-research"
-        "dual-ai-review"
-        "taiyo-analyzer"
-        "lp-analysis"
-        "nanobanana-pro"
-        "agentic-vision"
-        "anime-slide-generator"
-        "world-research"
-        "apify-research"
-        "video-agent"
-        "taiyo-style-lp"
-        "taiyo-style-sales-letter"
-    )
-
     INSTALLED=0
-    for skill in "${SKILLS_TO_INSTALL[@]}"; do
-        if [ -d "$SOURCE_SKILLS/$skill" ]; then
-            if [ ! -d "$TARGET_SKILLS/$skill" ] || [ "$SOURCE_SKILLS/$skill/SKILL.md" -nt "$TARGET_SKILLS/$skill/SKILL.md" ] 2>/dev/null; then
-                cp -R "$SOURCE_SKILLS/$skill" "$TARGET_SKILLS/"
-                echo "   - $skill: updated"
-                ((INSTALLED++))
+    UPDATED=0
+    SKIPPED=0
+
+    for skill_dir in "$SOURCE_SKILLS"/*/; do
+        skill_name=$(basename "$skill_dir")
+
+        [[ "$skill_name" == "_archived" ]] && continue
+        [[ "$skill_name" == "data" ]] && continue
+        [[ ! -f "$skill_dir/SKILL.md" ]] && continue
+
+        target="$TARGET_SKILLS/$skill_name"
+
+        # Remove old copy if it exists (not a symlink)
+        if [ -d "$target" ] && [ ! -L "$target" ]; then
+            rm -rf "$target"
+        fi
+
+        if [ ! -L "$target" ]; then
+            ln -sf "$skill_dir" "$target"
+            echo "  [+] $skill_name"
+            ((INSTALLED++)) || true
+        else
+            current_target=$(readlink "$target")
+            if [ "$current_target" != "$skill_dir" ]; then
+                ln -sf "$skill_dir" "$target"
+                echo "  [~] $skill_name (updated)"
+                ((UPDATED++)) || true
             else
-                echo "   - $skill: already up to date"
+                ((SKIPPED++)) || true
             fi
         fi
     done
 
-    echo "   Total skills updated: $INSTALLED"
+    echo ""
+    echo "  Skills: ${INSTALLED} new, ${UPDATED} updated, ${SKIPPED} already current"
+    TOTAL_SKILLS=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
+    echo "  Total in ~/.claude/skills/: ${TOTAL_SKILLS}"
 else
-    echo "   Warning: Skills directory not found"
+    echo "  [WARN] Skills directory not found: $SOURCE_SKILLS"
 fi
 
 echo ""
-echo "6. Verifying update..."
 
-# Check new version
-NEW_VERSION=$(cat package.json | grep '"version"' | head -1 | cut -d'"' -f4)
-echo "   - Version: $CURRENT_VERSION -> $NEW_VERSION"
+# ─────────────────────────────────────────
+# Step 5: Update agent symlinks
+# ─────────────────────────────────────────
+echo "5. Updating agent symlinks in ~/.claude/agents/..."
 
-# Check settings.json for 13-layer defense
-if grep -q "13-Layer Defense\|7-Layer Defense" .claude/settings.json 2>/dev/null; then
-    echo "   - 13-Layer Defense: configured"
-else
-    echo "   - 13-Layer Defense: NOT configured"
+TARGET_AGENTS="$HOME/.claude/agents"
+SOURCE_AGENTS="$REPO_DIR/.claude/agents"
+
+mkdir -p "$TARGET_AGENTS"
+
+if [ -d "$SOURCE_AGENTS" ]; then
+    AGENT_NEW=0
+    for agent_file in "$SOURCE_AGENTS"/*.md; do
+        agent_name=$(basename "$agent_file")
+        [[ "$agent_name" == "CLAUDE.md" ]] && continue
+
+        target="$TARGET_AGENTS/$agent_name"
+
+        if [ -f "$target" ] && [ ! -L "$target" ]; then
+            rm -f "$target"
+        fi
+
+        if [ ! -L "$target" ]; then
+            ln -sf "$agent_file" "$target"
+            ((AGENT_NEW++)) || true
+        fi
+    done
+    echo "  [OK] ${AGENT_NEW} new agents linked"
 fi
 
-# Check CLAUDE.md for contract
-if grep -q "WORKFLOW FIDELITY CONTRACT" .claude/CLAUDE.md 2>/dev/null; then
-    echo "   - Fidelity Contract: present"
-else
-    echo "   - Fidelity Contract: NOT found"
-fi
+echo ""
+
+# ─────────────────────────────────────────
+# Step 6: Verify
+# ─────────────────────────────────────────
+echo "6. Verifying..."
+
+SKILL_COUNT=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
+echo "  [OK] Skills available: ${SKILL_COUNT}"
+
+AGENT_COUNT=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
+echo "  [OK] Agents available: ${AGENT_COUNT}"
 
 # Test hook execution
-echo ""
-echo "7. Testing hooks..."
-if echo '{"source":"test","cwd":"'$(pwd)'"}' | node .claude/hooks/workflow-sessionstart-injector.js 2>/dev/null; then
-    echo "   - workflow-sessionstart-injector.js: OK"
+if echo '{"source":"test","cwd":"'"$(pwd)"'"}' | node .claude/hooks/workflow-sessionstart-injector.js 2>/dev/null; then
+    echo "  [OK] Hooks: functional"
 else
-    echo "   - workflow-sessionstart-injector.js: FAILED"
+    echo "  [WARN] Hooks: check .claude/hooks/"
 fi
 
 echo ""
 echo "========================================"
-echo "  Update Complete!"
+echo "  Update Complete! v${NEW_VERSION}"
 echo "========================================"
 echo ""
-echo "13-Layer Defense System v2.11.0:"
-echo "  Layer 0: CLAUDE.md Contract (absolute rules)"
-echo "  Layer 1: SessionStart State Injection"
-echo "  Layer 2: Permission Gate (phase restrictions)"
-echo "  Layer 3: Read-before-Write enforcement"
-echo "  Layer 4: Baseline Lock (script protection)"
-echo "  Layer 5: Skill Evidence (skill usage tracking)"
-echo "  Layer 6: Deviation Approval (pre-approval required)"
-echo "  Layer 7-12: Agent/Copy Safety/Input/Auto-Select/Lint/Quality"
-echo ""
-echo "Installed/Updated Skills:"
-echo "  /nanobanana-pro - AI画像生成（無料）"
-echo "  /agentic-vision - 画像・動画分析（無料）"
-echo "  /anime-slide-generator - アニメ風スライド生成（Mac/Win/Linux対応）"
-echo "  /research-free - APIキー不要リサーチ"
-echo "  ... and more"
+echo "Skills update via symlinks — git pull auto-updates all skills."
+echo "Re-run this script only when agents or MCP servers change."
 echo ""

@@ -58,7 +58,7 @@ Before starting work:
 ### Delegation Pattern (MUST)
 - 3+ parallel agents: `run_in_background: true` **REQUIRED** (violation = context exhaustion)
 - After background agent completes: Read output file, extract key findings only
-- Task result >2000chars → **immediately** run `mcp__praetorian__praetorian_compact`
+- Task result >2000chars → run `mcp__praetorian__praetorian_compact` if available, otherwise use `/compact`
 
 ### Strategic /compact Timing
 - **Before** launching 3+ parallel agents

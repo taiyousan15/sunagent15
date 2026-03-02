@@ -27,11 +27,12 @@ URL分析スキル（url-all / url-deep-analysis）実行後、以下を抽出:
 - 主要リンク・ナビゲーション
 - コンテンツのカテゴリ判定
 
-## Phase 2: 自動メモリ保存（MANDATORY）
+## Phase 2: 自動メモリ保存（推奨・任意）
 
-URL分析完了後、**必ず** Praetorian compact で結果を保存する:
+URL分析完了後、Praetorian compact が利用可能であれば保存する:
 
 ```
+// Praetorian MCP が有効な場合のみ実行（なければスキップしてPhase 3へ）
 mcp__praetorian__praetorian_compact({
   type: "web_research",
   title: "{サイト名} - {カテゴリ}",
@@ -42,6 +43,8 @@ mcp__praetorian__praetorian_compact({
   recommendations: [...],     // 次のアクション
 })
 ```
+
+> **Note**: Praetorian MCP はオプションです。インストールしていない環境ではこのフェーズをスキップし、Phase 3 に進んでください。
 
 ## Phase 3: ノウハウ判定
 

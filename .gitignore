@@ -44,6 +44,16 @@ coverage/
 # Memory backups (large files)
 .claude/memory-backup/archive/*.tar.gz
 
+# Agent memory (personal, machine-specific — each user builds their own)
+.claude/agent-memory/
+
+# Praetorian compaction cache (session-specific, personal)
+.claude/praetorian/compactions/
+.claude/praetorian/index.json
+
+# Claude worktrees (isolation: worktree が作成する一時ブランチ)
+.claude/worktrees/
+
 # Credentials
 credentials.json
 **/secrets/

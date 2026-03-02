@@ -81,12 +81,12 @@
 
     "youtube": {
       "type": "stdio",
-      "command": "node",
-      "args": ["/Users/matsumototoshihiko/mcp-youtube/dist/index.js"],
-      "disabled": false,
+      "command": "npx",
+      "args": ["-y", "mcp-youtube"],
+      "disabled": true,
       "defer_loading": true,
       "search_keywords": ["youtube", "動画", "字幕"],
-      "description": "YouTube字幕ダウンロード",
+      "description": "YouTube字幕ダウンロード (要: npm install -g mcp-youtube 後に有効化)",
       "category": "media"
     },
     "context7": {
