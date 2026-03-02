@@ -17,14 +17,14 @@
 
 ## 📋 最新バージョン
 
-**v2.27.0** (2026-02-28) — スラッシュコマンド大幅拡充 + サブエージェント永続メモリ
+**v2.28.0** (2026-03-02) — インストール・アップデート大幅改善
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.28.0 | 2026-03-02 | install/update 全面改善 — 全スキルsymlink化・MCP自動ビルド・絶対パス除去・agent-memory/praetorian をgitignore |
 | v2.27.0 | 2026-02-28 | スラッシュコマンド 110→190+に拡充 / サブエージェント永続メモリ実装 / task-overflow-guard追加 |
 | v2.26.0 | 2026-02-27 | プランモード自動起動防止ルール追加 (`no-plan-mode.md`) |
 | v2.25.0 | 2026-02-22 | Hook Advisory-only化 + AGENTS.md 自己改善ループ |
-| v2.24.0 | 2026-02-16 | Bootstrap Safe Mode + Mac/Windows インストール手順整備 |
 
 → 全バージョン履歴: [CHANGELOG.md](CHANGELOG.md)
 
@@ -43,10 +43,10 @@
 cd ~
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
-npm run taisun:setup
+./scripts/install.sh
 ```
 
-**完了の目安**: `100/100点` または `98点以上` が表示されれば成功
+**完了の目安**: `Skills available: 100+` と `Agents available: 90+` が表示されれば成功
 
 **2. プロジェクトで使えるようにする**
 
@@ -57,11 +57,14 @@ npm run taisun:setup
 ln -s ~/taisun_agent/.claude .claude && ln -s ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
 ```
 
+> スキル・エージェントは `~/.claude/skills/` と `~/.claude/agents/` にシンボリックリンクで追加されます。
+> `git pull` 後にスキルが自動反映されるため、再インストール不要です。
+
 **3. アップデート**
 
 ```
 以下のコマンドを実行して：
-cd ~/taisun_agent && git pull origin main && npm run taisun:setup
+cd ~/taisun_agent && git pull origin main && ./scripts/update.sh
 ```
 
 ---
@@ -105,7 +108,7 @@ cp -r ~/taisun_agent/.claude .claude && cp ~/taisun_agent/.mcp.json .mcp.json &&
 **3. アップデート**
 
 ```powershell
-cd $HOME\taisun_agent; git pull origin main; npm run taisun:setup
+cd $HOME\taisun_agent; git pull origin main; bash scripts/update.sh
 ```
 
 ---
