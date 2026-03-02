@@ -17,10 +17,11 @@
 
 ## 📋 最新バージョン
 
-**v2.29.0** (2026-03-02) — OpenRouter/Groq経由 格安モデル対応
+**v2.30.0** (2026-03-02) — agentシンボリックリンク修正・全96エージェント確実に反映
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.30.0 | 2026-03-02 | install/update のagentリンクバグ修正 — git pull後も全96エージェントが~/.claude/agents/に確実に反映されるよう修正 |
 | v2.29.0 | 2026-03-02 | OpenRouter/Groq経由 LiteLLMセットアップ追加 — claude-lite コマンドでClaude料金を1/3〜1/10に削減 |
 | v2.28.0 | 2026-03-02 | install/update 全面改善 — 全スキルsymlink化・MCP自動ビルド・絶対パス除去・agent-memory/praetorian をgitignore |
 | v2.27.0 | 2026-02-28 | スラッシュコマンド 110→190+に拡充 / サブエージェント永続メモリ実装 / task-overflow-guard追加 |
