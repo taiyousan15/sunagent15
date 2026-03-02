@@ -277,6 +277,14 @@
       "search_keywords": ["twitter", "X", "ツイート", "SNS", "トレンド"],
       "description": "Twitter/X Client - ツイート検索・取得・投稿（Cookie認証）",
       "category": "sns-research"
+    },
+    "puppeteer": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "disabled": false,
+      "description": "Puppeteer MCP - Browser automation for web scraping and interaction. Enables reading JavaScript-rendered pages.",
+      "category": "browser"
     }
   }
 }
