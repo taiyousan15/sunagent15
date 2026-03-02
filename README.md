@@ -62,8 +62,15 @@ ln -s ~/taisun_agent/.claude .claude && ln -s ~/taisun_agent/.mcp.json .mcp.json
 
 **3. アップデート**
 
+スキルはシンボリックリンクのため、`git pull` だけで自動反映されます：
+
 ```
-以下のコマンドを実行して：
+cd ~/taisun_agent && git pull origin main
+```
+
+MCPサーバーも再ビルドしたい場合（月1程度）：
+
+```
 cd ~/taisun_agent && git pull origin main && ./scripts/update.sh
 ```
 
