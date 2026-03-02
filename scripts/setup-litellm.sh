@@ -1,28 +1,29 @@
 #!/bin/bash
 # TAISUN Agent - LiteLLM セットアップ（OpenRouter/Groq経由格安モデル利用）
 #
-# 使い方: bash scripts/setup-litellm.sh
+# 使い方（Claude Codeのチャットに貼り付けて実行）:
 #
-# このスクリプトが行うこと:
-# 1. litellm をインストール
-# 2. ~/.zshrc に claude-lite 関数を追加
-# 3. APIキーを .env に書き込む（任意）
+#   OPENROUTER_API_KEY="sk-or-xxxx" GROQ_API_KEY="gsk_xxxx" bash ~/taisun_agent/scripts/setup-litellm.sh
+#
+# GroqキーなしでOpenRouterだけの場合:
+#
+#   OPENROUTER_API_KEY="sk-or-xxxx" bash ~/taisun_agent/scripts/setup-litellm.sh
 
 set -e
 
 GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; RED='\033[0;31m'; NC='\033[0m'
 
-echo ""
-echo -e "${CYAN}========================================${NC}"
-echo -e "${CYAN}  TAISUN LiteLLM セットアップ${NC}"
-echo -e "${CYAN}  （OpenRouter/Groq経由 格安モデル）${NC}"
-echo -e "${CYAN}========================================${NC}"
-echo ""
-
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 LITELLM_CONFIG="$REPO_DIR/config/litellm-config.yaml"
 SHELL_RC="$HOME/.zshrc"
 [ -f "$HOME/.bashrc" ] && [ ! -f "$HOME/.zshrc" ] && SHELL_RC="$HOME/.bashrc"
+ENV_FILE="$REPO_DIR/.env"
+
+echo ""
+echo -e "${CYAN}========================================${NC}"
+echo -e "${CYAN}  TAISUN LiteLLM セットアップ${NC}"
+echo -e "${CYAN}========================================${NC}"
+echo ""
 
 # ─────────────────────────────────────────
 # Step 1: litellm インストール
@@ -40,52 +41,40 @@ fi
 echo ""
 
 # ─────────────────────────────────────────
-# Step 2: APIキーを確認・入力
+# Step 2: APIキーを .env に保存
 # ─────────────────────────────────────────
-echo "2. APIキーを設定します"
-echo ""
-echo -e "  ${YELLOW}OpenRouter API キー${NC}"
-echo "  取得先: https://openrouter.ai/keys"
-echo "  （すでに .env に設定済みの場合はそのまま Enter）"
-echo ""
-read -p "  OPENROUTER_API_KEY: " INPUT_OPENROUTER
+echo "2. APIキーを .env に保存します..."
 
-echo ""
-echo -e "  ${YELLOW}Groq API キー${NC}（無料）"
-echo "  取得先: https://console.groq.com/keys"
-echo "  （スキップする場合はそのまま Enter）"
-echo ""
-read -p "  GROQ_API_KEY: " INPUT_GROQ
-
-# .env に書き込む
-ENV_FILE="$REPO_DIR/.env"
-if [ -n "$INPUT_OPENROUTER" ]; then
+if [ -n "${OPENROUTER_API_KEY:-}" ]; then
     if grep -q "^OPENROUTER_API_KEY=" "$ENV_FILE" 2>/dev/null; then
-        sed -i.bak "s|^OPENROUTER_API_KEY=.*|OPENROUTER_API_KEY=$INPUT_OPENROUTER|" "$ENV_FILE"
+        sed -i.bak "s|^OPENROUTER_API_KEY=.*|OPENROUTER_API_KEY=$OPENROUTER_API_KEY|" "$ENV_FILE"
     else
-        echo "OPENROUTER_API_KEY=$INPUT_OPENROUTER" >> "$ENV_FILE"
+        echo "OPENROUTER_API_KEY=$OPENROUTER_API_KEY" >> "$ENV_FILE"
     fi
-    echo -e "  ${GREEN}[OK]${NC} OPENROUTER_API_KEY を .env に保存"
+    rm -f "$ENV_FILE.bak"
+    echo -e "  ${GREEN}[OK]${NC} OPENROUTER_API_KEY を保存しました"
+else
+    echo -e "  ${YELLOW}[SKIP]${NC} OPENROUTER_API_KEY が未指定です（後で .env に追記してください）"
 fi
 
-if [ -n "$INPUT_GROQ" ]; then
+if [ -n "${GROQ_API_KEY:-}" ]; then
     if grep -q "^GROQ_API_KEY=" "$ENV_FILE" 2>/dev/null; then
-        sed -i.bak "s|^GROQ_API_KEY=.*|GROQ_API_KEY=$INPUT_GROQ|" "$ENV_FILE"
+        sed -i.bak "s|^GROQ_API_KEY=.*|GROQ_API_KEY=$GROQ_API_KEY|" "$ENV_FILE"
     else
-        echo "GROQ_API_KEY=$INPUT_GROQ" >> "$ENV_FILE"
+        echo "GROQ_API_KEY=$GROQ_API_KEY" >> "$ENV_FILE"
     fi
-    echo -e "  ${GREEN}[OK]${NC} GROQ_API_KEY を .env に保存"
+    rm -f "$ENV_FILE.bak"
+    echo -e "  ${GREEN}[OK]${NC} GROQ_API_KEY を保存しました"
+else
+    echo -e "  ${YELLOW}[SKIP]${NC} GROQ_API_KEY が未指定です（Groqなしでも動作します）"
 fi
-
-# .bak 削除
-rm -f "$ENV_FILE.bak"
 
 echo ""
 
 # ─────────────────────────────────────────
-# Step 3: ~/.zshrc に関数を追加
+# Step 3: ~/.zshrc にコマンドを追加
 # ─────────────────────────────────────────
-echo "3. シェル関数を追加します（$SHELL_RC）"
+echo "3. シェルコマンドを追加します（$SHELL_RC）..."
 
 MARKER="# === TAISUN LiteLLM ==="
 
@@ -95,13 +84,13 @@ else
     cat >> "$SHELL_RC" << SHELLEOF
 
 $MARKER
-export OPENROUTER_API_KEY="${INPUT_OPENROUTER:-\${OPENROUTER_API_KEY}}"
-export GROQ_API_KEY="${INPUT_GROQ:-\${GROQ_API_KEY}}"
-
-# Python パス（pipでインストールした litellm を使えるように）
+# Python パス（litellm コマンドを使えるように）
 export PATH="\$HOME/Library/Python/3.9/bin:\$HOME/Library/Python/3.11/bin:\$HOME/.local/bin:\$PATH"
 
-# claude-lite: OpenRouter経由でClaude Codeを起動
+# taisun_agent の .env を自動読み込み
+[ -f "$REPO_DIR/.env" ] && export \$(grep -v '^#' "$REPO_DIR/.env" | xargs)
+
+# claude-lite: OpenRouter経由でClaude Codeを起動（claude より安い）
 function claude-lite() {
   if ! curl -s http://localhost:4000/health > /dev/null 2>&1; then
     echo "🚀 OpenRouterプロキシを起動中..."
@@ -116,8 +105,8 @@ function claude-lite() {
   ANTHROPIC_BASE_URL="http://localhost:4000" ANTHROPIC_API_KEY="dummy" claude "\$@"
 }
 
-alias litellm-stop='pkill -f "litellm --config" && echo "✅ 停止しました" || echo "既に停止しています"'
-alias litellm-health='curl -s http://localhost:4000/health | python3 -m json.tool 2>/dev/null || echo "LiteLLM は起動していません"'
+alias litellm-stop='pkill -f "litellm --config" 2>/dev/null && echo "✅ 停止しました" || echo "⚠ すでに停止しています"'
+alias litellm-health='curl -s http://localhost:4000/health | python3 -m json.tool 2>/dev/null || echo "⚠ LiteLLM は起動していません"'
 alias litellm-log='tail -f /tmp/litellm.log'
 # === END TAISUN LiteLLM ===
 SHELLEOF
@@ -128,29 +117,20 @@ fi
 echo ""
 
 # ─────────────────────────────────────────
-# Step 4: 動作確認
+# 完了メッセージ
 # ─────────────────────────────────────────
-echo "4. セットアップ完了！"
-echo ""
 echo -e "${CYAN}========================================${NC}"
-echo -e "${GREEN}  使い方${NC}"
+echo -e "${GREEN}  ✅ セットアップ完了！${NC}"
 echo -e "${CYAN}========================================${NC}"
 echo ""
-echo "  # 設定を反映（1回だけ必要）"
-echo "  source $SHELL_RC"
+echo "  次のコマンドを実行して設定を反映："
 echo ""
-echo "  # OpenRouter経由でClaude Codeを起動"
-echo "  claude-lite"
+echo -e "  ${CYAN}source $SHELL_RC${NC}"
 echo ""
-echo "  # LiteLLMを止めたいとき"
-echo "  litellm-stop"
+echo "  以後の使い方："
 echo ""
-echo "  # 起動状態を確認"
-echo "  litellm-health"
-echo ""
-echo "  # ログを見る"
-echo "  litellm-log"
-echo ""
-echo -e "${YELLOW}  次のコマンドを実行して設定を反映してください:${NC}"
-echo -e "${CYAN}  source $SHELL_RC${NC}"
+echo "    claude-lite      ← 安いモデル経由でClaude Codeを起動"
+echo "    litellm-stop     ← 止める"
+echo "    litellm-health   ← 起動状態を確認"
+echo "    litellm-log      ← ログを見る"
 echo ""
