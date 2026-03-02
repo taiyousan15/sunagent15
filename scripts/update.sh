@@ -37,10 +37,24 @@ echo "1. Pulling latest changes..."
 CURRENT_VERSION=$VERSION
 
 git fetch origin
+
+# ローカルに追跡済みファイルの変更があれば一時退避（.mcp.jsonはgit管理外なので対象外）
+STASHED=false
+if ! git diff --quiet HEAD 2>/dev/null; then
+    git stash push -m "taisun-update-auto-stash" 2>/dev/null && STASHED=true
+    echo "  [INFO] Local changes stashed temporarily"
+fi
+
 git pull origin main --ff-only || {
     echo "  [WARN] Could not fast-forward. Manual merge may be needed."
     echo "         Run: git pull origin main"
 }
+
+# stashを戻す
+if [ "$STASHED" = true ]; then
+    git stash pop 2>/dev/null && echo "  [INFO] Local changes restored" || \
+        echo "  [WARN] Could not restore stashed changes. Run: git stash pop"
+fi
 
 NEW_VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
 echo "  [OK] $CURRENT_VERSION -> $NEW_VERSION"

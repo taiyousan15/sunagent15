@@ -14,6 +14,10 @@ config/proxy-mcp/internal-mcps.staging.json
 config/proxy-mcp/internal-mcps.prod.json
 config/proxy-mcp/observability-report.json
 
+# MCP config (local customization — each user/project may differ)
+# Template: .mcp.json.example
+.mcp.json
+
 # Build outputs
 dist/
 build/

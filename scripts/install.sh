@@ -235,7 +235,18 @@ echo ""
 # ─────────────────────────────────────────
 # Step 7: .env setup guide
 # ─────────────────────────────────────────
-echo "7. Environment variables (.env) setup..."
+echo "7. MCP config (.mcp.json) setup..."
+
+if [ ! -f "$REPO_DIR/.mcp.json" ]; then
+    cp "$REPO_DIR/.mcp.json.example" "$REPO_DIR/.mcp.json" 2>/dev/null || true
+    echo "  [OK] .mcp.json created from template"
+else
+    echo "  [OK] .mcp.json already exists (local customizations preserved)"
+fi
+
+echo ""
+
+echo "8. Environment variables (.env) setup..."
 
 if [ ! -f "$REPO_DIR/.env" ]; then
     echo ""
@@ -275,7 +286,7 @@ echo ""
 # ─────────────────────────────────────────
 # Step 8: Verification
 # ─────────────────────────────────────────
-echo "8. Verification..."
+echo "9. Verification..."
 
 # Check CLAUDE.md
 if [ -f "$REPO_DIR/.claude/CLAUDE.md" ]; then
