@@ -55,7 +55,7 @@ cd taisun_agent
 
 ```
 以下のコマンドを実行して：
-ln -s ~/taisun_agent/.claude .claude && ln -s ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
+rm -rf .claude .mcp.json 2>/dev/null; ln -sf ~/taisun_agent/.claude .claude && ln -sf ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
 ```
 
 > スキル・エージェントは `~/.claude/skills/` と `~/.claude/agents/` にシンボリックリンクで追加されます。
@@ -108,7 +108,7 @@ mklink .mcp.json C:\Users\YourName\taisun_agent\.mcp.json
 **方法C: フォルダをコピー（最も確実）**
 
 ```
-cp -r ~/taisun_agent/.claude .claude && cp ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
+rm -rf .claude .mcp.json 2>/dev/null; rsync -a --exclude='.claude' ~/taisun_agent/.claude/ .claude/ && cp ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
 ```
 
 > 注意: 方法Cはアップデート時に再コピーが必要です
