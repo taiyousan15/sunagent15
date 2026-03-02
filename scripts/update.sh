@@ -154,6 +154,8 @@ mkdir -p "$TARGET_AGENTS"
 
 if [ -d "$SOURCE_AGENTS" ]; then
     AGENT_NEW=0
+    AGENT_UPDATED=0
+    AGENT_SKIPPED=0
     for agent_file in "$SOURCE_AGENTS"/*.md; do
         agent_name=$(basename "$agent_file")
         [[ "$agent_name" == "CLAUDE.md" ]] && continue
@@ -167,9 +169,20 @@ if [ -d "$SOURCE_AGENTS" ]; then
         if [ ! -L "$target" ]; then
             ln -sf "$agent_file" "$target"
             ((AGENT_NEW++)) || true
+        else
+            # Always update symlink to ensure latest path
+            current_target=$(readlink "$target")
+            if [ "$current_target" != "$agent_file" ]; then
+                ln -sf "$agent_file" "$target"
+                ((AGENT_UPDATED++)) || true
+            else
+                ((AGENT_SKIPPED++)) || true
+            fi
         fi
     done
-    echo "  [OK] ${AGENT_NEW} new agents linked"
+    TOTAL_AGENTS=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    echo "  [OK] Agents: ${AGENT_NEW} new, ${AGENT_UPDATED} updated, ${AGENT_SKIPPED} already linked"
+    echo "  Total in ~/.claude/agents/: ${TOTAL_AGENTS}"
 fi
 
 echo ""

@@ -181,23 +181,37 @@ SOURCE_AGENTS="$REPO_DIR/.claude/agents"
 mkdir -p "$TARGET_AGENTS"
 
 if [ -d "$SOURCE_AGENTS" ]; then
-    AGENT_COUNT=0
+    AGENT_INSTALLED=0
+    AGENT_UPDATED=0
+    AGENT_SKIPPED=0
     for agent_file in "$SOURCE_AGENTS"/*.md; do
         agent_name=$(basename "$agent_file")
         [[ "$agent_name" == "CLAUDE.md" ]] && continue
 
         target="$TARGET_AGENTS/$agent_name"
 
+        # Remove old copy if it exists (not a symlink)
         if [ -f "$target" ] && [ ! -L "$target" ]; then
             rm -f "$target"
         fi
 
         if [ ! -L "$target" ]; then
             ln -sf "$agent_file" "$target"
-            ((AGENT_COUNT++)) || true
+            ((AGENT_INSTALLED++)) || true
+        else
+            # Always update symlink to ensure latest path
+            current_target=$(readlink "$target")
+            if [ "$current_target" != "$agent_file" ]; then
+                ln -sf "$agent_file" "$target"
+                ((AGENT_UPDATED++)) || true
+            else
+                ((AGENT_SKIPPED++)) || true
+            fi
         fi
     done
-    echo "  [OK] ${AGENT_COUNT} agents linked (plus existing)"
+    TOTAL_AGENTS=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    echo "  [OK] Agents: ${AGENT_INSTALLED} installed, ${AGENT_UPDATED} updated, ${AGENT_SKIPPED} already linked"
+    echo "  Total in ~/.claude/agents/: ${TOTAL_AGENTS}"
 fi
 
 echo ""
