@@ -17,10 +17,11 @@
 
 ## 📋 最新バージョン
 
-**v2.28.0** (2026-03-02) — インストール・アップデート大幅改善
+**v2.29.0** (2026-03-02) — OpenRouter/Groq経由 格安モデル対応
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.29.0 | 2026-03-02 | OpenRouter/Groq経由 LiteLLMセットアップ追加 — claude-lite コマンドでClaude料金を1/3〜1/10に削減 |
 | v2.28.0 | 2026-03-02 | install/update 全面改善 — 全スキルsymlink化・MCP自動ビルド・絶対パス除去・agent-memory/praetorian をgitignore |
 | v2.27.0 | 2026-02-28 | スラッシュコマンド 110→190+に拡充 / サブエージェント永続メモリ実装 / task-overflow-guard追加 |
 | v2.26.0 | 2026-02-27 | プランモード自動起動防止ルール追加 (`no-plan-mode.md`) |
@@ -117,6 +118,43 @@ cp -r ~/taisun_agent/.claude .claude && cp ~/taisun_agent/.mcp.json .mcp.json &&
 ```powershell
 cd $HOME\taisun_agent; git pull origin main; bash scripts/update.sh
 ```
+
+---
+
+## 💰 オプション：格安モデルで使う（OpenRouter / Groq）
+
+通常の Claude Code は Anthropic に直接課金されますが、**OpenRouter経由にすると料金が1/3〜1/10**になります。
+
+### APIキーを取得する（2つ）
+
+| サービス | 料金 | 取得先 |
+|---------|------|--------|
+| OpenRouter | 有料（安い） | https://openrouter.ai/keys |
+| Groq | **無料枠あり** | https://console.groq.com/keys |
+
+### セットアップ（Claude Code のチャットに貼り付けて実行）
+
+```
+以下を実行して（キーを自分のものに置き換えて）：
+OPENROUTER_API_KEY="sk-or-ここにキー" GROQ_API_KEY="gsk_ここにキー" bash ~/taisun_agent/scripts/setup-litellm.sh
+```
+
+完了したら：
+
+```
+以下を実行して：
+source ~/.zshrc
+```
+
+### 使い方
+
+```
+claude-lite      ← 安いモデル経由でClaude Codeを起動（これだけでOK）
+litellm-stop     ← 止める
+litellm-health   ← 起動状態を確認
+```
+
+> **Groqだけ使いたい場合**（完全無料）: `GROQ_API_KEY="gsk_ここにキー" bash ~/taisun_agent/scripts/setup-litellm.sh`
 
 ---
 
