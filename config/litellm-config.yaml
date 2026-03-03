@@ -1,4 +1,4 @@
-# LiteLLM Proxy Configuration - LLM Auto-Switching System v1.0
+# LiteLLM Proxy Configuration - LLM Auto-Switching System v2.0（SDD Ollama 統合）
 
 model_list:
   - model_name: claude-opus
@@ -83,6 +83,31 @@ model_list:
       api_key: os.environ/MINIMAX_API_KEY
       max_tokens: 40960
 
+  # ── Ollama ローカルモデル（SDD 専用・無料・M4 MAX最適化） ──
+  - model_name: ollama-qwen25-72b
+    litellm_params:
+      model: ollama/qwen2.5:72b-instruct-q8_0
+      api_base: http://localhost:11434
+      max_tokens: 32768
+
+  - model_name: ollama-deepseek-r1
+    litellm_params:
+      model: ollama/deepseek-r1:70b
+      api_base: http://localhost:11434
+      max_tokens: 32768
+
+  - model_name: ollama-llama33
+    litellm_params:
+      model: ollama/llama3.3:70b
+      api_base: http://localhost:11434
+      max_tokens: 32768
+
+  - model_name: ollama-qwen25-32b
+    litellm_params:
+      model: ollama/qwen2.5:32b
+      api_base: http://localhost:11434
+      max_tokens: 16384
+
 litellm_settings:
   fallbacks:
     - claude-sonnet:
@@ -111,6 +136,16 @@ litellm_settings:
     - groq-scout:
         - deepseek
         - openrouter-free
+    - ollama-deepseek-r1:
+        - ollama-qwen25-72b
+        - deepseek
+    - ollama-qwen25-72b:
+        - ollama-qwen25-32b
+        - deepseek
+        - glm5
+    - ollama-llama33:
+        - ollama-qwen25-72b
+        - deepseek
 
   cache: true
   cache_params:

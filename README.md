@@ -17,10 +17,11 @@
 
 ## 📋 最新バージョン
 
-**v2.30.0** (2026-03-02) — agentシンボリックリンク修正・全96エージェント確実に反映
+**v2.31.0** (2026-03-04) — SDD スキル Ollama最適化・setup-sdd.sh 追加
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.31.0 | 2026-03-04 | SDD 13スキルをOllamaローカルモデルに最適化（deepseek-r1:70b + qwen2.5:72b）+ setup-sdd.sh追加（3プラン選択式セットアップ） |
 | v2.30.0 | 2026-03-02 | install/update のagentリンクバグ修正 — git pull後も全96エージェントが~/.claude/agents/に確実に反映されるよう修正 |
 | v2.29.0 | 2026-03-02 | OpenRouter/Groq経由 LiteLLMセットアップ追加 — claude-lite コマンドでClaude料金を1/3〜1/10に削減 |
 | v2.28.0 | 2026-03-02 | install/update 全面改善 — 全スキルsymlink化・MCP自動ビルド・絶対パス除去・agent-memory/praetorian をgitignore |
@@ -113,6 +114,51 @@ rm -rf .claude .mcp.json 2>/dev/null; rsync -a --exclude='.claude' ~/taisun_agen
 ```powershell
 cd $HOME\taisun_agent; git pull origin main; bash scripts/update.sh
 ```
+
+---
+
+## 🤖 SDD スキル最適化セットアップ（NEW v2.31.0）
+
+SDD（Software Design Document）スキル13本を環境に合わせた最適なモデルで動作させるセットアップです。
+
+### 3パターンから選べます
+
+| # | プラン | モデル | 対象 |
+|---|--------|--------|------|
+| 1 | Claude MAX/Pro | claude-opus / claude-sonnet | MAX $200プラン加入済みの方 |
+| 2 | **Ollama ローカル（推奨）** | deepseek-r1:70b / qwen2.5:72b | M1/M2/M3/M4 Mac（32GB以上） |
+| 3 | OpenRouter 格安API | deepseek-chat | どのマシンでも |
+
+### セットアップ（Claude Code のチャットに貼り付けて実行）
+
+```
+以下を実行して（対話式でプランを選べます）：
+bash ~/taisun_agent/scripts/setup-sdd.sh
+```
+
+完了したら：
+
+```
+以下を実行して：
+source ~/.zshrc
+```
+
+### SDD スキル（13本）の使い方
+
+```
+/sdd-full <spec-slug>        ← 要件定義〜設計まで一括実行（最もよく使う）
+/sdd-req100 <spec-slug>      ← EARS準拠 要件定義書作成
+/sdd-design <spec-slug>      ← アーキテクチャ設計書作成
+/sdd-adr <title> <spec-slug> ← 技術決定記録（ADR）作成
+/sdd-context <spec-slug>     ← ビジネスコンテキスト整合（Amazon PR-FAQ）
+/sdd-tasks <spec-slug>       ← 実装タスク分解
+/sdd-slo <spec-slug>         ← SLO/SLA定義
+/sdd-threat <spec-slug>      ← STRIDE脅威分析
+/sdd-guardrails <spec-slug>  ← セキュリティガードレール
+/sdd-runbook <spec-slug>     ← 運用Runbook作成
+```
+
+> **Ollamaモデルを使う場合**: 事前に `ollama pull deepseek-r1:70b` と `ollama pull qwen2.5:72b-instruct-q8_0` が必要です（setup-sdd.sh が自動的に案内します）
 
 ---
 
