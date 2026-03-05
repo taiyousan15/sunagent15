@@ -97,7 +97,7 @@ INTEL_PID=$!
 ```bash
 cd $HOME/taisun_agent
 
-python3 /Users/matsumototoshihiko/.claude/skills/omega-research/scripts/research.py \
+python3 ~/.claude/skills/omega-research/scripts/research.py \
   "[TOPIC]" \
   --mode [MODE] \
   --output research/runs/$(date +%Y%m%d-%H%M%S)__omega-research

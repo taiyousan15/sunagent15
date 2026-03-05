@@ -70,8 +70,8 @@
     },
     "youtube": {
       "type": "stdio",
-      "command": "node",
-      "args": ["/Users/matsumototoshihiko/mcp-youtube/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "mcp-youtube"],
       "disabled": false,
       "description": "YouTube subtitle downloader using yt-dlp",
       "category": "media"

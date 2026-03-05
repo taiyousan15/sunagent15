@@ -35,8 +35,8 @@
 
     "youtube": {
       "type": "stdio",
-      "command": "node",
-      "args": ["/Users/matsumototoshihiko/mcp-youtube/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "mcp-youtube"],
       "disabled": false,
       "defer_loading": true,
       "search_keywords": ["youtube", "動画", "字幕"],

@@ -52,12 +52,12 @@ ARGUMENTSからトピックと追加オプションを解析する。
 cd $HOME/taisun_agent
 
 # デフォルト（4セクション、研究ディレクトリに保存）
-python3 /Users/matsumototoshihiko/.claude/skills/deep-research-grok/scripts/research.py \
+python3 ~/.claude/skills/deep-research-grok/scripts/research.py \
   "[TOPIC]" \
   --output research/runs/$(date +%Y%m%d)__grok-deep-research
 
 # クイックモード（2セクション）
-python3 /Users/matsumototoshihiko/.claude/skills/deep-research-grok/scripts/research.py \
+python3 ~/.claude/skills/deep-research-grok/scripts/research.py \
   "[TOPIC]" --quick \
   --output research/runs/$(date +%Y%m%d)__grok-quick-research
 ```

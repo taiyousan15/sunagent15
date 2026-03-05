@@ -40,15 +40,14 @@ Udemyコースの動画・字幕・アセット・クイズをダウンロード
 │   └──────────────┘                                    │
 │                                                        │
 │  必須: Python 3.12, ffmpeg, aria2c, yt-dlp            │
-│  場所: ~/Desktop/開発2026/taisun_agent2026/            │
-│        udemy-downloader/                               │
+│  場所: ~/taisun_agent/udemy-downloader/                │
 └───────────────────────────────────────────────────────┘
 ```
 
 ## インストール場所
 
 ```
-/Users/matsumototoshihiko/Desktop/開発2026/taisun_agent2026/udemy-downloader/
+$HOME/taisun_agent/udemy-downloader/
 ```
 
 - Python venv: `.venv/` (Python 3.12)
@@ -65,7 +64,7 @@ Bearer Token の取得が必要:
 
 ```bash
 # .env ファイルに設定
-cd /Users/matsumototoshihiko/Desktop/開発2026/taisun_agent2026/udemy-downloader
+cd $HOME/taisun_agent/udemy-downloader
 cp .env.sample .env
 # UDEMY_BEARER=<your_token> を設定
 ```
@@ -121,7 +120,7 @@ cp .env.sample .env
 
 ```bash
 # .env ファイルの存在チェック
-UDEMY_DIR="/Users/matsumototoshihiko/Desktop/開発2026/taisun_agent2026/udemy-downloader"
+UDEMY_DIR="$HOME/taisun_agent/udemy-downloader"
 
 if [ ! -f "$UDEMY_DIR/.env" ]; then
   echo "Bearer Tokenが未設定です"
@@ -138,7 +137,7 @@ fi
 引数に基づいてコマンドを構築:
 
 ```bash
-UDEMY_DIR="/Users/matsumototoshihiko/Desktop/開発2026/taisun_agent2026/udemy-downloader"
+UDEMY_DIR="$HOME/taisun_agent/udemy-downloader"
 PYTHON="$UDEMY_DIR/.venv/bin/python"
 OUTPUT_DIR="${OUT:-$HOME/Desktop/udemy-courses}"
 

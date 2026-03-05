@@ -31,18 +31,18 @@ disable-model-invocation: true
 
 ## Quick Start
 
-```bash
-cd /Users/matsumototoshihiko/Desktop/dev/\ kindlenote0201/kindle-content-empire
+このスキルは `WebSearch` と `WebFetch` を使って複数ソースから情報を収集します。
 
-# 単一クエリでリサーチ
-npx ts-node packages/worker/src/research/run-unified-research.ts single "新NISA 2024"
-
-# 新NISA専用リサーチ（7クエリ自動実行）
-npx ts-node packages/worker/src/research/run-unified-research.ts nisa
-
-# トピックリサーチ（5クエリ自動実行）
-npx ts-node packages/worker/src/research/run-unified-research.ts topic "投資信託"
 ```
+/unified-research 新NISA 2024
+/unified-research "投資信託 おすすめ" --apis=tavily,brave,news
+/unified-research 生成AI市場動向 --deep
+```
+
+**実行時の動作**:
+1. WebSearch で複数クエリを並列実行
+2. 結果をソースAPIごとに整理
+3. ファクトを抽出し Markdown レポートを生成
 
 ## API使用例
 
@@ -134,17 +134,6 @@ PERPLEXITY_API_KEY=your_perplexity_key
 3. **結果の検証**:
    - 複数ソースで情報をクロスチェック
    - 公式情報源を優先
-
-## ファイル構成
-
-```
-packages/worker/src/research/
-├── unified-research.ts      # メインモジュール
-├── run-unified-research.ts  # CLI実行スクリプト
-├── enhanced-research.ts     # WebSearch統合版
-├── keyword-research.ts      # キーワードリサーチ
-└── deep-research.ts         # 従来版（DuckDuckGo）
-```
 
 ## トラブルシューティング
 
