@@ -17,10 +17,13 @@
 
 ## 📋 最新バージョン
 
-**v2.31.0** (2026-03-04) — SDD スキル Ollama最適化・setup-sdd.sh 追加
+**v2.33.0** (2026-03-06) — `/research-system` スキル追加 — 4ステップ自動リサーチ
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.33.0 | 2026-03-06 | `/research-system` スキル追加 — BUILD_TARGETを引数で渡すとキーワード展開→ディープリサーチ2回→アーキテクチャ設計→12セクションレポートまで自動実行（YAML定義でコンテキスト52%削減） |
+| v2.32.1 | 2026-03-06 | スキル・MCP設定の絶対パスをポータブルパスに修正 |
+| v2.32.0 | 2026-03-06 | グローバルスキル3件をリポジトリに追加 — スタンドアロン化完了（deep-research-grok / intelligence-research / omega-research） |
 | v2.31.0 | 2026-03-04 | SDD 13スキルをOllamaローカルモデルに最適化（deepseek-r1:70b + qwen2.5:72b）+ setup-sdd.sh追加（3プラン選択式セットアップ） |
 | v2.30.0 | 2026-03-02 | install/update のagentリンクバグ修正 — git pull後も全96エージェントが~/.claude/agents/に確実に反映されるよう修正 |
 | v2.29.0 | 2026-03-02 | OpenRouter/Groq経由 LiteLLMセットアップ追加 — claude-lite コマンドでClaude料金を1/3〜1/10に削減 |

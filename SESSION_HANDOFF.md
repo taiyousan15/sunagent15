@@ -2,8 +2,21 @@
 
 > **CRITICAL**: 次のセッションは必ずこのファイルを読んでから作業を開始すること
 
-**最終更新**: 2026-02-27T13:39:02.499Z
+**最終更新**: 2026-03-06T02:00:00.000Z
 **作業ディレクトリ**: /Users/matsumototoshihiko/taisun_agent
+
+## 直近の完了作業（v2.33.0）— /research-system スキル追加
+
+### 内容
+- `/research-system` スキルを追加（`~/.claude/skills/research-system/` → シンボリックリンク済み）
+- BUILD_TARGETを引数で渡すと、`リサーチ提案v2_SUPER_PROMPT.yaml` を読み込み PRE-FLIGHT → STEP1〜4 を自動実行
+- YAML定義でコンテキスト消費52%削減（MD 691行 → YAML 333行）
+- ディープリサーチ2回実施（Pass1: 3エージェント並列 → Pass2: omega-research）
+- 12セクションレポート生成（TrendScore / アーキテクチャ設計 / 実装計画）
+
+### GitHub
+- Commit: v2.33.0 (feat: /research-system スキル追加)
+- Push 完了: `san15/taisun_agent` main ブランチ
 
 ## 既存スクリプト（MUST READ）
 
