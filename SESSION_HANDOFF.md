@@ -2,17 +2,38 @@
 
 > **CRITICAL**: 次のセッションは必ずこのファイルを読んでから作業を開始すること
 
-**最終更新**: 2026-03-06T02:00:00.000Z
+**最終更新**: 2026-03-06T04:00:00.000Z
 **作業ディレクトリ**: /Users/matsumototoshihiko/taisun_agent
 
-## 直近の完了作業（v2.33.0）— /research-system スキル追加
+## 直近の完了作業（v2.34.0）— intelligence-research スキルを taisun_agent に移植
+
+### 内容
+- `src/intelligence/` を taisun_agent に追加（マーケティングツール革命から **intelligence コードのみ** を移植）
+  - `src/intelligence/index.ts` — エントリポイント
+  - `src/intelligence/aggregator.ts` — 集計・スコアリング
+  - `src/intelligence/report.ts` — Markdownレポート生成
+  - `src/intelligence/scheduler.ts` — スケジューラ
+  - `src/intelligence/types/index.ts` — X_WATCH_ACCOUNTS 等の定数定義
+  - `src/intelligence/collectors/` — apify / economics / news / rss 各コレクター
+- `~/.claude/skills/intelligence-research/SKILL.md` をポータブル化
+  - ハードコードされたパス（`/マーケティングツール革命`）を除去
+  - シンボリックリンク自動検出ロジック（python3 で dirname × 4段遡り）に変更
+  - 他ユーザーへの配布・他プロジェクトへの転用が可能な形に
+
+### 注意
+- `src/intelligence/` コードのみ移植。マーケティングツール革命プロジェクト全体は **別プロジェクト**（影響なし）
+- `.env` の API キー（FRED_API_KEY, NEWSAPI_KEY, APIFY_TOKEN）は各ユーザーが個別設定（共有しない）
+
+### GitHub
+- Commit: c3d4cd6 (feat: intelligence-research スキル移植 + SKILL.md ポータブル化)
+- Push 完了: `san15/taisun_agent` main ブランチ
+
+## 前回完了作業（v2.33.0）— /research-system スキル追加
 
 ### 内容
 - `/research-system` スキルを追加（`~/.claude/skills/research-system/` → シンボリックリンク済み）
 - BUILD_TARGETを引数で渡すと、`リサーチ提案v2_SUPER_PROMPT.yaml` を読み込み PRE-FLIGHT → STEP1〜4 を自動実行
 - YAML定義でコンテキスト消費52%削減（MD 691行 → YAML 333行）
-- ディープリサーチ2回実施（Pass1: 3エージェント並列 → Pass2: omega-research）
-- 12セクションレポート生成（TrendScore / アーキテクチャ設計 / 実装計画）
 
 ### GitHub
 - Commit: v2.33.0 (feat: /research-system スキル追加)
