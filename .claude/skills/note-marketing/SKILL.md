@@ -13,7 +13,7 @@ disable-model-invocation: true
 - リードマグネット作成
 
 ## 参照コンテンツ
-- -taiyo/content/note/ (テンプレート・サンプル)
+- `$PROJECT_ROOT/content/note/` (テンプレート・サンプル、存在する場合)
 
 ## 記事タイプ
 ### 無料記事

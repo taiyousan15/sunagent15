@@ -69,6 +69,19 @@ model_list:
       api_key: os.environ/OPENROUTER_API_KEY
       max_tokens: 8192
 
+  # ── xAI Grok（X/Twitterリアルタイム検索・最新情報） ──
+  - model_name: grok-3
+    litellm_params:
+      model: xai/grok-3
+      api_key: os.environ/XAI_API_KEY
+      max_tokens: 131072
+
+  - model_name: grok-3-mini
+    litellm_params:
+      model: xai/grok-3-mini
+      api_key: os.environ/XAI_API_KEY
+      max_tokens: 131072
+
   # ── Groq（無料枠あり・超高速） ──
   - model_name: groq-scout
     litellm_params:

@@ -64,12 +64,22 @@
       "tool": "WebSearch",
       "rate_limit": "制限あり",
       "priority": 8
+    },
+    "xai": {
+      "name": "xAI Grok",
+      "description": "X/Twitterリアルタイム検索・最新情報・トレンド取得",
+      "env_key": "XAI_API_KEY",
+      "endpoint": "https://api.x.ai/v1/chat/completions",
+      "model": "grok-3",
+      "rate_limit": "課金制",
+      "priority": 9,
+      "features": ["live_search", "x_search", "real_time"]
     }
   },
   "modes": {
     "deep": {
       "description": "全API使用した徹底調査",
-      "apis": ["tavily", "serpapi", "brave", "newsapi", "perplexity", "twitter"],
+      "apis": ["tavily", "serpapi", "brave", "newsapi", "perplexity", "twitter", "xai"],
       "max_results": 50
     },
     "quick": {

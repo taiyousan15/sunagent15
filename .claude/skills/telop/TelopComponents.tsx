@@ -1,3 +1,4 @@
+
 /**
  * テロップコンポーネント集
  * SNS縦型動画（Reels/TikTok/Shorts）向け
