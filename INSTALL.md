@@ -1,310 +1,170 @@
-# TAISUN Agent 2026 インストールガイド
+# TAISUN Agent インストールガイド
 
-> ⚠️ **重要**: すべてのコマンドは `taisun_agent` ディレクトリ内で実行してください。
->
-> ```bash
-> # 正しいディレクトリにいることを確認
-> pwd  # → /path/to/taisun_agent と表示されるはず
->
-> # package.jsonにtaisun:diagnoseがあることを確認
-> grep "taisun:diagnose" package.json
-> ```
+> **対応OS**: macOS (Air / Pro) | Windows 10/11
 
 ---
 
-## クイックインストール（5分）
+## 必要なもの（共通）
+
+| 要件 | バージョン | 入手先 |
+|------|-----------|--------|
+| Node.js | 18 以上 | https://nodejs.org/ |
+| Git | 2.x 以上 | https://git-scm.com/ |
+| Claude Code | 最新 | https://claude.ai/download |
+| Python | 3.x 以上（推奨） | https://www.python.org/ |
+
+---
+
+## Mac（Air / Pro）
+
+### クイックインストール
 
 ```bash
 # 1. リポジトリをクローン
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 
-# 2. 依存関係をインストール
-npm install
-
-# 3. ビルド
-npm run build:all
-
-# 4. Hooksの実行権限を付与
-chmod +x .claude/hooks/*.js 2>/dev/null || true
-
-# 5. 高速モード有効化（推奨）
-npm run perf:fast
-
-# 6. メモリ対策（長時間セッション向け）
-echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
-source ~/.zshrc
-
-# 7. 動作確認
-npm run taisun:diagnose
+# 2. インストール実行（全自動）
+bash scripts/install.sh
 ```
 
----
-
-## 前提条件
-
-| 要件 | バージョン | 確認コマンド |
-|------|-----------|-------------|
-| Node.js | 18.x 以上 | `node -v` |
-| npm | 9.x 以上 | `npm -v` |
-| Git | 2.x 以上 | `git --version` |
-| Python | 3.10 以上（オプション） | `python3 --version` |
-
----
-
-## 詳細インストール手順
-
-### Step 1: リポジトリのクローン
+### .env を設定
 
 ```bash
+# .env をテキストエディタで開く
+open -a TextEdit .env
+
+# ANTHROPIC_API_KEY を設定（必須）
+ANTHROPIC_API_KEY=sk-ant-...
+
+# intelligence-research スキル用（任意）
+FRED_API_KEY=your_key
+NEWSAPI_KEY=your_key
+APIFY_TOKEN=your_key
+```
+
+### アップデート
+
+```bash
+git pull origin main
+bash scripts/install.sh
+```
+
+### メモリ最適化（推奨）
+
+```bash
+# Node.js ヒープサイズ増加（長時間セッション向け）
+echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### トラブルシューティング（Mac）
+
+| エラー | 対処 |
+|--------|------|
+| `command not found: node` | https://nodejs.org/ からインストール |
+| `permission denied` | `chmod +x scripts/install.sh` を実行 |
+| `node: bad option` | Node.js 18 以上にアップグレード |
+| ビルドエラー | `rm -rf node_modules dist && npm install` |
+
+---
+
+## Windows 10/11
+
+### 事前準備
+
+PowerShell でスクリプトの実行を許可する（初回のみ）:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+### クイックインストール
+
+**PowerShell を開いて実行:**
+
+```powershell
+# 1. リポジトリをクローン
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
+
+# 2. インストール実行（全自動）
+.\scripts\install.ps1
 ```
 
-または SSH:
-```bash
-git clone git@github.com:san15/taisun_agent.git
+### .env を設定
+
+```powershell
+# メモ帳で .env を開く
+notepad .env
 ```
 
-### Step 2: 依存関係のインストール
+`.env` に以下を設定:
 
-```bash
-npm install
+```
+# 必須
+ANTHROPIC_API_KEY=sk-ant-...
+
+# intelligence-research スキル用（任意）
+FRED_API_KEY=your_key
+NEWSAPI_KEY=your_key
+APIFY_TOKEN=your_key
 ```
 
-Python依存（オプション）:
-```bash
-pip install -r requirements.txt 2>/dev/null || true
-```
+### アップデート
 
-### Step 3: ビルド
-
-```bash
-npm run build:all
-```
-
-これにより以下がビルドされます:
-- `dist/proxy-mcp/` - MCP Proxy サーバー
-- `dist/scripts/` - CLIスクリプト
-
-### Step 4: 実行権限の付与（Unix/Mac）
-
-```bash
-chmod +x .claude/hooks/*.js
-chmod +x scripts/*.sh 2>/dev/null || true
-```
-
-Windowsの場合は不要です。
-
-### Step 5: 診断の実行
-
-```bash
-npm run taisun:diagnose
-```
-
-以下が表示されれば成功:
-```
-総合スコア: 100/100点
-すべてのシステムが正常に動作しています！
-```
-
----
-
-## Claude Code / Claude Desktopでの使用
-
-### .mcp.json の確認
-
-プロジェクトルートの `.mcp.json` が Claude Code に自動認識されます。
-
-```json
-{
-  "mcpServers": {
-    "taisun-proxy": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["dist/proxy-mcp/server.js"]
-    }
-  }
-}
-```
-
-### Claude Desktopの設定
-
-`~/Library/Application Support/Claude/claude_desktop_config.json` に追加:
-
-```json
-{
-  "mcpServers": {
-    "taisun-proxy": {
-      "command": "node",
-      "args": ["/path/to/taisun_agent/dist/proxy-mcp/server.js"]
-    }
-  }
-}
-```
-
----
-
-## アップデート
-
-```bash
-# 1. 最新を取得
+```powershell
 git pull origin main
+.\scripts\install.ps1
+```
 
-# 2. 依存関係を更新
-npm install
+### Windows の注意点
 
-# 3. 再ビルド
-npm run build:all
+| 項目 | Mac | Windows |
+|------|-----|---------|
+| スキル | シンボリックリンク（git pull で自動更新） | Junction（git pull で自動更新） |
+| エージェント | シンボリックリンク（自動更新） | コピー（再インストールで更新） |
+| chmod | 必要 | 不要 |
 
-# 4. 高速モード有効化（推奨）
-npm run perf:fast
+> **エージェントの更新について**: Windows では `git pull` 後に `.\scripts\install.ps1` を再実行することでエージェントが最新化されます。
 
-# 5. 診断
-npm run taisun:diagnose
+### トラブルシューティング（Windows）
+
+| エラー | 対処 |
+|--------|------|
+| `スクリプトの実行が無効` | `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` を実行 |
+| `node が見つからない` | https://nodejs.org/ からインストール後、PowerShell を再起動 |
+| `git が見つからない` | https://git-scm.com/ からインストール |
+| Junction 作成失敗 | PowerShell を管理者として実行 |
+
+---
+
+## インストール後の確認（共通）
+
+Claude Code でこのディレクトリを開き、以下を試してください:
+
+```
+/intelligence-research   → AIニュース・経済指標収集
+/research "テーマ"       → ディープリサーチ
+/batch                   → 並列エージェント実行
 ```
 
 ---
 
-## メモリ最適化（重要）
+## 環境変数一覧
 
-長時間セッションでの「JavaScript heap out of memory」エラーを防ぐための設定です。
-
-### 対策1: Node.jsヒープサイズ増加
-
-```bash
-# zshの場合
-echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.zshrc
-source ~/.zshrc
-
-# bashの場合
-echo 'export NODE_OPTIONS="--max-old-space-size=8192"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-### 対策2: 高速モード有効化
-
-```bash
-# 高速モード（フック81%削減）
-npm run perf:fast
-
-# 状態確認
-npm run perf:status
-
-# 通常モードに戻す
-npm run perf:normal
-```
-
-### 対策3: 安定起動エイリアス（オプション）
-
-```bash
-echo 'alias claude-stable="NODE_OPTIONS=\"--max-old-space-size=8192\" claude"' >> ~/.zshrc
-source ~/.zshrc
-
-# 使用方法
-claude-stable
-```
-
-### 各モードの比較
-
-| モード | フック数 | タイムアウト | 用途 |
-|--------|---------|------------|------|
-| `fast` | 4 | 16秒 | 日常の開発作業（推奨） |
-| `normal` | 31 | 83秒 | バランス型 |
-| `strict` | 31+ | 100秒+ | 本番ワークフロー |
-
-詳細: [docs/PERFORMANCE_MODE.md](docs/PERFORMANCE_MODE.md)
-
----
-
-## 環境変数（オプション）
-
-`.env` ファイルを作成:
-
-```bash
-# MCP統合（オプション）
-GITHUB_TOKEN=your_github_token
-OPENAI_API_KEY=your_openai_key
-ANTHROPIC_API_KEY=your_anthropic_key
-FIGMA_API_KEY=your_figma_key
-PEXELS_API_KEY=your_pexels_key
-
-# Supabase（オプション）
-SUPABASE_URL=your_supabase_url
-SUPABASE_ANON_KEY=your_anon_key
-
-# Qdrant（オプション）
-QDRANT_URL=http://localhost:6333
-```
-
----
-
-## トラブルシューティング
-
-### 「スクリプトが存在しません」エラー
-
-```bash
-# 原因: 間違ったディレクトリにいる可能性
-# 確認方法:
-pwd                                    # 現在のディレクトリを確認
-grep "taisun:diagnose" package.json    # スクリプトが存在するか確認
-
-# 正しいディレクトリに移動
-cd /path/to/taisun_agent
-
-# 再確認
-npm run taisun:diagnose
-```
-
-**よくある間違い:**
-- 親ディレクトリで実行している（`taisun_agent2026/` ではなく `taisun_agent/` で実行）
-- 別のプロジェクトディレクトリで実行している
-
-### ビルドエラー
-
-```bash
-# キャッシュをクリア
-rm -rf node_modules dist
-npm install
-npm run build:all
-```
-
-### 権限エラー（Mac/Linux）
-
-```bash
-chmod +x .claude/hooks/*.js
-```
-
-### Node.jsバージョンエラー
-
-```bash
-# nvmを使用している場合
-nvm install 20
-nvm use 20
-```
-
-### 診断が失敗する
-
-```bash
-# 完全リセット
-rm -f .workflow_state.json
-rm -rf dist/
-npm install
-npm run build:all
-npm run taisun:diagnose
-```
-
----
-
-## 次のステップ
-
-1. [TAISUN_SETUP_PROMPTS.md](TAISUN_SETUP_PROMPTS.md) - 初期設定プロンプト
-2. [README.md](README.md) - 詳細なドキュメント
-3. [DISTRIBUTION_GUIDE.md](DISTRIBUTION_GUIDE.md) - 配布ガイド
+| 変数名 | 必須 | 用途 |
+|--------|------|------|
+| `ANTHROPIC_API_KEY` | **必須** | Claude API（全機能の基本） |
+| `FRED_API_KEY` | 推奨 | 経済指標（FRED 無料登録）|
+| `NEWSAPI_KEY` | 推奨 | ニュース収集（newsapi.org 無料枠）|
+| `APIFY_TOKEN` | 任意 | X/Twitter 収集 |
+| `TAVILY_API_KEY` | 任意 | Web 検索 MCP |
+| `OPENAI_API_KEY` | 任意 | gpt-researcher MCP |
+| `GITHUB_TOKEN` | 任意 | GitHub MCP |
 
 ---
 
 ## サポート
 
 - Issues: https://github.com/san15/taisun_agent/issues
-- Discussions: https://github.com/san15/taisun_agent/discussions
