@@ -17,10 +17,12 @@
 
 ## 📋 最新バージョン
 
-**v2.33.0** (2026-03-06) — `/research-system` スキル追加 — 4ステップ自動リサーチ
+**v2.35.0** (2026-03-06) — Windows/Mac 全対応インストールスクリプト整備
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.35.0 | 2026-03-06 | Windows 10/11 用 PowerShell インストールスクリプト (`scripts/install.ps1`) 新規追加・INSTALL.md を Mac/Windows 分離の手順に全面書き直し |
+| v2.34.0 | 2026-03-06 | `intelligence-research` スキルを taisun_agent に移植（31ソース並列収集）+ SKILL.md をシンボリックリンク自動検出でポータブル化 |
 | v2.33.0 | 2026-03-06 | `/research-system` スキル追加 — BUILD_TARGETを引数で渡すとキーワード展開→ディープリサーチ2回→アーキテクチャ設計→12セクションレポートまで自動実行（YAML定義でコンテキスト52%削減） |
 | v2.32.1 | 2026-03-06 | スキル・MCP設定の絶対パスをポータブルパスに修正 |
 | v2.32.0 | 2026-03-06 | グローバルスキル3件をリポジトリに追加 — スタンドアロン化完了（deep-research-grok / intelligence-research / omega-research） |
@@ -78,45 +80,52 @@ cd ~/taisun_agent && git pull origin main && ./scripts/update.sh
 
 ### 🪟 Windows
 
-**1. インストール（初回のみ）**
+> PowerShell を開いて実行してください。
 
-```
-以下のコマンドを順番に実行して：
-cd ~
-git clone https://github.com/san15/taisun_agent.git
-cd taisun_agent
-npm run taisun:setup
-```
-
-**2. プロジェクトで使えるようにする**
-
-**方法A（推奨）: 開発者モードON後**
-- 設定 → 更新とセキュリティ → 開発者向け → **開発者モード ON**
-
-```
-export MSYS=winsymlinks:nativestrict && ln -s ~/taisun_agent/.claude .claude && ln -s ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
-```
-
-**方法B: 管理者コマンドプロンプトで実行**
-
-```cmd
-mklink /D .claude C:\Users\YourName\taisun_agent\.claude
-mklink .mcp.json C:\Users\YourName\taisun_agent\.mcp.json
-```
-
-**方法C: フォルダをコピー（最も確実）**
-
-```
-rm -rf .claude .mcp.json 2>/dev/null; rsync -a --exclude='.claude' ~/taisun_agent/.claude/ .claude/ && cp ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
-```
-
-> 注意: 方法Cはアップデート時に再コピーが必要です
-
-**3. アップデート**
+**0. 事前準備（初回のみ）**
 
 ```powershell
-cd $HOME\taisun_agent; git pull origin main; bash scripts/update.sh
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
+
+**1. インストール（初回のみ）**
+
+```powershell
+cd $HOME
+git clone https://github.com/san15/taisun_agent.git
+cd taisun_agent
+.\scripts\install.ps1
+```
+
+**完了の目安**: `Skills available: 100+` と `Agents available: 90+` が表示されれば成功
+
+**2. .env を設定**
+
+```powershell
+notepad .env
+```
+
+`ANTHROPIC_API_KEY=sk-ant-...` を設定して保存
+
+**3. プロジェクトで使えるようにする**
+
+使いたいプロジェクトフォルダで PowerShell を開き：
+
+```powershell
+# Junction（管理者権限不要）で .claude をリンク
+New-Item -ItemType Junction -Path .claude -Target "$HOME\taisun_agent\.claude"
+Copy-Item "$HOME\taisun_agent\.mcp.json" .mcp.json
+```
+
+**4. アップデート**
+
+```powershell
+cd $HOME\taisun_agent
+git pull origin main
+.\scripts\install.ps1
+```
+
+> スキルは Junction リンク（git pull で自動更新）、エージェントはコピー（再インストールで更新）。
 
 ---
 
