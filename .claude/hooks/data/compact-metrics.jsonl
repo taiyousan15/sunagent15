@@ -1,1 +1,3 @@
 {"event":"compact_suggestion","reason":"time","session_minutes":171.52113333333332,"tool_calls":3,"compact_count":0,"timestamp":"2026-02-15T13:04:21.030Z"}
+{"event":"compact_suggestion","reason":"time","session_minutes":56.2898,"tool_calls":29,"compact_count":0,"timestamp":"2026-03-06T02:54:39.053Z"}
+{"event":"compact_suggestion","reason":"time","session_minutes":58.44591666666667,"tool_calls":33,"compact_count":0,"timestamp":"2026-03-06T02:56:48.420Z"}
