@@ -86,7 +86,7 @@
     "taisun:diagnose": "node scripts/taisun-diagnose.js",
     "taisun:diagnose:full": "node scripts/taisun-diagnose.js --full",
     "taisun:diagnose:fix": "node scripts/taisun-diagnose.js --fix",
-    "taisun:setup": "npm install && npm run build:all && node -e \"try{require('child_process').execSync('chmod +x .claude/hooks/*.js')}catch(e){}\" && npm run taisun:diagnose",
+    "taisun:setup": "npm install && npm run build:all && node -e \"try{require('child_process').execSync('chmod +x .claude/hooks/*.js')}catch(e){}\" && node -e \"const fs=require('fs');if(!fs.existsSync('.mcp.json')&&fs.existsSync('.mcp.json.example')){fs.copyFileSync('.mcp.json.example','.mcp.json');console.log('[OK] .mcp.json created from .mcp.json.example');}else if(fs.existsSync('.mcp.json')){console.log('[OK] .mcp.json already exists');}\" && npm run taisun:diagnose",
     "metrics:collect": "node .claude/hooks/metrics-collector.js",
     "metrics:aggregate": "node .claude/hooks/metrics-aggregator.js",
     "metrics:report": "node .claude/hooks/generate-metrics-report.js",

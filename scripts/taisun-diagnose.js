@@ -40,8 +40,8 @@ const results = {
   score: 0
 };
 
-// ベースパス
-const BASE = process.cwd();
+// ベースパス（スクリプトの場所から常にリポジトリルートを特定）
+const BASE = path.resolve(__dirname, '..');
 const CLAUDE_DIR = path.join(BASE, '.claude');
 
 console.log(`
