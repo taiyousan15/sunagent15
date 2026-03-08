@@ -13,7 +13,7 @@ permissions:
 
 env:
   NODE_VERSION: '20.x'
-  COVERAGE_THRESHOLD: 70
+  COVERAGE_THRESHOLD: 80
 
 jobs:
   # ============================================
@@ -140,8 +140,13 @@ jobs:
         run: npm audit --audit-level=high
         continue-on-error: true
 
+      - name: Scan for secrets (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.29.0
         with:
           scan-type: 'fs'
           scan-ref: '.'

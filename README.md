@@ -4,7 +4,7 @@
 
 [![CI](https://github.com/san15/taisun_agent/actions/workflows/ci.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/ci.yml)
 [![Security Scan](https://github.com/san15/taisun_agent/actions/workflows/security.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/security.yml)
-[![Node.js](https://img.shields.io/badge/Node.js-18.x%20%7C%2020.x-green)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20.x%20%7C%2022.x-green)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-775%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
@@ -17,10 +17,11 @@
 
 ## 📋 最新バージョン
 
-**v2.35.0** (2026-03-06) — Windows/Mac 全対応インストールスクリプト整備
+**v2.36.1** (2026-03-08) — CI/CD・TypeScript品質強化・GitHub Releases配布対応
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.36.1 | 2026-03-08 | `tsconfig.json` バグ修正（`src/lib`除外を削除・`noImplicitAny: true`）/ CI カバレッジ閾値70→80%・Trivy@0.29.0固定・gitleaksシークレットスキャン追加 / `cd.yml`をGitHub Releases配布ワークフローに全面書き換え（tar.gz+zip+SHA256チェックサム自動生成） |
 | v2.35.0 | 2026-03-06 | Windows 10/11 用 PowerShell インストールスクリプト (`scripts/install.ps1`) 新規追加・INSTALL.md を Mac/Windows 分離の手順に全面書き直し |
 | v2.34.0 | 2026-03-06 | `intelligence-research` スキルを taisun_agent に移植（31ソース並列収集）+ SKILL.md をシンボリックリンク自動検出でポータブル化 |
 | v2.33.0 | 2026-03-06 | `/research-system` スキル追加 — BUILD_TARGETを引数で渡すとキーワード展開→ディープリサーチ2回→アーキテクチャ設計→12セクションレポートまで自動実行（YAML定義でコンテキスト52%削減） |
