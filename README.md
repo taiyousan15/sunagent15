@@ -57,17 +57,20 @@ cd taisun_agent
 
 **完了の目安**: `Skills available: 100+` と `Agents available: 90+` が表示されれば成功
 
-**2. プロジェクトで使えるようにする**
+**2. プロジェクトで使えるようにする（自動）**
 
-使いたいプロジェクトフォルダで Claude Code を開き：
+`install.sh` 実行時に **MCPはグローバル登録済み** のため、どのプロジェクトでもそのまま使えます。
+
+> スキル・エージェントは `~/.claude/skills/` と `~/.claude/agents/` に登録済み。
+> MCPは `~/.claude/settings.json` にグローバル登録済み。
+> 追加のコマンド入力は不要です。
+
+**（オプション）プロジェクトに .mcp.json を追加したい場合**
 
 ```
 以下のコマンドを実行して：
-rm -rf .claude .mcp.json 2>/dev/null; ln -sf ~/taisun_agent/.claude .claude && ln -sf ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
+ln -sf ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
 ```
-
-> スキル・エージェントは `~/.claude/skills/` と `~/.claude/agents/` にシンボリックリンクで追加されます。
-> `git pull` 後にスキルが自動反映されるため、再インストール不要です。
 
 **3. アップデート**
 
@@ -108,13 +111,17 @@ notepad .env
 
 `ANTHROPIC_API_KEY=sk-ant-...` を設定して保存
 
-**3. プロジェクトで使えるようにする**
+**3. プロジェクトで使えるようにする（自動）**
 
-使いたいプロジェクトフォルダで PowerShell を開き：
+`install.ps1` 実行時に **MCPはグローバル登録済み** のため、どのプロジェクトでもそのまま使えます。
+
+> スキル・エージェントは `~\.claude\skills\` と `~\.claude\agents\` に登録済み。
+> MCPは `~\.claude\settings.json` にグローバル登録済み。
+> 追加のコマンド入力は不要です。
+
+**（オプション）プロジェクトに .mcp.json を追加したい場合**
 
 ```powershell
-# Junction（管理者権限不要）で .claude をリンク
-New-Item -ItemType Junction -Path .claude -Target "$HOME\taisun_agent\.claude"
 Copy-Item "$HOME\taisun_agent\.mcp.json" .mcp.json
 ```
 

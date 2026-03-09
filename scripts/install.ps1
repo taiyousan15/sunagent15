@@ -289,7 +289,55 @@ Write-Host ""
 # ─────────────────────────────────────────
 # Step 9: Verification
 # ─────────────────────────────────────────
-Write-Host "9. Verification..."
+Write-Host "9. Registering MCPs globally (~/.claude/settings.json)..."
+
+$SETTINGS_FILE = "$env:USERPROFILE\.claude\settings.json"
+$settingsDir = Split-Path $SETTINGS_FILE
+if (-not (Test-Path $settingsDir)) {
+    New-Item -ItemType Directory -Path $settingsDir -Force | Out-Null
+}
+
+$nodeScript = @"
+const fs = require('fs');
+const path = require('path');
+const REPO_DIR = '$($REPO_DIR -replace '\\\\', '/')';
+const SETTINGS_FILE = '$($SETTINGS_FILE -replace '\\\\', '//')';
+
+let settings = {};
+try { settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8')); } catch(e) {}
+if (!settings.mcpServers) settings.mcpServers = {};
+
+let mcp = {};
+try { mcp = JSON.parse(fs.readFileSync(path.join(REPO_DIR, '.mcp.json'), 'utf8')); } catch(e) {}
+
+for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
+  if (key.startsWith('_comment')) continue;
+  const server = JSON.parse(JSON.stringify(val));
+  if (Array.isArray(server.args)) {
+    server.args = server.args.map(arg => {
+      if (typeof arg === 'string' && !path.isAbsolute(arg) &&
+          (arg.startsWith('dist/') || arg.startsWith('mcp-servers/'))) {
+        return path.join(REPO_DIR, arg).replace(/\//g, '\\\\');
+      }
+      return arg;
+    });
+  }
+  settings.mcpServers[key] = server;
+}
+
+fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+console.log('  [OK] MCPs registered globally (' + Object.keys(settings.mcpServers).filter(k=>!k.startsWith('_')).length + ' servers)');
+"@
+
+try {
+    node -e $nodeScript
+} catch {
+    Write-Host "  [WARN] Global MCP registration failed - run Step 2 manually"
+}
+
+Write-Host ""
+
+Write-Host "10. Verification..."
 
 if (Test-Path "$REPO_DIR\.claude\CLAUDE.md") {
     Write-Host "  [OK] .claude/CLAUDE.md present"

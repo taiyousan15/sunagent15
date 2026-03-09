@@ -286,7 +286,49 @@ echo ""
 # ─────────────────────────────────────────
 # Step 8: Verification
 # ─────────────────────────────────────────
-echo "9. Verification..."
+echo "9. Registering MCPs globally (~/.claude/settings.json)..."
+
+SETTINGS_FILE="$HOME/.claude/settings.json"
+mkdir -p "$(dirname "$SETTINGS_FILE")"
+
+node -e "
+const fs = require('fs');
+const path = require('path');
+const REPO_DIR = '$REPO_DIR';
+const SETTINGS_FILE = '$SETTINGS_FILE';
+
+// Read or initialize settings.json
+let settings = {};
+try { settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8')); } catch(e) {}
+if (!settings.mcpServers) settings.mcpServers = {};
+
+// Read .mcp.json
+let mcp = {};
+try { mcp = JSON.parse(fs.readFileSync(path.join(REPO_DIR, '.mcp.json'), 'utf8')); } catch(e) {}
+
+// Merge mcpServers with absolute paths for local dist files
+for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
+  if (key.startsWith('_comment')) continue;
+  const server = JSON.parse(JSON.stringify(val));
+  if (Array.isArray(server.args)) {
+    server.args = server.args.map(arg => {
+      if (typeof arg === 'string' && !path.isAbsolute(arg) &&
+          (arg.startsWith('dist/') || arg.startsWith('mcp-servers/'))) {
+        return path.join(REPO_DIR, arg);
+      }
+      return arg;
+    });
+  }
+  settings.mcpServers[key] = server;
+}
+
+fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+console.log('  [OK] MCPs registered globally (' + Object.keys(settings.mcpServers).filter(k=>!k.startsWith('_')).length + ' servers)');
+" 2>/dev/null || echo "  [WARN] Global MCP registration failed — run Step 2 manually"
+
+echo ""
+
+echo "10. Verification..."
 
 # Check CLAUDE.md
 if [ -f "$REPO_DIR/.claude/CLAUDE.md" ]; then
