@@ -302,6 +302,38 @@
       "cost_warning": true,
       "description": "Firecrawl MCP - Webスクレイピング・全サイトクロール・URL収集・構造分析・コンテンツ抽出",
       "category": "web-scraping"
+    },
+
+    "_comment_ai_browser": "=== AIブラウザ自動操作 ===",
+
+    "stagehand": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@browserbasehq/mcp-server-browserbase"],
+      "env": {
+        "BROWSERBASE_API_KEY": "${BROWSERBASE_API_KEY}",
+        "BROWSERBASE_PROJECT_ID": "${BROWSERBASE_PROJECT_ID}"
+      },
+      "disabled": false,
+      "defer_loading": true,
+      "search_keywords": ["stagehand", "フォーム送信", "ボタン操作", "自然言語操作", "AI操作", "書き込み", "入力", "フォーム入力", "クリック", "ブラウザ操作"],
+      "description": "Stagehand MCP - AI+確定的ハイブリッドブラウザ自動操作（フォーム・ボタン・書き込み・auto-caching）",
+      "category": "browser-automation"
+    },
+
+    "skyvern": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@skyvern/mcp"],
+      "env": {
+        "SKYVERN_API_KEY": "${SKYVERN_API_KEY}"
+      },
+      "disabled": true,
+      "defer_loading": true,
+      "search_keywords": ["skyvern", "2FA", "CAPTCHA", "TOTP", "業務自動化", "RPA", "フォーム自動送信", "認証突破", "kintone", "Salesforce"],
+      "cost_warning": true,
+      "description": "Skyvern MCP - 2FA/CAPTCHA対応RPA・LLM+Visionブラウザ自動化（$29/月〜）",
+      "category": "browser-automation"
     }
   }
 }
