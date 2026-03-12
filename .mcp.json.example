@@ -285,6 +285,23 @@
       "disabled": false,
       "description": "Puppeteer MCP - Browser automation for web scraping and interaction. Enables reading JavaScript-rendered pages.",
       "category": "browser"
+    },
+
+    "_comment_web_scraping": "=== Webスクレイピング・クロール ===",
+
+    "firecrawl": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+      },
+      "disabled": false,
+      "defer_loading": true,
+      "search_keywords": ["scrape", "crawl", "クロール", "スクレイプ", "サイト収集", "リンク収集", "サイト構造", "map", "firecrawl", "ウェブ調査", "コンテンツ抽出"],
+      "cost_warning": true,
+      "description": "Firecrawl MCP - Webスクレイピング・全サイトクロール・URL収集・構造分析・コンテンツ抽出",
+      "category": "web-scraping"
     }
   }
 }
