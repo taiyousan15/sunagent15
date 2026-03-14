@@ -131,9 +131,13 @@ function findContradiction(claim: string, fullText: string): string | undefined 
     const sharedKeywords = claimKeywords.filter(kw => sentence.toLowerCase().includes(kw));
 
     if (sharedKeywords.length >= 2 && sentenceNumbers.length > 0) {
-      const hasConflict = sentenceNumbers.some(
-        n => n !== claimValue && Math.abs(n - claimValue) / Math.max(claimValue, 1) > 0.1
-      );
+      // BUG-002修正: claimValue=0 の場合の誤検出を防ぐ絶対差分チェック
+      const hasConflict = sentenceNumbers.some(n => {
+        if (n === claimValue) return false;
+        const maxAbs = Math.max(Math.abs(n), Math.abs(claimValue));
+        if (maxAbs < 1e-9) return false; // 両方ゼロ近傍
+        return Math.abs(n - claimValue) / maxAbs > 0.1;
+      });
       if (hasConflict) {
         return `矛盾する可能性: "${sentence.substring(0, 80)}..." (値: ${sentenceNumbers[0]})`;
       }

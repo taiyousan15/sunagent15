@@ -149,11 +149,15 @@ const PRINCIPLES: PrincipleChecker[] = [
   {
     name: 'completeness',
     severity: 'low',
+    // BUG-006修正: 薬品名・医療成分名・法律・金融用語を包括するパターンに拡張
     check: (text) => {
-      const hasWarningNeeded = /(?:薬|医療|法律|投資|手術)[^。．\n]{5,}/.test(text);
-      const hasWarning = /(?:注意|警告|免責|専門家|医師|弁護士)/.test(text);
+      const MEDICAL = /(?:薬(?:品|剤|物)?|医療|診断|治療|処方|投薬|服用|副作用|手術|入院|症状|[ァ-ヶー]{4,}(?:塩酸塩|硫酸塩|注射|錠|カプセル)?)[^。．\n]{5,}/;
+      const LEGAL = /(?:法律|法的|契約|訴訟|弁護|判決|条文|規制|違法|合法)[^。．\n]{5,}/;
+      const FINANCIAL = /(?:投資|運用|株|為替|証券|ファンド|リスク|損失|利回り|金融商品)[^。．\n]{5,}/;
+      const hasWarningNeeded = MEDICAL.test(text) || LEGAL.test(text) || FINANCIAL.test(text);
+      const hasWarning = /(?:注意|警告|免責|専門家|医師|弁護士|ファイナンシャル)/.test(text);
       if (hasWarningNeeded && !hasWarning) {
-        const match = text.match(/(?:薬|医療|法律|投資|手術)[^。．\n]*/);
+        const match = text.match(MEDICAL) ?? text.match(LEGAL) ?? text.match(FINANCIAL);
         return match ? match[0].substring(0, 100) : undefined;
       }
       return undefined;

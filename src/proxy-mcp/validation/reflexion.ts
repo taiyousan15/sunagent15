@@ -88,7 +88,8 @@ function computeCompositeScore(
 // Correction Prompt
 // ──────────────────────────────────────────────
 
-function buildReflexionPrompt(record: RoundRecord): string {
+// BUG-004修正: maxRounds を追加して「X / Y 回目」を正しく表示
+function buildReflexionPrompt(record: RoundRecord, maxRounds = 3): string {
   const lines: string[] = [
     `## ラウンド ${record.round} のフィードバック`,
     `スコア: ${(record.compositeScore * 100).toFixed(0)}% (目標: 70%以上)`,
@@ -121,7 +122,7 @@ function buildReflexionPrompt(record: RoundRecord): string {
 
   lines.push(
     '上記の問題点をすべて修正して、より正確・一貫した回答を生成してください。',
-    `（ラウンド ${record.round + 1} / ${record.round + 1} 回目の修正）`
+    `（ラウンド ${record.round + 1} / ${maxRounds} 回目の修正）`
   );
 
   return lines.join('\n');
@@ -180,7 +181,7 @@ export function analyzeReflexionRounds(
 
     // 修正プロンプト (未収束の場合)
     if (compositeScore < convergenceThreshold) {
-      record.correctionPrompt = buildReflexionPrompt(record);
+      record.correctionPrompt = buildReflexionPrompt(record, maxRounds);
     }
 
     rounds.push(record);
@@ -215,7 +216,7 @@ export function analyzeReflexionRounds(
     bestRoundIndex,
     bestRound,
     rounds,
-    nextCorrectionPrompt: converged ? undefined : buildReflexionPrompt(bestRound),
+    nextCorrectionPrompt: converged ? undefined : buildReflexionPrompt(bestRound, maxRounds),
     totalRounds: rounds.length,
   };
 }
@@ -265,7 +266,7 @@ export function evaluateRound(
   };
 
   if (compositeScore < convergenceThreshold) {
-    record.correctionPrompt = buildReflexionPrompt(record);
+    record.correctionPrompt = buildReflexionPrompt(record, maxRounds);
   }
 
   const converged = compositeScore >= convergenceThreshold;

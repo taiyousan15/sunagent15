@@ -3,9 +3,33 @@
  *
  * 同一テキスト内で矛盾を検出する強化版。
  * numerical / logical / temporal / factual の4タイプを検出。
+ * kuromoji による日本語形態素解析で日本語文に対応（BUG-008修正）。
  */
 
+import * as kuromoji from 'kuromoji';
 import { recordEvent } from '../observability';
+
+// ──────────────────────────────────────────────
+// kuromoji Tokenizer Singleton (lazy init)
+// ──────────────────────────────────────────────
+
+type KuromojiTokenizer = kuromoji.Tokenizer<kuromoji.IpadicFeatures>;
+
+let _tokenizerPromise: Promise<KuromojiTokenizer> | null = null;
+
+function getTokenizer(): Promise<KuromojiTokenizer> {
+  if (!_tokenizerPromise) {
+    _tokenizerPromise = new Promise<KuromojiTokenizer>((resolve, reject) => {
+      kuromoji
+        .builder({ dicPath: 'node_modules/kuromoji/dict' })
+        .build((err, tokenizer) => {
+          if (err) reject(err);
+          else resolve(tokenizer);
+        });
+    });
+  }
+  return _tokenizerPromise;
+}
 
 // ──────────────────────────────────────────────
 // Types
@@ -36,7 +60,26 @@ function extractSentences(text: string): string[] {
     .filter(s => s.length > 10);
 }
 
-function getSharedKeywords(a: string, b: string): string[] {
+/**
+ * BUG-008修正: kuromoji形態素解析で共有キーワードを抽出。
+ * tokenizer が未初期化の場合はスペース分割にフォールバック。
+ */
+function getSharedKeywords(
+  a: string,
+  b: string,
+  tokenizer?: KuromojiTokenizer
+): string[] {
+  if (tokenizer) {
+    const CONTENT_POS = new Set(['名詞', '動詞', '形容詞', '形容動詞']);
+    const extractTokens = (text: string): string[] =>
+      tokenizer.tokenize(text)
+        .filter(t => CONTENT_POS.has(t.pos) && (t.basic_form || t.surface_form).length > 1)
+        .map(t => t.basic_form && t.basic_form !== '*' ? t.basic_form : t.surface_form);
+    const aTokens = extractTokens(a);
+    const bSet = new Set(extractTokens(b));
+    return aTokens.filter(w => bSet.has(w));
+  }
+  // Fallback: スペース/句読点分割（非日本語テキスト or 初期化失敗時）
   const aWords = a.toLowerCase().split(/\s+|[、。！？]/).filter(w => w.length > 2);
   const bLower = b.toLowerCase();
   return aWords.filter(w => bLower.includes(w));
@@ -46,7 +89,7 @@ function getSharedKeywords(a: string, b: string): string[] {
 // Contradiction Detectors
 // ──────────────────────────────────────────────
 
-function detectNumerical(sentences: string[]): Contradiction[] {
+function detectNumerical(sentences: string[], tokenizer?: KuromojiTokenizer): Contradiction[] {
   const results: Contradiction[] = [];
 
   for (let i = 0; i < sentences.length; i++) {
@@ -59,7 +102,7 @@ function detectNumerical(sentences: string[]): Contradiction[] {
       const bNumbers = [...b.matchAll(/\d+(?:\.\d+)?/g)].map(m => parseFloat(m[0]));
       if (bNumbers.length === 0) continue;
 
-      const shared = getSharedKeywords(a, b);
+      const shared = getSharedKeywords(a, b, tokenizer);
       if (shared.length < 2) continue;
 
       const hasConflict = aNumbers.some(an =>
@@ -82,7 +125,7 @@ function detectNumerical(sentences: string[]): Contradiction[] {
   return results;
 }
 
-function detectLogical(sentences: string[]): Contradiction[] {
+function detectLogical(sentences: string[], tokenizer?: KuromojiTokenizer): Contradiction[] {
   const results: Contradiction[] = [];
 
   for (let i = 0; i < sentences.length; i++) {
@@ -90,7 +133,7 @@ function detectLogical(sentences: string[]): Contradiction[] {
 
     for (let j = i + 1; j < sentences.length; j++) {
       const b = sentences[j];
-      const shared = getSharedKeywords(a, b);
+      const shared = getSharedKeywords(a, b, tokenizer);
       if (shared.length < 2) continue;
 
       const aAffirm = /はBだ|できる|である|です|あります|存在する/.test(a);
@@ -112,7 +155,7 @@ function detectLogical(sentences: string[]): Contradiction[] {
   return results;
 }
 
-function detectTemporal(sentences: string[]): Contradiction[] {
+function detectTemporal(sentences: string[], tokenizer?: KuromojiTokenizer): Contradiction[] {
   const results: Contradiction[] = [];
 
   for (let i = 0; i < sentences.length; i++) {
@@ -127,7 +170,7 @@ function detectTemporal(sentences: string[]): Contradiction[] {
       const bPast = /昨年|去年|以前|過去/.test(b);
       const bFuture = /来年|将来|今後|未来/.test(b);
 
-      const shared = getSharedKeywords(a, b);
+      const shared = getSharedKeywords(a, b, tokenizer);
       if (shared.length < 2) continue;
 
       if ((aPast && bFuture) || (aFuture && bPast)) {
@@ -144,7 +187,7 @@ function detectTemporal(sentences: string[]): Contradiction[] {
   return results;
 }
 
-function detectFactual(sentences: string[]): Contradiction[] {
+function detectFactual(sentences: string[], tokenizer?: KuromojiTokenizer): Contradiction[] {
   const results: Contradiction[] = [];
 
   for (let i = 0; i < sentences.length; i++) {
@@ -152,7 +195,7 @@ function detectFactual(sentences: string[]): Contradiction[] {
 
     for (let j = i + 1; j < sentences.length; j++) {
       const b = sentences[j];
-      const shared = getSharedKeywords(a, b);
+      const shared = getSharedKeywords(a, b, tokenizer);
       if (shared.length < 2) continue;
 
       const aPositive = /できる|可能|サポート|対応/.test(a);
@@ -195,22 +238,34 @@ function buildCorrectionPrompt(contradictions: Contradiction[]): string {
 // Main API
 // ──────────────────────────────────────────────
 
+/** 処理する最大文数（O(N²)爆発防止） */
+const MAX_SENTENCES = 50;
+
 /**
- * 自己矛盾チェックを実行する
+ * 自己矛盾チェックを実行する（BUG-008修正: kuromoji非同期初期化対応）
  */
-export function runSelfContrast(
+export async function runSelfContrast(
   text: string,
   options: { threshold?: number; contextId?: string } = {}
-): SelfContrastResult {
+): Promise<SelfContrastResult> {
   const { threshold = 0.5, contextId = 'self-contrast' } = options;
 
-  const sentences = extractSentences(text);
+  // kuromoji tokenizer を取得（失敗時は undefined でフォールバック）
+  let tokenizer: KuromojiTokenizer | undefined;
+  try {
+    tokenizer = await getTokenizer();
+  } catch {
+    // フォールバック: スペース分割で処理継続
+  }
+
+  // O(N²)爆発防止: 先頭 MAX_SENTENCES 文のみ処理
+  const sentences = extractSentences(text).slice(0, MAX_SENTENCES);
 
   const contradictions: Contradiction[] = [
-    ...detectNumerical(sentences),
-    ...detectLogical(sentences),
-    ...detectTemporal(sentences),
-    ...detectFactual(sentences),
+    ...detectNumerical(sentences, tokenizer),
+    ...detectLogical(sentences, tokenizer),
+    ...detectTemporal(sentences, tokenizer),
+    ...detectFactual(sentences, tokenizer),
   ];
 
   const totalPairs = Math.max(1, (sentences.length * (sentences.length - 1)) / 2);

@@ -26,6 +26,40 @@ export interface FaithfulnessOptions {
 }
 
 // ──────────────────────────────────────────────
+// Number Normalization (BUG-007修正)
+// ──────────────────────────────────────────────
+
+/** 英語サフィックス (k/M/B/T) や日本語単位 (万/億/兆) を含む数値表現を正規数値に変換 */
+function parseNormalizedNumber(raw: string): number {
+  const s = raw.trim();
+  // 英語サフィックス: 200k, 1.5M, 3B, 2T
+  const engMatch = s.match(/^([\d,]+(?:\.\d+)?)([kKmMbBtT])$/);
+  if (engMatch) {
+    const base = parseFloat(engMatch[1].replace(/,/g, ''));
+    const suffixes: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9, t: 1e12 };
+    return base * (suffixes[engMatch[2].toLowerCase()] ?? 1);
+  }
+  // 日本語単位: 500万, 3億, 1.5兆, 1千万
+  const jpMatch = s.match(/^([\d,]+(?:\.\d+)?)(万|億|兆|千|百)/);
+  if (jpMatch) {
+    const base = parseFloat(jpMatch[1].replace(/,/g, ''));
+    const units: Record<string, number> = { 万: 1e4, 億: 1e8, 兆: 1e12, 千: 1e3, 百: 1e2 };
+    return base * (units[jpMatch[2]] ?? 1);
+  }
+  // 通常数値（コンマ区切り含む）
+  return parseFloat(s.replace(/,/g, ''));
+}
+
+/** テキストから数値表現（英語サフィックス・日本語単位含む）を全て抽出して正規化 */
+function extractNumbers(text: string): number[] {
+  // 日本語単位付き / 英語サフィックス付き / 通常数値 の順でマッチ
+  const pattern = /[\d,]+(?:\.\d+)?(?:[kKmMbBtT万億兆千百])?/g;
+  return [...text.matchAll(pattern)]
+    .map(m => parseNormalizedNumber(m[0]))
+    .filter(n => !isNaN(n));
+}
+
+// ──────────────────────────────────────────────
 // Claim Extraction
 // ──────────────────────────────────────────────
 
@@ -37,7 +71,8 @@ function extractVerifiableClaims(text: string): string[] {
     .filter(s => s.length > 10);
 
   return sentences.filter(sentence => {
-    const hasNumbers = /\d+/.test(sentence);
+    // BUG-007修正: 英語サフィックス・日本語単位付き数値も検出
+    const hasNumbers = /\d+(?:[kKmMbBtT万億兆千百])?/.test(sentence);
     const hasDate = /20\d{2}年?|[0-9]{1,2}月[0-9]{1,2}日/.test(sentence);
     const hasProperNoun = /[A-Z][a-z]{2,}|Claude|GPT|Google|Microsoft|Anthropic|OpenAI/.test(sentence);
     return hasNumbers || hasDate || hasProperNoun;
@@ -55,14 +90,18 @@ function isClaimSupported(claim: string, sourceTexts: string[]): boolean {
     .split(/\s+|[、。！？]/)
     .filter(w => w.length > 2);
 
-  const claimNumbers = [...claim.matchAll(/\d+(?:\.\d+)?/g)].map(m => m[0]);
+  // BUG-007修正: 正規化数値で比較
+  const claimNumbers = extractNumbers(claim);
 
   for (const source of sourceTexts) {
     const sourceLower = source.toLowerCase();
 
-    // 数値の一致確認
+    // 数値の一致確認（正規化数値で比較）
     if (claimNumbers.length > 0) {
-      const allNumbersFound = claimNumbers.every(n => source.includes(n));
+      const sourceNumbers = extractNumbers(source);
+      const allNumbersFound = claimNumbers.every(cn =>
+        sourceNumbers.some(sn => Math.abs(sn - cn) / Math.max(Math.abs(cn), 1) < 0.01)
+      );
       if (allNumbersFound) return true;
     }
 
@@ -77,7 +116,8 @@ function isClaimSupported(claim: string, sourceTexts: string[]): boolean {
 
 /** クレームがソーステキストと矛盾するか確認 */
 function isClaimContradicted(claim: string, sourceTexts: string[]): boolean {
-  const claimNumbers = [...claim.matchAll(/\d+(?:\.\d+)?/g)].map(m => parseFloat(m[0]));
+  // BUG-007修正: 正規化数値で比較
+  const claimNumbers = extractNumbers(claim);
   if (claimNumbers.length === 0) return false;
 
   const claimWords = claim
@@ -93,12 +133,15 @@ function isClaimContradicted(claim: string, sourceTexts: string[]): boolean {
       const shared = claimWords.filter(w => sentenceWords.includes(w));
 
       if (shared.length >= 2) {
-        const sourceNumbers = [...sentence.matchAll(/\d+(?:\.\d+)?/g)].map(m => parseFloat(m[0]));
+        const sourceNumbers = extractNumbers(sentence);
         if (sourceNumbers.length > 0 && claimNumbers.length > 0) {
           const hasConflict = claimNumbers.some(cn =>
-            sourceNumbers.some(
-              sn => sn !== cn && Math.abs(sn - cn) / Math.max(cn, 1) > 0.1
-            )
+            sourceNumbers.some(sn => {
+              if (sn === cn) return false;
+              const maxAbs = Math.max(Math.abs(sn), Math.abs(cn));
+              if (maxAbs < 1e-9) return false;
+              return Math.abs(sn - cn) / maxAbs > 0.1;
+            })
           );
           if (hasConflict) return true;
         }

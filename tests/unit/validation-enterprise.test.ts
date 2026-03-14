@@ -116,12 +116,9 @@ describe('Constitutional AI — 10原則チェック', () => {
   describe('ハルシネーション検出', () => {
     it('[Critical] 危険な医療情報の「副作用なし」断言を検出する', () => {
       const result = checkConstitutional(ENTERPRISE_SCENARIOS.medical.dangerous);
-      // [BUG-006] completeness チェックは「薬|医療|法律|投資|手術」しか見ない
-      // 「メトホルミン塩酸塩」は対象外 → completeness 違反を検出できない
-      // 実際の動作を記録するテスト (Known Limitation)
-      expect(result.violations.some(v => v.principle === 'completeness')).toBe(false);
-      // ただし「確実に」「誰でも安全」などの uncertainty/honesty 違反は検出可能
-      // → テキストに合致するパターン次第
+      // [BUG-006修正済み] completeness チェックが「〜塩酸塩」などの薬品名を検出可能に
+      // 「メトホルミン塩酸塩」は [ァ-ヶー]{4,}(?:塩酸塩|...) パターンに該当
+      expect(result.violations.some(v => v.principle === 'completeness')).toBe(true);
     });
 
     it('[High] 法務判断の過信断言を検出する', () => {
@@ -374,62 +371,58 @@ describe('Faithfulness — RAGソース忠実度チェック', () => {
 
 describe('Self-Contrast — 自己矛盾検出', () => {
   describe('矛盾タイプ別テスト', () => {
-    it('数値矛盾を検出する', () => {
+    it('数値矛盾を検出する', async () => {
       const numericalContradiction = `
         システムの応答時間は100msです。
         このシステムの応答時間は500msとなっています。
       `;
-      const result = runSelfContrast(numericalContradiction);
-      // [BUG-008] 日本語テキストはスペース区切りがないため getSharedKeywords が
-      // 文全体を1トークンとして扱う。「システムの応答時間は100msです」という
-      // 長い文字列が bLower.includes(w) でマッチしないため共有キーワードが
-      // 2件未満となり数値矛盾検出がスキップされる
-      // スペース区切り英語テキストでは正しく動作する
-      expect(result.contradictions.some(c => c.contradictionType === 'numerical')).toBe(false);
+      const result = await runSelfContrast(numericalContradiction);
+      // [BUG-008修正済み] kuromoji形態素解析により日本語テキストでも
+      // 「システム」「応答」「時間」などの共有キーワードが正しく抽出される
+      expect(result.contradictions.some(c => c.contradictionType === 'numerical')).toBe(true);
 
-      // 英語テキストでの数値矛盾は検出できる
+      // 英語テキストでも数値矛盾は検出できる
       const englishNumericalContradiction = `
         The response time is 100 ms.
         The response time for this system is 500 ms.
       `;
-      const englishResult = runSelfContrast(englishNumericalContradiction);
-      // 英語では shared keywords が2件以上取れるため検出可能
+      const englishResult = await runSelfContrast(englishNumericalContradiction);
       expect(typeof englishResult.contrastScore).toBe('number');
     });
 
-    it('論理矛盾を検出する', () => {
+    it('論理矛盾を検出する', async () => {
       const logicalContradiction = `
         このAIシステムは常に正確な回答を提供できます。
         このAIシステムはハルシネーションを起こすことがあります。
       `;
-      const result = runSelfContrast(logicalContradiction);
+      const result = await runSelfContrast(logicalContradiction);
       // 論理矛盾または factual矛盾として検出されるべき
       expect(result.contradictions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('矛盾なしのテキストは高スコアを返す', () => {
-      const result = runSelfContrast(ENTERPRISE_SCENARIOS.infrastructure.consistent);
+    it('矛盾なしのテキストは高スコアを返す', async () => {
+      const result = await runSelfContrast(ENTERPRISE_SCENARIOS.infrastructure.consistent);
       expect(result.contrastScore).toBeGreaterThanOrEqual(0.5);
       expect(result.passed).toBe(true);
     });
   });
 
   describe('エッジケース', () => {
-    it('空文字列は安全に処理される', () => {
-      const result = runSelfContrast('');
+    it('空文字列は安全に処理される', async () => {
+      const result = await runSelfContrast('');
       expect(result.passed).toBe(true);
       expect(result.contrastScore).toBe(1.0);
       expect(result.contradictions).toHaveLength(0);
     });
 
-    it('単一文は矛盾を生じない', () => {
-      const result = runSelfContrast('売上高は500億円でした。');
+    it('単一文は矛盾を生じない', async () => {
+      const result = await runSelfContrast('売上高は500億円でした。');
       expect(result.passed).toBe(true);
     });
 
-    it('contrastScore は 0.0〜1.0 の範囲内', () => {
+    it('contrastScore は 0.0〜1.0 の範囲内', async () => {
       const text = ENTERPRISE_SCENARIOS.infrastructure.contradicted;
-      const result = runSelfContrast(text);
+      const result = await runSelfContrast(text);
       expect(result.contrastScore).toBeGreaterThanOrEqual(0);
       expect(result.contrastScore).toBeLessThanOrEqual(1);
     });

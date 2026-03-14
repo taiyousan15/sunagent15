@@ -1,8 +1,8 @@
 /**
- * Validation Pipeline — 7層オーケストレーター
+ * Validation Pipeline — 8層オーケストレーター
  *
  * Constitutional AI + Self-Contrast + CoVe + Faithfulness + DeepEval + Reflexion
- * を統合実行し、テキスト品質を一括検証する。
+ * + LLM Judge (オプション) を統合実行し、テキスト品質を一括検証する。
  */
 
 import { getValidationConfig, ValidationMode } from './config';
@@ -12,6 +12,7 @@ import { runSelfContrast, SelfContrastResult } from './self-contrast';
 import { runCoVe, CoVeResult } from './cove';
 import { runDeepEvalGate, DeepEvalResult } from './deepeval-gate';
 import { analyzeReflexionRounds, ReflexionResult } from './reflexion';
+import { runLLMJudge, LLMJudgeResult } from './llm-judge';
 
 // ──────────────────────────────────────────────
 // Types
@@ -24,6 +25,7 @@ export interface PipelineLayers {
   faithfulness: FaithfulnessResult;
   deepEval: DeepEvalResult;
   reflexion?: ReflexionResult;
+  llmJudge?: LLMJudgeResult;
 }
 
 export interface PipelineResult {
@@ -53,6 +55,18 @@ function computeOverallScore(layers: PipelineLayers): number {
   const faithfulnessScore = layers.faithfulness.faithfulnessScore;
   const deepEvalScore = 1 - layers.deepEval.hallucinationScore;
 
+  // LLM Judge が有効（非スキップ）の場合はウェイトを再分配して組み込む
+  if (layers.llmJudge && !layers.llmJudge.skipped) {
+    return (
+      constitutionalScore * 0.20 +
+      selfContrastScore * 0.15 +
+      coveScore * 0.15 +
+      faithfulnessScore * 0.15 +
+      deepEvalScore * 0.10 +
+      layers.llmJudge.score * 0.25
+    );
+  }
+
   return (
     constitutionalScore * 0.25 +
     selfContrastScore * 0.20 +
@@ -70,11 +84,16 @@ function buildSummary(layers: PipelineLayers, overallScore: number, passed: bool
   const pct = (n: number) => `${(n * 100).toFixed(0)}%`;
   const icon = passed ? '✅' : overallScore >= 0.5 ? '⚠️' : '❌';
 
+  const judgeInfo = layers.llmJudge && !layers.llmJudge.skipped
+    ? ` | LLM Judge: ${pct(layers.llmJudge.score)}`
+    : '';
+
   return (
     `スコア: ${pct(overallScore)} ${icon} | ` +
     `Constitutional: ${pct(1 - layers.constitutional.violationScore)} | ` +
     `CoVe矛盾: ${layers.cove.contradictions.length}件 | ` +
-    `忠実度: ${pct(layers.faithfulness.faithfulnessScore)}`
+    `忠実度: ${pct(layers.faithfulness.faithfulnessScore)}` +
+    judgeInfo
   );
 }
 
@@ -100,6 +119,12 @@ function aggregateCorrectionPrompt(layers: PipelineLayers): string | undefined {
   if (layers.deepEval.correctionPrompt) {
     prompts.push(`## DeepEval\n${layers.deepEval.correctionPrompt}`);
   }
+  if (layers.llmJudge && !layers.llmJudge.skipped && layers.llmJudge.issues.length > 0) {
+    const issueLines = layers.llmJudge.issues
+      .map(i => `- [${i.severity}] ${i.description}: "${i.evidence}"`)
+      .join('\n');
+    prompts.push(`## LLM Judge\n${issueLines}`);
+  }
 
   return prompts.length > 0 ? prompts.join('\n\n') : undefined;
 }
@@ -108,7 +133,8 @@ function aggregateCorrectionPrompt(layers: PipelineLayers): string | undefined {
 // Off Mode — Skip all layers
 // ──────────────────────────────────────────────
 
-function buildPassedLayers(sourceTexts: string[]): PipelineLayers {
+// BUG-001修正: sourceTexts は使用されていなかった dead parameter を削除
+function buildPassedLayers(): PipelineLayers {
   return {
     constitutional: { passed: true, violationScore: 0, violations: [] },
     selfContrast: { passed: true, contrastScore: 1.0, contradictions: [] },
@@ -153,7 +179,7 @@ export async function runValidationPipeline(
 
   // off モード: 全層スキップ
   if (mode === 'off') {
-    const layers = buildPassedLayers(sourceTexts);
+    const layers = buildPassedLayers();
     return {
       overallPassed: true,
       mode,
@@ -169,7 +195,7 @@ export async function runValidationPipeline(
     contextId,
   });
 
-  const selfContrast = runSelfContrast(text, { contextId });
+  const selfContrast = await runSelfContrast(text, { contextId });
 
   const cove = runCoVe(text, { maxQuestions: 5, contextId });
 
@@ -189,6 +215,12 @@ export async function runValidationPipeline(
     reflexion = analyzeReflexionRounds([...previousOutputs, text], { contextId });
   }
 
+  // LLM Judge: 環境変数 VALIDATION_LLM_JUDGE_ENABLED=true で有効化
+  const llmJudge = await runLLMJudge(text, {
+    contextId,
+    sourceTexts,
+  });
+
   const layers: PipelineLayers = {
     constitutional,
     selfContrast,
@@ -196,6 +228,7 @@ export async function runValidationPipeline(
     faithfulness,
     deepEval,
     reflexion,
+    llmJudge,
   };
 
   const overallScore = computeOverallScore(layers);
