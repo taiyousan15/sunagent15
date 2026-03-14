@@ -7,7 +7,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20.x%20%7C%2022.x-green)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-775%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
+[![Tests](https://img.shields.io/badge/Tests-81%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
@@ -17,10 +17,14 @@
 
 ## 📋 最新バージョン
 
-**v2.36.1** (2026-03-08) — CI/CD・TypeScript品質強化・GitHub Releases配布対応
+**v2.40.0** (2026-03-14) — バリデーション8層化・BUG-001〜008全修正・kuromoji日本語解析・LLM Judge追加
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.40.0 | 2026-03-14 | バリデーション8層化 — kuromoji日本語形態素解析・LLM Judge（Claude Haiku審判）追加 / BUG-001〜008全修正（ゼロ除算・数値正規化・ラウンド表記・completeness検出強化）/ MAX_SENTENCES=50でO(N²)爆発防止 |
+| v2.39.0 | 2026-03-14 | 7層バリデーションパイプライン実装（Constitutional AI + Self-Contrast + CoVe + Faithfulness + DeepEval + Reflexion）/ エンタープライズ規模テスト81件追加 |
+| v2.38.0 | 2026-03-13 | Stagehand/Skyvern MCP追加でAIブラウザ自動操作を強化 |
+| v2.37.0 | 2026-03-12 | Firecrawl MCP統合 — スクレイピング・クロール・サイト構造分析 |
 | v2.36.1 | 2026-03-08 | `tsconfig.json` バグ修正（`src/lib`除外を削除・`noImplicitAny: true`）/ CI カバレッジ閾値70→80%・Trivy@0.29.0固定・gitleaksシークレットスキャン追加 / `cd.yml`をGitHub Releases配布ワークフローに全面書き換え（tar.gz+zip+SHA256チェックサム自動生成） |
 | v2.35.0 | 2026-03-06 | Windows 10/11 用 PowerShell インストールスクリプト (`scripts/install.ps1`) 新規追加・INSTALL.md を Mac/Windows 分離の手順に全面書き直し |
 | v2.34.0 | 2026-03-06 | `intelligence-research` スキルを taisun_agent に移植（31ソース並列収集）+ SKILL.md をシンボリックリンク自動検出でポータブル化 |
@@ -57,6 +61,18 @@ cd taisun_agent
 
 **完了の目安**: `Skills available: 100+` と `Agents available: 90+` が表示されれば成功
 
+> **別フォルダにインストールしたい場合**（例: `/opt/taisun_agent` や `~/dev/taisun_agent`）
+>
+> ```
+> 以下のコマンドを順番に実行して（パスは好みの場所に変更してOK）：
+> git clone https://github.com/san15/taisun_agent.git ~/dev/taisun_agent
+> cd ~/dev/taisun_agent
+> TAISUN_HOME=~/dev/taisun_agent ./scripts/install.sh
+> ```
+>
+> スキル・エージェントは `~/.claude/` にシンボリックリンクされるので、
+> インストール先フォルダが変わっても Claude Code からは同じように使えます。
+
 **2. プロジェクトで使えるようにする（自動）**
 
 `install.sh` 実行時に **MCPはグローバル登録済み** のため、どのプロジェクトでもそのまま使えます。
@@ -68,7 +84,7 @@ cd taisun_agent
 **（オプション）プロジェクトに .mcp.json を追加したい場合**
 
 ```
-以下のコマンドを実行して：
+以下のコマンドを実行して（~/taisun_agent は自分のインストール先に変更）：
 ln -sf ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
 ```
 

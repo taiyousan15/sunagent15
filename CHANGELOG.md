@@ -7,6 +7,67 @@
 
 ---
 
+## [2.40.0] - 2026-03-14
+
+### ✨ 追加 (Added)
+
+#### バリデーション第8層: LLM Judge
+- `src/proxy-mcp/validation/llm-judge.ts` 新規追加
+- Claude Haiku をセマンティック審判者として使用し、ハルシネーション・論理破綻・事実誤認を検出
+- Prompt Caching (`cache_control: ephemeral`) でコスト90%削減
+- デフォルト無効 — `VALIDATION_LLM_JUDGE_ENABLED=true` で有効化
+- API障害・タイムアウト時はパイプラインを止めず graceful degradation
+
+#### kuromoji 日本語形態素解析 (BUG-008修正)
+- `src/proxy-mcp/validation/self-contrast.ts` に kuromoji lazy singleton 追加
+- 日本語テキストで名詞・動詞・形容詞・形容動詞を正確に抽出し共有キーワード比較
+- `runSelfContrast()` を async 化
+- `MAX_SENTENCES=50` キャップで O(N²) 爆発を防止（50,000文字を1.2秒で処理）
+
+### 🔧 修正 (Fixed)
+
+| バグID | 対象ファイル | 内容 |
+|--------|------------|------|
+| BUG-001 | `pipeline.ts` | `buildPassedLayers(sourceTexts)` の dead parameter 削除 |
+| BUG-002 | `cove.ts` | ゼロ除算 NaN — `Math.max(Math.abs(n), Math.abs(claimValue))` + ゼロ近傍ガード |
+| BUG-004 | `reflexion.ts` | ラウンド表記バグ `/ round+1` → `/ maxRounds` で正しい分母に |
+| BUG-005 | `llm-judge.ts` | `@anthropic-ai/sdk` 未インストール → fetch ベース直接 HTTP に変更 |
+| BUG-006 | `constitutional.ts` | MEDICAL regex に `[ァ-ヶー]{4+}(?:塩酸塩|硫酸塩|...)` 追加、薬品名を正確に検出 |
+| BUG-007 | `faithfulness.ts` | 数値正規化 `parseNormalizedNumber()` 追加 — k/M/B/T (英語) と 万/億/兆/千/百 (漢字) に対応 |
+| BUG-008 | `self-contrast.ts` | kuromoji 形態素解析で日本語文の数値矛盾を検出可能に |
+
+### 🧪 テスト
+- `tests/unit/validation-enterprise.test.ts`: 81/81 全テスト通過 (2.8秒)
+- `runSelfContrast` 呼び出し箇所を async/await 対応
+- BUG-006/008 修正により期待値を「修正後の正しい動作」に更新
+
+---
+
+## [2.39.0] - 2026-03-14
+
+### ✨ 追加 (Added)
+
+#### 7層バリデーションパイプライン
+- Constitutional AI + Self-Contrast + CoVe + Faithfulness + DeepEval Gate + Reflexion + Prospective Reflection
+- `src/proxy-mcp/validation/` 以下に各層を独立ファイルで実装
+- エンタープライズ規模テスト 81件追加
+
+---
+
+## [2.38.0] - 2026-03-13
+
+### ✨ 追加 (Added)
+- Stagehand/Skyvern MCP追加でAIブラウザ自動操作を強化
+
+---
+
+## [2.37.0] - 2026-03-12
+
+### ✨ 追加 (Added)
+- Firecrawl MCP統合 — スクレイピング・クロール・サイト構造分析
+
+---
+
 ## [2.30.0] - 2026-03-02
 
 ### 🔧 修正 (Fixed)
