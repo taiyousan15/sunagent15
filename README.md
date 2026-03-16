@@ -17,10 +17,11 @@
 
 ## 📋 最新バージョン
 
-**v2.40.0** (2026-03-14) — バリデーション8層化・BUG-001〜008全修正・kuromoji日本語解析・LLM Judge追加
+**v2.41.0** (2026-03-17) — ECC インストール・アップデート手順追加・MCP整理・resilience強化
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.41.0 | 2026-03-17 | README に everything-claude-code インストール・アップデート手順セクション追加 / MCP 29→21個に整理（不要5サーバー削除）/ proxy-mcp resilience 強化（リトライ5回・エラークラス分類）|
 | v2.40.0 | 2026-03-14 | バリデーション8層化 — kuromoji日本語形態素解析・LLM Judge（Claude Haiku審判）追加 / BUG-001〜008全修正（ゼロ除算・数値正規化・ラウンド表記・completeness検出強化）/ MAX_SENTENCES=50でO(N²)爆発防止 |
 | v2.39.0 | 2026-03-14 | 7層バリデーションパイプライン実装（Constitutional AI + Self-Contrast + CoVe + Faithfulness + DeepEval + Reflexion）/ エンタープライズ規模テスト81件追加 |
 | v2.38.0 | 2026-03-13 | Stagehand/Skyvern MCP追加でAIブラウザ自動操作を強化 |
