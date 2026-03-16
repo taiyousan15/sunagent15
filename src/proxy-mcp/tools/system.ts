@@ -54,7 +54,7 @@ export function systemHealth(): ToolResult {
   }
 
   // Check success rate (only if there are events to evaluate)
-  const totalEvents = metrics?.last24h?.successCount + metrics?.last24h?.failureCount || 0;
+  const totalEvents = (metrics?.last24h?.successCount ?? 0) + (metrics?.last24h?.failureCount ?? 0);
   if (totalEvents > 0) {
     if (metrics && metrics.last24h.successRate < 0.9) {
       status = 'unhealthy';

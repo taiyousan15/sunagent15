@@ -153,6 +153,77 @@ git pull origin main
 
 ---
 
+## 🔄 everything-claude-code (ECC) のインストール・アップデート
+
+TAISUN は **[everything-claude-code](https://github.com/affaan-m/everything-claude-code)** をベースレイヤーとして使用しています。
+ECC は Claude Code 向けの汎用スキル・エージェント・コマンド集（Anthropic Hackathon 受賞）です。
+
+### システム構造
+
+```
+ECC (基盤層)              → ~/.claude/ にグローバルインストール
+  └─ rules / agents / commands / skills (300+)
+
+TAISUN (プロジェクト層)   → ./claude/ にプロジェクトローカル設定
+  └─ WORKFLOW CONTRACT / hooks / MCP 21個 / 独自スキル
+```
+
+### 初回インストール
+
+```bash
+# 1. リポジトリをクローン
+cd ~/Desktop/01_開発プロジェクト   # ← 任意のフォルダでOK
+git clone https://github.com/affaan-m/everything-claude-code.git
+cd everything-claude-code
+
+# 2. 依存関係をインストール
+npm install
+
+# 3. ECC を ~/.claude/ に適用（TypeScript プロジェクト向け）
+bash install.sh typescript
+```
+
+**完了の目安**: `~/.claude/commands/`, `~/.claude/agents/`, `~/.claude/skills/` に大量のファイルが展開されれば成功。
+
+> インストール記録は `~/.claude/ecc/install-state.json` に保存されます（バージョン・コミットハッシュ確認可能）。
+
+### アップデート
+
+```bash
+cd ~/Desktop/01_開発プロジェクト/everything-claude-code
+
+# 競合する可能性があるローカルファイルを退避（初回のみ）
+# ls .claude 2>/dev/null && mv .claude .claude.backup
+
+# 最新版を取得
+git pull origin main
+
+# 再インストール（差分のみ適用）
+bash install.sh typescript
+```
+
+**現在の ECC バージョン確認**:
+```bash
+cat ~/.claude/ecc/install-state.json | python3 -m json.tool | grep repoVersion
+```
+
+### ECC が提供する主な機能
+
+| カテゴリ | 内容 | TAISUN での使われ方 |
+|---------|------|-------------------|
+| `rules/` | coding-style, testing, security 等11ファイル | 全コードのコーディング規約強制 |
+| `agents/` | ait42-* 汎用エージェント群 | `/omega-research` 等から自動呼び出し |
+| `commands/` | /tdd, /code-review, /checkpoint 等 | スラッシュコマンドとして使用可能 |
+| `skills/` | 300+ スキル | `Skill tool` で呼び出す全スキルのベース |
+
+### 注意事項
+
+- ECC は `~/.claude/` (グローバル) に適用、TAISUN 独自設定 `.claude/` (プロジェクト) には影響なし
+- `git pull` 前にローカルに `.claude/` があると競合エラーが出る → `mv .claude .claude.backup` で退避
+- ECC v1.8.0 では357ファイルが展開される（インストール時間: 約30秒）
+
+---
+
 ## 🤖 SDD スキル最適化セットアップ（NEW v2.31.0）
 
 SDD（Software Design Document）スキル13本を環境に合わせた最適なモデルで動作させるセットアップです。

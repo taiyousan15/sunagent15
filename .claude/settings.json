@@ -109,9 +109,29 @@
             "timeout": 3
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/pre-compact-save.js",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/auto-adr.js",
+            "timeout": 3
+          }
+        ]
+      },
       {
         "matcher": "Write|Edit",
         "hooks": [
@@ -151,6 +171,16 @@
             "timeout": 3
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/output-verifier.js",
+            "timeout": 3
+          }
+        ]
       }
     ],
     "SessionEnd": [
@@ -165,6 +195,27 @@
         ]
       }
     ],
-    "Stop": []
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/auto-changelog.js",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/session-end-ledger.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
   }
 }

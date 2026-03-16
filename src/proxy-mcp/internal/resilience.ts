@@ -45,11 +45,54 @@ export const DEFAULT_RESILIENCE_CONFIG: ResilienceConfig = {
     toolCallMs: 15000,
   },
   retry: {
-    maxAttempts: 2,
-    backoffMs: 250,
+    maxAttempts: 5,
+    backoffMs: 500,
     jitter: true,
   },
   circuit: DEFAULT_CIRCUIT_CONFIG,
+};
+
+/**
+ * エラークラス分類 — リトライ戦略を決定する
+ * - transient:   ネットワーク/タイムアウト → 指数バックオフでリトライ
+ * - rate_limit:  429 → 長めのバックオフ後にリトライ
+ * - logic_error: 意味的失敗 (400/422) → 別プロンプト戦略でリトライ
+ * - fatal:       権限/認証 (401/403) → リトライしない
+ */
+export type ErrorClass = 'transient' | 'rate_limit' | 'logic_error' | 'fatal';
+
+export function classifyError(error: Error): ErrorClass {
+  const msg = error.message.toLowerCase();
+
+  // Fatal: 認証・権限エラー
+  if (msg.includes('401') || msg.includes('403') ||
+      msg.includes('unauthorized') || msg.includes('forbidden')) {
+    return 'fatal';
+  }
+
+  // Rate limit: 429
+  if (msg.includes('429') || msg.includes('rate limit') || msg.includes('too many requests')) {
+    return 'rate_limit';
+  }
+
+  // Logic error: 400/422 — 意味的に不正なリクエスト
+  if (msg.includes('400') || msg.includes('422') ||
+      msg.includes('bad request') || msg.includes('unprocessable')) {
+    return 'logic_error';
+  }
+
+  // それ以外は transient (ネットワーク/タイムアウト)
+  return 'transient';
+}
+
+/**
+ * エラークラス別のバックオフ係数
+ */
+const ERROR_CLASS_BACKOFF_MULTIPLIER: Record<ErrorClass, number> = {
+  transient:   1.0,
+  rate_limit:  4.0,  // レートリミットは長めに待つ
+  logic_error: 2.0,
+  fatal:       0,    // リトライしない
 };
 
 /**
@@ -60,7 +103,8 @@ export class ResilienceError extends Error {
     message: string,
     public readonly type: 'timeout' | 'circuit_open' | 'max_retries' | 'execution',
     public readonly mcpName: string,
-    public readonly attempts: number = 0
+    public readonly attempts: number = 0,
+    public readonly errorClass: ErrorClass = 'transient'
   ) {
     super(message);
     this.name = 'ResilienceError';
@@ -103,7 +147,7 @@ export async function withTimeout<T>(
 }
 
 /**
- * Execute a function with retry logic
+ * Execute a function with retry logic (エラー分類対応版)
  */
 export async function withRetry<T>(
   fn: () => Promise<T>,
@@ -111,19 +155,33 @@ export async function withRetry<T>(
   mcpName: string
 ): Promise<T> {
   let lastError: Error | undefined;
+  let lastErrorClass: ErrorClass = 'transient';
 
   for (let attempt = 0; attempt < config.maxAttempts; attempt++) {
     try {
       return await fn();
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
+      lastErrorClass = classifyError(lastError);
+
+      // fatal エラーは即座に諦める
+      if (lastErrorClass === 'fatal') {
+        throw new ResilienceError(
+          `Fatal error (no retry): ${lastError.message}`,
+          'execution',
+          mcpName,
+          attempt + 1,
+          'fatal'
+        );
+      }
 
       if (attempt < config.maxAttempts - 1) {
-        const delay = calculateDelay(config.backoffMs, attempt, config.jitter);
-        await new Promise((resolve) => setTimeout(resolve, delay));
+        const multiplier = ERROR_CLASS_BACKOFF_MULTIPLIER[lastErrorClass];
+        const baseDelay = calculateDelay(config.backoffMs * multiplier, attempt, config.jitter);
+        await new Promise((resolve) => setTimeout(resolve, baseDelay));
 
         recordEvent('internal_mcp_tool_call', mcpName, 'ok', {
-          metadata: { retry: true, attempt: attempt + 1 },
+          metadata: { retry: true, attempt: attempt + 1, errorClass: lastErrorClass },
         });
       }
     }
@@ -133,7 +191,8 @@ export async function withRetry<T>(
     `Max retries (${config.maxAttempts}) exceeded: ${lastError?.message}`,
     'max_retries',
     mcpName,
-    config.maxAttempts
+    config.maxAttempts,
+    lastErrorClass
   );
 }
 
