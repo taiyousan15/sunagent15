@@ -1,205 +1,199 @@
 #!/bin/bash
-# TAISUN Agent v2.26.0 - Installation Script
+# TAISUN Agent - インストールスクリプト
 #
-# Usage: ./scripts/install.sh
-#
-# This script:
-# 1. Checks prerequisites (Node.js, npm, uv)
-# 2. Installs npm dependencies
-# 3. Builds MCP servers (dist/ files)
-# 4. Installs ALL skills globally via symlinks
-# 5. Sets up hooks and required directories
-# 6. Guides .env setup
-# 7. Verifies installation
+# 使い方: ./scripts/install.sh
 
 set -e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
 
-echo "========================================"
-echo "  TAISUN Agent v${VERSION} Installation"
-echo "========================================"
-echo ""
+# ─────────────────────────────────────────
+# 表示ヘルパー
+# ─────────────────────────────────────────
+ok()   { echo "  ✅ $1"; }
+warn() { echo "  ⚠️  $1"; }
+info() { echo "  ℹ️  $1"; }
+fail() { echo ""; echo "  ❌ エラー: $1"; echo "     → $2"; echo ""; exit 1; }
+step() { echo ""; echo "━━━ $1 ━━━"; }
 
 # ─────────────────────────────────────────
-# Step 1: Prerequisites
+# ヘッダー
 # ─────────────────────────────────────────
-echo "1. Checking prerequisites..."
+clear
+echo ""
+echo "╔══════════════════════════════════════════════════╗"
+echo "║     TAISUN Agent v${VERSION} インストール          ║"
+echo "║     所要時間：約 3〜5 分                            ║"
+echo "╚══════════════════════════════════════════════════╝"
+echo ""
+echo "  このスクリプトが行うこと："
+echo "  1. 必要なソフトウェアの確認"
+echo "  2. 必要なファイルのダウンロード・準備"
+echo "  3. スキル・エージェントの登録"
+echo "  4. 設定ファイルの作成"
+echo "  5. 動作確認"
+echo ""
+echo "  ⚠️  途中でフォルダが作られたり、画面に文字が流れますが"
+echo "      正常な動作です。最後まで待ってください。"
+echo ""
+read -p "  インストールを開始しますか？ [Enter でスタート / Ctrl+C でキャンセル]" _
+
+# ─────────────────────────────────────────
+# Step 1: 必要なソフトウェアの確認
+# ─────────────────────────────────────────
+step "ステップ 1/5：必要なソフトウェアを確認しています"
+
+echo ""
+echo "  このシステムを動かすために必要なソフトウェアを確認します。"
+echo ""
 
 # Node.js
 if ! command -v node &> /dev/null; then
-    echo "  [ERROR] Node.js is not installed"
-    echo "  → Install from https://nodejs.org/ (v18 or higher)"
-    exit 1
+    fail \
+        "Node.js がインストールされていません" \
+        "https://nodejs.org/ を開き「LTS版」をダウンロードしてインストールしてください"
 fi
 NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
 if [ "$NODE_VERSION" -lt 18 ]; then
-    echo "  [WARN] Node.js 18+ recommended (current: $(node -v))"
+    warn "Node.js のバージョンが古いです（現在: $(node -v)、推奨: v18以上）"
+    warn "https://nodejs.org/ から新しいバージョンをインストールすることをお勧めします"
 else
-    echo "  [OK] Node.js $(node -v)"
+    ok "Node.js $(node -v) … OK"
 fi
 
 # npm
 if ! command -v npm &> /dev/null; then
-    echo "  [ERROR] npm is not installed"
-    exit 1
+    fail \
+        "npm がインストールされていません" \
+        "Node.js を再インストールすると npm も一緒にインストールされます"
 fi
-echo "  [OK] npm $(npm -v)"
+ok "npm $(npm -v) … OK"
 
-# uv (optional but recommended for some MCPs)
+# uv（任意）
 UV_AVAILABLE=false
 if command -v uv &> /dev/null || command -v uvx &> /dev/null; then
     UV_AVAILABLE=true
-    echo "  [OK] uv/uvx available (enables: open-websearch, gpt-researcher, qdrant, etc.)"
+    ok "uv … OK（追加機能が使えます）"
 else
-    echo "  [SKIP] uv not found — optional MCPs (open-websearch, gpt-researcher, qdrant) will be disabled"
-    echo "         To install uv later: curl -LsSf https://astral.sh/uv/install.sh | sh"
+    info "uv が見つかりません。一部の追加機能（Web検索など）は使えませんが、"
+    info "メインの機能はすべて使えます。後から追加することもできます。"
 fi
 
 # Claude Code
 if command -v claude &> /dev/null; then
-    echo "  [OK] Claude Code: $(claude --version 2>/dev/null | head -1 || echo 'installed')"
+    ok "Claude Code … OK"
 else
-    echo "  [WARN] Claude Code not found in PATH"
-    echo "         → Install from https://claude.ai/download"
+    warn "Claude Code がみつかりません"
+    warn "https://claude.ai/download からインストールしてください"
 fi
 
 echo ""
+ok "ソフトウェアの確認が完了しました"
 
 # ─────────────────────────────────────────
-# Step 2: Install npm dependencies
+# Step 2: ファイルのダウンロード・準備
 # ─────────────────────────────────────────
-echo "2. Installing npm dependencies..."
+step "ステップ 2/5：必要なファイルを準備しています（少し時間がかかります）"
+
+echo ""
+echo "  インターネットからファイルをダウンロードしています。"
+echo "  ※ この作業中は画面に英語の文字が流れますが、正常です。"
+echo ""
+
 cd "$REPO_DIR"
-npm install --silent
-echo "  [OK] npm install complete"
+
+echo "  📦 ファイルをダウンロード中..."
+npm install --silent 2>/dev/null || npm install
+ok "ファイルのダウンロードが完了しました"
 
 echo ""
+echo "  🔨 システムを構築中..."
 
-# ─────────────────────────────────────────
-# Step 3: Build MCP servers
-# ─────────────────────────────────────────
-echo "3. Building MCP servers (dist/)..."
-
-# Main proxy MCP
 if npm run build 2>/dev/null; then
-    echo "  [OK] Main build complete"
+    ok "メインシステムの構築が完了しました"
 else
-    echo "  [WARN] Main build had issues — continuing"
+    warn "一部の構築に問題がありましたが、続行します"
 fi
 
-# voice-ai MCP server
-if [ -f "mcp-servers/voice-ai-mcp-server/package.json" ]; then
-    (cd mcp-servers/voice-ai-mcp-server && npm install --silent && npm run build 2>/dev/null) && \
-        echo "  [OK] voice-ai MCP built" || \
-        echo "  [WARN] voice-ai MCP build failed (requires TWILIO keys)"
-fi
+# 追加MCPサーバーのビルド
+for mcp_dir in "mcp-servers/voice-ai-mcp-server" "mcp-servers/ai-sdr-mcp-server" "mcp-servers/line-bot-mcp-server"; do
+    if [ -f "$REPO_DIR/$mcp_dir/package.json" ]; then
+        mcp_name=$(basename "$mcp_dir")
+        (cd "$REPO_DIR/$mcp_dir" && npm install --silent && npm run build 2>/dev/null) && \
+            ok "${mcp_name} の準備が完了しました" || \
+            info "${mcp_name} の準備をスキップしました（APIキー設定後に使えます）"
+    fi
+done
 
-# ai-sdr MCP server
-if [ -f "mcp-servers/ai-sdr-mcp-server/package.json" ]; then
-    (cd mcp-servers/ai-sdr-mcp-server && npm install --silent && npm run build 2>/dev/null) && \
-        echo "  [OK] ai-sdr MCP built" || \
-        echo "  [WARN] ai-sdr MCP build failed"
-fi
-
-# line-bot MCP server
-if [ -f "mcp-servers/line-bot-mcp-server/package.json" ]; then
-    (cd mcp-servers/line-bot-mcp-server && npm install --silent && npm run build 2>/dev/null) && \
-        echo "  [OK] line-bot MCP built" || \
-        echo "  [WARN] line-bot MCP build failed (requires LINE keys)"
-fi
+# ─────────────────────────────────────────
+# Step 3: スキル・エージェントの登録
+# ─────────────────────────────────────────
+step "ステップ 3/5：スキル・エージェントを登録しています"
 
 echo ""
-
-# ─────────────────────────────────────────
-# Step 4: Install ALL skills globally (symlinks)
-# ─────────────────────────────────────────
-echo "4. Installing skills to ~/.claude/skills/ (symlinks — auto-update on git pull)..."
+echo "  スキルとは「Claude への命令テンプレート」です。"
+echo "  登録すると /リサーチ や /設計 などのコマンドが使えるようになります。"
+echo ""
+echo "  🔗 ~/.claude/skills/ フォルダを作成・更新しています"
+echo "     ※ ~/.claude/ は Claude Code の設定フォルダです（システムが自動管理します）"
+echo ""
 
 TARGET_SKILLS="$HOME/.claude/skills"
 SOURCE_SKILLS="$REPO_DIR/.claude/skills"
-
 mkdir -p "$TARGET_SKILLS"
 
-if [ -d "$SOURCE_SKILLS" ]; then
-    INSTALLED=0
-    UPDATED=0
-    SKIPPED=0
+INSTALLED=0; UPDATED=0; SKIPPED=0
 
+if [ -d "$SOURCE_SKILLS" ]; then
     for skill_dir in "$SOURCE_SKILLS"/*/; do
         skill_name=$(basename "$skill_dir")
-
-        # Skip internal/meta files
         [[ "$skill_name" == "_archived" ]] && continue
         [[ "$skill_name" == "data" ]] && continue
-        [[ ! -f "$skill_dir/SKILL.md" ]] && continue
+        [[ ! -f "$skill_dir/SKILL.md" ]] && [[ ! -f "$skill_dir/CLAUDE.md" ]] && continue
 
         target="$TARGET_SKILLS/$skill_name"
+        if [ -d "$target" ] && [ ! -L "$target" ]; then rm -rf "$target"; fi
 
-        # Remove old copy if it exists (not a symlink)
-        if [ -d "$target" ] && [ ! -L "$target" ]; then
-            rm -rf "$target"
-        fi
-
-        # Create symlink
         if [ ! -L "$target" ]; then
             ln -sf "$skill_dir" "$target"
-            echo "  [+] $skill_name"
             ((INSTALLED++)) || true
         else
-            # Update symlink if pointing to wrong place
             current_target=$(readlink "$target")
             if [ "$current_target" != "$skill_dir" ]; then
                 ln -sf "$skill_dir" "$target"
-                echo "  [~] $skill_name (updated)"
                 ((UPDATED++)) || true
             else
                 ((SKIPPED++)) || true
             fi
         fi
     done
-
-    echo ""
-    echo "  Skills: ${INSTALLED} installed, ${UPDATED} updated, ${SKIPPED} already linked"
-    TOTAL_SKILLS=$(ls -d "$TARGET_SKILLS"/*/  2>/dev/null | wc -l | tr -d ' ')
-    echo "  Total in ~/.claude/skills/: ${TOTAL_SKILLS}"
-else
-    echo "  [ERROR] Skills directory not found: $SOURCE_SKILLS"
 fi
 
-echo ""
+TOTAL_SKILLS=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
+ok "スキルを登録しました（新規: ${INSTALLED}件 / 更新: ${UPDATED}件 / 合計: ${TOTAL_SKILLS}件）"
 
-# ─────────────────────────────────────────
-# Step 5: Install agents globally (symlinks)
-# ─────────────────────────────────────────
-echo "5. Installing agents to ~/.claude/agents/ (symlinks)..."
+echo ""
+echo "  🤖 ~/.claude/agents/ フォルダを作成・更新しています"
+echo "     ※ エージェントとは「特定の仕事を自動で行うAI」です"
+echo ""
 
 TARGET_AGENTS="$HOME/.claude/agents"
 SOURCE_AGENTS="$REPO_DIR/.claude/agents"
-
 mkdir -p "$TARGET_AGENTS"
 
+AGENT_INSTALLED=0; AGENT_UPDATED=0; AGENT_SKIPPED=0
+
 if [ -d "$SOURCE_AGENTS" ]; then
-    AGENT_INSTALLED=0
-    AGENT_UPDATED=0
-    AGENT_SKIPPED=0
     for agent_file in "$SOURCE_AGENTS"/*.md; do
         agent_name=$(basename "$agent_file")
         [[ "$agent_name" == "CLAUDE.md" ]] && continue
-
         target="$TARGET_AGENTS/$agent_name"
-
-        # Remove old copy if it exists (not a symlink)
-        if [ -f "$target" ] && [ ! -L "$target" ]; then
-            rm -f "$target"
-        fi
-
+        if [ -f "$target" ] && [ ! -L "$target" ]; then rm -f "$target"; fi
         if [ ! -L "$target" ]; then
             ln -sf "$agent_file" "$target"
             ((AGENT_INSTALLED++)) || true
         else
-            # Always update symlink to ensure latest path
             current_target=$(readlink "$target")
             if [ "$current_target" != "$agent_file" ]; then
                 ln -sf "$agent_file" "$target"
@@ -209,84 +203,80 @@ if [ -d "$SOURCE_AGENTS" ]; then
             fi
         fi
     done
-    TOTAL_AGENTS=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
-    echo "  [OK] Agents: ${AGENT_INSTALLED} installed, ${AGENT_UPDATED} updated, ${AGENT_SKIPPED} already linked"
-    echo "  Total in ~/.claude/agents/: ${TOTAL_AGENTS}"
 fi
 
+TOTAL_AGENTS=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
+ok "エージェントを登録しました（新規: ${AGENT_INSTALLED}件 / 更新: ${AGENT_UPDATED}件 / 合計: ${TOTAL_AGENTS}件）"
+
+# ─────────────────────────────────────────
+# Step 4: 設定ファイルの作成
+# ─────────────────────────────────────────
+step "ステップ 4/5：設定ファイルを作成しています"
+
+echo ""
+echo "  各種ツールの設定ファイルを準備します。"
 echo ""
 
-# ─────────────────────────────────────────
-# Step 6: Hooks setup
-# ─────────────────────────────────────────
-echo "6. Setting up hooks..."
-
+# フック
 chmod +x "$REPO_DIR"/.claude/hooks/*.sh 2>/dev/null || true
 chmod +x "$REPO_DIR"/.claude/hooks/*.js 2>/dev/null || true
+mkdir -p "$REPO_DIR/.claude/temp" "$REPO_DIR/.claude/agent-memory" "$REPO_DIR/.taisun/memory"
+ok "フック（自動実行設定）を準備しました"
+info "  .claude/temp/        … 一時ファイル置き場"
+info "  .claude/agent-memory/ … AIの作業メモ置き場"
+info "  .taisun/memory/      … システムのメモリ置き場"
 
-mkdir -p "$REPO_DIR/.claude/temp"
-mkdir -p "$REPO_DIR/.claude/agent-memory"
-mkdir -p "$REPO_DIR/.taisun/memory"
-
-echo "  [OK] Hooks configured"
-
+# .mcp.json
 echo ""
-
-# ─────────────────────────────────────────
-# Step 7: .env setup guide
-# ─────────────────────────────────────────
-echo "7. MCP config (.mcp.json) setup..."
-
 if [ ! -f "$REPO_DIR/.mcp.json" ]; then
     cp "$REPO_DIR/.mcp.json.example" "$REPO_DIR/.mcp.json" 2>/dev/null || true
-    echo "  [OK] .mcp.json created from template"
+    ok ".mcp.json を作成しました（利用するツールの設定ファイル）"
 else
-    echo "  [OK] .mcp.json already exists (local customizations preserved)"
+    ok ".mcp.json はすでに存在します（既存の設定を保持しました）"
 fi
 
+# .env
 echo ""
-
-echo "8. Environment variables (.env) setup..."
-
 if [ ! -f "$REPO_DIR/.env" ]; then
-    echo ""
-    echo "  ┌─────────────────────────────────────────────────────────┐"
-    echo "  │  .env file not found. Creating from template...         │"
-    echo "  └─────────────────────────────────────────────────────────┘"
     cp "$REPO_DIR/.env.example" "$REPO_DIR/.env" 2>/dev/null || touch "$REPO_DIR/.env"
     echo ""
-    echo "  REQUIRED (core features):"
-    echo "  ┌─────────────────────────────────────────────────────────┐"
-    echo "  │  ANTHROPIC_API_KEY=sk-ant-...  (必須)                   │"
-    echo "  │  → https://console.anthropic.com/                       │"
-    echo "  └─────────────────────────────────────────────────────────┘"
+    echo "  ┌─────────────────────────────────────────────────────────────┐"
+    echo "  │  ⚠️  APIキーの設定が必要です（重要）                          │"
+    echo "  └─────────────────────────────────────────────────────────────┘"
     echo ""
-    echo "  OPTIONAL (extra MCPs — skip if not needed):"
-    echo "  ┌─────────────────────────────────────────────────────────┐"
-    echo "  │  TAVILY_API_KEY      → Web検索 (tavily.com 無料枠あり)  │"
-    echo "  │  OPENAI_API_KEY      → gpt-researcher用                 │"
-    echo "  │  TWILIO_*            → voice-ai (電話機能)               │"
-    echo "  │  LINE_CHANNEL_*      → Line Bot                         │"
-    echo "  │  META_ACCESS_TOKEN   → Meta広告                         │"
-    echo "  │  APIFY_API_TOKEN     → Apify スクレイピング              │"
-    echo "  └─────────────────────────────────────────────────────────┘"
+    echo "  .env ファイルが作成されました。"
+    echo "  このファイルにあなたのAPIキーを設定する必要があります。"
     echo ""
-    echo "  → .env を編集して ANTHROPIC_API_KEY を設定してください"
+    echo "  【必須】ANTHROPIC_API_KEY（これがないと動きません）"
+    echo "    取得先 → https://console.anthropic.com/"
+    echo "    設定例 → ANTHROPIC_API_KEY=sk-ant-api03-xxxxx"
+    echo ""
+    echo "  【任意】その他のAPIキー（なくても基本機能は使えます）"
+    echo "    TAVILY_API_KEY    → Web検索機能（無料枠あり）"
+    echo "    OPENAI_API_KEY    → 一部の調査機能"
+    echo "    META_ACCESS_TOKEN → Facebook/Instagram広告機能"
+    echo ""
+    echo "  👉 設定方法："
+    echo "     1. taisun_agent フォルダを開く"
+    echo "     2. .env ファイルをテキストエディタで開く"
+    echo "     3. ANTHROPIC_API_KEY= の右側にAPIキーを貼り付ける"
+    echo "     4. 保存して閉じる"
+    echo ""
 else
-    echo "  [OK] .env already exists"
+    ok ".env はすでに存在します（既存の設定を保持しました）"
     if grep -q "ANTHROPIC_API_KEY=sk-ant-" "$REPO_DIR/.env" 2>/dev/null; then
-        echo "  [OK] ANTHROPIC_API_KEY is set"
+        ok "ANTHROPIC_API_KEY が設定されています"
     else
-        echo "  [WARN] ANTHROPIC_API_KEY not set in .env"
+        warn "ANTHROPIC_API_KEY がまだ設定されていません"
+        warn ".env ファイルを開いて ANTHROPIC_API_KEY を設定してください"
+        warn "取得先 → https://console.anthropic.com/"
     fi
 fi
 
+# MCP グローバル登録
 echo ""
-
-# ─────────────────────────────────────────
-# Step 8: Verification
-# ─────────────────────────────────────────
-echo "9. Registering MCPs globally (~/.claude/settings.json)..."
+echo "  🔗 ツール（MCP）をClaude Codeに登録しています..."
+echo "     ※ ~/.claude/settings.json に設定が書き込まれます"
 
 SETTINGS_FILE="$HOME/.claude/settings.json"
 mkdir -p "$(dirname "$SETTINGS_FILE")"
@@ -297,16 +287,13 @@ const path = require('path');
 const REPO_DIR = '$REPO_DIR';
 const SETTINGS_FILE = '$SETTINGS_FILE';
 
-// Read or initialize settings.json
 let settings = {};
 try { settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8')); } catch(e) {}
 if (!settings.mcpServers) settings.mcpServers = {};
 
-// Read .mcp.json
 let mcp = {};
 try { mcp = JSON.parse(fs.readFileSync(path.join(REPO_DIR, '.mcp.json'), 'utf8')); } catch(e) {}
 
-// Merge mcpServers with absolute paths for local dist files
 for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
   if (key.startsWith('_comment')) continue;
   const server = JSON.parse(JSON.stringify(val));
@@ -323,56 +310,66 @@ for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
 }
 
 fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
-console.log('  [OK] MCPs registered globally (' + Object.keys(settings.mcpServers).filter(k=>!k.startsWith('_')).length + ' servers)');
-" 2>/dev/null || echo "  [WARN] Global MCP registration failed — run Step 2 manually"
+const count = Object.keys(settings.mcpServers).filter(k=>!k.startsWith('_')).length;
+console.log('  ✅ ツールを ' + count + ' 個登録しました');
+" 2>/dev/null || warn "ツールの登録に問題がありました（後から手動で設定できます）"
+
+# ─────────────────────────────────────────
+# Step 5: 動作確認
+# ─────────────────────────────────────────
+step "ステップ 5/5：動作を確認しています"
 
 echo ""
 
-echo "10. Verification..."
+[ -f "$REPO_DIR/.claude/CLAUDE.md" ] && ok "設定ファイル (.claude/CLAUDE.md) … OK"
 
-# Check CLAUDE.md
-if [ -f "$REPO_DIR/.claude/CLAUDE.md" ]; then
-    echo "  [OK] .claude/CLAUDE.md present"
-fi
-
-# Check hooks
 HOOK_OK=0
-HOOK_MISSING=0
 for hook in workflow-sessionstart-injector.js skill-usage-guard.js session-handoff-generator.js; do
-    if [ -f "$REPO_DIR/.claude/hooks/$hook" ]; then
-        ((HOOK_OK++)) || true
-    else
-        echo "  [WARN] Hook missing: $hook"
-        ((HOOK_MISSING++)) || true
-    fi
+    [ -f "$REPO_DIR/.claude/hooks/$hook" ] && ((HOOK_OK++)) || true
 done
-echo "  [OK] Hooks: ${HOOK_OK} present"
+ok "フック: ${HOOK_OK} 個が正常に設定されています"
 
-# Skill count
 SKILL_COUNT=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
-echo "  [OK] Skills available: ${SKILL_COUNT}"
+ok "スキル: ${SKILL_COUNT} 個が利用可能です"
 
-# Agent count
 AGENT_COUNT=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
-echo "  [OK] Agents available: ${AGENT_COUNT}"
+ok "エージェント: ${AGENT_COUNT} 個が利用可能です"
 
+# ─────────────────────────────────────────
+# 完了メッセージ
+# ─────────────────────────────────────────
 echo ""
-echo "========================================"
-echo "  Installation Complete! v${VERSION}"
-echo "========================================"
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║   🎉  インストールが完了しました！  v${VERSION}                 ║"
+echo "╚══════════════════════════════════════════════════════════════╝"
 echo ""
-echo "Next steps:"
-echo "  1. Edit .env → set ANTHROPIC_API_KEY (必須)"
-echo "  2. Open Claude Code in this directory"
-echo "  3. Run: npm run taisun:diagnose  (動作確認)"
+echo "  ┌──────────────────────────────────────────────────────────┐"
+echo "  │  次にやること（3ステップ）                                │"
+echo "  ├──────────────────────────────────────────────────────────┤"
+echo "  │                                                          │"
+echo "  │  1️⃣  .env ファイルに ANTHROPIC_API_KEY を設定する         │"
+echo "  │     → taisun_agent フォルダの中にある .env を開く         │"
+echo "  │     → ANTHROPIC_API_KEY=sk-ant-... と入力して保存        │"
+echo "  │                                                          │"
+echo "  │  2️⃣  Claude Code を開く（再起動が必要です）                │"
+echo "  │     → Claude Code を一度閉じて、再度開いてください        │"
+echo "  │                                                          │"
+echo "  │  3️⃣  試しに使ってみる                                     │"
+echo "  │     → チャット欄に「こんにちは」と入力してみる            │"
+echo "  │     → /help と入力すると使い方が見られます                │"
+echo "  │                                                          │"
+echo "  └──────────────────────────────────────────────────────────┘"
 echo ""
-echo "Quick commands:"
-echo "  /batch         → 大規模並列エージェント実行"
-echo "  /research      → Deep Research"
-echo "  /mega-research → 6API統合リサーチ"
-echo "  /sdd-full      → 完全設計書一式生成"
-echo "  /video-agent   → 動画パイプライン"
+echo "  💡 よく使うコマンド："
+echo "     /research      → 調査・リサーチ"
+echo "     /mega-research → 複数ソースからの詳細調査"
+echo "     /sdd-full      → 設計書の自動生成"
+echo "     /help-expert   → 詳しい使い方を見る"
 echo ""
-echo "Update:"
-echo "  git pull origin main && npm run setup"
+echo "  🔄 アップデート方法："
+echo "     git pull origin main && npm run setup"
+echo ""
+echo "  ❓ 困ったときは："
+echo "     npm run taisun:diagnose  → 問題の診断"
+echo "     チャットで「使い方を教えて」と話しかける"
 echo ""

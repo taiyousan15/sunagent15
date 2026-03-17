@@ -1,6 +1,6 @@
 {
   "name": "taisun-v2",
-  "version": "2.30.0",
+  "version": "2.42.0",
   "description": "Unified Development System - World-class system development platform with OpenCode/OMO integration and Workflow Guardian",
   "main": "src/index.js",
   "scripts": {
@@ -42,6 +42,10 @@
     "perf:metrics": "npx ts-node scripts/performance-report.ts metrics",
     "perf:recommend": "npx ts-node scripts/performance-report.ts recommend",
     "perf:benchmark": "npx ts-node scripts/run-benchmarks.ts",
+    "mcp:dev": "node .claude/scripts/switch-mcp-profile.js development",
+    "mcp:secure": "node .claude/scripts/switch-mcp-profile.js secure",
+    "mcp:marketing": "node .claude/scripts/switch-mcp-profile.js marketing",
+    "mcp:status": "node .claude/scripts/switch-mcp-profile.js --status",
     "perf:benchmark:json": "npx ts-node scripts/run-benchmarks.ts --format=json --output=benchmark-results.json",
     "agents:list": "node scripts/list-agents.js",
     "skills:list": "node scripts/list-skills.js",

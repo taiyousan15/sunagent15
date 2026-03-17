@@ -1,103 +1,138 @@
-# TAISUN Agent - Windows Installation Script (PowerShell)
+# TAISUN Agent - Windowsインストールスクリプト (PowerShell)
 #
-# Usage (PowerShell):
+# 使い方 (PowerShell):
 #   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 #   .\scripts\install.ps1
 #
-# Requirements:
+# 必要なもの:
 #   - Windows 10/11
 #   - Node.js v18+ (https://nodejs.org/)
 #   - Claude Code (https://claude.ai/download)
-#   - PowerShell 5.1 or later
+#   - PowerShell 5.1 以上
 
 $ErrorActionPreference = "Stop"
 
 $REPO_DIR = Split-Path -Parent $PSScriptRoot
 $VERSION = (Get-Content "$REPO_DIR\package.json" | ConvertFrom-Json).version
 
-Write-Host "========================================"
-Write-Host "  TAISUN Agent v$VERSION Installation"
-Write-Host "  (Windows)"
-Write-Host "========================================"
+# ─────────────────────────────────────────
+# 表示ヘルパー関数
+# ─────────────────────────────────────────
+function Write-Ok   { param($msg) Write-Host "  OK  $msg" -ForegroundColor Green }
+function Write-Warn { param($msg) Write-Host "  !!  $msg" -ForegroundColor Yellow }
+function Write-Info { param($msg) Write-Host "  ->  $msg" -ForegroundColor Cyan }
+function Write-Fail { param($msg) Write-Host "  NG  $msg" -ForegroundColor Red }
+function Write-Step { param($msg) Write-Host ""; Write-Host "━━━ $msg ━━━" -ForegroundColor White }
+
+# ─────────────────────────────────────────
+# ヘッダー
+# ─────────────────────────────────────────
+Clear-Host
+Write-Host ""
+Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Cyan
+Write-Host "║     TAISUN Agent インストール (Windows)            ║" -ForegroundColor Cyan
+Write-Host "║     バージョン：v$VERSION                              ║" -ForegroundColor Cyan
+Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  このスクリプトが行うこと："
+Write-Host "  1. 必要なソフトウェアの確認"
+Write-Host "  2. ファイルのダウンロード・インストール"
+Write-Host "  3. スキル・エージェントのセットアップ"
+Write-Host "  4. API キーの設定"
+Write-Host "  5. 動作確認"
+Write-Host ""
+Write-Host "  ⚠  途中で文字が流れますが正常な動作です。"
+Write-Host "     最後まで待ってください。"
+Write-Host ""
+Write-Host "  何かキーを押すと始まります..."
+$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 Write-Host ""
 
 # ─────────────────────────────────────────
-# Step 1: Prerequisites
+# ステップ 1: 必要なソフトウェアの確認
 # ─────────────────────────────────────────
-Write-Host "1. Checking prerequisites..."
+Write-Step "ステップ 1/5：必要なソフトウェアを確認しています"
+Write-Host ""
 
 # Node.js
 try {
     $nodeVersion = (node -v 2>$null).TrimStart('v').Split('.')[0]
     if ([int]$nodeVersion -lt 18) {
-        Write-Host "  [WARN] Node.js 18+ recommended (current: $(node -v))"
+        Write-Warn "Node.js のバージョンが古いです（現在: $(node -v)、推奨: v18以上）"
+        Write-Info "https://nodejs.org/ から最新版をダウンロードしてください"
     } else {
-        Write-Host "  [OK] Node.js $(node -v)"
+        Write-Ok "Node.js $(node -v) がインストールされています"
     }
 } catch {
-    Write-Host "  [ERROR] Node.js is not installed"
-    Write-Host "  -> Install from https://nodejs.org/ (v18 or higher)"
+    Write-Fail "Node.js がインストールされていません"
+    Write-Host ""
+    Write-Host "  ┌──────────────────────────────────────────────────────────┐"
+    Write-Host "  │  Node.js のインストール方法                               │"
+    Write-Host "  ├──────────────────────────────────────────────────────────┤"
+    Write-Host "  │  1. https://nodejs.org/ を開く                            │"
+    Write-Host "  │  2. 「LTS（推奨版）」をクリックしてダウンロード           │"
+    Write-Host "  │  3. ダウンロードした .msi ファイルを実行                  │"
+    Write-Host "  │  4. インストール完了後、このスクリプトを再実行            │"
+    Write-Host "  └──────────────────────────────────────────────────────────┘"
+    Write-Host ""
     exit 1
 }
 
 # npm
 try {
     $npmV = npm -v 2>$null
-    Write-Host "  [OK] npm $npmV"
+    Write-Ok "npm $npmV がインストールされています"
 } catch {
-    Write-Host "  [ERROR] npm is not installed"
+    Write-Fail "npm がインストールされていません（Node.js と一緒にインストールされるはずです）"
     exit 1
 }
 
-# uv (optional)
+# uv（省略可能）
 $UV_AVAILABLE = $false
 if (Get-Command uv -ErrorAction SilentlyContinue) {
     $UV_AVAILABLE = $true
-    Write-Host "  [OK] uv available"
+    Write-Ok "uv がインストールされています"
 } else {
-    Write-Host "  [SKIP] uv not found (optional MCPs disabled)"
-    Write-Host "         To install: winget install astral-sh.uv"
+    Write-Warn "uv が見つかりません（Python系の一部機能が使えません）"
+    Write-Info "後でインストールする場合: winget install astral-sh.uv"
 }
 
 # Claude Code
 if (Get-Command claude -ErrorAction SilentlyContinue) {
-    Write-Host "  [OK] Claude Code installed"
+    Write-Ok "Claude Code がインストールされています"
 } else {
-    Write-Host "  [WARN] Claude Code not found"
-    Write-Host "         -> Install from https://claude.ai/download"
+    Write-Warn "Claude Code が見つかりません"
+    Write-Info "https://claude.ai/download からインストールしてください"
 }
 
-# Python3 (for intelligence-research skill)
+# Python3（intelligence-research スキル用）
 if (Get-Command python3 -ErrorAction SilentlyContinue) {
-    Write-Host "  [OK] Python3 available (intelligence-research skill enabled)"
+    Write-Ok "Python3 がインストールされています"
 } elseif (Get-Command python -ErrorAction SilentlyContinue) {
-    Write-Host "  [OK] Python available (intelligence-research skill enabled)"
+    Write-Ok "Python がインストールされています"
 } else {
-    Write-Host "  [WARN] Python not found (intelligence-research skill path detection may fail)"
-    Write-Host "         -> Install from https://www.python.org/"
+    Write-Warn "Python が見つかりません（intelligence-research スキルが使えない場合があります）"
+    Write-Info "https://www.python.org/ からインストールできます"
 }
+
+# ─────────────────────────────────────────
+# ステップ 2: ファイルのインストール
+# ─────────────────────────────────────────
+Write-Step "ステップ 2/5：ファイルをインストールしています（少し時間がかかります）"
 
 Write-Host ""
-
-# ─────────────────────────────────────────
-# Step 2: Install npm dependencies
-# ─────────────────────────────────────────
-Write-Host "2. Installing npm dependencies..."
+Write-Host "  📦 必要なファイルをダウンロードしています..."
 Set-Location $REPO_DIR
 npm install --silent
-Write-Host "  [OK] npm install complete"
+Write-Ok "ファイルのインストールが完了しました"
+
 Write-Host ""
-
-# ─────────────────────────────────────────
-# Step 3: Build MCP servers
-# ─────────────────────────────────────────
-Write-Host "3. Building MCP servers (dist/)..."
-
+Write-Host "  🔨 システムを構築しています..."
 try {
     npm run build 2>$null
-    Write-Host "  [OK] Main build complete"
+    Write-Ok "システムの構築が完了しました"
 } catch {
-    Write-Host "  [WARN] Main build had issues - continuing"
+    Write-Warn "一部の構築に問題がありましたが、続行します"
 }
 
 foreach ($server in @("voice-ai-mcp-server", "ai-sdr-mcp-server", "line-bot-mcp-server")) {
@@ -107,27 +142,34 @@ foreach ($server in @("voice-ai-mcp-server", "ai-sdr-mcp-server", "line-bot-mcp-
             Push-Location "$REPO_DIR\mcp-servers\$server"
             npm install --silent 2>$null
             npm run build 2>$null
-            Write-Host "  [OK] $server built"
+            Write-Ok "$server を構築しました"
         } catch {
-            Write-Host "  [WARN] $server build failed (API keys may be required)"
+            Write-Info "$server の構築をスキップしました"
         } finally {
             Pop-Location
         }
     }
 }
 
+# ─────────────────────────────────────────
+# ステップ 3: スキル・エージェントのセットアップ
+# ─────────────────────────────────────────
+Write-Step "ステップ 3/5：スキル・エージェントをセットアップしています"
+
 Write-Host ""
 
-# ─────────────────────────────────────────
-# Step 4: Install skills (Windows: Junction for dirs)
-# ─────────────────────────────────────────
-Write-Host "4. Installing skills to ~\.claude\skills\ ..."
-
+# --- スキルのインストール ---
 $TARGET_SKILLS = "$env:USERPROFILE\.claude\skills"
 $SOURCE_SKILLS = "$REPO_DIR\.claude\skills"
 
+Write-Host "  スキルを設定しています..."
+Write-Info "スキルの保存先: $TARGET_SKILLS"
+Write-Host "       （Claude Code が使うスキルが入るフォルダです）"
+Write-Host ""
+
 if (-not (Test-Path $TARGET_SKILLS)) {
     New-Item -ItemType Directory -Path $TARGET_SKILLS -Force | Out-Null
+    Write-Ok "$TARGET_SKILLS フォルダを作成しました"
 }
 
 $INSTALLED = 0
@@ -139,119 +181,102 @@ if (Test-Path $SOURCE_SKILLS) {
         $skillName = $_.Name
         $skillDir = $_.FullName
 
-        # Skip internal dirs
+        # 内部ディレクトリをスキップ
         if ($skillName -in @("_archived", "data")) { return }
 
-        # Must have SKILL.md
-        if (-not (Test-Path "$skillDir\SKILL.md")) { return }
+        # SKILL.md または CLAUDE.md があるものだけ
+        if (-not (Test-Path "$skillDir\SKILL.md") -and -not (Test-Path "$skillDir\CLAUDE.md")) { return }
 
         $target = "$TARGET_SKILLS\$skillName"
 
-        # Remove old regular directory (not junction)
+        # 古い通常ディレクトリを削除（Junctionではないもの）
         if ((Test-Path $target) -and (-not ((Get-Item $target).Attributes -band [IO.FileAttributes]::ReparsePoint))) {
             Remove-Item $target -Recurse -Force
         }
 
         if (-not (Test-Path $target)) {
-            # Create Junction (no admin rights needed for directories)
+            # Junction リンクを作成（管理者権限不要）
             New-Item -ItemType Junction -Path $target -Target $skillDir | Out-Null
-            Write-Host "  [+] $skillName"
             $INSTALLED++
         } else {
             $SKIPPED++
         }
     }
 
-    Write-Host ""
-    Write-Host "  Skills: $INSTALLED installed, $UPDATED updated, $SKIPPED already linked"
-    $total = (Get-ChildItem $TARGET_SKILLS -Directory).Count
-    Write-Host "  Total in ~/.claude/skills/: $total"
+    $total = (Get-ChildItem $TARGET_SKILLS -Directory -ErrorAction SilentlyContinue).Count
+    Write-Ok "スキルを設定しました（新規: ${INSTALLED}件 / スキップ: ${SKIPPED}件 / 合計: ${total}件）"
 } else {
-    Write-Host "  [ERROR] Skills directory not found: $SOURCE_SKILLS"
+    Write-Warn "スキルのソースフォルダが見つかりません: $SOURCE_SKILLS"
 }
 
 Write-Host ""
 
-# ─────────────────────────────────────────
-# Step 5: Install agents (Windows: Copy files)
-# ─────────────────────────────────────────
-Write-Host "5. Installing agents to ~\.claude\agents\ ..."
-
+# --- エージェントのインストール ---
 $TARGET_AGENTS = "$env:USERPROFILE\.claude\agents"
 $SOURCE_AGENTS = "$REPO_DIR\.claude\agents"
 
+Write-Host "  エージェントを設定しています..."
+Write-Info "エージェントの保存先: $TARGET_AGENTS"
+Write-Host "       （Claude Code が使うエージェントが入るフォルダです）"
+Write-Host ""
+
 if (-not (Test-Path $TARGET_AGENTS)) {
     New-Item -ItemType Directory -Path $TARGET_AGENTS -Force | Out-Null
+    Write-Ok "$TARGET_AGENTS フォルダを作成しました"
 }
 
 $AGENT_INSTALLED = 0
-$AGENT_SKIPPED = 0
 
 if (Test-Path $SOURCE_AGENTS) {
     Get-ChildItem -Path $SOURCE_AGENTS -Filter "*.md" | ForEach-Object {
         if ($_.Name -eq "CLAUDE.md") { return }
 
         $target = "$TARGET_AGENTS\$($_.Name)"
-
-        # Always overwrite to keep up to date
         Copy-Item $_.FullName -Destination $target -Force
         $AGENT_INSTALLED++
     }
-    $total = (Get-ChildItem $TARGET_AGENTS -Filter "*.md").Count
-    Write-Host "  [OK] Agents: $AGENT_INSTALLED installed/updated"
-    Write-Host "  Total in ~/.claude/agents/: $total"
-
-    Write-Host "  [NOTE] Windows: agents are copied (not symlinked)."
-    Write-Host "         Re-run install.ps1 after 'git pull' to update agents."
+    $total = (Get-ChildItem $TARGET_AGENTS -Filter "*.md" -ErrorAction SilentlyContinue).Count
+    Write-Ok "エージェントを設定しました（更新: ${AGENT_INSTALLED}件 / 合計: ${total}件）"
+    Write-Info "Windows版はエージェントをコピーしています。git pull 後に再実行して更新してください。"
 }
 
+# --- 作業用ディレクトリの作成 ---
 Write-Host ""
-
-# ─────────────────────────────────────────
-# Step 6: Hooks setup (Windows: no chmod needed)
-# ─────────────────────────────────────────
-Write-Host "6. Setting up directories..."
+Write-Host "  作業用フォルダを作成しています..."
 
 $dirs = @(
-    "$REPO_DIR\.claude\temp",
-    "$REPO_DIR\.claude\agent-memory",
-    "$REPO_DIR\.taisun\memory"
+    @{ Path = "$REPO_DIR\.claude\temp";         Desc = "一時ファイル用" },
+    @{ Path = "$REPO_DIR\.claude\agent-memory"; Desc = "エージェントの記憶保存用" },
+    @{ Path = "$REPO_DIR\.taisun\memory";       Desc = "システムの記憶保存用" }
 )
 foreach ($dir in $dirs) {
-    if (-not (Test-Path $dir)) {
-        New-Item -ItemType Directory -Path $dir -Force | Out-Null
+    if (-not (Test-Path $dir.Path)) {
+        New-Item -ItemType Directory -Path $dir.Path -Force | Out-Null
+        Write-Ok "$($dir.Path) を作成しました（$($dir.Desc)）"
     }
 }
 
-Write-Host "  [OK] Directories created"
-Write-Host "  [OK] Hooks configured (Windows: chmod not required)"
-Write-Host ""
+# ─────────────────────────────────────────
+# ステップ 4: API キーの設定
+# ─────────────────────────────────────────
+Write-Step "ステップ 4/5：API キーを設定しています"
 
-# ─────────────────────────────────────────
-# Step 7: .mcp.json setup
-# ─────────────────────────────────────────
-Write-Host "7. MCP config (.mcp.json) setup..."
+Write-Host ""
+Write-Host "  📝 設定ファイル (.mcp.json) を準備しています..."
 
 if (-not (Test-Path "$REPO_DIR\.mcp.json")) {
     if (Test-Path "$REPO_DIR\.mcp.json.example") {
         Copy-Item "$REPO_DIR\.mcp.json.example" "$REPO_DIR\.mcp.json"
-        Write-Host "  [OK] .mcp.json created from template"
+        Write-Ok ".mcp.json をテンプレートから作成しました"
     }
 } else {
-    Write-Host "  [OK] .mcp.json already exists"
+    Write-Ok ".mcp.json は既に存在します"
 }
 
 Write-Host ""
-
-# ─────────────────────────────────────────
-# Step 8: .env setup
-# ─────────────────────────────────────────
-Write-Host "8. Environment variables (.env) setup..."
+Write-Host "  🔑 環境変数ファイル (.env) を準備しています..."
 
 if (-not (Test-Path "$REPO_DIR\.env")) {
-    Write-Host ""
-    Write-Host "  .env file not found. Creating from template..."
-
     if (Test-Path "$REPO_DIR\.env.example") {
         Copy-Item "$REPO_DIR\.env.example" "$REPO_DIR\.env"
     } else {
@@ -259,42 +284,44 @@ if (-not (Test-Path "$REPO_DIR\.env")) {
     }
 
     Write-Host ""
-    Write-Host "  REQUIRED:"
-    Write-Host "  +----------------------------------------------------------+"
-    Write-Host "  |  ANTHROPIC_API_KEY=sk-ant-...  (必須)                    |"
-    Write-Host "  |  -> https://console.anthropic.com/                        |"
-    Write-Host "  +----------------------------------------------------------+"
+    Write-Host "  ┌──────────────────────────────────────────────────────────────┐"
+    Write-Host "  │  ⚠  ANTHROPIC_API_KEY の設定が必要です                      │"
+    Write-Host "  ├──────────────────────────────────────────────────────────────┤"
+    Write-Host "  │  1. https://console.anthropic.com/ を開く                    │"
+    Write-Host "  │  2. 「API Keys」→「Create Key」でキーを発行                  │"
+    Write-Host "  │  3. 以下のファイルをメモ帳で開いて編集:                      │"
+    Write-Host "  │     $REPO_DIR\.env"
+    Write-Host "  │  4. ANTHROPIC_API_KEY=sk-ant-... の行を追記                  │"
+    Write-Host "  └──────────────────────────────────────────────────────────────┘"
     Write-Host ""
-    Write-Host "  OPTIONAL (intelligence-research skill):"
-    Write-Host "  +----------------------------------------------------------+"
-    Write-Host "  |  FRED_API_KEY    -> 経済指標 (fred.stlouisfed.org 無料)  |"
-    Write-Host "  |  NEWSAPI_KEY     -> ニュース (newsapi.org 無料枠)         |"
-    Write-Host "  |  APIFY_TOKEN     -> X/Twitter収集 (apify.com)             |"
-    Write-Host "  +----------------------------------------------------------+"
-    Write-Host ""
-    Write-Host "  -> .env を編集して ANTHROPIC_API_KEY を設定してください"
-    Write-Host "     (メモ帳や VSCode で開いて編集)"
+    Write-Host "  オプション（設定するとより多くの機能が使えます）："
+    Write-Host "  ┌──────────────────────────────────────────────────────────────┐"
+    Write-Host "  │  FRED_API_KEY    → 経済指標の取得 (fred.stlouisfed.org 無料) │"
+    Write-Host "  │  NEWSAPI_KEY     → ニュース収集 (newsapi.org 無料枠あり)     │"
+    Write-Host "  │  APIFY_TOKEN     → X/Twitter のデータ収集 (apify.com)        │"
+    Write-Host "  └──────────────────────────────────────────────────────────────┘"
 } else {
-    Write-Host "  [OK] .env already exists"
+    Write-Ok ".env は既に存在します"
     $envContent = Get-Content "$REPO_DIR\.env" -Raw
     if ($envContent -match "ANTHROPIC_API_KEY=sk-ant-") {
-        Write-Host "  [OK] ANTHROPIC_API_KEY is set"
+        Write-Ok "ANTHROPIC_API_KEY が設定されています"
     } else {
-        Write-Host "  [WARN] ANTHROPIC_API_KEY not set in .env"
+        Write-Warn "ANTHROPIC_API_KEY がまだ設定されていません"
+        Write-Info ".env ファイルに ANTHROPIC_API_KEY=sk-ant-... を追記してください"
     }
 }
 
+# MCPをグローバル登録
 Write-Host ""
-
-# ─────────────────────────────────────────
-# Step 9: Verification
-# ─────────────────────────────────────────
-Write-Host "9. Registering MCPs globally (~/.claude/settings.json)..."
+Write-Host "  🔌 MCPサーバーをグローバル登録しています..."
+Write-Info "登録先: $env:USERPROFILE\.claude\settings.json"
+Write-Host "       （Claude Code が自動的に読み込む設定ファイルです）"
 
 $SETTINGS_FILE = "$env:USERPROFILE\.claude\settings.json"
 $settingsDir = Split-Path $SETTINGS_FILE
 if (-not (Test-Path $settingsDir)) {
     New-Item -ItemType Directory -Path $settingsDir -Force | Out-Null
+    Write-Ok "$settingsDir フォルダを作成しました"
 }
 
 $nodeScript = @"
@@ -326,43 +353,64 @@ for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
 }
 
 fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
-console.log('  [OK] MCPs registered globally (' + Object.keys(settings.mcpServers).filter(k=>!k.startsWith('_')).length + ' servers)');
+const count = Object.keys(settings.mcpServers).filter(k => !k.startsWith('_')).length;
+console.log('  [OK] MCPサーバーを登録しました（' + count + ' 件）');
 "@
 
 try {
     node -e $nodeScript
 } catch {
-    Write-Host "  [WARN] Global MCP registration failed - run Step 2 manually"
+    Write-Warn "MCPのグローバル登録に失敗しました（後で手動設定もできます）"
 }
+
+# ─────────────────────────────────────────
+# ステップ 5: 動作確認
+# ─────────────────────────────────────────
+Write-Step "ステップ 5/5：動作を確認しています"
 
 Write-Host ""
 
-Write-Host "10. Verification..."
-
 if (Test-Path "$REPO_DIR\.claude\CLAUDE.md") {
-    Write-Host "  [OK] .claude/CLAUDE.md present"
+    Write-Ok "設定ファイルが正しく配置されています"
 }
 
 $SKILL_COUNT = (Get-ChildItem $TARGET_SKILLS -Directory -ErrorAction SilentlyContinue).Count
-Write-Host "  [OK] Skills available: $SKILL_COUNT"
+Write-Ok "スキル: $SKILL_COUNT 個が利用可能です"
 
 $AGENT_COUNT = (Get-ChildItem $TARGET_AGENTS -Filter "*.md" -ErrorAction SilentlyContinue).Count
-Write-Host "  [OK] Agents available: $AGENT_COUNT"
+Write-Ok "エージェント: $AGENT_COUNT 個が利用可能です"
 
+# ─────────────────────────────────────────
+# 完了メッセージ
+# ─────────────────────────────────────────
 Write-Host ""
-Write-Host "========================================"
-Write-Host "  Installation Complete! v$VERSION"
-Write-Host "  (Windows)"
-Write-Host "========================================"
+Write-Host "╔══════════════════════════════════════════════════════════════╗" -ForegroundColor Green
+Write-Host "║   インストールが完了しました！  v$VERSION (Windows)               ║" -ForegroundColor Green
+Write-Host "╚══════════════════════════════════════════════════════════════╝" -ForegroundColor Green
 Write-Host ""
-Write-Host "Next steps:"
-Write-Host "  1. .env を編集 -> ANTHROPIC_API_KEY を設定"
-Write-Host "  2. Claude Code をこのディレクトリで開く"
+Write-Host "  ┌──────────────────────────────────────────────────────────┐"
+Write-Host "  │  次にやること（3ステップ）                               │"
+Write-Host "  ├──────────────────────────────────────────────────────────┤"
+Write-Host "  │                                                          │"
+Write-Host "  │  ① .env を開いて ANTHROPIC_API_KEY を設定               │"
+Write-Host "  │     （まだ設定していない場合のみ）                       │"
+Write-Host "  │                                                          │"
+Write-Host "  │  ② Claude Code をこのフォルダで開く                     │"
+Write-Host "  │     PowerShell で: claude                                │"
+Write-Host "  │                                                          │"
+Write-Host "  │  ③ 「使い方を教えて」と話しかける                       │"
+Write-Host "  │     日本語で何でも聞けます                               │"
+Write-Host "  │                                                          │"
+Write-Host "  └──────────────────────────────────────────────────────────┘"
 Write-Host ""
-Write-Host "Update:"
-Write-Host "  git pull origin main"
-Write-Host "  .\scripts\install.ps1"
+Write-Host "  アップデートするには："
+Write-Host "    git pull origin main"
+Write-Host "    .\scripts\install.ps1"
 Write-Host ""
-Write-Host "Note: スキルは Junction リンク (自動更新)、"
-Write-Host "      エージェントは Copy (git pull 後に再実行して更新)。"
+Write-Host "  ❓ 困ったときは："
+Write-Host "     npm run taisun:diagnose  → 問題の診断"
+Write-Host "     チャットで「使い方を教えて」と話しかける"
+Write-Host ""
+Write-Host "  ※ スキルは Junction リンク（git pull で自動更新）"
+Write-Host "     エージェントはコピー（git pull 後に install.ps1 を再実行）"
 Write-Host ""
