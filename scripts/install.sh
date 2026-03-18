@@ -88,6 +88,19 @@ else
     warn "https://claude.ai/download からインストールしてください"
 fi
 
+# Ollama（SDD / LP 生成スキル用）
+if command -v ollama &> /dev/null; then
+    ok "Ollama がインストールされています"
+    OLLAMA_MODELS=$(ollama list 2>/dev/null | tail -n +2 | awk '{print $1}' | head -5 | tr '\n' ', ' | sed 's/,$//')
+    if [ -n "$OLLAMA_MODELS" ]; then
+        info "利用可能モデル: ${OLLAMA_MODELS}"
+    fi
+else
+    warn "Ollama が見つかりません（一部のスキルで必要です）"
+    info "対象スキル: sdd-full / sdd-design / sdd-req100 / lp-full-generation / lp-local-generator"
+    info "インストール: https://ollama.com/download"
+fi
+
 echo ""
 ok "ソフトウェアの確認が完了しました"
 

@@ -1,6 +1,6 @@
 ---
 name: gem-research
-description: 9-layer research for Marketing AI
+description: 9層マーケティングリサーチ（競合AI分析・顧客の声・マーケティングパターン特化）。業界別プリセット（美容院/飲食/コンサル/EC）対応。トリガー:「gemリサーチ」「マーケティングリサーチ」「競合AI分析」
   Marketing AI Factory向け9層リサーチシステム。world-research v2.0の6層を基盤に、
   マーケティング特化の3層（競合AI分析/顧客の声/マーケティングパターン）を追加。
   Gem自動生成に必要なキーワード・ペルソナ・トーン・CTA・競合分析をSkillConfig互換JSONで出力。

@@ -7,7 +7,10 @@ disable-model-invocation: true
 
 # Unified Research Skill
 
-複数のリサーチAPIを統合した高品質な情報収集スキル。
+> ⚠️ **廃止予定**: このスキルは `disable-model-invocation: true` で動作しており、
+> LLM を呼び出しません。代替として `/research` または `/mega-research` を使用してください。
+
+複数のリサーチAPIを統合した情報収集スキル（レガシー）。
 
 ## When to Use This Skill
 

@@ -87,6 +87,8 @@
     "perf:normal": "node scripts/switch-performance-mode.js normal",
     "perf:strict": "node scripts/switch-performance-mode.js strict",
     "perf:status": "node scripts/switch-performance-mode.js status",
+    "taisun:version": "node scripts/taisun-version.js",
+    "taisun:support": "node scripts/taisun-support.js",
     "taisun:diagnose": "node scripts/taisun-diagnose.js",
     "taisun:diagnose:full": "node scripts/taisun-diagnose.js --full",
     "taisun:diagnose:fix": "node scripts/taisun-diagnose.js --fix",

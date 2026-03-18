@@ -115,6 +115,19 @@ if (Get-Command python3 -ErrorAction SilentlyContinue) {
     Write-Info "https://www.python.org/ からインストールできます"
 }
 
+# Ollama（SDD / LP 生成スキル用）
+if (Get-Command ollama -ErrorAction SilentlyContinue) {
+    Write-Ok "Ollama がインストールされています"
+    try {
+        $ollamaModels = (ollama list 2>$null | Select-Object -Skip 1 | Select-Object -First 5 | ForEach-Object { ($_ -split '\s+')[0] }) -join ', '
+        if ($ollamaModels) { Write-Info "利用可能モデル: $ollamaModels" }
+    } catch {}
+} else {
+    Write-Warn "Ollama が見つかりません（一部のスキルで必要です）"
+    Write-Info "対象スキル: sdd-full / sdd-design / sdd-req100 / lp-full-generation / lp-local-generator"
+    Write-Info "インストール: https://ollama.com/download"
+}
+
 # ─────────────────────────────────────────
 # ステップ 2: ファイルのインストール
 # ─────────────────────────────────────────

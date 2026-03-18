@@ -1,5 +1,5 @@
 ---
-name: gemini-image-generator
+name: nanobanana-pro
 description: AI image generation via Gemini
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---

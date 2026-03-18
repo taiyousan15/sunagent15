@@ -27,7 +27,7 @@
 | v2.39.0 | 2026-03-14 | 7層バリデーションパイプライン実装（Constitutional AI + Self-Contrast + CoVe + Faithfulness + DeepEval + Reflexion）/ エンタープライズ規模テスト81件追加 |
 | v2.38.0 | 2026-03-13 | Stagehand/Skyvern MCP追加でAIブラウザ自動操作を強化 |
 | v2.37.0 | 2026-03-12 | Firecrawl MCP統合 — スクレイピング・クロール・サイト構造分析 |
-| v2.36.1 | 2026-03-08 | `tsconfig.json` バグ修正（`src/lib`除外を削除・`noImplicitAny: true`）/ CI カバレッジ閾値70→80%・Trivy@0.29.0固定・gitleaksシークレットスキャン追加 / `cd.yml`をGitHub Releases配布ワークフローに全面書き換え（tar.gz+zip+SHA256チェックサム自動生成） |
+| v2.36.1 | 2026-03-08 | `tsconfig.json` バグ修正（`src/lib`除外を削除・`noImplicitAny: true`）/ CI カバレッジ閾値70→80%（※`src/`ビルド対象のみ。フック46個・スキル130個・エージェント96個は対象外）・Trivy@0.29.0固定・gitleaksシークレットスキャン追加 / `cd.yml`をGitHub Releases配布ワークフローに全面書き換え（tar.gz+zip+SHA256チェックサム自動生成） |
 | v2.35.0 | 2026-03-06 | Windows 10/11 用 PowerShell インストールスクリプト (`scripts/install.ps1`) 新規追加・INSTALL.md を Mac/Windows 分離の手順に全面書き直し |
 | v2.34.0 | 2026-03-06 | `intelligence-research` スキルを taisun_agent に移植（31ソース並列収集）+ SKILL.md をシンボリックリンク自動検出でポータブル化 |
 | v2.33.0 | 2026-03-06 | `/research-system` スキル追加 — BUILD_TARGETを引数で渡すとキーワード展開→ディープリサーチ2回→アーキテクチャ設計→12セクションレポートまで自動実行（YAML定義でコンテキスト52%削減） |

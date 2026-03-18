@@ -100,6 +100,26 @@ function switchProfile(targetProfile) {
     settings.mcpServers = {};
   }
 
+  // ─── 整合性チェック: enabledServers が .mcp.json に存在するか ───
+  const mcpJsonPath = path.join(__dirname, '..', '..', '.mcp.json');
+  let mcpServers = {};
+  try {
+    const mcpData = JSON.parse(fs.readFileSync(mcpJsonPath, 'utf-8'));
+    mcpServers = mcpData.mcpServers || {};
+  } catch (_) {}
+
+  const missingServers = [];
+  (profile.enabledServers || []).forEach((serverName) => {
+    if (!mcpServers[serverName] && !settings.mcpServers[serverName]) {
+      missingServers.push(serverName);
+    }
+  });
+
+  if (missingServers.length > 0) {
+    console.log(`\n⚠️  以下のサーバーは .mcp.json に登録されていません（スキップ）:`);
+    missingServers.forEach((s) => console.log(`   - ${s}`));
+  }
+
   let changedCount = 0;
 
   // enabledServers → disabled: false
