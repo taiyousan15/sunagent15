@@ -11,16 +11,17 @@
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
-> インストールするだけで 101スキル・96エージェント・190+コマンド が使えるようになります。
+> インストールするだけで 130スキル・96エージェント・190+コマンド が使えるようになります。
 
 ---
 
 ## 📋 最新バージョン
 
-**v2.42.0** (2026-03-17) — インストール・アップデートスクリプト完全日本語化・初心者UX改善・MCPプロファイル切替スキル追加
+**v2.43.0** (2026-03-18) — BUG 5件修正・入口設計（早見表4枚）・承認モデル実装・taisun:version / taisun:support 新設
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.43.0 | 2026-03-18 | BUG-001/004/005/006/007 全解消 / スキル早見表4枚（リサーチTier・taiyo-style・LP・SDD）追加 / `taisun:version` `taisun:support` コマンド新設 / 承認モデル実装（投稿系=警告・課金系=ブロック）/ Ollamaランタイムガード / プロファイル整合性チェック / gem-research・unified-research 命名修正 / research-system v2.4（QA Gate・61件URL・外部ファイル不要） |
 | v2.42.0 | 2026-03-17 | install.sh / update.sh / install.ps1 を全面日本語化（70歳でも使える初心者UX）/ フォルダ説明・エラー案内・完了後3ステップガイドを追加 / MCPプロファイル切替スキル（`/mcp-profile`）追加 / `npm run mcp:dev\|secure\|marketing\|status` コマンド追加 |
 | v2.41.0 | 2026-03-17 | README に everything-claude-code インストール・アップデート手順セクション追加 / MCP 29→21個に整理（不要5サーバー削除）/ proxy-mcp resilience 強化（リトライ5回・エラークラス分類）|
 | v2.40.0 | 2026-03-14 | バリデーション8層化 — kuromoji日本語形態素解析・LLM Judge（Claude Haiku審判）追加 / BUG-001〜008全修正（ゼロ除算・数値正規化・ラウンド表記・completeness検出強化）/ MAX_SENTENCES=50でO(N²)爆発防止 |
@@ -152,6 +153,54 @@ git pull origin main
 ```
 
 > スキルは Junction リンク（git pull で自動更新）、エージェントはコピー（再インストールで更新）。
+
+---
+
+## 🛠 インストール後に使えるコマンド
+
+### バージョン確認
+
+```bash
+npm run taisun:version
+```
+
+バージョン・OS・Node・Ollama・プロファイル・スキル数・サポートIDを一覧表示します。
+
+### 困ったとき（サポート用診断）
+
+```bash
+npm run taisun:support
+```
+
+診断情報をファイルに保存します。サポートに送るだけで問題を特定できます。
+
+### システム診断
+
+```bash
+npm run taisun:diagnose
+```
+
+スキル・エージェント・MCP・フックの状態を自動チェックします。
+
+### MCPプロファイル切替
+
+```bash
+npm run mcp:dev          # 開発モード（Playwright・Context7・n8n等）
+npm run mcp:secure       # セキュアモード（最小権限）
+npm run mcp:marketing    # マーケティングモード（Meta Ads・Twitter・Firecrawl等）
+npm run mcp:status       # 現在の状態を確認
+```
+
+### スキル早見表
+
+インストール後、以下のガイドが `.claude/skills/_guides/` に配置されます：
+
+| ガイド | 内容 |
+|-------|------|
+| `research-tier-guide.md` | リサーチスキルの選び方（Tier 0〜4 / 8スキル比較） |
+| `taiyo-style-guide.md` | コピーライティング8種の用途別早見表 |
+| `lp-flow-guide.md` | LP作成フロー（Ollama不要/必要ルート別） |
+| `sdd-flow-guide.md` | SDD設計フロー（Ollama不要/必要ルート別） |
 
 ---
 
