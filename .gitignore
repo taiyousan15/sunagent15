@@ -112,3 +112,4 @@ google-auth-system/
 
 # Circular symlink (created when ln -sf taisun_agent/.claude .claude is run from inside repo)
 .claude/.claude
+logs/approvals/
