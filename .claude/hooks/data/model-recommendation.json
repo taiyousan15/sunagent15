@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-03-06T02:58:22.789Z",
-  "complexity": "moderate",
-  "confidence": 100,
+  "timestamp": "2026-03-20T16:22:31.276Z",
+  "complexity": "complex",
+  "confidence": 87,
   "taskModel": "sonnet",
   "claudeCodeModel": "sonnet",
-  "litellmModel": null,
-  "description": "ファイル修正・関数追加・テスト作成",
-  "reason": "キーワード検出: 更新",
-  "previousModel": "haiku",
-  "switched": true
+  "litellmModel": "minimax-m2-5",
+  "description": "新機能実装・API構築・マルチファイル変更",
+  "reason": "キーワード検出: デプロイ",
+  "previousModel": "sonnet",
+  "switched": false
 }

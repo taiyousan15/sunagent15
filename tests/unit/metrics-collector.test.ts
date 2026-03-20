@@ -35,7 +35,7 @@ describe('metrics-collector', () => {
       };
       const result = metricsCollector.validateEvent(event);
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.includes('timestamp'))).toBe(true);
+      expect(result.errors.some((e: string) => e.includes('timestamp'))).toBe(true);
     });
 
     test('should reject event with invalid timestamp format', () => {
@@ -49,7 +49,7 @@ describe('metrics-collector', () => {
       };
       const result = metricsCollector.validateEvent(event);
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.includes('ISO 8601'))).toBe(true);
+      expect(result.errors.some((e: string) => e.includes('ISO 8601'))).toBe(true);
     });
 
     test('should reject block event without reason', () => {
@@ -63,7 +63,7 @@ describe('metrics-collector', () => {
       };
       const result = metricsCollector.validateEvent(event);
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.includes('reason'))).toBe(true);
+      expect(result.errors.some((e: string) => e.includes('reason'))).toBe(true);
     });
 
     test('should accept processingTimeMs up to 10000', () => {

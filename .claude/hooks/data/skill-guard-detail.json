@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-03-20T12:26:30.171Z",
+  "autoMapped": [
+    {
+      "name": "太陽スタイルLP",
+      "description": "太陽スタイルLP",
+      "required_skills": [
+        "taiyo-style-lp"
+      ],
+      "strict": false,
+      "skill_path": null
+    }
+  ],
+  "explicit": [
+    "help",
+    "knowledge-allpages",
+    "linestep",
+    "lp",
+    "01",
+    "Users",
+    "matsumototoshihiko",
+    "Desktop",
+    "taisun"
+  ],
+  "requiresSameWorkflow": false
+}

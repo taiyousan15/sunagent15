@@ -195,27 +195,6 @@
         ]
       }
     ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .claude/hooks/auto-changelog.js",
-            "timeout": 5
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .claude/hooks/session-end-ledger.js",
-            "timeout": 5
-          }
-        ]
-      }
-    ]
+    "Stop": []
   }
 }
