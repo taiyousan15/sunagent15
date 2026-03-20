@@ -1,0 +1,88 @@
+{
+  "canvas": {
+    "width": 600,
+    "height": 1200,
+    "backgroundColor": "radial burst pattern yellow #FFD93D to orange #FF9F1C, manga-style explosion lines"
+  },
+  "mainHeadline": {
+    "text": "2026年の5つのキーワード",
+    "fontSize": "48px",
+    "fontFamily": "bold gothic",
+    "color": "#C92A2A",
+    "decoration": "brush stroke underline, slight 3D shadow effect"
+  },
+  "keywordSection": {
+    "backgroundColor": "semi-transparent white with rounded corners",
+    "keywords": [
+      {"text": "バイブコーディング", "color": "#1A4D80", "icon": "code symbol"},
+      {"text": "AIエージェント", "color": "#1A4D80", "icon": "robot symbol"},
+      {"text": "ブラウザ自動化", "color": "#1A4D80", "icon": "browser symbol"},
+      {"text": "動画エージェント革命", "color": "#1A4D80", "icon": "video symbol"},
+      {"text": "自立的マルチエージェント", "color": "#1A4D80", "icon": "network symbol"}
+    ],
+    "fontSize": "20px",
+    "fontWeight": "bold"
+  },
+  "subHeadline": {
+    "text": "これらが何を意味するか、AIに聞いてみてください。",
+    "fontSize": "18px",
+    "color": "#333333",
+    "fontStyle": "italic"
+  },
+  "storySection": {
+    "backgroundColor": "#2D2D2D",
+    "borderRadius": "12px",
+    "text1": "孫正義がこのスピーチで発表した内容を、",
+    "text2": "私はただ、ただ信じただけです。",
+    "textColor": "#FFFFFF",
+    "fontSize": "18px"
+  },
+  "achievementBadge": {
+    "text": "エージェントを300体",
+    "fontSize": "42px",
+    "color": "#FFD700",
+    "backgroundColor": "#C92A2A",
+    "decoration": "golden glow effect, badge shape"
+  },
+  "mainMessage": {
+    "headline": "「影響力ゼロ」でも勝てる",
+    "subheadline": "史上初のチャンス",
+    "headlineSize": "36px",
+    "headlineColor": "#C92A2A",
+    "decoration": "yellow highlight marker behind text"
+  },
+  "bulletPoints": {
+    "backgroundColor": "white with slight shadow",
+    "items": [
+      "これまでのビジネスは「影響力」が全てでした",
+      "フォロワー数、知名度、実績…",
+      "しかし、第二次AIバブルではルールが根本から変わります",
+      "「誰が言うか」より「何を提供できるか」",
+      "「影響力」より「システムの価値」"
+    ],
+    "fontSize": "16px",
+    "color": "#333333"
+  },
+  "conclusionSection": {
+    "text1": "影響力ゼロの凡人が、",
+    "text2": "大物インフルエンサーと対等になれる時代",
+    "highlight": "対等になれる時代",
+    "highlightColor": "#C92A2A",
+    "fontSize": "22px"
+  },
+  "ctaButton": {
+    "backgroundColor": "green gradient #4CAF50 to #2E7D32",
+    "text": "第二次AIバブルの正体を知る",
+    "textColor": "#FFFFFF",
+    "fontSize": "20px",
+    "icon": "arrow right",
+    "borderRadius": "30px",
+    "shadow": "strong drop shadow"
+  },
+  "bottomAccent": {
+    "text": "これが「第二次AIバブル」の正体です。",
+    "fontSize": "24px",
+    "color": "#1A4D80",
+    "fontWeight": "extra-bold"
+  }
+}

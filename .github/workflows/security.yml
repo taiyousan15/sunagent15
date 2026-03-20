@@ -77,7 +77,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.29.0
         with:
           scan-type: 'fs'
           scan-ref: '.'
@@ -92,7 +92,7 @@ jobs:
           path: trivy-fs-report.txt
 
       - name: Run Trivy for SARIF
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.29.0
         with:
           scan-type: 'fs'
           scan-ref: '.'

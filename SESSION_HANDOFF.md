@@ -2,8 +2,8 @@
 
 > **CRITICAL**: 次のセッションは必ずこのファイルを読んでから作業を開始すること
 
-**最終更新**: 2026-03-20T23:41:22.323Z
-**作業ディレクトリ**: /Users/matsumototoshihiko/Desktop/01_開発プロジェクト/テストコンサル開発/セミナー用テスト
+**最終更新**: 2026-03-20T01:33:19.680Z
+**作業ディレクトリ**: /Users/matsumototoshihiko/taisun_agent
 
 ## 既存スクリプト（MUST READ）
 
@@ -13,14 +13,15 @@
 └─────────────────────────────────────────────────────────┘
 ```
 
-- `agent_os/runner.py` (7.0KB, 2026/3/19 15:34:08)
-- `generate_10_slides.py` (2.3KB, 2026/3/19 15:34:08)
-- `generate_full_guide.py` (5.0KB, 2026/3/19 15:34:08)
-- `generate_install_slides.py` (2.7KB, 2026/3/19 15:34:08)
-- `scripts/generate-release-approval.sh` (11.4KB, 2026/3/19 15:34:08)
-- `scripts/ollama-process-transcript.sh` (6.2KB, 2026/3/19 15:34:08)
-- `scripts/text_preprocessor.py` (11.2KB, 2026/3/19 15:34:08)
-- `tests/test_runner_retry_stop.py` (1.9KB, 2026/3/19 15:34:08)
+- `agent_os/runner.py` (7.0KB, 2026/2/16 7:20:42)
+- `dist/scripts/run-benchmarks.js` (9.5KB, 2026/3/17 4:27:12)
+- `generate_10_slides.py` (2.3KB, 2026/2/16 7:20:42)
+- `generate_full_guide.py` (5.0KB, 2026/2/16 7:20:42)
+- `generate_install_slides.py` (2.7KB, 2026/2/16 7:20:42)
+- `scripts/generate-release-approval.sh` (11.4KB, 2026/2/16 7:20:42)
+- `scripts/ollama-process-transcript.sh` (6.2KB, 2026/2/16 7:20:42)
+- `scripts/text_preprocessor.py` (11.2KB, 2026/2/16 7:20:42)
+- `tests/test_runner_retry_stop.py` (1.9KB, 2026/2/16 7:20:42)
 
 ## ワークフロー定義
 

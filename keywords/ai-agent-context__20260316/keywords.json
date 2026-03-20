@@ -1,0 +1,92 @@
+{
+  "seed_keyword": "AIエージェント コンテキスト圧縮 台本永続化 セッション引継ぎ LLM開発ドキュメント管理",
+  "generated_at": "2026-03-16",
+  "sources": {
+    "tavily": 3,
+    "brave": 2,
+    "newsapi": 1
+  },
+  "keywords": {
+    "compound": [
+      "AIエージェント コンテキストウィンドウ管理",
+      "LLM コンテキスト圧縮 セッション永続化",
+      "AIエージェント メモリフレームワーク 2026",
+      "Claude Code コンパクト コンテキスト保存",
+      "マルチセッション AI ステート管理",
+      "コンテキストエンジニアリング エージェント設計",
+      "永続メモリ トークン削減 AI",
+      "セッション引継ぎ ドキュメント永続化 LLM"
+    ],
+    "longtail": [
+      "AI agent context window management session persistence",
+      "automatic context compression in LLM agents graduated approach",
+      "multi-session AI agent state management architecture decision records",
+      "Claude Code compact context loss prevention architecture",
+      "strategies for preserving long-term context in LLMs",
+      "persistent context contracts for AI coding agents",
+      "LLM context compression document persistence best practices",
+      "top techniques to manage context length in LLMs",
+      "building agents that remember state management in multi-agent systems",
+      "セッションを超えた文脈の保持 ツール使用自動記録 AI要約圧縮"
+    ],
+    "niche": [
+      "ACON context compression long-horizon LLM agents",
+      "LongCodeZip 5.6x code context compression",
+      "Context Autoencoder ICAE compact memory slots",
+      "Claude-Mem 永続メモリ 95%トークン削減",
+      "Praetorian compact メモリ保存",
+      "Redis Agent Memory Server dual-tier architecture",
+      "LlamaIndex Memory knowledge-intensive agents",
+      "docker-agent セッション自動永続化 ブランチ分岐"
+    ],
+    "related": [
+      "context engineering",
+      "token management",
+      "RAG retrieval augmented generation",
+      "vector search semantic retrieval",
+      "agent memory framework",
+      "conversation summarization",
+      "contextual compression RAG",
+      "orchestrator-worker pattern",
+      "hierarchical agent pattern",
+      "CLAUDE.md コンテキスト保存",
+      "SESSION_HANDOFF セッション継続"
+    ],
+    "buying": [
+      "AI agent memory framework 比較 導入",
+      "LLM コンテキスト管理 ツール 価格",
+      "Claude Code Pro 月額200ドル コンテキスト制限",
+      "Redis AI agent memory server 導入コスト",
+      "エンタープライズ向け AI agent 永続メモリ ソリューション"
+    ],
+    "trending": [
+      "context engineering for AI agents 2026",
+      "automatic context compression graduated layers",
+      "AI agent architecture build systems 2026",
+      "AIエージェント開発 コンテキストウィンドウ問題",
+      "Claude Code auto-compact session management",
+      "SDLC is dead AI agents context",
+      "AI coding agent stability long tasks"
+    ],
+    "question": [
+      "AIエージェントのコンテキストウィンドウが足りない時どうする？",
+      "LLMのコンテキスト圧縮で情報が失われないようにするには？",
+      "Claude Codeでどうやってコンテキスト管理してる？20万トークンじゃ足りない",
+      "How to prevent context loss during LLM agent compaction?",
+      "What are the best AI agent memory frameworks in 2026?",
+      "Why does my AI agent feel stupid after long sessions?",
+      "How to manage long-term memory in AI business workflows?",
+      "セッション間でAIエージェントの学習を引き継ぐ方法は？",
+      "ドキュメント永続化とコンテキスト圧縮を両立する設計パターンは？"
+    ],
+    "comparison": [
+      "LlamaIndex Memory vs Redis Agent Memory vs Mem0",
+      "Claude Code compact vs 手動セッション分割",
+      "RAG vs summarization vs hybrid コンテキスト管理比較",
+      "single-agent vs multi-agent state management",
+      "コンテキスト圧縮 Layer 1 vs Layer 2 vs Layer 3 比較",
+      "Cursor vs Claude Code コンテキスト管理能力比較"
+    ]
+  },
+  "total_keywords": 65
+}

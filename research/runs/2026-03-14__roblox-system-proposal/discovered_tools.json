@@ -1,0 +1,126 @@
+{
+  "generated_at": "2026-03-14",
+  "topic": "Claude Code × Roblox 毎日ゲーム開発システム",
+  "tools": [
+    {
+      "name": "Roblox/studio-rust-mcp-server",
+      "type": "MCP Server",
+      "stars": 412,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.92,
+      "rating": "HOT",
+      "install": "cargo build --release → claude --mcp-config",
+      "url": "https://github.com/Roblox/studio-rust-mcp-server",
+      "notes": "Roblox公式・Rust製・最安定・insert_model/run_code搭載"
+    },
+    {
+      "name": "boshyxd/robloxstudio-mcp",
+      "type": "MCP Server",
+      "stars": 281,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.78,
+      "rating": "HOT",
+      "install": "claude mcp add robloxstudio -- npx -y robloxstudio-mcp@latest",
+      "url": "https://github.com/boshyxd/robloxstudio-mcp",
+      "notes": "39ツール搭載・Claude/Gemini両対応・1コマンドインストール"
+    },
+    {
+      "name": "Rojo",
+      "type": "File Sync Tool",
+      "stars": 1000,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.85,
+      "rating": "HOT",
+      "install": "brew install rojo",
+      "url": "https://rojo.space/docs/v7/",
+      "notes": "ファイルシステム↔Studio双方向同期の事実上標準"
+    },
+    {
+      "name": "luau-lsp",
+      "type": "Language Server",
+      "stars": 500,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.80,
+      "rating": "HOT",
+      "install": "code --install-extension JohnnyMorganz.luau-lsp",
+      "url": "https://github.com/JohnnyMorganz/luau-lsp",
+      "notes": "VS CodeでのLuau補完・型チェック"
+    },
+    {
+      "name": "n4tivex/mcp-roblox-docs",
+      "type": "MCP Server",
+      "stars": 1,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.55,
+      "rating": "WARM",
+      "install": "uvx mcp-roblox-docs",
+      "url": "https://github.com/n4tivex/mcp-roblox-docs",
+      "notes": "Roblox APIドキュメント・FastFlagsをClaudeに自動提供"
+    },
+    {
+      "name": "rblx-open-cloud (Python)",
+      "type": "API Wrapper",
+      "stars": 100,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.65,
+      "rating": "WARM",
+      "install": "pip install rblx-open-cloud",
+      "url": "https://github.com/treeben77/rblx-open-cloud",
+      "notes": "Open Cloud API 100%カバー・DataStore・OAuth2対応"
+    },
+    {
+      "name": "Selene",
+      "type": "Linter",
+      "stars": 300,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.70,
+      "rating": "HOT",
+      "install": "brew install selene",
+      "url": "https://github.com/Kampfkarren/selene",
+      "notes": "Luau静的解析・CI/CD組込み可"
+    },
+    {
+      "name": "Wally",
+      "type": "Package Manager",
+      "stars": 400,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.72,
+      "rating": "HOT",
+      "install": "brew install wally",
+      "url": "https://wally.run/",
+      "notes": "Cargo/npm風Robloxパッケージ管理"
+    },
+    {
+      "name": "Fusion",
+      "type": "UI Framework",
+      "stars": 300,
+      "license": "MIT",
+      "cost": "無料",
+      "trend_score": 0.68,
+      "rating": "WARM",
+      "install": "Wally経由でインストール",
+      "url": "https://elttob.uk/Fusion/",
+      "notes": "宣言型UI・Luauネイティブ設計・Roactの後継候補"
+    },
+    {
+      "name": "RoCode Plugin",
+      "type": "Studio Plugin",
+      "stars": null,
+      "license": "独自",
+      "cost": "無料プランあり",
+      "trend_score": 0.60,
+      "rating": "WARM",
+      "install": "Roblox Studio Plugin Marketplace",
+      "url": "https://www.rocode.app/",
+      "notes": "Luau/Roblox API専用学習済みAI・Server/Client/Module自動分割"
+    }
+  ]
+}

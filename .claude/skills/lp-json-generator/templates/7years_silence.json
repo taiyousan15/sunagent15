@@ -1,0 +1,89 @@
+{
+  "canvas": {
+    "width": 900,
+    "height": 800,
+    "backgroundColor": "#FFFFFF"
+  },
+  "topBar": {
+    "backgroundColor": "#C92A2A",
+    "text": "7年間の徹底調査に基づく「成功の方程式」公開",
+    "textColor": "#FFFFFF"
+  },
+  "textElements": [
+    {
+      "id": "exclaim",
+      "text": "えっ！",
+      "position": "top-left",
+      "fontSize": "22px",
+      "fontStyle": "italic handwritten",
+      "color": "#333333"
+    },
+    {
+      "id": "line1",
+      "text": "7年間の『沈黙』で",
+      "fontSize": "28px",
+      "fontFamily": "serif",
+      "color": "#111111",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "line2",
+      "text": "気づいた",
+      "fontSize": "28px",
+      "fontFamily": "serif",
+      "color": "#111111",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "mainWord",
+      "text": "残酷な真実",
+      "fontSize": "72px",
+      "fontFamily": "brush calligraphy",
+      "color": "#111111",
+      "decoration": "golden beige oval brush stroke circle around it"
+    },
+    {
+      "id": "suffix",
+      "text": "を発見！",
+      "fontSize": "36px",
+      "color": "#C92A2A",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "blueLine1",
+      "text": "影響力がゼロでも",
+      "fontSize": "22px",
+      "color": "#1A4D80"
+    },
+    {
+      "id": "blueLine2",
+      "text": "成功できる秘密を",
+      "fontSize": "22px",
+      "color": "#1A4D80",
+      "highlight": "秘密 in red #C92A2A with underline"
+    },
+    {
+      "id": "bigRed",
+      "text": "特別公開中！",
+      "fontSize": "46px",
+      "color": "#C92A2A",
+      "fontWeight": "extra-bold"
+    }
+  ],
+  "personPhoto": {
+    "position": "right 50%",
+    "width": "50%",
+    "description": "smiling Japanese man with curly hair, warm expression"
+  },
+  "ctaButton": {
+    "backgroundColor": "green gradient #6DB36D to #3D8C3D",
+    "text": "無料オンライン動画を今すぐ視聴する！",
+    "textColor": "#FFFFFF",
+    "playIcon": "yellow circle with play triangle"
+  },
+  "bottomBar": {
+    "backgroundColor": "#C92A2A",
+    "text1": "影響力に依存しない成功法則を提供する",
+    "text2": "メイン講師の紹介"
+  }
+}

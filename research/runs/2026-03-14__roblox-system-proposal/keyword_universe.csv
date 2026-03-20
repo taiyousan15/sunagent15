@@ -1,0 +1,47 @@
+category,keyword,notes
+core,Claude Code,メインツール
+core,Roblox Studio,ゲームエンジン
+core,Luau スクリプト自動生成,主要機能
+core,AI駆動ゲーム開発,コンセプト
+core,毎日ゲームリリース,目標
+core,Roblox Open Cloud API,外部連携
+core,MCP × Roblox Studio,技術基盤
+core,Rojo ファイル同期,必須ツール
+core,Vibe Coding for Roblox,トレンドワード
+core,ゲーム開発自動化,目的
+related,Luau,言語
+related,roblox-ts,TypeScript→Luauコンパイラ
+related,GitHub Actions,CI/CD
+related,Selene,Linter
+related,StyLua,Formatter
+related,Wally,パッケージマネージャー
+related,Fusion,UIフレームワーク
+related,Knit,ゲームFW
+related,Matter ECS,物理/ECS
+rising_2026,Vibe Coding for Roblox,X言及数急増
+rising_2026,Claude Code ゲーム開発,Anthropic公式事例増加
+rising_2026,Roblox Open Cloud v2,DevForum API更新頻度
+rising_2026,AI NPC生成 Luau,Roblox AIロードマップ
+rising_2026,MCP × Roblox Studio,MCP対応ツールStars急増
+rising_2026,ゲームAIエージェント,AI Agent系リポジトリ増加
+rising_2026,1日1ゲームチャレンジ,YouTube/Zenn投稿数増加
+niche,Claude Code に Roblox を教える,学習コンテンツ角度
+niche,Luau プロンプトエンジニアリング,開発者向け超ニッチ
+niche,Roblox Studio MCP サーバー自作,超ニッチ
+niche,毎日Robloxゲームリリースの収益記録,実験ログ系
+niche,Roblox ゲームを Claude に丸投げする方法,バズりやすい
+niche,Obby 自動生成アルゴリズム Luau,ジャンル特化
+niche,小学生でもわかる AI ゲーム開発 Roblox,教育コンテンツ
+tech_stack,Luau,言語(Roblox内)
+tech_stack,TypeScript + roblox-ts,言語(外部)
+tech_stack,Python,自動化スクリプト
+tech_stack,Rojo,ファイル同期
+tech_stack,Wally,パッケージ管理
+tech_stack,Claude API,AI連携
+tech_stack,GitHub Actions,CI/CD
+tech_stack,Git + GitHub,バージョン管理
+mcp,mcp-roblox-studio (公式),Studio操作
+mcp,boshyxd/robloxstudio-mcp,39ツール
+mcp,mcp-github,自動コミット・PR作成
+mcp,mcp-filesystem,Luauファイル生成・管理
+mcp,mcp-roblox-docs,APIドキュメント提供

@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-03-20T12:26:30.167Z",
+  "timestamp": "2026-03-17T17:19:20.027Z",
   "patterns": [
-    "design"
+    "セキュリティスキャン"
   ],
   "agents": {
     "dev": [

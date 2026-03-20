@@ -1,0 +1,89 @@
+{
+  "canvas": {
+    "width": 900,
+    "height": 800,
+    "backgroundColor": "#FFFFFF"
+  },
+  "topBar": {
+    "backgroundColor": "#C92A2A",
+    "text": "【上部バーテキスト】",
+    "textColor": "#FFFFFF"
+  },
+  "textElements": [
+    {
+      "id": "exclaim",
+      "text": "えっ！",
+      "position": "top-left",
+      "fontSize": "22px",
+      "fontStyle": "italic handwritten",
+      "color": "#333333"
+    },
+    {
+      "id": "line1",
+      "text": "【1行目テキスト】",
+      "fontSize": "28px",
+      "fontFamily": "serif",
+      "color": "#111111",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "line2",
+      "text": "【2行目テキスト】",
+      "fontSize": "28px",
+      "fontFamily": "serif",
+      "color": "#111111",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "mainWord",
+      "text": "【メインワード】",
+      "fontSize": "72px",
+      "fontFamily": "brush calligraphy",
+      "color": "#111111",
+      "decoration": "golden beige oval brush stroke circle around it"
+    },
+    {
+      "id": "suffix",
+      "text": "【サフィックス】",
+      "fontSize": "36px",
+      "color": "#C92A2A",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "blueLine1",
+      "text": "【青テキスト1行目】",
+      "fontSize": "22px",
+      "color": "#1A4D80"
+    },
+    {
+      "id": "blueLine2",
+      "text": "【青テキスト2行目】",
+      "fontSize": "22px",
+      "color": "#1A4D80",
+      "highlight": "秘密 in red #C92A2A with underline"
+    },
+    {
+      "id": "bigRed",
+      "text": "特別公開中！",
+      "fontSize": "46px",
+      "color": "#C92A2A",
+      "fontWeight": "extra-bold"
+    }
+  ],
+  "personPhoto": {
+    "position": "right 50%",
+    "width": "50%",
+    "description": "smiling professional person"
+  },
+  "ctaButton": {
+    "backgroundColor": "green gradient #6DB36D to #3D8C3D",
+    "text": "【CTAボタンテキスト】",
+    "textColor": "#FFFFFF",
+    "playIcon": "yellow circle with play triangle"
+  },
+  "bottomBar": {
+    "backgroundColor": "#C92A2A",
+    "text1": "【下部バー小テキスト】",
+    "text2": "【下部バー大テキスト】"
+  }
+}

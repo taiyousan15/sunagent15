@@ -1,0 +1,3879 @@
+{
+  "items": [
+    {
+      "id": "b62e59bbcd8bdbd9",
+      "title": "Future AI chips could be built on glass",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/13/1134230/future-ai-chips-could-be-built-on-glass/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T09:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "865a766afce8d400",
+      "title": "AstrBotDevs/AstrBot",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        AstrBotDevs /\n\n      AstrBot  \n\n    \n      Agentic IM Chatbot infrastructure that integrates lots of IM platforms, LLMs, plugins and AI feature, and can be your openclaw alternative. ✨ (+1770 stars today)",
+      "url": "https://github.com/AstrBotDevs/AstrBot",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.269Z",
+      "fetchedAt": "2026-03-13T11:13:41.269Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "49710ce743843a36",
+      "title": "vectorize-io/hindsight",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        vectorize-io /\n\n      hindsight  \n\n    \n      Hindsight: Agent Memory That Learns (+217 stars today)",
+      "url": "https://github.com/vectorize-io/hindsight",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.269Z",
+      "fetchedAt": "2026-03-13T11:13:41.269Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "5e00522022bd7815",
+      "title": "sponsors/InsForge",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        InsForge /\n\n      InsForge  \n\n    \n      Give agents everything they need to ship fullstack apps. The backend built for agentic development. (+263 stars today)",
+      "url": "https://github.com/sponsors/InsForge",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.269Z",
+      "fetchedAt": "2026-03-13T11:13:41.269Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "12dfe60d08d139ff",
+      "title": "google-ai-edge/LiteRT",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        google-ai-edge /\n\n      LiteRT  \n\n    \n      LiteRT, successor to TensorFlow Lite. is Google's On-device framework for high-performance ML &amp; GenAI deployment on edge platforms, via efficient conversion, runtime, and optimization (+13 stars today)",
+      "url": "https://github.com/google-ai-edge/LiteRT",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.269Z",
+      "fetchedAt": "2026-03-13T11:13:41.269Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "a2fb65a76373b5a4",
+      "title": "microsoft/BitNet",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        microsoft /\n\n      BitNet  \n\n    \n      Official inference framework for 1-bit LLMs (+2149 stars today)",
+      "url": "https://github.com/microsoft/BitNet",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "114315b35124311e",
+      "title": "langflow-ai/openrag",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        langflow-ai /\n\n      openrag  \n\n    \n      OpenRAG is a comprehensive, single package Retrieval-Augmented Generation platform built on Langflow, Docling, and Opensearch. (+322 stars today)",
+      "url": "https://github.com/langflow-ai/openrag",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "1203b8c58c0b1b80",
+      "title": "lightpanda-io/browser",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        lightpanda-io /\n\n      browser  \n\n    \n      Lightpanda: the headless browser designed for AI and automation (+1175 stars today)",
+      "url": "https://github.com/lightpanda-io/browser",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "7b904ac8471c462c",
+      "title": "sponsors/obra",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        obra /\n\n      superpowers  \n\n    \n      An agentic skills framework &amp; software development methodology that works. (+1706 stars today)",
+      "url": "https://github.com/sponsors/obra",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "5da3cea8dd0c75b4",
+      "title": "public-apis/public-apis",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        public-apis /\n\n      public-apis  \n\n    \n      A collective list of free APIs (+895 stars today)",
+      "url": "https://github.com/public-apis/public-apis",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "39f5c4b9c24c8782",
+      "title": "promptfoo/promptfoo",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        promptfoo /\n\n      promptfoo  \n\n    \n      Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, Llama, and more. Simple declarative configs with command line and CI/CD integration. (+503 stars today)",
+      "url": "https://github.com/promptfoo/promptfoo",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "e3344b0ce3854708",
+      "title": "sponsors/msitarzewski",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        msitarzewski /\n\n      agency-agents  \n\n    \n      A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a specialized expert with personality, processes, and proven deliverables. (+4168 stars today)",
+      "url": "https://github.com/sponsors/msitarzewski",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "556725d92974f979",
+      "title": "sponsors/dolthub",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        dolthub /\n\n      dolt  \n\n    \n      Dolt – Git for Data (+58 stars today)",
+      "url": "https://github.com/sponsors/dolthub",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "0d233b14a5936a64",
+      "title": "google/A2UI",
+      "summary": "GitHub Trending: google/A2UI (+225 stars today)",
+      "url": "https://github.com/google/A2UI",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "80f2fea6de2fe517",
+      "title": "fishaudio/fish-speech",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        fishaudio /\n\n      fish-speech  \n\n    \n      SOTA Open Source TTS (+637 stars today)",
+      "url": "https://github.com/fishaudio/fish-speech",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "4028e6647a3c6640",
+      "title": "alibaba/page-agent",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        alibaba /\n\n      page-agent  \n\n    \n      JavaScript in-page GUI agent. Control web interfaces with natural language. (+1205 stars today)",
+      "url": "https://github.com/alibaba/page-agent",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "1994bcb7028602d3",
+      "title": "anthropics/claude-plugins-official",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        anthropics /\n\n      claude-plugins-official  \n\n    \n      Official, Anthropic-managed directory of high quality Claude Code Plugins. (+150 stars today)",
+      "url": "https://github.com/anthropics/claude-plugins-official",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:13:41.268Z",
+      "fetchedAt": "2026-03-13T11:13:41.268Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "af6a8be4741bae56",
+      "title": "Brent oil futures climb above $100 on continued disruption to Strait of Hormuz traffic",
+      "summary": "Prices have spiked after Iran&#x2019;s new supreme leader broke his silence and called for the Strait of Hormuz to stay closed.",
+      "url": "https://www.marketwatch.com/story/brent-oil-futures-climb-above-100-on-continued-disruption-to-strait-of-hormuz-traffic-764be61b?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-13T10:59:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "65e680009646c115",
+      "title": "Why a 1980s conflict may be the best market analog for the current Iran situation",
+      "summary": "Citi&#x2019;s global macro strategy team led by Dirk Willer went in search of historical analogs, looking through the last five oil crises",
+      "url": "https://www.marketwatch.com/story/why-a-1980s-conflict-may-be-the-best-market-analog-for-the-current-iran-situation-4e0d404a?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-13T10:40:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "17d86ff3cbf13bb0",
+      "title": "A defense official reveals how AI chatbots could be used for targeting decisions",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/12/1134243/defense-official-military-use-ai-chatbots-targeting-decisions/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T22:23:34.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "81a5dd753396dfcb",
+      "title": "ホンダ、慶大・阪大とAI開発の協働研究所　人材育成を加速",
+      "summary": "本田技研工業は、慶應義塾大学および大阪大学とAI開発で産学連携するプロジェクト「BRIDGE」（ブリッジ）を始めると発表した。",
+      "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news108.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T09:53:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.060Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "7790d08d5fe2e0a2",
+      "title": "&#x2018;Healthcare is important to me&#x2019;: I&#x2019;m worried about relocating to Florida from New Jersey. Are hospitals there under stress?",
+      "summary": "&#x201c;The issue is not the weather, high insurance premiums or high maintenance fees.&#x201d;",
+      "url": "https://www.marketwatch.com/story/healthcare-is-important-to-me-im-worried-about-relocating-to-florida-from-new-jersey-are-hospitals-there-under-stress-5c270b07?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-13T09:15:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "7d631eaeddf01a15",
+      "title": "三菱電機、人型ロボットで工場を無人化へ　中国スタートアップと協業",
+      "summary": "三菱電機は、人型ロボットを開発するスタートアップの中国Lumos Robotics Technologyに出資し、協業すると発表した。",
+      "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news104.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T08:06:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.060Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "68ee6a4d708ad53b",
+      "title": "“AI養老孟司”が客員教授に就任　本人とともに　東京工科大",
+      "summary": "東京工科大学は、養老孟司氏と同氏を模したAIアバター「AI養老先生」がともに客員教授に就任したと発表した。",
+      "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news093.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T06:26:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.060Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "3786a898e0eb9fb2",
+      "title": "Before quantum computing arrives, this startup wants enterprises already running on it",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/before-quantum-computing-arrives-this-startup-wants-enterprises-already-running-on-it/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T05:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "66a6e7f0e6774ab4",
+      "title": "Truecaller now lets you hang up on scammers &#8212; on behalf of your family",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/truecallers-now-lets-you-hang-up-on-scammers-on-behalf-of-your-family/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T04:30:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "37964885e1115ad4",
+      "title": "AIエージェント導入が進む企業は何が違う？　Microsoft、成否を分ける“5要素”を提示",
+      "summary": "MicrosoftはAIエージェントの導入準備態勢に関する調査結果を公開した。準備が整った企業は未整備企業に比べ、約2.5倍の速さでエージェントを導入できるという。",
+      "url": "https://atmarkit.itmedia.co.jp/ait/articles/2603/13/news063.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T04:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.060Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "95a3b3762e86a1d8",
+      "title": "急成長上位10位プロジェクトの6割がAI関連　GitHubが分析するAI支援ワークフローの変化",
+      "summary": "GitHubが年次レポート「Octoverse 2025」に基づく分析記事を公開した。AIプロジェクトを推進する上で開発者が重視する点とツールの選択方法が変化しつつあるという。",
+      "url": "https://atmarkit.itmedia.co.jp/ait/articles/2603/13/news061.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T04:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.061Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "04b52dd037c9626a",
+      "title": "Sakana AI、防衛装備庁から委託研究　部隊の情報分析や意思決定にAI利用へ",
+      "summary": "Sakana AIは、防衛装備庁からの委託研究を始めると発表した。自律的にタスクをこなすAIエージェント技術により、部隊の情報分析や意思決定の高度化を目指す。",
+      "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news083.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T03:14:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.061Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "36924688832c251c",
+      "title": "Rivian is fulfilling its promise to launch a $45,000 EV, but there&#x2019;s a catch",
+      "summary": "The EV maker just revealed pricing details for its new R2 lineup. Rivian will first launch a $57,990 model, with plans to debut a $45,000 variant in late 2027.",
+      "url": "https://www.marketwatch.com/story/rivian-is-fulfilling-its-promise-to-launch-a-45-000-ev-but-theres-a-catch-598d33d0?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-13T02:43:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "e2b335bcd170787b",
+      "title": "GoogleマップがGeminiで進化　AIが複雑な質問に答える「Ask Maps」と3Dナビ「Immersive Navigation」",
+      "summary": "Googleは「Googleマップ」の「Gemini」採用新機能を発表した。会話形式で複雑な条件の場所探しができる「Ask Maps」と、3Dビューで直感的なルート案内を行う「Immersive Navigation」を導入。ユーザーの嗜好や過去の履歴に基づいたパーソナライズ提案や、自然な音声案内により、ナビゲーション体験を再構築する。（日本での提供はまだ）",
+      "url": "https://www.itmedia.co.jp/news/articles/2603/13/news080.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T02:25:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.061Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "0b4163a1e549629e",
+      "title": "「とほほのWWW入門」30年目も更新中　96年開設の個人サイト、CGIからOpenAI APIまでカバー",
+      "summary": "近年はReactやNext.js、OpneAI APIまで対象を広げ、淡々と更新を続けている。",
+      "url": "https://www.itmedia.co.jp/news/articles/2603/13/news073.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-13T01:46:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.061Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "9f8eb9c05fcfecf0",
+      "title": "The Download: Early adopters cash in on China’s OpenClaw craze, and US batteries slump",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/12/1134207/the-download-china-openclaw-ai-craze-us-battery-industry-downturn/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T13:02:48.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "80b7cf9a355bbfa2",
+      "title": "Pragmatic by design: Engineering AI for the real world",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/12/1133675/pragmatic-by-design-engineering-ai-for-the-real-world/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T13:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "e70d912ff9f10ae0",
+      "title": "Netflix is spending up to $600 million to buy Ben Affleck&#x2019;s AI startup. What exactly is it buying?",
+      "summary": "A week after backing away from buying Warner Bros. Discovery, Netflix decides to buy rather than build AI tools for filmmakers.",
+      "url": "https://www.marketwatch.com/story/netflix-is-spending-up-to-600-million-to-buy-ben-afflecks-ai-startup-what-exactly-is-it-buying-8435f02e?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-13T00:34:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "2fd43158bcd99beb",
+      "title": "Why Adobe&#x2019;s stock is falling despite an earnings beat",
+      "summary": "Adobe&#x2019;s longtime CEO is stepping down, and the lack of acceleration on a key metric signaled that AI isn&#x2019;t driving significant financial benefits yet.",
+      "url": "https://www.marketwatch.com/story/why-adobes-stock-is-falling-despite-an-earnings-beat-b6a67617?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-13T00:29:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "d5f391f2ecfdb70e",
+      "title": "Ulta Beauty says it&#x2019;s &#x2018;increasingly mindful&#x2019; of effects that global conflicts have on shoppers, as profit forecast sinks stock",
+      "summary": "Shares of Ulta Beauty slid after hours on Thursday after the cosmetics retailer forecast a profit and same-store sales for this year that were below Wall Street&#x2019;s estimates, adding that it expects more selective consumer spending and that it was &#x201c;increasingly mindful&#x201d; of conflic",
+      "url": "https://www.marketwatch.com/story/ulta-beauty-says-its-increasingly-mindful-of-effects-that-global-conflicts-have-on-shoppers-as-profit-forecast-sinks-stock-b03cc1c3?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-13T00:27:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "35003fd09a94660e",
+      "title": "&#x2018;I am stuck in a low-income trap&#x2019;: I&#x2019;m a teacher and very good at my job. Will I ever earn six figures?",
+      "summary": "&#x201c;My low salary requires me to have multiple other part-time jobs.&#x201d;",
+      "url": "https://www.marketwatch.com/story/i-am-stuck-in-a-low-income-trap-im-a-teacher-will-i-ever-earn-six-figures-5f7dd2b9?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-12T23:47:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "009750aefbce75d7",
+      "title": "How to watch Jensen Huang’s Nvidia GTC 2026 keynote",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/how-to-watch-jensen-huangs-nvidia-gtc-2026-keynote/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "celebrity",
+      "publishedAt": "2026-03-12T23:25:39.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": [],
+      "speaker": "Jensen Huang"
+    },
+    {
+      "id": "092b3706ce2738e6",
+      "title": "Anthropic、「Claude」で表や図のインライン表示をβ公開　無料版でも",
+      "summary": "Anthropicは、Claudeのチャット回答内で表や図、画像をインライン生成する機能をβ版として導入した。2025年9月に公開された「Imagine with Claude」がベースで、全ユーザーが利用可能。プロンプトに応じてAIが視覚化の必要性を判断する。",
+      "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news068.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T23:02:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.061Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "d0d4a9897622d067",
+      "title": "Best Dress Shoes for Men: Style, Comfort, and Quality Combined",
+      "summary": "<p>Dress shoes are part of many important moments. Work meetings. Formal events. Even simple family gatherings. The right pair helps you look neat and put together.</p>\n\n<p>But looks are not everything. Shoes must also feel comfortable. Many men wear them for long hours. If the fit or material is po",
+      "url": "https://dev.to/richard_mtrask_7688ace5a2/best-dress-shoes-for-men-style-comfort-and-quality-combined-123c",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T11:00:28.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.000Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "263833c87ed44f23",
+      "title": "黒船「フィジカルAI」襲来　日本におけるヒューマノイド開発の最適解とは",
+      "summary": "アールティが、産業技術総合研究所、川田テクノロジーズ、川崎重工業などと共同で「フィジカルAI勉強会」を開催。ヒューマノイドの実用化に必要不可欠な技術としてフィジカルAIという言葉そのものや技術成熟度への認識については混乱が見られる中、今回の勉強会は現時点でのフィジカルAIの捉え方を共有することを目的に開催された。",
+      "url": "https://monoist.itmedia.co.jp/mn/articles/2603/13/news050.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T23:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.061Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "6dd67933408c7776",
+      "title": "Shoppers seeking a tariff refund from retailers are likely out of luck",
+      "summary": "A new lawsuit alleges that Costco owes shoppers refunds for tariffs, but experts say that&#x2019;s a tough call.",
+      "url": "https://www.marketwatch.com/story/shoppers-seeking-a-tariff-refund-from-retailers-are-likely-out-of-luck-5aacf5f4?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-12T22:59:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "b269ae4c4b07056f",
+      "title": "Probability Can Never Be Permission — The Structural Flaw of Open Agent AI and the Conditions for the Next Standard",
+      "summary": "<p><a href=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fxd2uw54toa389bxp42ew.jpg\" class=\"article-body-image-wrapper\"><img src=\"https://media2.dev.to/dynamic/image/width=800%",
+      "url": "https://dev.to/aaih_sg/probability-can-never-be-permission-the-structural-flaw-of-open-agent-ai-and-the-conditions-for-maf",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:57:39.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.000Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "7034f66e7c1696fc",
+      "title": "Trump is scrambling to quell the rise of $100 oil. But the market keeps circling one answer.",
+      "summary": "Other efforts to coax oil down prices &#x2014; now at $100 a barrel &#x2014; are like putting a Band-Aid on a shotgun wound, says analyst",
+      "url": "https://www.marketwatch.com/story/trump-is-scrambling-to-quell-the-rise-of-100-oil-but-the-market-keeps-circling-one-answer-bf9abf20?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-12T22:50:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.321Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "6e72be3e2d8d88ba",
+      "title": "React: avoid hooks that set default values, use getters with defaults",
+      "summary": "<p>A colleague of mine helped identify a pattern that has turned out to be a bit of a footgun.</p>\n\n<p>The goal was: when a customer opens <code>mysite.com/?urlParam=foo</code>, I want to load the correct FooComponent. However, if <code>mysite.com</code> is opened with no param is set, I want it to ",
+      "url": "https://dev.to/domantasjurkus/react-avoid-setdefaulthook-use-getparams-26l7",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:49:58.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.000Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "df601fc837033ba3",
+      "title": "SEO is Dead? How I Optimized My Next.js SaaS for ChatGPT & Perplexity (AEO)",
+      "summary": "<p>Everyone is still playing the Google SEO game: stuffing keywords, buying backlinks, and fighting for Page 1.</p>\n\n<p>But if you are building a <strong>B2B SaaS in 2026</strong>, your target audience (developers, founders, CTOs) has already changed their behavior.</p>\n\n<p>They aren't Googling anym",
+      "url": "https://dev.to/damsho92/seo-is-dead-how-i-optimized-my-nextjs-saas-for-chatgpt-perplexity-aeo-3ppc",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:48:15.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.000Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "8ec3df3acf2a3546",
+      "title": "Tokenizasyon Nedir? API Güvenliği İçin Kapsamlı Rehber",
+      "summary": "<p>Tokenleştirme, hassas verilerin token adı verilen hassas olmayan yer tutucularla değiştirilmesi sürecidir. Bu token'lar orijinal verinin formatını veya uzunluğunu korur ancak kendi başlarına istismar edilebilir bir değere sahip değildir. API güvenliği bağlamında, <a href=\"https://docs.apidog.com/",
+      "url": "https://dev.to/tobiass_hoffmann/tokenizasyon-nedir-api-guvenligi-icin-kapsamli-rehber-29d0",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:41:14.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.000Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "bac88a300139f8ef",
+      "title": "An LLM Is Not a Deficient Mind",
+      "summary": "<p>I called it \"the perfect bullshitter.\"</p>\n\n<p>This was GPT-2, maybe early GPT-3. I was feeding it prompts and getting back text that looked like answers — structured, fluent, confident. The kind of output that would survive a casual reading. It was not grounded in anything. The model was halluci",
+      "url": "https://dev.to/romanonthego/an-llm-is-not-a-deficient-mind-234l",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:40:15.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.000Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "fc0877396b39d162",
+      "title": "How Developers Can Prevent Frontend Wallet Drainer Attacks: A Case Study of the BONK.fun Hack",
+      "summary": "<p>The Solana ecosystem recently experienced a security incident involving the launchpad BONK.fun. Attackers compromised a team account and injected malicious code into the website that triggered a wallet drainer attack.<br>\nThe breach tricked users into signing a fake Terms of Service prompt, which",
+      "url": "https://dev.to/cryip/how-developers-can-prevent-frontend-wallet-drainer-attacks-a-case-study-of-the-bonkfun-hack-29k4",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:40:12.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.000Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "e0231f5483b4ff5c",
+      "title": "Connecting power bi to SQL databases locally and through cloud service.",
+      "summary": "<p>Power BI is a  powerful tool designed for cleaning data ,creating reports and dashboards.It is preferred over other tools due to its ability to handle large data sets,create real-time dashboards and its beginner friendly.Power BI desktop is a free version provided by Microsoft.</p>\n\n<p><strong>Ma",
+      "url": "https://dev.to/maggy_njuguna/connecting-power-bi-to-sql-databases-locally-and-through-cloud-service-4876",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:38:47.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.000Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "3728242ab17a779d",
+      "title": "Why Your AI Strategy Is Three-Quarters Wrong",
+      "summary": "<p><a href=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F1jef5mose7pnldrdezjp.png\" class=\"article-body-image-wrapper\"><img src=\"https://media2.dev.to/dynamic/image/width=800%",
+      "url": "https://dev.to/jgongo/why-your-ai-strategy-is-three-quarters-wrong-c0j",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:38:45.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.001Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "405e59abb1ef5c3e",
+      "title": "ما هو التوكن؟ الدليل النهائي لأمن API",
+      "summary": "<p>الترميز هو عملية استبدال البيانات الحساسة بعناصر نائبة غير حساسة تُسمى الرموز (Tokens). تحتفظ هذه الرموز بتنسيق أو طول البيانات الأصلية ولكنها لا تحمل قيمة قابلة للاستغلال بحد ذاتها. في سياق أمان واجهة برمجة التطبيقات (API)، يعمل <a href=\"https://docs.apidog.com/authentication-and-authorization-i",
+      "url": "https://dev.to/yusuf_khalidd/m-hw-ltwkn-ldlyl-lnhyy-lmn-api-fbd",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T10:36:27.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.001Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "8322cd82db802024",
+      "title": "Sales automation startup Rox AI hits $1.2B valuation, sources say",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/sales-automation-startup-rox-ai-hits-1-2b-valuation-sources-say/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T22:25:50.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "f8dafcf9efa8d42d",
+      "title": "Brutal times for the US battery industry",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/12/1134197/us-battery-industry/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T10:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "592c4268de1ac048",
+      "title": "Facebook Marketplace now lets Meta AI respond to buyers&#8217; messages",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/facebook-marketplace-now-lets-meta-ai-respond-to-buyers-messages/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T18:20:33.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "adcc14e14288d7d6",
+      "title": "Tinder tries to lure people back to online dating with IRL events, virtual speed dating",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/tinder-tries-to-lure-people-back-to-online-dating-with-irl-events-virtual-speed-dating/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T18:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "238898ae354937a9",
+      "title": "Atlassian follows Block’s footsteps and cuts staff in the name of AI",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/atlassian-follows-blocks-footsteps-and-cuts-staff-in-the-name-of-ai/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T17:20:19.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "dfa55fa7c5c5d789",
+      "title": "Bumble introduces an AI dating assistant, &#8216;Bee&#8217;",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/bumble-introduces-an-ai-dating-assistant-bee/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T16:52:17.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "61efd577ec7f21b6",
+      "title": "A writer is suing Grammarly for turning her and other authors into &#8216;AI editors&#8217; without consent",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/a-writer-is-suing-grammarly-for-turning-her-and-other-authors-into-ai-editors-without-consent/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T16:42:40.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "added3e625083a87",
+      "title": "Gumloop lands $50M from Benchmark to turn every employee into an AI agent builder",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/gumloop-lands-50m-from-benchmark-to-turn-every-employee-into-an-ai-agent-builder/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T15:30:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "6d94a274b9c166d8",
+      "title": "“This is not the computer for you”",
+      "summary": "HackerNews - Score: 511, Comments: 201",
+      "url": "https://samhenri.gold/blog/20260312-this-is-not-the-computer-for-you/",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-13T01:45:49.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.830Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "f227a7ae0ed22a3b",
+      "title": "Bitcoin climbs the wall of worry amid escalating Iran war and stock market losses",
+      "summary": "BTC holds near $70,000 and outperforms major assets during Middle East tensions, even as derivatives data and fear indicators signal deep market pessimism.",
+      "url": "https://www.coindesk.com/markets/2026/03/12/bitcoin-climbs-the-wall-of-worry-amid-escalating-iran-war-and-stock-market-losses",
+      "source": "CoinDesk",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-12T10:51:33.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "16419b6fb54969d9",
+      "title": "Bitcoin steady near $70,000 as rising open interest hints at cautious, bearish positioning",
+      "summary": "Bitcoin traded around $69,800 as open interest rose to $102 billion, suggesting defensive, bearish bets while altcoins outperformed in a risk-off macro backdrop.",
+      "url": "https://www.coindesk.com/markets/2026/03/12/bitcoin-steady-near-usd70-000-as-rising-open-interest-hints-at-cautious-bearish-positioning",
+      "source": "CoinDesk",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-12T10:33:01.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "f80ca9de86c2e8a9",
+      "title": "AI Watch, Pt. 1",
+      "summary": "AI at war.  One-third of Americans think advice from AI is as good as their pastor's.  And how to hack AI.",
+      "url": "https://www.patheos.com/blogs/geneveith/2026/03/ai-watch-pt-1/",
+      "source": "Patheos",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T10:00:57.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "643cdc5c86024fa5",
+      "title": "Burning effigies, doomsday prepping and ‘cyber-chondriacs’: The wacky beliefs of the tech elite shaping global society",
+      "summary": "These moguls tell us their AI systems — which they admit they don’t fully understand — are beneficial. However, experts say it’s a coin toss whether humans will be enslaved by their creations or live carefree lives of leisure, while robots do all the work.",
+      "url": "https://nypost.com/2026/03/12/us-news/the-wacky-beliefs-of-the-tech-elite-shaping-global-society/",
+      "source": "New York Post",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T10:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "eb94319d17fd0251",
+      "title": "Lobster buffet: China’s tech firms feast on OpenClaw as companies race to deploy AI agents",
+      "summary": "China-based usage of OpenClaw has already topped that of the U.S., while driving demand for Chinese lower-cost AI models.",
+      "url": "https://www.cnbc.com/2026/03/12/china-openclaw-ai-agent-adoption-tech-companies-government-support-lobster-shrimp.html",
+      "source": "CNBC",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T09:11:58.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "6d22344460daebcb",
+      "title": "Shall I implement it? No",
+      "summary": "HackerNews - Score: 1309, Comments: 481",
+      "url": "https://gist.github.com/bretonium/291f4388e2de89a43b25c135b44e41f0",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-12T21:01:10.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.829Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "5d22d0b2896f830d",
+      "title": "Innocent woman jailed after being misidentified using AI facial recognition",
+      "summary": "HackerNews - Score: 627, Comments: 331",
+      "url": "https://www.grandforksherald.com/news/north-dakota/ai-error-jails-innocent-grandmother-for-months-in-north-dakota-fraud-case",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-12T20:55:51.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.830Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "9ccc730eff9d2f56",
+      "title": "AI isn’t replacing workers – it’s making them compete",
+      "summary": "With fear of being ‘phased out’ of rapidly AI-integrated workforces, people are scrambling to secure their place as one of the few ‘valuable’ humans left",
+      "url": "https://www.dazeddigital.com/life-culture/article/69863/1/ai-pressure-to-become-an-irreplaceable-worker-myth-chatgpt-claude?utm_source=Link&utm_medium=Link&utm_campaign=RSSFeed&utm_term=ai-isn-t-replacing-workers-it-s-making-them-compete",
+      "source": "Dazed",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T08:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "9205bcd7d10750de",
+      "title": "The Iran war is pushing up European energy prices. Here's why a Ukraine-style inflation shock could still be avoided",
+      "summary": "The Iran war has rattled global energy markets, but analysts say Europe can avoid a full-blown 2022-style supply crisis.",
+      "url": "https://www.cnbc.com/2026/03/12/iran-gas-oil-price-bills-europe-energy-ukraine-war-russia-shock-rise-inflation-interest-rates-crisis.html",
+      "source": "CNBC",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-12T06:10:11.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "76c80d3198b42b00",
+      "title": "Anthropic in talks with Blackstone, other PE firms to set up AI joint venture: Report",
+      "summary": "Anthropic, maker of Claude AI, is in talks with Blackstone and Hellman &amp; Friedman to form a Palantir‑style joint venture, despite tensions with the US Defense Department, which labelled the firm a supply chain risk.",
+      "url": "https://www.livemint.com/companies/news/anthropic-in-talks-with-blackstone-other-pe-firms-to-set-up-ai-joint-venture-report-11773287347357.html",
+      "source": "Livemint",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T05:04:52.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "2c0c7c39719e8bff",
+      "title": "Show HN: An Open-source platform for building and orchestrating AI agents",
+      "summary": "Obsidian AI is an open-source platform that gives you a full visual interface for building, managing, and running AI agents — no SDKs, no boilerplate, no glue code required. - sup3rus3r/obsidian-ai",
+      "url": "https://github.com/sup3rus3r/obsidian-ai",
+      "source": "Github.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-12T05:03:53.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "d8c9ada7902cc799",
+      "title": "Is AI our agent, or are our governments becoming agents for AI?",
+      "summary": "Yet more billions are being spent on agentic AI, despite warnings of its potentially extreme fallibility. Just who are governments serving when they spout the messaging of Big Tech companies?",
+      "url": "https://www.computerweekly.com/opinion/Is-AI-our-agent-or-are-our-governments-becoming-agents-for-AI",
+      "source": "ComputerWeekly.com",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T05:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "210c96a368662109",
+      "title": "chatixia-agent added to PyPI",
+      "summary": "Chatixia: a domain-agnostic skill-based AI agent framework",
+      "url": "https://pypi.org/project/chatixia-agent/",
+      "source": "Pypi.org",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-12T04:51:19.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "61e0196c38b9ece9",
+      "title": "US Stock Market | Inflation stays cool, oil heats up: US markets brace for fallout from Iran tensions",
+      "summary": "America's inflation stayed steady in February. This was before conflicts involving Iran began. Now, oil prices are surging. This has revived worries about inflation increasing in the coming months. Food prices contributed significantly to the rise. Energy pri…",
+      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/us-stock-market-inflation-stays-cool-oil-heats-up-us-markets-brace-for-fallout-from-iran-tensions/articleshow/129491091.cms",
+      "source": "The Times of India",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-12T04:21:51.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "7658d5cd6d254f2a",
+      "title": "How the Anthropic-Pentagon dispute over AI safeguards escalated",
+      "summary": "A dispute erupted after Anthropic refused to loosen AI safety safeguards for the Pentagon. The U.S. Defense Department labelled the Claude maker a “supply-chain risk”, threatening government contracts. Anthropic plans a court challenge, warning the move could…",
+      "url": "https://economictimes.indiatimes.com/tech/artificial-intelligence/how-the-anthropic-pentagon-dispute-over-ai-safeguards-escalated/articleshow/129490706.cms",
+      "source": "The Times of India",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T03:54:17.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "60a26bc2cbc264c6",
+      "title": "ATMs didn’t kill bank teller jobs, but the iPhone did",
+      "summary": "HackerNews - Score: 430, Comments: 452",
+      "url": "https://davidoks.blog/p/why-the-atm-didnt-kill-bank-teller",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-12T14:48:57.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.830Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "142326fda117eb45",
+      "title": "Trump’s War with Iran Is Even More of a Disaster than People Realize",
+      "summary": "Over the weekend, the US and Israeli governments attacked Iran. In the days since, both militaries have reportedly struck thousands of targets, and Iranian forces have retaliated by launching hundreds or even thousands of missiles and drones at Israel and at …",
+      "url": "https://www.activistpost.com/trumps-war-with-iran-is-even-more-of-a-disaster-than-people-realize/",
+      "source": "Activistpost.com",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-12T02:45:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "569fc9e2508b7f87",
+      "title": "Malus – Clean Room as a Service",
+      "summary": "HackerNews - Score: 1298, Comments: 472",
+      "url": "https://malus.sh",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-12T13:42:04.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.829Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "4784c4c20dd7fcf4",
+      "title": "Anthropic launches Anthropic Institute to tackle AI risks",
+      "summary": "Anthropic PBC today announced the formation of the Anthropic Institute, a business unit tasked with studying the risks posed by artificial intelligence. The unit will bring three of the company’s existing teams together under the leadership of co-founder Jack…",
+      "url": "https://siliconangle.com/2026/03/11/anthropic-launches-anthropic-institute-tackle-ai-risks/",
+      "source": "SiliconANGLE News",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-12T01:19:39.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "5fc020026012894a",
+      "title": "Hustlers are cashing in on China&#8217;s OpenClaw AI craze",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/11/1134179/china-openclaw-gold-rush/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-11T12:46:21.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "ab54f0e7b04c67eb",
+      "title": "The Download: Pokémon Go to train world models, and the US-China race to find aliens",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/11/1134174/the-download-pokemon-go-train-world-models-us-china-race-find-aliens/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-11T12:38:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "1e6d76aa4bd9d8a7",
+      "title": "Enable intelligent insights with Red Hat Satellite MCP Server",
+      "summary": "Red Hat Satellite manages Red Hat Enterprise Linux (RHEL) systems at scale across the cloud and on-premises. Last year, a model context protocol (MCP) server for Red Hat Satellite was released as a Technology Preview feature to enable more intelligent and aut…",
+      "url": "https://www.redhat.com/en/blog/enable-intelligent-insights-red-hat-satellite-mcp-server",
+      "source": "Redhat.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-12T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "603386f862949881",
+      "title": "Show HN:Conduit–Headless browser with SHA-256 hash chain - Ed25519 audit trails",
+      "summary": "I've been building AI agent tooling and kept running into the same problem: agents browse the web, take actions, fill out forms, scrape data -- and there's zero proof of what actually happened. Screenshots can be faked. Logs can be edited. If something goes w…",
+      "url": "https://news.ycombinator.com/item?id=47343785",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T23:15:53.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "e9b714cad095b40e",
+      "title": "Building a strong data infrastructure for AI agent success",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/10/1134083/building-a-strong-data-infrastructure-for-ai-agent-success/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-10T14:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "b1799da906df5c53",
+      "title": "How Pokémon Go is giving delivery robots an inch-perfect view of the world",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/10/1134099/how-pokemon-go-is-helping-robots-deliver-pizza-on-time/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-10T13:47:26.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "6f3e36de9d186769",
+      "title": "Prioritizing energy intelligence for sustainable growth",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/10/1133972/prioritizing-energy-intelligence-for-sustainable-growth/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-10T13:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.981Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "5158d0aa08056373",
+      "title": "World World GDP (current USD): 110982661180013.00",
+      "summary": "World Bank data - World GDP (current USD) for World (2024): 110982661180013.00",
+      "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.461Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "wld"
+      ],
+      "indicator": {
+        "name": "World GDP (current USD)",
+        "value": 110982661180013,
+        "unit": "",
+        "country": "WLD",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "f030645323df505c",
+      "title": "World Inflation (CPI %): 2.97",
+      "summary": "World Bank data - Inflation (CPI %) for World (2024): 2.97",
+      "url": "https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.461Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "wld"
+      ],
+      "indicator": {
+        "name": "Inflation (CPI %)",
+        "value": 2.97200477643618,
+        "unit": "",
+        "country": "WLD",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "b2f0a0176d71fd2d",
+      "title": "Japan GDP Growth Rate (%): 0.10",
+      "summary": "World Bank data - GDP Growth Rate (%) for Japan (2024): 0.10",
+      "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.461Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "jpn"
+      ],
+      "indicator": {
+        "name": "GDP Growth Rate (%)",
+        "value": 0.104309021773304,
+        "unit": "",
+        "country": "JPN",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "5bde36f2b911539a",
+      "title": "Japan Unemployment Rate (%): 2.45",
+      "summary": "World Bank data - Unemployment Rate (%) for Japan (2025): 2.45",
+      "url": "https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2025-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.461Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "jpn"
+      ],
+      "indicator": {
+        "name": "Unemployment Rate (%)",
+        "value": 2.451,
+        "unit": "",
+        "country": "JPN",
+        "date": "2025"
+      }
+    },
+    {
+      "id": "3f7db9221e00aaa4",
+      "title": "A Typed Language for Agent Coordination",
+      "summary": "A category-theoretic approach to \"agent frameworks\": that is, frameworks for coordinating \"agents\" that are large language models.",
+      "url": "https://golem.ph.utexas.edu/category/2026/03/a_typed_language_for_agent_coordination.html",
+      "source": "Utexas.edu",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T22:17:31.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "d8a6317b2b7f8ed8",
+      "title": "Trump’s AI-Powered World Wars",
+      "summary": "Nick Turse and Hooman Majd discuss war on Iran and other U.S. conflicts, and Sam Biddle breaks down how AI is being used.\nThe post Trump’s AI-Powered World Wars appeared first on The Intercept.",
+      "url": "https://theintercept.com/2026/03/11/podcast-trump-ai-world-wars/",
+      "source": "The Intercept",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-11T22:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "abcfc034325d7a68",
+      "title": "Oil Shock From Iran Conflict Complicates Fed's Rate Cut Plans",
+      "summary": "Rising oil prices tied to the Iran conflict are pushing investors to delay expectations of a Fed rate cut amid familiar inflation risks.",
+      "url": "https://www.investopedia.com/oil-shock-from-iran-conflict-complicates-fed-s-rate-cut-plans-11924361",
+      "source": "Investopedia",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T21:23:53.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "05acb939cf8f1bde",
+      "title": "Trump's war on Iran creates an economic storm for consumers and the Fed",
+      "summary": "Inflation held steady in February — but offered little clarity for Federal Reserve officials navigating an economic landscape altered by the Iran war.",
+      "url": "https://www.nbcnews.com/business/economy/trump-war-iran-consumers-federal-reserve-rcna262936",
+      "source": "NBC News",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T20:58:17.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "db8ae20b4238ff6c",
+      "title": "US consumer inflation unchanged but price shocks from Iran war loom",
+      "summary": "Economists warn war-driven oil spikes could push US inflation above 4% soon.",
+      "url": "https://www.nzherald.co.nz/business/us-consumer-inflation-unchanged-but-price-shocks-from-iran-war-loom/2KXIXKQ2FBG6NNWLEOZLL77ZXY/",
+      "source": "New Zealand Herald",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T20:55:15.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "2523fdaef9e176f0",
+      "title": "How the Anthropic-Pentagon dispute over AI safeguards escalated",
+      "summary": "March 11 : A standoff erupted between the U.S. Department of Defense and Anthropic in January after the AI lab refused to loosen safety guardrails on its systems, prompting the Pentagon to label it a 'supply-chain risk,' and putting the company's government c…",
+      "url": "https://www.channelnewsasia.com/business/how-anthropic-pentagon-dispute-over-ai-safeguards-escalated-5987686",
+      "source": "CNA",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-11T20:36:11.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "1f8b60cb953e4160",
+      "title": "Most U.S. stocks fall as oil prices get back to rising",
+      "summary": "Since the start of the Iran war, sharp moves for oil prices have triggered swings up and down for financial markets worldwide, sometimes by the hour.",
+      "url": "https://www.pbs.org/newshour/world/most-u-s-stocks-fall-as-oil-prices-get-back-to-rising",
+      "source": "PBS",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T19:49:13.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "276a7b13fa66f466",
+      "title": "Mitigating The Risk of Prompt Injection for AI Agents on Databricks",
+      "summary": "How to secure AI agents on Databricks against prompt injection by hardening three risk pillars: data access, untrusted inputs, and external actions.",
+      "url": "https://www.databricks.com/blog/mitigating-risk-prompt-injection-ai-agents-databricks",
+      "source": "Databricks.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T18:54:42.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "8cfe04cdf3e1baa3",
+      "title": "What could happen with mortgage interest rates this spring? Experts weigh in",
+      "summary": "Mortgage rates have fallen steadily, but could new developments change that trend this spring? Here's what to know.",
+      "url": "https://www.cbsnews.com/news/what-could-happen-with-mortgage-interest-rates-spring-2026-experts/",
+      "source": "CBS News",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T17:22:51.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "ad0124ae3f91d998",
+      "title": "A Typed Language for Agent Coordination",
+      "summary": "guest post by William Waites Agent frameworks are popular. (These are frameworks for coordinating large language model agents, not to be confused with agent-based modelling in the simulation sense.) There are dozens of them for wrapping large language models …",
+      "url": "https://johncarlosbaez.wordpress.com/2026/03/11/a-typed-language-for-agent-coordination/",
+      "source": "Wordpress.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T16:53:13.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "8aec5e52ae9c1a7b",
+      "title": "qiskit-docs-mcp-server added to PyPI",
+      "summary": "MCP server for Qiskit documentation retrieval and search",
+      "url": "https://pypi.org/project/qiskit-docs-mcp-server/",
+      "source": "Pypi.org",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T16:49:41.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "3599d4fc2298ac80",
+      "title": "Crypto Long & Short: AI agents choosing denationalized money",
+      "summary": "In this week’s Crypto Long & Short Newsletter, Sylvia To on AI agents choosing denationalized money.",
+      "url": "https://www.coindesk.com/coindesk-indices/2026/03/11/crypto-long-and-short-ai-agents-choosing-denationalized-money",
+      "source": "CoinDesk",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T16:02:20.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "97adf66f63dd1a65",
+      "title": "CPI Report Update: U.S. Inflation Remains Steady at 2.4% in February 2026 CPI Report, Core Rate Holds at 2.5%",
+      "summary": "U.S. inflation showed no acceleration in February, with the headline Consumer Price Index holding firm at 2.4% annually while monthly gains ticked slightly higher amid persistent shelter costs and a rebound in energy prices, the Labor Department reported Wedn…",
+      "url": "https://www.ibtimes.com.au/cpi-report-update-us-inflation-remains-steady-24-february-2026-cpi-report-core-rate-holds-1863093",
+      "source": "Ibtimes.com.au",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T15:53:58.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "d9631ff85b7faa3d",
+      "title": "FreeWheel Launches AI Agent Infrastructure for Premium Video Ads, Pilots with PMG",
+      "summary": "FreeWheel, the leading global technology platform for the streaming advertising ecosystem, today (11th March, 2026) announced the launch of its new AI agent infrastructure, powered by FreeWheel’s Model Context Protocol (MCP) Server and a suite of Intelligence…",
+      "url": "https://www.exchangewire.com/blog/2026/03/11/freewheel-launches-ai-agent-infrastructure-for-premium-video-ads-pilots-with-pmg/",
+      "source": "ExchangeWire",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T15:44:14.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "aa46d1b8385dd37b",
+      "title": "Inflation held steady last month before attack on Iran sent energy costs soaring",
+      "summary": "Wednesday's data has been overtaken by the conflict that began when the U.S. and Israel attacked Iran on Feb. 28, which has caused wild gyrations in oil prices as shipping lanes through the Persian Gulf have suffered a rare shutdown.",
+      "url": "https://www.pbs.org/newshour/economy/inflation-held-steady-last-month-before-attack-on-iran-sent-energy-costs-soaring",
+      "source": "PBS",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T15:04:58.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "7dfc4916fd39e49b",
+      "title": "Show HN: AI-assisted coding landscape without the hype",
+      "summary": "Article URL: https://danielball.com/notes/ai_assisted_coding.html\nComments URL: https://news.ycombinator.com/item?id=47144069\nPoints: 1\n# Comments: 1",
+      "url": "http://danielball.com/notes/ai_assisted_coding.html",
+      "source": "Danielball.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-02-24T22:16:27.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "94b8949bdab50199",
+      "title": "Circle shares surge as Bernstein sees upside from stablecoin adoption",
+      "summary": "Circle stock has surged 49% in 2026 and doubled since February as Bernstein maintains a $190 price target, citing accelerating stablecoin adoption.",
+      "url": "https://cointelegraph.com/news/circle-stock-surges-bernstein-stablecoin-adoption",
+      "source": "Cointelegraph",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-10T21:13:08.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "6793e4c9469c25ce",
+      "title": "Strategy Doubles Down on Bitcoin in a Volatile Market",
+      "summary": "Strategy Inc. solidifies its position as a leading Bitcoin treasury company with another substantial acquisition, reinforcing its long-term accumulation plan...",
+      "url": "https://www.marketbeat.com/originals/strategy-doubles-down-on-bitcoin-in-a-volatile-market/?utm_source=yahoofinance&amp;utm_medium=yahoofinance",
+      "source": "MarketBeat",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-10T16:21:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "da97b4dc57ebf6ad",
+      "title": "Nasdaq Partners With Crypto Exchange Kraken To Connect Tokenized Equities Markets to Decentralized Blockchains",
+      "summary": "The crypto exchange Kraken is partnering with the financial giant Nasdaq to enable a gateway that would let traders swap tokenized equities from regulated environments into decentralized finance (DeFi) ecosystems. Nasdaq, which operates the world’s second-lar…",
+      "url": "https://dailyhodl.com/2026/03/10/nasdaq-partners-with-crypto-exchange-kraken-to-connect-tokenized-equities-markets-to-decentralized-blockchains/",
+      "source": "The Daily Hodl",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-10T09:15:50.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "c22a2ebd2b9ff3ea",
+      "title": "Here's how traders and big buyers stepped in to keep bitcoin steady during the oil shock",
+      "summary": "Several market participants, including MSTR and OTC traders, kept demand steady, helping BTC stay resilient.",
+      "url": "https://www.coindesk.com/markets/2026/03/10/here-s-how-traders-and-big-buyers-stepped-in-to-keep-bitcoin-steady-during-the-oil-shock",
+      "source": "CoinDesk",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-10T06:14:24.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "fa37178d834e1eea",
+      "title": "Stock market today: Dow, S&P 500, Nasdaq futures falter, oil slides as Wall Street weighs Iran war signals",
+      "summary": "Wall Street is adjusting to a historic spike and fall in oil prices after the global economy was thrown into disarray.",
+      "url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-futures-falter-oil-slides-as-wall-street-weighs-iran-war-signals-224255455.html",
+      "source": "Yahoo Entertainment",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-09T22:42:55.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "aae36abae660b5c3",
+      "title": "Stock market today: Nasdaq gains, Dow, S&P 500 recover losses as oil prices ease after spiking above $100",
+      "summary": "Oil's rise above $100 per barrel has unleashed fears of a more severe economic impact from the war in the Middle East.",
+      "url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-turn-higher-oil-slides-as-trump-says-war-could-be-over-soon-193324857.html",
+      "source": "Yahoo Entertainment",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-09T19:23:47.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "3828d0278462ee27",
+      "title": "Bitcoin 'Can Never Be A Structural Holding Of A Central Bank,' Billionaire VC Chamath Palihapitiya Says",
+      "summary": "Bitcoin will not be held as a reserve asset by central banks, billionaire venture capitalist Chamath Palihapitiya says. \"If you think about what is the value...",
+      "url": "https://finance.yahoo.com/news/bitcoin-never-structural-holding-central-172052994.html",
+      "source": "Yahoo Entertainment",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-09T17:20:52.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "98e764641830b354",
+      "title": "Jim Cramer sees no path to de-escalation in U.S.-Iran war",
+      "summary": "CNBC \"Mad Money\" host Jim Cramer has been commenting on the markets for decades. But it is not his commentary that people watch. It is the effects it can...",
+      "url": "https://www.thestreet.com/crypto/markets/jim-cramer-sees-no-path-to-de-escalation-in-u-s-iran-war",
+      "source": "TheStreet",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-09T15:56:51.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.579Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "ac22a05086f328c0",
+      "title": "Don't post generated/AI-edited comments. HN is for conversation between humans",
+      "summary": "HackerNews - Score: 4137, Comments: 1627",
+      "url": "https://news.ycombinator.com/newsguidelines.html#generated",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T19:29:29.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.829Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "892c8e8615cf14ef",
+      "title": "I was interviewed by an AI bot for a job",
+      "summary": "HackerNews - Score: 409, Comments: 455",
+      "url": "https://www.theverge.com/featured-video/892850/i-was-interviewed-by-an-ai-bot-for-a-job",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T18:17:30.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.830Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "321cce925affc860",
+      "title": "Temporal: The 9-year journey to fix time in JavaScript",
+      "summary": "HackerNews - Score: 770, Comments: 257",
+      "url": "https://bloomberg.github.io/js-blog/post/temporal/",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T15:35:50.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.829Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "79e3c34e3b554fb9",
+      "title": "Whistleblower claims ex-DOGE member says he took Social Security data to new job",
+      "summary": "HackerNews - Score: 619, Comments: 276",
+      "url": "https://www.washingtonpost.com/politics/2026/03/10/social-security-data-breach-doge-2/",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T13:52:01.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.830Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "d128c32cd97db44d",
+      "title": "The MacBook Neo",
+      "summary": "HackerNews - Score: 631, Comments: 1019",
+      "url": "https://daringfireball.net/2026/03/the_macbook_neo",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-11T11:37:24.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.829Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    }
+  ],
+  "byCategory": {
+    "finance": [
+      {
+        "id": "af6a8be4741bae56",
+        "title": "Brent oil futures climb above $100 on continued disruption to Strait of Hormuz traffic",
+        "summary": "Prices have spiked after Iran&#x2019;s new supreme leader broke his silence and called for the Strait of Hormuz to stay closed.",
+        "url": "https://www.marketwatch.com/story/brent-oil-futures-climb-above-100-on-continued-disruption-to-strait-of-hormuz-traffic-764be61b?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-13T10:59:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "65e680009646c115",
+        "title": "Why a 1980s conflict may be the best market analog for the current Iran situation",
+        "summary": "Citi&#x2019;s global macro strategy team led by Dirk Willer went in search of historical analogs, looking through the last five oil crises",
+        "url": "https://www.marketwatch.com/story/why-a-1980s-conflict-may-be-the-best-market-analog-for-the-current-iran-situation-4e0d404a?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-13T10:40:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "7790d08d5fe2e0a2",
+        "title": "&#x2018;Healthcare is important to me&#x2019;: I&#x2019;m worried about relocating to Florida from New Jersey. Are hospitals there under stress?",
+        "summary": "&#x201c;The issue is not the weather, high insurance premiums or high maintenance fees.&#x201d;",
+        "url": "https://www.marketwatch.com/story/healthcare-is-important-to-me-im-worried-about-relocating-to-florida-from-new-jersey-are-hospitals-there-under-stress-5c270b07?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-13T09:15:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "36924688832c251c",
+        "title": "Rivian is fulfilling its promise to launch a $45,000 EV, but there&#x2019;s a catch",
+        "summary": "The EV maker just revealed pricing details for its new R2 lineup. Rivian will first launch a $57,990 model, with plans to debut a $45,000 variant in late 2027.",
+        "url": "https://www.marketwatch.com/story/rivian-is-fulfilling-its-promise-to-launch-a-45-000-ev-but-theres-a-catch-598d33d0?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-13T02:43:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "e70d912ff9f10ae0",
+        "title": "Netflix is spending up to $600 million to buy Ben Affleck&#x2019;s AI startup. What exactly is it buying?",
+        "summary": "A week after backing away from buying Warner Bros. Discovery, Netflix decides to buy rather than build AI tools for filmmakers.",
+        "url": "https://www.marketwatch.com/story/netflix-is-spending-up-to-600-million-to-buy-ben-afflecks-ai-startup-what-exactly-is-it-buying-8435f02e?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-13T00:34:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "2fd43158bcd99beb",
+        "title": "Why Adobe&#x2019;s stock is falling despite an earnings beat",
+        "summary": "Adobe&#x2019;s longtime CEO is stepping down, and the lack of acceleration on a key metric signaled that AI isn&#x2019;t driving significant financial benefits yet.",
+        "url": "https://www.marketwatch.com/story/why-adobes-stock-is-falling-despite-an-earnings-beat-b6a67617?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-13T00:29:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "d5f391f2ecfdb70e",
+        "title": "Ulta Beauty says it&#x2019;s &#x2018;increasingly mindful&#x2019; of effects that global conflicts have on shoppers, as profit forecast sinks stock",
+        "summary": "Shares of Ulta Beauty slid after hours on Thursday after the cosmetics retailer forecast a profit and same-store sales for this year that were below Wall Street&#x2019;s estimates, adding that it expects more selective consumer spending and that it was &#x201c;increasingly mindful&#x201d; of conflic",
+        "url": "https://www.marketwatch.com/story/ulta-beauty-says-its-increasingly-mindful-of-effects-that-global-conflicts-have-on-shoppers-as-profit-forecast-sinks-stock-b03cc1c3?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-13T00:27:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "35003fd09a94660e",
+        "title": "&#x2018;I am stuck in a low-income trap&#x2019;: I&#x2019;m a teacher and very good at my job. Will I ever earn six figures?",
+        "summary": "&#x201c;My low salary requires me to have multiple other part-time jobs.&#x201d;",
+        "url": "https://www.marketwatch.com/story/i-am-stuck-in-a-low-income-trap-im-a-teacher-will-i-ever-earn-six-figures-5f7dd2b9?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-12T23:47:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "6dd67933408c7776",
+        "title": "Shoppers seeking a tariff refund from retailers are likely out of luck",
+        "summary": "A new lawsuit alleges that Costco owes shoppers refunds for tariffs, but experts say that&#x2019;s a tough call.",
+        "url": "https://www.marketwatch.com/story/shoppers-seeking-a-tariff-refund-from-retailers-are-likely-out-of-luck-5aacf5f4?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-12T22:59:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "7034f66e7c1696fc",
+        "title": "Trump is scrambling to quell the rise of $100 oil. But the market keeps circling one answer.",
+        "summary": "Other efforts to coax oil down prices &#x2014; now at $100 a barrel &#x2014; are like putting a Band-Aid on a shotgun wound, says analyst",
+        "url": "https://www.marketwatch.com/story/trump-is-scrambling-to-quell-the-rise-of-100-oil-but-the-market-keeps-circling-one-answer-bf9abf20?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-12T22:50:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.321Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "f227a7ae0ed22a3b",
+        "title": "Bitcoin climbs the wall of worry amid escalating Iran war and stock market losses",
+        "summary": "BTC holds near $70,000 and outperforms major assets during Middle East tensions, even as derivatives data and fear indicators signal deep market pessimism.",
+        "url": "https://www.coindesk.com/markets/2026/03/12/bitcoin-climbs-the-wall-of-worry-amid-escalating-iran-war-and-stock-market-losses",
+        "source": "CoinDesk",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-12T10:51:33.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "16419b6fb54969d9",
+        "title": "Bitcoin steady near $70,000 as rising open interest hints at cautious, bearish positioning",
+        "summary": "Bitcoin traded around $69,800 as open interest rose to $102 billion, suggesting defensive, bearish bets while altcoins outperformed in a risk-off macro backdrop.",
+        "url": "https://www.coindesk.com/markets/2026/03/12/bitcoin-steady-near-usd70-000-as-rising-open-interest-hints-at-cautious-bearish-positioning",
+        "source": "CoinDesk",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-12T10:33:01.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "94b8949bdab50199",
+        "title": "Circle shares surge as Bernstein sees upside from stablecoin adoption",
+        "summary": "Circle stock has surged 49% in 2026 and doubled since February as Bernstein maintains a $190 price target, citing accelerating stablecoin adoption.",
+        "url": "https://cointelegraph.com/news/circle-stock-surges-bernstein-stablecoin-adoption",
+        "source": "Cointelegraph",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-10T21:13:08.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "6793e4c9469c25ce",
+        "title": "Strategy Doubles Down on Bitcoin in a Volatile Market",
+        "summary": "Strategy Inc. solidifies its position as a leading Bitcoin treasury company with another substantial acquisition, reinforcing its long-term accumulation plan...",
+        "url": "https://www.marketbeat.com/originals/strategy-doubles-down-on-bitcoin-in-a-volatile-market/?utm_source=yahoofinance&amp;utm_medium=yahoofinance",
+        "source": "MarketBeat",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-10T16:21:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "da97b4dc57ebf6ad",
+        "title": "Nasdaq Partners With Crypto Exchange Kraken To Connect Tokenized Equities Markets to Decentralized Blockchains",
+        "summary": "The crypto exchange Kraken is partnering with the financial giant Nasdaq to enable a gateway that would let traders swap tokenized equities from regulated environments into decentralized finance (DeFi) ecosystems. Nasdaq, which operates the world’s second-lar…",
+        "url": "https://dailyhodl.com/2026/03/10/nasdaq-partners-with-crypto-exchange-kraken-to-connect-tokenized-equities-markets-to-decentralized-blockchains/",
+        "source": "The Daily Hodl",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-10T09:15:50.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "c22a2ebd2b9ff3ea",
+        "title": "Here's how traders and big buyers stepped in to keep bitcoin steady during the oil shock",
+        "summary": "Several market participants, including MSTR and OTC traders, kept demand steady, helping BTC stay resilient.",
+        "url": "https://www.coindesk.com/markets/2026/03/10/here-s-how-traders-and-big-buyers-stepped-in-to-keep-bitcoin-steady-during-the-oil-shock",
+        "source": "CoinDesk",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-10T06:14:24.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "fa37178d834e1eea",
+        "title": "Stock market today: Dow, S&P 500, Nasdaq futures falter, oil slides as Wall Street weighs Iran war signals",
+        "summary": "Wall Street is adjusting to a historic spike and fall in oil prices after the global economy was thrown into disarray.",
+        "url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-futures-falter-oil-slides-as-wall-street-weighs-iran-war-signals-224255455.html",
+        "source": "Yahoo Entertainment",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-09T22:42:55.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "aae36abae660b5c3",
+        "title": "Stock market today: Nasdaq gains, Dow, S&P 500 recover losses as oil prices ease after spiking above $100",
+        "summary": "Oil's rise above $100 per barrel has unleashed fears of a more severe economic impact from the war in the Middle East.",
+        "url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-turn-higher-oil-slides-as-trump-says-war-could-be-over-soon-193324857.html",
+        "source": "Yahoo Entertainment",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-09T19:23:47.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "3828d0278462ee27",
+        "title": "Bitcoin 'Can Never Be A Structural Holding Of A Central Bank,' Billionaire VC Chamath Palihapitiya Says",
+        "summary": "Bitcoin will not be held as a reserve asset by central banks, billionaire venture capitalist Chamath Palihapitiya says. \"If you think about what is the value...",
+        "url": "https://finance.yahoo.com/news/bitcoin-never-structural-holding-central-172052994.html",
+        "source": "Yahoo Entertainment",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-09T17:20:52.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "98e764641830b354",
+        "title": "Jim Cramer sees no path to de-escalation in U.S.-Iran war",
+        "summary": "CNBC \"Mad Money\" host Jim Cramer has been commenting on the markets for decades. But it is not his commentary that people watch. It is the effects it can...",
+        "url": "https://www.thestreet.com/crypto/markets/jim-cramer-sees-no-path-to-de-escalation-in-u-s-iran-war",
+        "source": "TheStreet",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-09T15:56:51.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      }
+    ],
+    "economics": [
+      {
+        "id": "9205bcd7d10750de",
+        "title": "The Iran war is pushing up European energy prices. Here's why a Ukraine-style inflation shock could still be avoided",
+        "summary": "The Iran war has rattled global energy markets, but analysts say Europe can avoid a full-blown 2022-style supply crisis.",
+        "url": "https://www.cnbc.com/2026/03/12/iran-gas-oil-price-bills-europe-energy-ukraine-war-russia-shock-rise-inflation-interest-rates-crisis.html",
+        "source": "CNBC",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-12T06:10:11.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "61e0196c38b9ece9",
+        "title": "US Stock Market | Inflation stays cool, oil heats up: US markets brace for fallout from Iran tensions",
+        "summary": "America's inflation stayed steady in February. This was before conflicts involving Iran began. Now, oil prices are surging. This has revived worries about inflation increasing in the coming months. Food prices contributed significantly to the rise. Energy pri…",
+        "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/us-stock-market-inflation-stays-cool-oil-heats-up-us-markets-brace-for-fallout-from-iran-tensions/articleshow/129491091.cms",
+        "source": "The Times of India",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-12T04:21:51.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "142326fda117eb45",
+        "title": "Trump’s War with Iran Is Even More of a Disaster than People Realize",
+        "summary": "Over the weekend, the US and Israeli governments attacked Iran. In the days since, both militaries have reportedly struck thousands of targets, and Iranian forces have retaliated by launching hundreds or even thousands of missiles and drones at Israel and at …",
+        "url": "https://www.activistpost.com/trumps-war-with-iran-is-even-more-of-a-disaster-than-people-realize/",
+        "source": "Activistpost.com",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-12T02:45:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "5158d0aa08056373",
+        "title": "World World GDP (current USD): 110982661180013.00",
+        "summary": "World Bank data - World GDP (current USD) for World (2024): 110982661180013.00",
+        "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD",
+        "source": "World Bank Open Data",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2024-01-01T00:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.461Z",
+        "reliability": 5,
+        "tags": [
+          "world-bank",
+          "economic-indicator",
+          "wld"
+        ],
+        "indicator": {
+          "name": "World GDP (current USD)",
+          "value": 110982661180013,
+          "unit": "",
+          "country": "WLD",
+          "date": "2024"
+        }
+      },
+      {
+        "id": "f030645323df505c",
+        "title": "World Inflation (CPI %): 2.97",
+        "summary": "World Bank data - Inflation (CPI %) for World (2024): 2.97",
+        "url": "https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG",
+        "source": "World Bank Open Data",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2024-01-01T00:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.461Z",
+        "reliability": 5,
+        "tags": [
+          "world-bank",
+          "economic-indicator",
+          "wld"
+        ],
+        "indicator": {
+          "name": "Inflation (CPI %)",
+          "value": 2.97200477643618,
+          "unit": "",
+          "country": "WLD",
+          "date": "2024"
+        }
+      },
+      {
+        "id": "b2f0a0176d71fd2d",
+        "title": "Japan GDP Growth Rate (%): 0.10",
+        "summary": "World Bank data - GDP Growth Rate (%) for Japan (2024): 0.10",
+        "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG",
+        "source": "World Bank Open Data",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2024-01-01T00:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.461Z",
+        "reliability": 5,
+        "tags": [
+          "world-bank",
+          "economic-indicator",
+          "jpn"
+        ],
+        "indicator": {
+          "name": "GDP Growth Rate (%)",
+          "value": 0.104309021773304,
+          "unit": "",
+          "country": "JPN",
+          "date": "2024"
+        }
+      },
+      {
+        "id": "5bde36f2b911539a",
+        "title": "Japan Unemployment Rate (%): 2.45",
+        "summary": "World Bank data - Unemployment Rate (%) for Japan (2025): 2.45",
+        "url": "https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS",
+        "source": "World Bank Open Data",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2025-01-01T00:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.461Z",
+        "reliability": 5,
+        "tags": [
+          "world-bank",
+          "economic-indicator",
+          "jpn"
+        ],
+        "indicator": {
+          "name": "Unemployment Rate (%)",
+          "value": 2.451,
+          "unit": "",
+          "country": "JPN",
+          "date": "2025"
+        }
+      },
+      {
+        "id": "abcfc034325d7a68",
+        "title": "Oil Shock From Iran Conflict Complicates Fed's Rate Cut Plans",
+        "summary": "Rising oil prices tied to the Iran conflict are pushing investors to delay expectations of a Fed rate cut amid familiar inflation risks.",
+        "url": "https://www.investopedia.com/oil-shock-from-iran-conflict-complicates-fed-s-rate-cut-plans-11924361",
+        "source": "Investopedia",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-11T21:23:53.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "05acb939cf8f1bde",
+        "title": "Trump's war on Iran creates an economic storm for consumers and the Fed",
+        "summary": "Inflation held steady in February — but offered little clarity for Federal Reserve officials navigating an economic landscape altered by the Iran war.",
+        "url": "https://www.nbcnews.com/business/economy/trump-war-iran-consumers-federal-reserve-rcna262936",
+        "source": "NBC News",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-11T20:58:17.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "db8ae20b4238ff6c",
+        "title": "US consumer inflation unchanged but price shocks from Iran war loom",
+        "summary": "Economists warn war-driven oil spikes could push US inflation above 4% soon.",
+        "url": "https://www.nzherald.co.nz/business/us-consumer-inflation-unchanged-but-price-shocks-from-iran-war-loom/2KXIXKQ2FBG6NNWLEOZLL77ZXY/",
+        "source": "New Zealand Herald",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-11T20:55:15.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "1f8b60cb953e4160",
+        "title": "Most U.S. stocks fall as oil prices get back to rising",
+        "summary": "Since the start of the Iran war, sharp moves for oil prices have triggered swings up and down for financial markets worldwide, sometimes by the hour.",
+        "url": "https://www.pbs.org/newshour/world/most-u-s-stocks-fall-as-oil-prices-get-back-to-rising",
+        "source": "PBS",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-11T19:49:13.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "8cfe04cdf3e1baa3",
+        "title": "What could happen with mortgage interest rates this spring? Experts weigh in",
+        "summary": "Mortgage rates have fallen steadily, but could new developments change that trend this spring? Here's what to know.",
+        "url": "https://www.cbsnews.com/news/what-could-happen-with-mortgage-interest-rates-spring-2026-experts/",
+        "source": "CBS News",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-11T17:22:51.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "97adf66f63dd1a65",
+        "title": "CPI Report Update: U.S. Inflation Remains Steady at 2.4% in February 2026 CPI Report, Core Rate Holds at 2.5%",
+        "summary": "U.S. inflation showed no acceleration in February, with the headline Consumer Price Index holding firm at 2.4% annually while monthly gains ticked slightly higher amid persistent shelter costs and a rebound in energy prices, the Labor Department reported Wedn…",
+        "url": "https://www.ibtimes.com.au/cpi-report-update-us-inflation-remains-steady-24-february-2026-cpi-report-core-rate-holds-1863093",
+        "source": "Ibtimes.com.au",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-11T15:53:58.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "aa46d1b8385dd37b",
+        "title": "Inflation held steady last month before attack on Iran sent energy costs soaring",
+        "summary": "Wednesday's data has been overtaken by the conflict that began when the U.S. and Israel attacked Iran on Feb. 28, which has caused wild gyrations in oil prices as shipping lanes through the Persian Gulf have suffered a rare shutdown.",
+        "url": "https://www.pbs.org/newshour/economy/inflation-held-steady-last-month-before-attack-on-iran-sent-energy-costs-soaring",
+        "source": "PBS",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-11T15:04:58.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      }
+    ],
+    "ai_news": [
+      {
+        "id": "b62e59bbcd8bdbd9",
+        "title": "Future AI chips could be built on glass",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/13/1134230/future-ai-chips-could-be-built-on-glass/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T09:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "17d86ff3cbf13bb0",
+        "title": "A defense official reveals how AI chatbots could be used for targeting decisions",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/12/1134243/defense-official-military-use-ai-chatbots-targeting-decisions/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T22:23:34.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "81a5dd753396dfcb",
+        "title": "ホンダ、慶大・阪大とAI開発の協働研究所　人材育成を加速",
+        "summary": "本田技研工業は、慶應義塾大学および大阪大学とAI開発で産学連携するプロジェクト「BRIDGE」（ブリッジ）を始めると発表した。",
+        "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news108.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T09:53:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.060Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "7d631eaeddf01a15",
+        "title": "三菱電機、人型ロボットで工場を無人化へ　中国スタートアップと協業",
+        "summary": "三菱電機は、人型ロボットを開発するスタートアップの中国Lumos Robotics Technologyに出資し、協業すると発表した。",
+        "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news104.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T08:06:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.060Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "68ee6a4d708ad53b",
+        "title": "“AI養老孟司”が客員教授に就任　本人とともに　東京工科大",
+        "summary": "東京工科大学は、養老孟司氏と同氏を模したAIアバター「AI養老先生」がともに客員教授に就任したと発表した。",
+        "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news093.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T06:26:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.060Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "3786a898e0eb9fb2",
+        "title": "Before quantum computing arrives, this startup wants enterprises already running on it",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/before-quantum-computing-arrives-this-startup-wants-enterprises-already-running-on-it/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T05:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "66a6e7f0e6774ab4",
+        "title": "Truecaller now lets you hang up on scammers &#8212; on behalf of your family",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/truecallers-now-lets-you-hang-up-on-scammers-on-behalf-of-your-family/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T04:30:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "37964885e1115ad4",
+        "title": "AIエージェント導入が進む企業は何が違う？　Microsoft、成否を分ける“5要素”を提示",
+        "summary": "MicrosoftはAIエージェントの導入準備態勢に関する調査結果を公開した。準備が整った企業は未整備企業に比べ、約2.5倍の速さでエージェントを導入できるという。",
+        "url": "https://atmarkit.itmedia.co.jp/ait/articles/2603/13/news063.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T04:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.060Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "95a3b3762e86a1d8",
+        "title": "急成長上位10位プロジェクトの6割がAI関連　GitHubが分析するAI支援ワークフローの変化",
+        "summary": "GitHubが年次レポート「Octoverse 2025」に基づく分析記事を公開した。AIプロジェクトを推進する上で開発者が重視する点とツールの選択方法が変化しつつあるという。",
+        "url": "https://atmarkit.itmedia.co.jp/ait/articles/2603/13/news061.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T04:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.061Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "04b52dd037c9626a",
+        "title": "Sakana AI、防衛装備庁から委託研究　部隊の情報分析や意思決定にAI利用へ",
+        "summary": "Sakana AIは、防衛装備庁からの委託研究を始めると発表した。自律的にタスクをこなすAIエージェント技術により、部隊の情報分析や意思決定の高度化を目指す。",
+        "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news083.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T03:14:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.061Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "e2b335bcd170787b",
+        "title": "GoogleマップがGeminiで進化　AIが複雑な質問に答える「Ask Maps」と3Dナビ「Immersive Navigation」",
+        "summary": "Googleは「Googleマップ」の「Gemini」採用新機能を発表した。会話形式で複雑な条件の場所探しができる「Ask Maps」と、3Dビューで直感的なルート案内を行う「Immersive Navigation」を導入。ユーザーの嗜好や過去の履歴に基づいたパーソナライズ提案や、自然な音声案内により、ナビゲーション体験を再構築する。（日本での提供はまだ）",
+        "url": "https://www.itmedia.co.jp/news/articles/2603/13/news080.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T02:25:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.061Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "0b4163a1e549629e",
+        "title": "「とほほのWWW入門」30年目も更新中　96年開設の個人サイト、CGIからOpenAI APIまでカバー",
+        "summary": "近年はReactやNext.js、OpneAI APIまで対象を広げ、淡々と更新を続けている。",
+        "url": "https://www.itmedia.co.jp/news/articles/2603/13/news073.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-13T01:46:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.061Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "9f8eb9c05fcfecf0",
+        "title": "The Download: Early adopters cash in on China’s OpenClaw craze, and US batteries slump",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/12/1134207/the-download-china-openclaw-ai-craze-us-battery-industry-downturn/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T13:02:48.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "80b7cf9a355bbfa2",
+        "title": "Pragmatic by design: Engineering AI for the real world",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/12/1133675/pragmatic-by-design-engineering-ai-for-the-real-world/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T13:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "009750aefbce75d7",
+        "title": "How to watch Jensen Huang’s Nvidia GTC 2026 keynote",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/how-to-watch-jensen-huangs-nvidia-gtc-2026-keynote/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "celebrity",
+        "publishedAt": "2026-03-12T23:25:39.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": [],
+        "speaker": "Jensen Huang"
+      },
+      {
+        "id": "092b3706ce2738e6",
+        "title": "Anthropic、「Claude」で表や図のインライン表示をβ公開　無料版でも",
+        "summary": "Anthropicは、Claudeのチャット回答内で表や図、画像をインライン生成する機能をβ版として導入した。2025年9月に公開された「Imagine with Claude」がベースで、全ユーザーが利用可能。プロンプトに応じてAIが視覚化の必要性を判断する。",
+        "url": "https://www.itmedia.co.jp/aiplus/articles/2603/13/news068.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T23:02:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.061Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "263833c87ed44f23",
+        "title": "黒船「フィジカルAI」襲来　日本におけるヒューマノイド開発の最適解とは",
+        "summary": "アールティが、産業技術総合研究所、川田テクノロジーズ、川崎重工業などと共同で「フィジカルAI勉強会」を開催。ヒューマノイドの実用化に必要不可欠な技術としてフィジカルAIという言葉そのものや技術成熟度への認識については混乱が見られる中、今回の勉強会は現時点でのフィジカルAIの捉え方を共有することを目的に開催された。",
+        "url": "https://monoist.itmedia.co.jp/mn/articles/2603/13/news050.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T23:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.061Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "8322cd82db802024",
+        "title": "Sales automation startup Rox AI hits $1.2B valuation, sources say",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/sales-automation-startup-rox-ai-hits-1-2b-valuation-sources-say/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T22:25:50.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "f8dafcf9efa8d42d",
+        "title": "Brutal times for the US battery industry",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/12/1134197/us-battery-industry/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T10:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "592c4268de1ac048",
+        "title": "Facebook Marketplace now lets Meta AI respond to buyers&#8217; messages",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/facebook-marketplace-now-lets-meta-ai-respond-to-buyers-messages/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T18:20:33.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "adcc14e14288d7d6",
+        "title": "Tinder tries to lure people back to online dating with IRL events, virtual speed dating",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/tinder-tries-to-lure-people-back-to-online-dating-with-irl-events-virtual-speed-dating/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T18:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "238898ae354937a9",
+        "title": "Atlassian follows Block’s footsteps and cuts staff in the name of AI",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/atlassian-follows-blocks-footsteps-and-cuts-staff-in-the-name-of-ai/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T17:20:19.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "dfa55fa7c5c5d789",
+        "title": "Bumble introduces an AI dating assistant, &#8216;Bee&#8217;",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/bumble-introduces-an-ai-dating-assistant-bee/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T16:52:17.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "61efd577ec7f21b6",
+        "title": "A writer is suing Grammarly for turning her and other authors into &#8216;AI editors&#8217; without consent",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/a-writer-is-suing-grammarly-for-turning-her-and-other-authors-into-ai-editors-without-consent/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T16:42:40.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "added3e625083a87",
+        "title": "Gumloop lands $50M from Benchmark to turn every employee into an AI agent builder",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/12/gumloop-lands-50m-from-benchmark-to-turn-every-employee-into-an-ai-agent-builder/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T15:30:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.805Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "f80ca9de86c2e8a9",
+        "title": "AI Watch, Pt. 1",
+        "summary": "AI at war.  One-third of Americans think advice from AI is as good as their pastor's.  And how to hack AI.",
+        "url": "https://www.patheos.com/blogs/geneveith/2026/03/ai-watch-pt-1/",
+        "source": "Patheos",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T10:00:57.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "643cdc5c86024fa5",
+        "title": "Burning effigies, doomsday prepping and ‘cyber-chondriacs’: The wacky beliefs of the tech elite shaping global society",
+        "summary": "These moguls tell us their AI systems — which they admit they don’t fully understand — are beneficial. However, experts say it’s a coin toss whether humans will be enslaved by their creations or live carefree lives of leisure, while robots do all the work.",
+        "url": "https://nypost.com/2026/03/12/us-news/the-wacky-beliefs-of-the-tech-elite-shaping-global-society/",
+        "source": "New York Post",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T10:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "eb94319d17fd0251",
+        "title": "Lobster buffet: China’s tech firms feast on OpenClaw as companies race to deploy AI agents",
+        "summary": "China-based usage of OpenClaw has already topped that of the U.S., while driving demand for Chinese lower-cost AI models.",
+        "url": "https://www.cnbc.com/2026/03/12/china-openclaw-ai-agent-adoption-tech-companies-government-support-lobster-shrimp.html",
+        "source": "CNBC",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T09:11:58.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "9ccc730eff9d2f56",
+        "title": "AI isn’t replacing workers – it’s making them compete",
+        "summary": "With fear of being ‘phased out’ of rapidly AI-integrated workforces, people are scrambling to secure their place as one of the few ‘valuable’ humans left",
+        "url": "https://www.dazeddigital.com/life-culture/article/69863/1/ai-pressure-to-become-an-irreplaceable-worker-myth-chatgpt-claude?utm_source=Link&utm_medium=Link&utm_campaign=RSSFeed&utm_term=ai-isn-t-replacing-workers-it-s-making-them-compete",
+        "source": "Dazed",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T08:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "76c80d3198b42b00",
+        "title": "Anthropic in talks with Blackstone, other PE firms to set up AI joint venture: Report",
+        "summary": "Anthropic, maker of Claude AI, is in talks with Blackstone and Hellman &amp; Friedman to form a Palantir‑style joint venture, despite tensions with the US Defense Department, which labelled the firm a supply chain risk.",
+        "url": "https://www.livemint.com/companies/news/anthropic-in-talks-with-blackstone-other-pe-firms-to-set-up-ai-joint-venture-report-11773287347357.html",
+        "source": "Livemint",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T05:04:52.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "d8c9ada7902cc799",
+        "title": "Is AI our agent, or are our governments becoming agents for AI?",
+        "summary": "Yet more billions are being spent on agentic AI, despite warnings of its potentially extreme fallibility. Just who are governments serving when they spout the messaging of Big Tech companies?",
+        "url": "https://www.computerweekly.com/opinion/Is-AI-our-agent-or-are-our-governments-becoming-agents-for-AI",
+        "source": "ComputerWeekly.com",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T05:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "7658d5cd6d254f2a",
+        "title": "How the Anthropic-Pentagon dispute over AI safeguards escalated",
+        "summary": "A dispute erupted after Anthropic refused to loosen AI safety safeguards for the Pentagon. The U.S. Defense Department labelled the Claude maker a “supply-chain risk”, threatening government contracts. Anthropic plans a court challenge, warning the move could…",
+        "url": "https://economictimes.indiatimes.com/tech/artificial-intelligence/how-the-anthropic-pentagon-dispute-over-ai-safeguards-escalated/articleshow/129490706.cms",
+        "source": "The Times of India",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T03:54:17.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "4784c4c20dd7fcf4",
+        "title": "Anthropic launches Anthropic Institute to tackle AI risks",
+        "summary": "Anthropic PBC today announced the formation of the Anthropic Institute, a business unit tasked with studying the risks posed by artificial intelligence. The unit will bring three of the company’s existing teams together under the leadership of co-founder Jack…",
+        "url": "https://siliconangle.com/2026/03/11/anthropic-launches-anthropic-institute-tackle-ai-risks/",
+        "source": "SiliconANGLE News",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-12T01:19:39.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "5fc020026012894a",
+        "title": "Hustlers are cashing in on China&#8217;s OpenClaw AI craze",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/11/1134179/china-openclaw-gold-rush/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-11T12:46:21.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "ab54f0e7b04c67eb",
+        "title": "The Download: Pokémon Go to train world models, and the US-China race to find aliens",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/11/1134174/the-download-pokemon-go-train-world-models-us-china-race-find-aliens/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-11T12:38:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "e9b714cad095b40e",
+        "title": "Building a strong data infrastructure for AI agent success",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/10/1134083/building-a-strong-data-infrastructure-for-ai-agent-success/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-10T14:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "b1799da906df5c53",
+        "title": "How Pokémon Go is giving delivery robots an inch-perfect view of the world",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/10/1134099/how-pokemon-go-is-helping-robots-deliver-pizza-on-time/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-10T13:47:26.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "6f3e36de9d186769",
+        "title": "Prioritizing energy intelligence for sustainable growth",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/10/1133972/prioritizing-energy-intelligence-for-sustainable-growth/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-10T13:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:39.981Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "d8a6317b2b7f8ed8",
+        "title": "Trump’s AI-Powered World Wars",
+        "summary": "Nick Turse and Hooman Majd discuss war on Iran and other U.S. conflicts, and Sam Biddle breaks down how AI is being used.\nThe post Trump’s AI-Powered World Wars appeared first on The Intercept.",
+        "url": "https://theintercept.com/2026/03/11/podcast-trump-ai-world-wars/",
+        "source": "The Intercept",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-11T22:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "2523fdaef9e176f0",
+        "title": "How the Anthropic-Pentagon dispute over AI safeguards escalated",
+        "summary": "March 11 : A standoff erupted between the U.S. Department of Defense and Anthropic in January after the AI lab refused to loosen safety guardrails on its systems, prompting the Pentagon to label it a 'supply-chain risk,' and putting the company's government c…",
+        "url": "https://www.channelnewsasia.com/business/how-anthropic-pentagon-dispute-over-ai-safeguards-escalated-5987686",
+        "source": "CNA",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-11T20:36:11.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      }
+    ],
+    "dev_tools": [
+      {
+        "id": "865a766afce8d400",
+        "title": "AstrBotDevs/AstrBot",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        AstrBotDevs /\n\n      AstrBot  \n\n    \n      Agentic IM Chatbot infrastructure that integrates lots of IM platforms, LLMs, plugins and AI feature, and can be your openclaw alternative. ✨ (+1770 stars today)",
+        "url": "https://github.com/AstrBotDevs/AstrBot",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.269Z",
+        "fetchedAt": "2026-03-13T11:13:41.269Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "49710ce743843a36",
+        "title": "vectorize-io/hindsight",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        vectorize-io /\n\n      hindsight  \n\n    \n      Hindsight: Agent Memory That Learns (+217 stars today)",
+        "url": "https://github.com/vectorize-io/hindsight",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.269Z",
+        "fetchedAt": "2026-03-13T11:13:41.269Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "5e00522022bd7815",
+        "title": "sponsors/InsForge",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        InsForge /\n\n      InsForge  \n\n    \n      Give agents everything they need to ship fullstack apps. The backend built for agentic development. (+263 stars today)",
+        "url": "https://github.com/sponsors/InsForge",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.269Z",
+        "fetchedAt": "2026-03-13T11:13:41.269Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "12dfe60d08d139ff",
+        "title": "google-ai-edge/LiteRT",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        google-ai-edge /\n\n      LiteRT  \n\n    \n      LiteRT, successor to TensorFlow Lite. is Google's On-device framework for high-performance ML &amp; GenAI deployment on edge platforms, via efficient conversion, runtime, and optimization (+13 stars today)",
+        "url": "https://github.com/google-ai-edge/LiteRT",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.269Z",
+        "fetchedAt": "2026-03-13T11:13:41.269Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "a2fb65a76373b5a4",
+        "title": "microsoft/BitNet",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        microsoft /\n\n      BitNet  \n\n    \n      Official inference framework for 1-bit LLMs (+2149 stars today)",
+        "url": "https://github.com/microsoft/BitNet",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "114315b35124311e",
+        "title": "langflow-ai/openrag",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        langflow-ai /\n\n      openrag  \n\n    \n      OpenRAG is a comprehensive, single package Retrieval-Augmented Generation platform built on Langflow, Docling, and Opensearch. (+322 stars today)",
+        "url": "https://github.com/langflow-ai/openrag",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "1203b8c58c0b1b80",
+        "title": "lightpanda-io/browser",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        lightpanda-io /\n\n      browser  \n\n    \n      Lightpanda: the headless browser designed for AI and automation (+1175 stars today)",
+        "url": "https://github.com/lightpanda-io/browser",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "7b904ac8471c462c",
+        "title": "sponsors/obra",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        obra /\n\n      superpowers  \n\n    \n      An agentic skills framework &amp; software development methodology that works. (+1706 stars today)",
+        "url": "https://github.com/sponsors/obra",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "5da3cea8dd0c75b4",
+        "title": "public-apis/public-apis",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        public-apis /\n\n      public-apis  \n\n    \n      A collective list of free APIs (+895 stars today)",
+        "url": "https://github.com/public-apis/public-apis",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "39f5c4b9c24c8782",
+        "title": "promptfoo/promptfoo",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        promptfoo /\n\n      promptfoo  \n\n    \n      Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, Llama, and more. Simple declarative configs with command line and CI/CD integration. (+503 stars today)",
+        "url": "https://github.com/promptfoo/promptfoo",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "e3344b0ce3854708",
+        "title": "sponsors/msitarzewski",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        msitarzewski /\n\n      agency-agents  \n\n    \n      A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a specialized expert with personality, processes, and proven deliverables. (+4168 stars today)",
+        "url": "https://github.com/sponsors/msitarzewski",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "556725d92974f979",
+        "title": "sponsors/dolthub",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        dolthub /\n\n      dolt  \n\n    \n      Dolt – Git for Data (+58 stars today)",
+        "url": "https://github.com/sponsors/dolthub",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "0d233b14a5936a64",
+        "title": "google/A2UI",
+        "summary": "GitHub Trending: google/A2UI (+225 stars today)",
+        "url": "https://github.com/google/A2UI",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "80f2fea6de2fe517",
+        "title": "fishaudio/fish-speech",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        fishaudio /\n\n      fish-speech  \n\n    \n      SOTA Open Source TTS (+637 stars today)",
+        "url": "https://github.com/fishaudio/fish-speech",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "4028e6647a3c6640",
+        "title": "alibaba/page-agent",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        alibaba /\n\n      page-agent  \n\n    \n      JavaScript in-page GUI agent. Control web interfaces with natural language. (+1205 stars today)",
+        "url": "https://github.com/alibaba/page-agent",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "1994bcb7028602d3",
+        "title": "anthropics/claude-plugins-official",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        anthropics /\n\n      claude-plugins-official  \n\n    \n      Official, Anthropic-managed directory of high quality Claude Code Plugins. (+150 stars today)",
+        "url": "https://github.com/anthropics/claude-plugins-official",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:13:41.268Z",
+        "fetchedAt": "2026-03-13T11:13:41.268Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "d0d4a9897622d067",
+        "title": "Best Dress Shoes for Men: Style, Comfort, and Quality Combined",
+        "summary": "<p>Dress shoes are part of many important moments. Work meetings. Formal events. Even simple family gatherings. The right pair helps you look neat and put together.</p>\n\n<p>But looks are not everything. Shoes must also feel comfortable. Many men wear them for long hours. If the fit or material is po",
+        "url": "https://dev.to/richard_mtrask_7688ace5a2/best-dress-shoes-for-men-style-comfort-and-quality-combined-123c",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T11:00:28.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.000Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "b269ae4c4b07056f",
+        "title": "Probability Can Never Be Permission — The Structural Flaw of Open Agent AI and the Conditions for the Next Standard",
+        "summary": "<p><a href=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fxd2uw54toa389bxp42ew.jpg\" class=\"article-body-image-wrapper\"><img src=\"https://media2.dev.to/dynamic/image/width=800%",
+        "url": "https://dev.to/aaih_sg/probability-can-never-be-permission-the-structural-flaw-of-open-agent-ai-and-the-conditions-for-maf",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:57:39.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.000Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "6e72be3e2d8d88ba",
+        "title": "React: avoid hooks that set default values, use getters with defaults",
+        "summary": "<p>A colleague of mine helped identify a pattern that has turned out to be a bit of a footgun.</p>\n\n<p>The goal was: when a customer opens <code>mysite.com/?urlParam=foo</code>, I want to load the correct FooComponent. However, if <code>mysite.com</code> is opened with no param is set, I want it to ",
+        "url": "https://dev.to/domantasjurkus/react-avoid-setdefaulthook-use-getparams-26l7",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:49:58.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.000Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "df601fc837033ba3",
+        "title": "SEO is Dead? How I Optimized My Next.js SaaS for ChatGPT & Perplexity (AEO)",
+        "summary": "<p>Everyone is still playing the Google SEO game: stuffing keywords, buying backlinks, and fighting for Page 1.</p>\n\n<p>But if you are building a <strong>B2B SaaS in 2026</strong>, your target audience (developers, founders, CTOs) has already changed their behavior.</p>\n\n<p>They aren't Googling anym",
+        "url": "https://dev.to/damsho92/seo-is-dead-how-i-optimized-my-nextjs-saas-for-chatgpt-perplexity-aeo-3ppc",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:48:15.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.000Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "8ec3df3acf2a3546",
+        "title": "Tokenizasyon Nedir? API Güvenliği İçin Kapsamlı Rehber",
+        "summary": "<p>Tokenleştirme, hassas verilerin token adı verilen hassas olmayan yer tutucularla değiştirilmesi sürecidir. Bu token'lar orijinal verinin formatını veya uzunluğunu korur ancak kendi başlarına istismar edilebilir bir değere sahip değildir. API güvenliği bağlamında, <a href=\"https://docs.apidog.com/",
+        "url": "https://dev.to/tobiass_hoffmann/tokenizasyon-nedir-api-guvenligi-icin-kapsamli-rehber-29d0",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:41:14.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.000Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "bac88a300139f8ef",
+        "title": "An LLM Is Not a Deficient Mind",
+        "summary": "<p>I called it \"the perfect bullshitter.\"</p>\n\n<p>This was GPT-2, maybe early GPT-3. I was feeding it prompts and getting back text that looked like answers — structured, fluent, confident. The kind of output that would survive a casual reading. It was not grounded in anything. The model was halluci",
+        "url": "https://dev.to/romanonthego/an-llm-is-not-a-deficient-mind-234l",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:40:15.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.000Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "fc0877396b39d162",
+        "title": "How Developers Can Prevent Frontend Wallet Drainer Attacks: A Case Study of the BONK.fun Hack",
+        "summary": "<p>The Solana ecosystem recently experienced a security incident involving the launchpad BONK.fun. Attackers compromised a team account and injected malicious code into the website that triggered a wallet drainer attack.<br>\nThe breach tricked users into signing a fake Terms of Service prompt, which",
+        "url": "https://dev.to/cryip/how-developers-can-prevent-frontend-wallet-drainer-attacks-a-case-study-of-the-bonkfun-hack-29k4",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:40:12.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.000Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "e0231f5483b4ff5c",
+        "title": "Connecting power bi to SQL databases locally and through cloud service.",
+        "summary": "<p>Power BI is a  powerful tool designed for cleaning data ,creating reports and dashboards.It is preferred over other tools due to its ability to handle large data sets,create real-time dashboards and its beginner friendly.Power BI desktop is a free version provided by Microsoft.</p>\n\n<p><strong>Ma",
+        "url": "https://dev.to/maggy_njuguna/connecting-power-bi-to-sql-databases-locally-and-through-cloud-service-4876",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:38:47.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.000Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "3728242ab17a779d",
+        "title": "Why Your AI Strategy Is Three-Quarters Wrong",
+        "summary": "<p><a href=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F1jef5mose7pnldrdezjp.png\" class=\"article-body-image-wrapper\"><img src=\"https://media2.dev.to/dynamic/image/width=800%",
+        "url": "https://dev.to/jgongo/why-your-ai-strategy-is-three-quarters-wrong-c0j",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:38:45.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.001Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "405e59abb1ef5c3e",
+        "title": "ما هو التوكن؟ الدليل النهائي لأمن API",
+        "summary": "<p>الترميز هو عملية استبدال البيانات الحساسة بعناصر نائبة غير حساسة تُسمى الرموز (Tokens). تحتفظ هذه الرموز بتنسيق أو طول البيانات الأصلية ولكنها لا تحمل قيمة قابلة للاستغلال بحد ذاتها. في سياق أمان واجهة برمجة التطبيقات (API)، يعمل <a href=\"https://docs.apidog.com/authentication-and-authorization-i",
+        "url": "https://dev.to/yusuf_khalidd/m-hw-ltwkn-ldlyl-lnhyy-lmn-api-fbd",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T10:36:27.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.001Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "6d94a274b9c166d8",
+        "title": "“This is not the computer for you”",
+        "summary": "HackerNews - Score: 511, Comments: 201",
+        "url": "https://samhenri.gold/blog/20260312-this-is-not-the-computer-for-you/",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-13T01:45:49.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.830Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "6d22344460daebcb",
+        "title": "Shall I implement it? No",
+        "summary": "HackerNews - Score: 1309, Comments: 481",
+        "url": "https://gist.github.com/bretonium/291f4388e2de89a43b25c135b44e41f0",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-12T21:01:10.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.829Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "5d22d0b2896f830d",
+        "title": "Innocent woman jailed after being misidentified using AI facial recognition",
+        "summary": "HackerNews - Score: 627, Comments: 331",
+        "url": "https://www.grandforksherald.com/news/north-dakota/ai-error-jails-innocent-grandmother-for-months-in-north-dakota-fraud-case",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-12T20:55:51.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.830Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "2c0c7c39719e8bff",
+        "title": "Show HN: An Open-source platform for building and orchestrating AI agents",
+        "summary": "Obsidian AI is an open-source platform that gives you a full visual interface for building, managing, and running AI agents — no SDKs, no boilerplate, no glue code required. - sup3rus3r/obsidian-ai",
+        "url": "https://github.com/sup3rus3r/obsidian-ai",
+        "source": "Github.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-12T05:03:53.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "210c96a368662109",
+        "title": "chatixia-agent added to PyPI",
+        "summary": "Chatixia: a domain-agnostic skill-based AI agent framework",
+        "url": "https://pypi.org/project/chatixia-agent/",
+        "source": "Pypi.org",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-12T04:51:19.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "60a26bc2cbc264c6",
+        "title": "ATMs didn’t kill bank teller jobs, but the iPhone did",
+        "summary": "HackerNews - Score: 430, Comments: 452",
+        "url": "https://davidoks.blog/p/why-the-atm-didnt-kill-bank-teller",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-12T14:48:57.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.830Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "569fc9e2508b7f87",
+        "title": "Malus – Clean Room as a Service",
+        "summary": "HackerNews - Score: 1298, Comments: 472",
+        "url": "https://malus.sh",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-12T13:42:04.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.829Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "1e6d76aa4bd9d8a7",
+        "title": "Enable intelligent insights with Red Hat Satellite MCP Server",
+        "summary": "Red Hat Satellite manages Red Hat Enterprise Linux (RHEL) systems at scale across the cloud and on-premises. Last year, a model context protocol (MCP) server for Red Hat Satellite was released as a Technology Preview feature to enable more intelligent and aut…",
+        "url": "https://www.redhat.com/en/blog/enable-intelligent-insights-red-hat-satellite-mcp-server",
+        "source": "Redhat.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-12T00:00:00.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "603386f862949881",
+        "title": "Show HN:Conduit–Headless browser with SHA-256 hash chain - Ed25519 audit trails",
+        "summary": "I've been building AI agent tooling and kept running into the same problem: agents browse the web, take actions, fill out forms, scrape data -- and there's zero proof of what actually happened. Screenshots can be faked. Logs can be edited. If something goes w…",
+        "url": "https://news.ycombinator.com/item?id=47343785",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T23:15:53.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "3f7db9221e00aaa4",
+        "title": "A Typed Language for Agent Coordination",
+        "summary": "A category-theoretic approach to \"agent frameworks\": that is, frameworks for coordinating \"agents\" that are large language models.",
+        "url": "https://golem.ph.utexas.edu/category/2026/03/a_typed_language_for_agent_coordination.html",
+        "source": "Utexas.edu",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T22:17:31.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "276a7b13fa66f466",
+        "title": "Mitigating The Risk of Prompt Injection for AI Agents on Databricks",
+        "summary": "How to secure AI agents on Databricks against prompt injection by hardening three risk pillars: data access, untrusted inputs, and external actions.",
+        "url": "https://www.databricks.com/blog/mitigating-risk-prompt-injection-ai-agents-databricks",
+        "source": "Databricks.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T18:54:42.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "ad0124ae3f91d998",
+        "title": "A Typed Language for Agent Coordination",
+        "summary": "guest post by William Waites Agent frameworks are popular. (These are frameworks for coordinating large language model agents, not to be confused with agent-based modelling in the simulation sense.) There are dozens of them for wrapping large language models …",
+        "url": "https://johncarlosbaez.wordpress.com/2026/03/11/a-typed-language-for-agent-coordination/",
+        "source": "Wordpress.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T16:53:13.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "8aec5e52ae9c1a7b",
+        "title": "qiskit-docs-mcp-server added to PyPI",
+        "summary": "MCP server for Qiskit documentation retrieval and search",
+        "url": "https://pypi.org/project/qiskit-docs-mcp-server/",
+        "source": "Pypi.org",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T16:49:41.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "3599d4fc2298ac80",
+        "title": "Crypto Long & Short: AI agents choosing denationalized money",
+        "summary": "In this week’s Crypto Long & Short Newsletter, Sylvia To on AI agents choosing denationalized money.",
+        "url": "https://www.coindesk.com/coindesk-indices/2026/03/11/crypto-long-and-short-ai-agents-choosing-denationalized-money",
+        "source": "CoinDesk",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T16:02:20.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "d9631ff85b7faa3d",
+        "title": "FreeWheel Launches AI Agent Infrastructure for Premium Video Ads, Pilots with PMG",
+        "summary": "FreeWheel, the leading global technology platform for the streaming advertising ecosystem, today (11th March, 2026) announced the launch of its new AI agent infrastructure, powered by FreeWheel’s Model Context Protocol (MCP) Server and a suite of Intelligence…",
+        "url": "https://www.exchangewire.com/blog/2026/03/11/freewheel-launches-ai-agent-infrastructure-for-premium-video-ads-pilots-with-pmg/",
+        "source": "ExchangeWire",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T15:44:14.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.579Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "7dfc4916fd39e49b",
+        "title": "Show HN: AI-assisted coding landscape without the hype",
+        "summary": "Article URL: https://danielball.com/notes/ai_assisted_coding.html\nComments URL: https://news.ycombinator.com/item?id=47144069\nPoints: 1\n# Comments: 1",
+        "url": "http://danielball.com/notes/ai_assisted_coding.html",
+        "source": "Danielball.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-02-24T22:16:27.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.578Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "ac22a05086f328c0",
+        "title": "Don't post generated/AI-edited comments. HN is for conversation between humans",
+        "summary": "HackerNews - Score: 4137, Comments: 1627",
+        "url": "https://news.ycombinator.com/newsguidelines.html#generated",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T19:29:29.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.829Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "892c8e8615cf14ef",
+        "title": "I was interviewed by an AI bot for a job",
+        "summary": "HackerNews - Score: 409, Comments: 455",
+        "url": "https://www.theverge.com/featured-video/892850/i-was-interviewed-by-an-ai-bot-for-a-job",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T18:17:30.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.830Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "321cce925affc860",
+        "title": "Temporal: The 9-year journey to fix time in JavaScript",
+        "summary": "HackerNews - Score: 770, Comments: 257",
+        "url": "https://bloomberg.github.io/js-blog/post/temporal/",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T15:35:50.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.829Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "79e3c34e3b554fb9",
+        "title": "Whistleblower claims ex-DOGE member says he took Social Security data to new job",
+        "summary": "HackerNews - Score: 619, Comments: 276",
+        "url": "https://www.washingtonpost.com/politics/2026/03/10/social-security-data-breach-doge-2/",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T13:52:01.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.830Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "d128c32cd97db44d",
+        "title": "The MacBook Neo",
+        "summary": "HackerNews - Score: 631, Comments: 1019",
+        "url": "https://daringfireball.net/2026/03/the_macbook_neo",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-11T11:37:24.000Z",
+        "fetchedAt": "2026-03-13T11:13:40.829Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      }
+    ],
+    "celebrity": [],
+    "crypto": [],
+    "business": [],
+    "tech_community": []
+  },
+  "celebrities": [
+    {
+      "id": "009750aefbce75d7",
+      "title": "How to watch Jensen Huang’s Nvidia GTC 2026 keynote",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/12/how-to-watch-jensen-huangs-nvidia-gtc-2026-keynote/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "celebrity",
+      "publishedAt": "2026-03-12T23:25:39.000Z",
+      "fetchedAt": "2026-03-13T11:13:39.805Z",
+      "reliability": 4,
+      "tags": [],
+      "speaker": "Jensen Huang"
+    }
+  ],
+  "economics": [
+    {
+      "id": "9205bcd7d10750de",
+      "title": "The Iran war is pushing up European energy prices. Here's why a Ukraine-style inflation shock could still be avoided",
+      "summary": "The Iran war has rattled global energy markets, but analysts say Europe can avoid a full-blown 2022-style supply crisis.",
+      "url": "https://www.cnbc.com/2026/03/12/iran-gas-oil-price-bills-europe-energy-ukraine-war-russia-shock-rise-inflation-interest-rates-crisis.html",
+      "source": "CNBC",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-12T06:10:11.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "61e0196c38b9ece9",
+      "title": "US Stock Market | Inflation stays cool, oil heats up: US markets brace for fallout from Iran tensions",
+      "summary": "America's inflation stayed steady in February. This was before conflicts involving Iran began. Now, oil prices are surging. This has revived worries about inflation increasing in the coming months. Food prices contributed significantly to the rise. Energy pri…",
+      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/us-stock-market-inflation-stays-cool-oil-heats-up-us-markets-brace-for-fallout-from-iran-tensions/articleshow/129491091.cms",
+      "source": "The Times of India",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-12T04:21:51.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "142326fda117eb45",
+      "title": "Trump’s War with Iran Is Even More of a Disaster than People Realize",
+      "summary": "Over the weekend, the US and Israeli governments attacked Iran. In the days since, both militaries have reportedly struck thousands of targets, and Iranian forces have retaliated by launching hundreds or even thousands of missiles and drones at Israel and at …",
+      "url": "https://www.activistpost.com/trumps-war-with-iran-is-even-more-of-a-disaster-than-people-realize/",
+      "source": "Activistpost.com",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-12T02:45:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "5158d0aa08056373",
+      "title": "World World GDP (current USD): 110982661180013.00",
+      "summary": "World Bank data - World GDP (current USD) for World (2024): 110982661180013.00",
+      "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.461Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "wld"
+      ],
+      "indicator": {
+        "name": "World GDP (current USD)",
+        "value": 110982661180013,
+        "unit": "",
+        "country": "WLD",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "f030645323df505c",
+      "title": "World Inflation (CPI %): 2.97",
+      "summary": "World Bank data - Inflation (CPI %) for World (2024): 2.97",
+      "url": "https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.461Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "wld"
+      ],
+      "indicator": {
+        "name": "Inflation (CPI %)",
+        "value": 2.97200477643618,
+        "unit": "",
+        "country": "WLD",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "b2f0a0176d71fd2d",
+      "title": "Japan GDP Growth Rate (%): 0.10",
+      "summary": "World Bank data - GDP Growth Rate (%) for Japan (2024): 0.10",
+      "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.461Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "jpn"
+      ],
+      "indicator": {
+        "name": "GDP Growth Rate (%)",
+        "value": 0.104309021773304,
+        "unit": "",
+        "country": "JPN",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "5bde36f2b911539a",
+      "title": "Japan Unemployment Rate (%): 2.45",
+      "summary": "World Bank data - Unemployment Rate (%) for Japan (2025): 2.45",
+      "url": "https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2025-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.461Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "jpn"
+      ],
+      "indicator": {
+        "name": "Unemployment Rate (%)",
+        "value": 2.451,
+        "unit": "",
+        "country": "JPN",
+        "date": "2025"
+      }
+    },
+    {
+      "id": "abcfc034325d7a68",
+      "title": "Oil Shock From Iran Conflict Complicates Fed's Rate Cut Plans",
+      "summary": "Rising oil prices tied to the Iran conflict are pushing investors to delay expectations of a Fed rate cut amid familiar inflation risks.",
+      "url": "https://www.investopedia.com/oil-shock-from-iran-conflict-complicates-fed-s-rate-cut-plans-11924361",
+      "source": "Investopedia",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T21:23:53.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "05acb939cf8f1bde",
+      "title": "Trump's war on Iran creates an economic storm for consumers and the Fed",
+      "summary": "Inflation held steady in February — but offered little clarity for Federal Reserve officials navigating an economic landscape altered by the Iran war.",
+      "url": "https://www.nbcnews.com/business/economy/trump-war-iran-consumers-federal-reserve-rcna262936",
+      "source": "NBC News",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T20:58:17.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "db8ae20b4238ff6c",
+      "title": "US consumer inflation unchanged but price shocks from Iran war loom",
+      "summary": "Economists warn war-driven oil spikes could push US inflation above 4% soon.",
+      "url": "https://www.nzherald.co.nz/business/us-consumer-inflation-unchanged-but-price-shocks-from-iran-war-loom/2KXIXKQ2FBG6NNWLEOZLL77ZXY/",
+      "source": "New Zealand Herald",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T20:55:15.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "1f8b60cb953e4160",
+      "title": "Most U.S. stocks fall as oil prices get back to rising",
+      "summary": "Since the start of the Iran war, sharp moves for oil prices have triggered swings up and down for financial markets worldwide, sometimes by the hour.",
+      "url": "https://www.pbs.org/newshour/world/most-u-s-stocks-fall-as-oil-prices-get-back-to-rising",
+      "source": "PBS",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T19:49:13.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "8cfe04cdf3e1baa3",
+      "title": "What could happen with mortgage interest rates this spring? Experts weigh in",
+      "summary": "Mortgage rates have fallen steadily, but could new developments change that trend this spring? Here's what to know.",
+      "url": "https://www.cbsnews.com/news/what-could-happen-with-mortgage-interest-rates-spring-2026-experts/",
+      "source": "CBS News",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T17:22:51.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "97adf66f63dd1a65",
+      "title": "CPI Report Update: U.S. Inflation Remains Steady at 2.4% in February 2026 CPI Report, Core Rate Holds at 2.5%",
+      "summary": "U.S. inflation showed no acceleration in February, with the headline Consumer Price Index holding firm at 2.4% annually while monthly gains ticked slightly higher amid persistent shelter costs and a rebound in energy prices, the Labor Department reported Wedn…",
+      "url": "https://www.ibtimes.com.au/cpi-report-update-us-inflation-remains-steady-24-february-2026-cpi-report-core-rate-holds-1863093",
+      "source": "Ibtimes.com.au",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T15:53:58.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "aa46d1b8385dd37b",
+      "title": "Inflation held steady last month before attack on Iran sent energy costs soaring",
+      "summary": "Wednesday's data has been overtaken by the conflict that began when the U.S. and Israel attacked Iran on Feb. 28, which has caused wild gyrations in oil prices as shipping lanes through the Persian Gulf have suffered a rare shutdown.",
+      "url": "https://www.pbs.org/newshour/economy/inflation-held-steady-last-month-before-attack-on-iran-sent-energy-costs-soaring",
+      "source": "PBS",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-11T15:04:58.000Z",
+      "fetchedAt": "2026-03-13T11:13:40.578Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "source": "Apify (Trending)",
+      "error": "Error: Apify run failed 401: {\n  \"error\": {\n    \"type\": \"user-or-token-not-found\",\n    \"message\": \"User was not found or authentication token is not valid\"\n  }\n}"
+    }
+  ],
+  "fetchedAt": "2026-03-13T11:13:41.757Z",
+  "totalCount": 121,
+  "durationMs": 2082
+}
