@@ -1,8 +1,12 @@
 {
-  "timestamp": "2026-03-20T08:27:33.964Z",
+  "timestamp": "2026-03-21T00:00:05.922Z",
   "autoMapped": [],
   "explicit": [
-    "settings"
+    "hooks",
+    "data",
+    "compact-metrics",
+    "model-recommendation",
+    "taisun_agent"
   ],
   "requiresSameWorkflow": false
 }
