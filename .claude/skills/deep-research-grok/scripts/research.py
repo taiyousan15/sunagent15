@@ -237,8 +237,9 @@ def research_section(
         "max_tokens": 2048,
         "temperature": 0.2,
     }
-    if use_search:
-        kwargs["tools"] = [{"type": "web_search"}]
+    # xAI live_search deprecated (410) — tools param removed
+    # if use_search:
+    #     kwargs["tools"] = [{"type": "web_search"}]
 
     response = client.chat.completions.create(**kwargs)
     content = extract_content(response)
@@ -282,7 +283,7 @@ def synthesize_report(
         messages=[{"role": "user", "content": prompt}],
         max_tokens=4096,
         temperature=0.3,
-        tools=[{"type": "web_search"}],
+        # tools=[{"type": "web_search"}],  # xAI live_search deprecated (410)
     )
 
     return extract_content(response)

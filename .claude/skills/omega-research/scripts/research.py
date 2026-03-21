@@ -407,7 +407,6 @@ def research_section(
         messages=[{"role": "user", "content": prompt}],
         max_tokens=2048,
         temperature=0.2,
-        tools=[{"type": "web_search"}],
     )
     content = extract_content(response)
 
@@ -465,7 +464,6 @@ def synthesize_report(
         messages=[{"role": "user", "content": prompt}],
         max_tokens=4096,
         temperature=0.3,
-        tools=[{"type": "web_search"}],
     )
     return extract_content(response)
 
