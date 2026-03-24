@@ -2,7 +2,10 @@
 #
 # 使い方 (PowerShell):
 #   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-#   .\scripts\install.ps1
+#   .\scripts\install.ps1                    # 標準インストール
+#   .\scripts\install.ps1 -Profile minimal   # 最小構成（coreのみ）
+#   .\scripts\install.ps1 -Profile full      # 全スキル
+#   .\scripts\install.ps1 -ListProfiles      # プロファイル一覧
 #
 # 必要なもの:
 #   - Windows 10/11
@@ -10,10 +13,41 @@
 #   - Claude Code (https://claude.ai/download)
 #   - PowerShell 5.1 以上
 
+param(
+    [string]$Profile = "standard",
+    [switch]$WithDocker,
+    [switch]$WithFigma,
+    [switch]$WithVoice,
+    [switch]$WithDeepResearch,
+    [switch]$ListProfiles
+)
+
 $ErrorActionPreference = "Stop"
 
 $REPO_DIR = Split-Path -Parent $PSScriptRoot
 $VERSION = (Get-Content "$REPO_DIR\package.json" | ConvertFrom-Json).version
+
+if ($ListProfiles) {
+    Write-Host ""
+    Write-Host "  利用可能なプロファイル:"
+    Write-Host ""
+    Write-Host "  minimal   — コアスキルのみ（約92個）"
+    Write-Host "              リサーチ・SDD・LP・コピーライティング・キーワード等"
+    Write-Host ""
+    Write-Host "  standard  — 標準構成（約113個）[デフォルト]"
+    Write-Host "              core + 動画制作 + X/SNS自動投稿"
+    Write-Host ""
+    Write-Host "  full      — 全スキル（約120個）"
+    Write-Host "              standard + Docker + Figma + 音声AI + ディープリサーチ拡張"
+    Write-Host ""
+    Write-Host "  追加オプション:"
+    Write-Host "    -WithDocker          Docker/コンテナ運用"
+    Write-Host "    -WithFigma           Figmaデザイン連携"
+    Write-Host "    -WithVoice           音声AI・TTS"
+    Write-Host "    -WithDeepResearch    ディープリサーチ拡張"
+    Write-Host ""
+    exit 0
+}
 
 # ─────────────────────────────────────────
 # 表示ヘルパー関数
@@ -175,7 +209,37 @@ Write-Host ""
 $TARGET_SKILLS = "$env:USERPROFILE\.claude\skills"
 $SOURCE_SKILLS = "$REPO_DIR\.claude\skills"
 
+# プロファイルに基づく許可リスト生成
+$PROFILE_FILE = "$REPO_DIR\scripts\skill-profiles.json"
+$ALLOWED_SKILLS = @()
+
+if (Test-Path $PROFILE_FILE) {
+    try {
+        $profileData = Get-Content $PROFILE_FILE -Raw | ConvertFrom-Json
+        $presetGroups = $profileData.presets.$Profile
+        if (-not $presetGroups) { $presetGroups = $profileData.presets.standard }
+
+        $extraProfiles = @()
+        if ($WithDocker) { $extraProfiles += "docker" }
+        if ($WithFigma) { $extraProfiles += "figma" }
+        if ($WithVoice) { $extraProfiles += "voice" }
+        if ($WithDeepResearch) { $extraProfiles += "deep-research" }
+
+        $activeGroups = @($presetGroups) + $extraProfiles | Select-Object -Unique
+        foreach ($group in $activeGroups) {
+            $groupObj = $profileData.profiles | Select-Object -ExpandProperty $group -ErrorAction SilentlyContinue
+            if ($groupObj) {
+                $ALLOWED_SKILLS += $groupObj.skills
+            }
+        }
+        $ALLOWED_SKILLS = $ALLOWED_SKILLS | Select-Object -Unique
+    } catch {
+        Write-Warn "プロファイル読み込みエラー: 全スキルをインストールします"
+    }
+}
+
 Write-Host "  スキルを設定しています..."
+Write-Host "  📋 プロファイル: $Profile"
 Write-Info "スキルの保存先: $TARGET_SKILLS"
 Write-Host "       （Claude Code が使うスキルが入るフォルダです）"
 Write-Host ""
@@ -188,6 +252,7 @@ if (-not (Test-Path $TARGET_SKILLS)) {
 $INSTALLED = 0
 $UPDATED = 0
 $SKIPPED = 0
+$PROFILE_SKIPPED = 0
 
 if (Test-Path $SOURCE_SKILLS) {
     Get-ChildItem -Path $SOURCE_SKILLS -Directory | ForEach-Object {
@@ -195,10 +260,16 @@ if (Test-Path $SOURCE_SKILLS) {
         $skillDir = $_.FullName
 
         # 内部ディレクトリをスキップ
-        if ($skillName -in @("_archived", "data")) { return }
+        if ($skillName -in @("_archived", "_guides", "data")) { return }
 
         # SKILL.md または CLAUDE.md があるものだけ
         if (-not (Test-Path "$skillDir\SKILL.md") -and -not (Test-Path "$skillDir\CLAUDE.md")) { return }
+
+        # プロファイルフィルタ
+        if ($ALLOWED_SKILLS.Count -gt 0 -and $skillName -notin $ALLOWED_SKILLS) {
+            $PROFILE_SKIPPED++
+            return
+        }
 
         $target = "$TARGET_SKILLS\$skillName"
 
@@ -218,6 +289,9 @@ if (Test-Path $SOURCE_SKILLS) {
 
     $total = (Get-ChildItem $TARGET_SKILLS -Directory -ErrorAction SilentlyContinue).Count
     Write-Ok "スキルを設定しました（新規: ${INSTALLED}件 / スキップ: ${SKIPPED}件 / 合計: ${total}件）"
+    if ($PROFILE_SKIPPED -gt 0) {
+        Write-Info "プロファイル外スキル: ${PROFILE_SKIPPED}件（-Profile full で全て登録可能）"
+    }
 } else {
     Write-Warn "スキルのソースフォルダが見つかりません: $SOURCE_SKILLS"
 }
@@ -376,6 +450,22 @@ try {
     Write-Warn "MCPのグローバル登録に失敗しました（後で手動設定もできます）"
 }
 
+# CodeGraph MCP パスをプロジェクト設定に自動書き換え
+$PROJ_SETTINGS = "$REPO_DIR\.claude\settings.json"
+$CODEGRAPH_BIN = "$REPO_DIR\tools\codebase-memory-mcp\codebase-memory-mcp"
+if ((Test-Path $PROJ_SETTINGS) -and (Test-Path $CODEGRAPH_BIN)) {
+    try {
+        $projSettings = Get-Content $PROJ_SETTINGS -Raw | ConvertFrom-Json
+        if ($projSettings.mcpServers -and $projSettings.mcpServers.'codebase-memory') {
+            $projSettings.mcpServers.'codebase-memory'.command = $CODEGRAPH_BIN
+            $projSettings | ConvertTo-Json -Depth 10 | Set-Content $PROJ_SETTINGS -Encoding UTF8
+            Write-Ok "CodeGraph MCP パスを自動設定しました"
+        }
+    } catch {
+        Write-Warn "CodeGraph MCP パス設定をスキップしました"
+    }
+}
+
 # ─────────────────────────────────────────
 # ステップ 5: 動作確認
 # ─────────────────────────────────────────
@@ -419,6 +509,11 @@ Write-Host ""
 Write-Host "  アップデートするには："
 Write-Host "    git pull origin main"
 Write-Host "    .\scripts\install.ps1"
+Write-Host ""
+Write-Host "  📋 スキル構成の変更："
+Write-Host "    .\scripts\install.ps1 -ListProfiles      # プロファイル一覧"
+Write-Host "    .\scripts\install.ps1 -Profile minimal    # 最小構成に変更"
+Write-Host "    .\scripts\install.ps1 -Profile full       # 全スキルに変更"
 Write-Host ""
 Write-Host "  ❓ 困ったときは："
 Write-Host "     npm run taisun:diagnose  → 問題の診断"

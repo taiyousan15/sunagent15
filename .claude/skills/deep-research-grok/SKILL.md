@@ -1,9 +1,11 @@
+effort: high
 ---
 name: deep-research-grok
 description: "Grok-4 Live Search を使った高精度ディープリサーチ。xAI のリアルタイムWeb検索で最新情報を収集し、多段階リサーチ+統合レポートを生成。市場調査・競合分析・技術調査に最適。"
 argument-hint: "[リサーチトピック] [--quick] [--output ./出力ディレクトリ]"
 allowed-tools: Read, Write, Bash(python3:*, pip:*)
 model: sonnet
+effort: high
 ---
 
 # Deep Research with Grok-4 Live Search

@@ -11,16 +11,17 @@
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
-> インストールするだけで 130スキル・96エージェント・190+コマンド が使えるようになります。
+> インストールするだけで 120+スキル・114エージェント・190+コマンド が使えるようになります。
 
 ---
 
 ## 📋 最新バージョン
 
-**v2.43.0** (2026-03-18) — BUG 5件修正・入口設計（早見表4枚）・承認モデル実装・taisun:version / taisun:support 新設
+**v2.44.0** (2026-03-25) — プロファイルインストール・Windows強化・CodeGraph統合・配布互換性修正
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.44.0 | 2026-03-25 | **プロファイルインストール**（minimal/standard/full）— install.sh + install.ps1 両対応 / **CodeGraph統合**（codebase-memory-mcp・自動インデックス・ROI計測）/ **配布互換性修正**（ハードコードパス5箇所→環境変数化）/ StopFailure自動記録Hook / effortフロントマター（コスト制御）/ MCP最適化（twitter-client・obsidian有効化、9個無効化）/ video-downloadスキル復活 / スキル114エージェント数更新 |
 | v2.43.0 | 2026-03-18 | BUG-001/004/005/006/007 全解消 / スキル早見表4枚（リサーチTier・taiyo-style・LP・SDD）追加 / `taisun:version` `taisun:support` コマンド新設 / 承認モデル実装（投稿系=警告・課金系=ブロック）/ Ollamaランタイムガード / プロファイル整合性チェック / gem-research・unified-research 命名修正 / research-system v2.4（QA Gate・61件URL・外部ファイル不要） |
 | v2.42.0 | 2026-03-17 | install.sh / update.sh / install.ps1 を全面日本語化（70歳でも使える初心者UX）/ フォルダ説明・エラー案内・完了後3ステップガイドを追加 / MCPプロファイル切替スキル（`/mcp-profile`）追加 / `npm run mcp:dev\|secure\|marketing\|status` コマンド追加 |
 | v2.41.0 | 2026-03-17 | README に everything-claude-code インストール・アップデート手順セクション追加 / MCP 29→21個に整理（不要5サーバー削除）/ proxy-mcp resilience 強化（リトライ5回・エラークラス分類）|
@@ -62,7 +63,18 @@ cd taisun_agent
 ./scripts/install.sh
 ```
 
-**完了の目安**: `Skills available: 100+` と `Agents available: 90+` が表示されれば成功
+**完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
+
+**プロファイル選択（オプション）**
+
+| コマンド | スキル数 | 内容 |
+|---------|---------|------|
+| `./scripts/install.sh` | 113個 | 標準構成（デフォルト） |
+| `./scripts/install.sh --profile minimal` | 92個 | コアのみ（リサーチ・SDD・LP・コピー） |
+| `./scripts/install.sh --profile full` | 120個 | 全スキル |
+| `./scripts/install.sh --list-profiles` | — | プロファイル一覧表示 |
+
+追加オプション: `--with-docker` `--with-figma` `--with-voice` `--with-deep-research`
 
 > **別フォルダにインストールしたい場合**（例: `/opt/taisun_agent` や `~/dev/taisun_agent`）
 >
@@ -120,7 +132,18 @@ cd taisun_agent
 .\scripts\install.ps1
 ```
 
-**完了の目安**: `Skills available: 100+` と `Agents available: 90+` が表示されれば成功
+**完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
+
+**プロファイル選択（オプション）**
+
+| コマンド | スキル数 | 内容 |
+|---------|---------|------|
+| `.\scripts\install.ps1` | 113個 | 標準構成（デフォルト） |
+| `.\scripts\install.ps1 -Profile minimal` | 92個 | コアのみ |
+| `.\scripts\install.ps1 -Profile full` | 120個 | 全スキル |
+| `.\scripts\install.ps1 -ListProfiles` | — | プロファイル一覧表示 |
+
+追加オプション: `-WithDocker` `-WithFigma` `-WithVoice` `-WithDeepResearch`
 
 **2. .env を設定**
 

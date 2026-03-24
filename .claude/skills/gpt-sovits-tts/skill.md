@@ -15,7 +15,7 @@ disable-model-invocation: true
 |------|------|
 | ツール | GPT-SoVITS v2 |
 | 開発元 | RVC-Boss |
-| インストール先 | `/Users/matsumototoshihiko/Desktop/semi/_/GPT-SoVITS` |
+| インストール先 | 環境変数 `GPT_SOVITS_DIR` で指定（デフォルト: `~/GPT-SoVITS`） |
 | 用途 | 音声クローニング、ナレーション生成 |
 
 ## 特徴
@@ -30,7 +30,7 @@ disable-model-invocation: true
 ### 1. 環境起動
 
 ```bash
-cd /Users/matsumototoshihiko/Desktop/semi/_/GPT-SoVITS
+cd "${GPT_SOVITS_DIR:-$HOME/GPT-SoVITS}"
 source venv/bin/activate
 
 # WebUI起動（ポート9874）
@@ -168,7 +168,7 @@ GPT-SoVITSで生成した音声を使って、Creatify Aurora APIでリップシ
 ### 使用方法
 
 ```bash
-cd /Users/matsumototoshihiko/Desktop/semi/_/GPT-SoVITS
+cd "${GPT_SOVITS_DIR:-$HOME/GPT-SoVITS}"
 source venv/bin/activate
 
 # リップシンク動画を生成

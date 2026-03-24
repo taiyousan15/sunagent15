@@ -51,9 +51,16 @@ Before starting work:
 ## Sub-Agent Context Protection (MANDATORY)
 
 ### Result Size Control (MUST)
-- **ALL** Task prompts MUST include `結果は500文字以内で要約して返してください`
+- **通常タスク**: `結果は500文字以内で要約して返してください`
+- **リサーチ・列挙タスク**: `事実・URL・数値を省略せず返してください。不要な修飾語のみ削減`
 - **ALL** research/analysis agents MUST use `run_in_background: true`
 - Read background agent output files selectively (use `offset`/`limit`)
+
+### Web Research Quality (MUST)
+- WebSearchで検索したら、**結果URLのうち最低3件はWebFetchで実際にページを開くこと**
+- 検索結果のスニペットだけでレポートを書くことは**禁止**
+- サブエージェントが「十分な情報が集まった」と自己判断して停止することは**禁止**。指示された件数・サイト数を全て完了すること
+- 列挙タスク（「N件調査」「全サイト巡回」）では、完了数を明示報告すること（例: 「14サイト中14サイト巡回完了」）
 
 ### Delegation Pattern (MUST)
 - 3+ parallel agents: `run_in_background: true` **REQUIRED** (violation = context exhaustion)
@@ -64,6 +71,45 @@ Before starting work:
 - **Before** launching 3+ parallel agents
 - **Immediately after** receiving large agent results (hook: task-overflow-guard)
 - Hook auto-suggests at dynamic intervals (compact-optimizer)
+
+## ECC（Everything Claude Code）スキル活用ルール
+
+### 自動適用するECCスキル
+| 場面 | 使用スキル |
+|------|-----------|
+| コードレビュー時 | coding-standards の基準を適用 |
+| 新機能実装時 | tdd-workflow に従いテストファースト |
+| 実装完了の判断時 | verification-loop で自動検証 |
+| セキュリティに関わるコード変更時 | cc-skill-security-review を適用 |
+| コンテキスト圧迫を検知した時 | strategic-compact の基準で判断 |
+
+### OpenCode（セカンドエンジン）
+- 通常時: 使わない（Claude Code + TAISUNで十分）
+- テストが通らないバグ: `/opencode-fix` で別視点の修正案を取得
+- TDDサイクル自動化: `/opencode-ralph-loop` を一時的に有効化（仕様が明確なタスクのみ）
+- Ralph Loopは既定OFF。使う時だけONにし、完了後は必ずOFFに戻す
+
+## CodeGraph（コードベース知識グラフ）
+
+### 概要
+codebase-memory-mcp がMCPサーバーとして登録済み。コード構造（関数/クラス/依存関係）を知識グラフ化し、query/search/impact分析が可能。
+
+### メモリ責務分離（MUST）
+| 保存データ | 保存先 | 理由 |
+|-----------|--------|------|
+| ユーザー情報・フィードバック | MEMORY.md（SSoT） | 人間が確認・編集可能 |
+| プロジェクトルール | MEMORY.md | バージョン管理でチーム共有 |
+| コード構造（関数/クラス/依存） | codebase-memory-mcp | 構造化データはDBが最適 |
+| コード検索インデックス | codebase-memory-mcp | ファイル変更時に自動更新 |
+
+### 矛盾時のルール
+- SSoT = MEMORY.md（最高優先度）
+- 矛盾はSESSION_HANDOFF.mdに記録してユーザーに確認
+
+### 活用方法
+- コード探索時: Grep/Readの前にcodebase-memoryのsearch_code/query_graphを優先使用
+- 変更影響分析: trace_call_path/detect_changesで事前確認
+- アーキテクチャ把握: get_architectureで全体像を即取得
 
 ## Self-Improvement Loop
 

@@ -1,12 +1,74 @@
 #!/bin/bash
 # TAISUN Agent - インストールスクリプト
 #
-# 使い方: ./scripts/install.sh
+# 使い方:
+#   ./scripts/install.sh                    # 標準インストール（core + video + x-sns）
+#   ./scripts/install.sh --profile minimal  # 最小構成（coreのみ、約85スキル）
+#   ./scripts/install.sh --profile full     # 全スキル（約118スキル）
+#   ./scripts/install.sh --with-docker      # 標準 + Docker スキル追加
+#   ./scripts/install.sh --with-figma       # 標準 + Figma スキル追加
+#   ./scripts/install.sh --with-voice       # 標準 + 音声AI スキル追加
+#   ./scripts/install.sh --list-profiles    # プロファイル一覧を表示
 
 set -e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
+
+# ─────────────────────────────────────────
+# プロファイル引数の解析
+# ─────────────────────────────────────────
+SKILL_PROFILE="standard"
+EXTRA_PROFILES=()
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --profile)
+            SKILL_PROFILE="$2"
+            shift 2
+            ;;
+        --with-docker)
+            EXTRA_PROFILES+=("docker")
+            shift
+            ;;
+        --with-figma)
+            EXTRA_PROFILES+=("figma")
+            shift
+            ;;
+        --with-voice)
+            EXTRA_PROFILES+=("voice")
+            shift
+            ;;
+        --with-deep-research)
+            EXTRA_PROFILES+=("deep-research")
+            shift
+            ;;
+        --list-profiles)
+            echo ""
+            echo "  利用可能なプロファイル:"
+            echo ""
+            echo "  minimal   — コアスキルのみ（約92個）"
+            echo "              リサーチ・SDD・LP・コピーライティング・キーワード等"
+            echo ""
+            echo "  standard  — 標準構成（約113個）[デフォルト]"
+            echo "              core + 動画制作 + X/SNS自動投稿"
+            echo ""
+            echo "  full      — 全スキル（約120個）"
+            echo "              standard + Docker + Figma + 音声AI + ディープリサーチ拡張"
+            echo ""
+            echo "  追加オプション:"
+            echo "    --with-docker          Docker/コンテナ運用"
+            echo "    --with-figma           Figmaデザイン連携"
+            echo "    --with-voice           音声AI・TTS"
+            echo "    --with-deep-research   ディープリサーチ拡張"
+            echo ""
+            exit 0
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
 
 # ─────────────────────────────────────────
 # 表示ヘルパー
@@ -27,10 +89,12 @@ echo "║     TAISUN Agent v${VERSION} インストール          ║"
 echo "║     所要時間：約 3〜5 分                            ║"
 echo "╚══════════════════════════════════════════════════╝"
 echo ""
+echo "  プロファイル: ${SKILL_PROFILE}"
+echo ""
 echo "  このスクリプトが行うこと："
 echo "  1. 必要なソフトウェアの確認"
 echo "  2. 必要なファイルのダウンロード・準備"
-echo "  3. スキル・エージェントの登録"
+echo "  3. スキル・エージェントの登録（プロファイルに基づく）"
 echo "  4. 設定ファイルの作成"
 echo "  5. 動作確認"
 echo ""
@@ -148,6 +212,34 @@ echo ""
 echo "  スキルとは「Claude への命令テンプレート」です。"
 echo "  登録すると /リサーチ や /設計 などのコマンドが使えるようになります。"
 echo ""
+
+# プロファイルに基づく許可リスト生成
+PROFILE_FILE="$REPO_DIR/scripts/skill-profiles.json"
+ALLOWED_SKILLS=""
+
+if [ -f "$PROFILE_FILE" ] && command -v node &> /dev/null; then
+    ALLOWED_SKILLS=$(node -e "
+const fs = require('fs');
+const profiles = JSON.parse(fs.readFileSync('$PROFILE_FILE', 'utf8'));
+const preset = profiles.presets['$SKILL_PROFILE'] || profiles.presets['standard'];
+const extras = '${EXTRA_PROFILES[*]}'.split(' ').filter(Boolean);
+const activeGroups = [...new Set([...preset, ...extras])];
+const skills = new Set();
+for (const group of activeGroups) {
+    if (profiles.profiles[group]) {
+        profiles.profiles[group].skills.forEach(s => skills.add(s));
+    }
+}
+console.log([...skills].join('\n'));
+" 2>/dev/null)
+fi
+
+# プロファイル情報を表示
+echo "  📋 プロファイル: ${SKILL_PROFILE}"
+if [ ${#EXTRA_PROFILES[@]} -gt 0 ]; then
+    echo "     追加: ${EXTRA_PROFILES[*]}"
+fi
+echo ""
 echo "  🔗 ~/.claude/skills/ フォルダを作成・更新しています"
 echo "     ※ ~/.claude/ は Claude Code の設定フォルダです（システムが自動管理します）"
 echo ""
@@ -156,14 +248,23 @@ TARGET_SKILLS="$HOME/.claude/skills"
 SOURCE_SKILLS="$REPO_DIR/.claude/skills"
 mkdir -p "$TARGET_SKILLS"
 
-INSTALLED=0; UPDATED=0; SKIPPED=0
+INSTALLED=0; UPDATED=0; SKIPPED=0; PROFILE_SKIPPED=0
 
 if [ -d "$SOURCE_SKILLS" ]; then
     for skill_dir in "$SOURCE_SKILLS"/*/; do
         skill_name=$(basename "$skill_dir")
         [[ "$skill_name" == "_archived" ]] && continue
+        [[ "$skill_name" == "_guides" ]] && continue
         [[ "$skill_name" == "data" ]] && continue
         [[ ! -f "$skill_dir/SKILL.md" ]] && [[ ! -f "$skill_dir/CLAUDE.md" ]] && continue
+
+        # プロファイルフィルタ: 許可リストが空でない場合、リストにないスキルはスキップ
+        if [ -n "$ALLOWED_SKILLS" ]; then
+            if ! echo "$ALLOWED_SKILLS" | grep -qx "$skill_name"; then
+                ((PROFILE_SKIPPED++)) || true
+                continue
+            fi
+        fi
 
         target="$TARGET_SKILLS/$skill_name"
         if [ -d "$target" ] && [ ! -L "$target" ]; then rm -rf "$target"; fi
@@ -185,6 +286,9 @@ fi
 
 TOTAL_SKILLS=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
 ok "スキルを登録しました（新規: ${INSTALLED}件 / 更新: ${UPDATED}件 / 合計: ${TOTAL_SKILLS}件）"
+if [ "$PROFILE_SKIPPED" -gt 0 ]; then
+    info "プロファイル外スキル: ${PROFILE_SKIPPED}件（--profile full で全て登録可能）"
+fi
 
 echo ""
 echo "  🤖 ~/.claude/agents/ フォルダを作成・更新しています"
@@ -327,6 +431,21 @@ const count = Object.keys(settings.mcpServers).filter(k=>!k.startsWith('_')).len
 console.log('  ✅ ツールを ' + count + ' 個登録しました');
 " 2>/dev/null || warn "ツールの登録に問題がありました（後から手動で設定できます）"
 
+# CodeGraph MCP パスをプロジェクト設定に自動書き換え
+PROJ_SETTINGS="$REPO_DIR/.claude/settings.json"
+CODEGRAPH_BIN="$REPO_DIR/tools/codebase-memory-mcp/codebase-memory-mcp"
+if [ -f "$PROJ_SETTINGS" ] && [ -f "$CODEGRAPH_BIN" ]; then
+    node -e "
+const fs = require('fs');
+const s = JSON.parse(fs.readFileSync('$PROJ_SETTINGS', 'utf8'));
+if (s.mcpServers && s.mcpServers['codebase-memory']) {
+  s.mcpServers['codebase-memory'].command = '$CODEGRAPH_BIN';
+  fs.writeFileSync('$PROJ_SETTINGS', JSON.stringify(s, null, 2));
+  console.log('  ✅ CodeGraph MCP パスを自動設定しました');
+}
+" 2>/dev/null
+fi
+
 # ─────────────────────────────────────────
 # Step 5: 動作確認
 # ─────────────────────────────────────────
@@ -381,6 +500,11 @@ echo "     /help-expert   → 詳しい使い方を見る"
 echo ""
 echo "  🔄 アップデート方法："
 echo "     git pull origin main && npm run setup"
+echo ""
+echo "  📋 スキル構成の変更："
+echo "     ./scripts/install.sh --list-profiles    # プロファイル一覧"
+echo "     ./scripts/install.sh --profile minimal  # 最小構成に変更"
+echo "     ./scripts/install.sh --profile full     # 全スキルに変更"
 echo ""
 echo "  ❓ 困ったときは："
 echo "     npm run taisun:diagnose  → 問題の診断"

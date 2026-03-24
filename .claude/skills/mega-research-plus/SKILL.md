@@ -1,9 +1,11 @@
+effort: high
 ---
 name: mega-research-plus
 description: 8-source integrated research system
 argument-hint: "[トピック] [--mode=deep|quick|news|social|free]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python:*, node:*)
 model: opus
+effort: high
 ---
 
 # mega-research-plus - 最強統合リサーチシステム v2

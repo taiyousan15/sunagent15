@@ -1,9 +1,11 @@
+effort: high
 ---
 name: omega-research
 description: "最高精度統合リサーチ。Grok-4 Agent Tools Live Search + Exa セマンティック検索(精度81%/p95 1.4s) + Tavily + Brave + NewsAPI + intelligence-research(GIS 31ソース) + smolagents/HF InferenceClient(オープンモデル)を統合した最強スキル。market調査・競合分析・学術研究・技術調査・経済分析に対応。トリガー: 「最高精度リサーチ」「全力リサーチ」「omega-research」「完全調査」「最強リサーチ」「deep-research-grok」"
 argument-hint: "[トピック] [--mode=deep|grok|api|intel|quick|academic|smolagents]"
 allowed-tools: Read, Write, Bash(python3:*, pip:*, npx:*, cd:*)
 model: opus
+effort: high
 ---
 
 # Omega Research - 最高精度統合リサーチシステム v2

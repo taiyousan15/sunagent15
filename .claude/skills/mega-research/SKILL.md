@@ -1,9 +1,11 @@
+effort: high
 ---
 name: mega-research
 description: 6-API integrated research system
 argument-hint: "[トピック] [--mode=deep|quick|news|trend]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python:*, node:*)
 model: opus
+effort: high
 ---
 
 # mega-research - 最強統合リサーチシステム

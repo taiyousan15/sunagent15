@@ -1,3 +1,4 @@
+effort: high
 ---
 name: world-research
 description: Global SNS/academic cross-search
@@ -16,6 +17,7 @@ description: Global SNS/academic cross-search
          「論文検索」「学術リサーチ」「ペーパーサーチ」「最新研究」「アカデミックリサーチ」
          「暗号通貨リサーチ」「クリプトリサーチ」「仮想通貨調査」「DeFi調査」「オンチェーン分析」
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
+effort: high
 ---
 
 # World Research - 全世界総合リサーチシステム v2.0
@@ -134,6 +136,7 @@ allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 /world-research キーワード=multi-agent モード=ecosystem
 ```
 
+effort: high
 ---
 
 ## AIキーワードマスターリスト
@@ -212,6 +215,7 @@ allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 6. Arxivカテゴリ変換（例: LLM → cs.CL, cs.AI, cs.LG）
 ```
 
+effort: high
 ---
 
 ## Layer 1: 学術論文検索
@@ -265,6 +269,7 @@ https://arxiv.org/search/?query={keyword}&start=0&order=-announced_date_first
 | アライメント | `"alignment" OR "RLHF" OR "DPO" OR "constitutional AI"` |
 | 効率化 | `"quantization" OR "distillation" OR "pruning" OR "efficient"` |
 
+effort: high
 ---
 
 ### 1-2. Papers with Code
@@ -305,6 +310,7 @@ GET https://paperswithcode.com/api/v1/papers/?q={keyword}&has_code=true
 | Image Generation | `https://paperswithcode.com/task/image-generation` |
 | Object Detection | `https://paperswithcode.com/task/object-detection` |
 
+effort: high
 ---
 
 ### 1-3. OpenReview
@@ -338,6 +344,7 @@ https://openreview.net/group?id=NeurIPS.cc/2025/Conference
 GET https://api2.openreview.net/notes/search?query={keyword}&limit=25&offset=0
 ```
 
+effort: high
 ---
 
 ### 1-4. Google Scholar
@@ -377,6 +384,7 @@ https://scholar.google.com/scholar?q={keyword}+source:"{venue_name}"
 | Percy Liang | Stanford | Foundation Models (HELM), Benchmarks |
 | Denny Zhou | Google DeepMind | Reasoning, Chain-of-Thought |
 
+effort: high
 ---
 
 ### 1-5. Semantic Scholar
@@ -410,6 +418,7 @@ GET https://api.semanticscholar.org/recommendations/v1/papers/?positivePaperIds=
 - **Influential Citations**: 影響力の高い引用のみフィルタ
 - **Research Feeds**: パーソナライズドフィード
 
+effort: high
 ---
 
 ### 1-6. Connected Papers
@@ -436,6 +445,7 @@ https://www.connectedpapers.com/main/{arxiv_id}
 - サーベイ論文の発見
 - 見落としている重要論文の発見
 
+effort: high
 ---
 
 ### 1-7. DBLP
@@ -451,6 +461,7 @@ https://dblp.org/search?q={author_name}
 GET https://dblp.org/search/publ/api?q={keyword}&format=json&h=20
 ```
 
+effort: high
 ---
 
 ### 1-8. ACL Anthology
@@ -467,6 +478,7 @@ https://aclanthology.org/venues/emnlp/
 https://aclanthology.org/venues/naacl/
 ```
 
+effort: high
 ---
 
 ### 1-9. ResearchRabbit
@@ -478,6 +490,7 @@ https://aclanthology.org/venues/naacl/
 - 引用ネットワーク可視化
 - メールアラート設定
 
+effort: high
 ---
 
 ## Layer 2: ペーパーキュレーション・デイリートラッキング
@@ -502,6 +515,7 @@ https://huggingface.co/papers?q={keyword}
 - 論文ごとにデモ/モデル/データセットへの直リンク
 - Upvote数で注目度を把握
 
+effort: high
 ---
 
 ### 2-2. Daily AI Papers (GitHub)
@@ -512,6 +526,7 @@ https://huggingface.co/papers?q={keyword}
 - カテゴリ別整理
 - GitHub Starで人気度を追跡
 
+effort: high
 ---
 
 ### 2-3. @_akhaliq（AK）Twitter/X
@@ -531,6 +546,7 @@ from:_akhaliq "{keyword}" min_faves:50
 - デモ動画/GIF付きで直感的
 - HuggingFace Papers Pageの主要コントリビューター
 
+effort: high
 ---
 
 ### 2-4. Alpha Signal
@@ -541,6 +557,7 @@ from:_akhaliq "{keyword}" min_faves:50
 - 論文・リリース・ツールの統合フィード
 - メールニュースレター
 
+effort: high
 ---
 
 ### 2-5. ML News Aggregators
@@ -559,6 +576,7 @@ from:_akhaliq "{keyword}" min_faves:50
 | **Yannic Kilcher** | YouTube | 論文の詳細レビュー |
 | **AI Explained** | YouTube | AI技術の解説 |
 
+effort: high
 ---
 
 ### 2-6. X（Twitter）論文速報アカウント
@@ -638,6 +656,7 @@ from:_akhaliq "{keyword}" min_faves:50
 (from:coin_post OR from:bokujyuumai OR from:CryptoTimes_mag) "{keyword}" lang:ja since:{date}
 ```
 
+effort: high
 ---
 
 ## Layer 3: テックブログ・研究解説
@@ -659,6 +678,7 @@ from:_akhaliq "{keyword}" min_faves:50
 site:lilianweng.github.io {keyword}
 ```
 
+effort: high
 ---
 
 ### 3-2. Distill.pub
@@ -669,6 +689,7 @@ site:lilianweng.github.io {keyword}
 - Transformer, Attention, Feature Visualizationの名解説
 - 2021年以降更新停止だが、基礎理解に必須
 
+effort: high
 ---
 
 ### 3-3. The Gradient
@@ -679,6 +700,7 @@ site:lilianweng.github.io {keyword}
 - インタビュー・オピニオン
 - 学術とビジネスの橋渡し
 
+effort: high
 ---
 
 ### 3-4. Jay Alammar
@@ -693,6 +715,7 @@ site:lilianweng.github.io {keyword}
 | Word2Vec | "The Illustrated Word2Vec" |
 | Stable Diffusion | "The Illustrated Stable Diffusion" |
 
+effort: high
 ---
 
 ### 3-5. Andrej Karpathy
@@ -712,6 +735,7 @@ site:lilianweng.github.io {keyword}
 site:youtube.com "Andrej Karpathy" {keyword}
 ```
 
+effort: high
 ---
 
 ### 3-6. Sebastian Raschka
@@ -725,6 +749,7 @@ site:youtube.com "Andrej Karpathy" {keyword}
 | "Build a Large Language Model" | 書籍（LLM実装ガイド） |
 | ブログ | DL/ML研究の解説 |
 
+effort: high
 ---
 
 ### 3-7. Chip Huyen
@@ -737,6 +762,7 @@ site:youtube.com "Andrej Karpathy" {keyword}
 | LLMOps | LLMデプロイ・運用のベストプラクティス |
 | キャリア | ML/AI業界のキャリアガイド |
 
+effort: high
 ---
 
 ### 3-8. Eugene Yan
@@ -749,6 +775,7 @@ site:youtube.com "Andrej Karpathy" {keyword}
 | LLM応用 | LLMの産業応用パターン |
 | ML実務 | MLエンジニアリングの実践 |
 
+effort: high
 ---
 
 ### 3-9. その他の注目ブログ・リソース
@@ -766,6 +793,7 @@ site:youtube.com "Andrej Karpathy" {keyword}
 | **Cohere For AI** | `https://cohere.com/research` | Aya/Command-R研究 |
 | **AI2 Blog (Allen AI)** | `https://blog.allenai.org/` | OLMo/Tulu研究 |
 
+effort: high
 ---
 
 ## Layer 4: 実装エコシステム
@@ -802,6 +830,7 @@ https://github.com/huggingface/smolagents
 https://huggingface.co/spaces?search=smolagents&sort=trending
 ```
 
+effort: high
 ---
 
 ### 4-2. awesome-* リポジトリ
@@ -827,6 +856,7 @@ https://huggingface.co/spaces?search=smolagents&sort=trending
 https://github.com/search?q={keyword}+awesome&type=repositories&s=stars&o=desc
 ```
 
+effort: high
 ---
 
 ### 4-3. エージェントフレームワーク
@@ -859,6 +889,7 @@ https://github.com/trending?since=weekly&spoken_language_code=&language=python
 https://github.com/search?q=llm+agent&type=repositories&s=stars&o=desc
 ```
 
+effort: high
 ---
 
 ### 4-4. MLOps・インフラ
@@ -878,6 +909,7 @@ https://github.com/search?q=llm+agent&type=repositories&s=stars&o=desc
 | **Axolotl** | `https://github.com/OpenAccess-AI-Collective/axolotl` | LLMファインチューニング |
 | **LitGPT** | `https://github.com/Lightning-AI/litgpt` | GPT実装・訓練 |
 
+effort: high
 ---
 
 ### 4-5. 教育・コースリソース
@@ -894,6 +926,7 @@ https://github.com/search?q=llm+agent&type=repositories&s=stars&o=desc
 | **Hugging Face Course** | `https://huggingface.co/learn` | Transformers/NLP/RL |
 | **DeepLearning.AI** | `https://www.deeplearning.ai/` | Andrew Ngのコース群 |
 
+effort: high
 ---
 
 ## Layer 5: SNSプラットフォーム検索
@@ -932,6 +965,7 @@ https://github.com/search?q=llm+agent&type=repositories&s=stars&o=desc
 "paper" ("{keyword}" OR "LLM") min_faves:500 filter:links since:{date}
 ```
 
+effort: high
 ---
 
 ### 5-2. Reddit
@@ -987,6 +1021,7 @@ GET https://www.reddit.com/r/{subreddit}/search.json?q={keyword}&restrict_sr=1&s
 # ForumScout: https://forumscout.app/reddit-api
 ```
 
+effort: high
 ---
 
 ### 5-3. note.com（日本）
@@ -1004,6 +1039,7 @@ GET https://www.reddit.com/r/{subreddit}/search.json?q={keyword}&restrict_sr=1&s
 | タグ検索 | `GET https://note.com/api/v3/articles?tag={tag_name}&page=1` |
 | トレンド | `GET https://note.com/api/v3/trending/notes` |
 
+effort: high
 ---
 
 ### 5-4. YouTube
@@ -1051,6 +1087,7 @@ GET https://www.reddit.com/r/{subreddit}/search.json?q={keyword}&restrict_sr=1&s
 | **區塊鏈日報** | デイリーニュース | ~80K | ZH-TW |
 | **mr block (區塊先生)** | エアドロップ・DeFi | ~100K | ZH-TW |
 
+effort: high
 ---
 
 ### 5-5. Instagram / TikTok / Shorts
@@ -1063,6 +1100,7 @@ GET https://www.reddit.com/r/{subreddit}/search.json?q={keyword}&restrict_sr=1&s
 | **TikTok** | `#AI #AITools #ChatGPT #AIHack #TechTok #LearnOnTikTok #VibeCoding #AIAgent` |
 | **YouTube Shorts** | `#Shorts #AI #AITutorial #GenerativeAI #ClaudeCode` |
 
+effort: high
 ---
 
 ### 5-6. 中国SNS
@@ -1086,6 +1124,7 @@ https://api.tikhub.io/
 https://www.pulsemcp.com/servers/chenningling-xiaohongshu-search-comment
 ```
 
+effort: high
 ---
 
 ### 5-7. その他プラットフォーム
@@ -1103,6 +1142,7 @@ https://www.pulsemcp.com/servers/chenningling-xiaohongshu-search-comment
 | **Stack Overflow** | `https://stackoverflow.com/search?q=` | [llm], [langchain], [openai] |
 | **Product Hunt** | `https://www.producthunt.com/search?q=` | AI tools, AI agent |
 
+effort: high
 ---
 
 ## Layer 6: コミュニティ・フォーラム
@@ -1181,6 +1221,7 @@ https://stackoverflow.com/questions/tagged/huggingface-transformers
 https://stackoverflow.com/questions/tagged/pytorch
 ```
 
+effort: high
 ---
 
 ## 研究トラック別検索ガイド
@@ -1259,6 +1300,7 @@ https://arxiv.org/search/?query="vision+language+action"+OR+"VLA"&searchtype=all
 | `"AI safety"` | Anthropic Research, ARC |
 | `"interpretability"` | Mechanistic Interpretability |
 
+effort: high
 ---
 
 ## Layer 7: 暗号通貨オンチェーン分析プラットフォーム
@@ -1318,6 +1360,7 @@ https://app.nansen.ai/smart-money
 https://platform.arkhamintelligence.com/explorer
 ```
 
+effort: high
 ---
 
 ## Layer 8: 暗号通貨データAPI
@@ -1431,6 +1474,7 @@ GET https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=10
 GET https://api.whale-alert.io/v1/transactions?api_key={key}&min_value=500000
 ```
 
+effort: high
 ---
 
 ## Layer 9: 暗号通貨トレーディングツール
@@ -1470,6 +1514,7 @@ GET https://api.whale-alert.io/v1/transactions?api_key={key}&min_value=500000
 | **Koinly** | `https://koinly.io` | ポートフォリオ/税務 | 700+統合 |
 | **CoinLedger** | `https://coinledger.io` | ポートフォリオ/税務 | 800+ブロックチェーン |
 
+effort: high
 ---
 
 ## Layer 10: 暗号通貨ニュース・メディア
@@ -1531,6 +1576,7 @@ https://coinpost.jp/?s={keyword}
 https://www.coingecko.com/en/news?keyword={keyword}
 ```
 
+effort: high
 ---
 
 ## 暗号通貨研究トラック別検索ガイド
@@ -1574,6 +1620,7 @@ https://www.coingecko.com/en/news?keyword={keyword}
 | `"backtesting" cryptocurrency` | Freqtrade, Jesse |
 | `"CCXT" exchange API` | 100+取引所統合ライブラリ |
 
+effort: high
 ---
 
 ## 暗号通貨プラットフォーム別検索テンプレート
@@ -1716,6 +1763,7 @@ https://github.com/search?q=on-chain+analysis&type=repositories&s=stars
 https://github.com/search?q=MEV+bot&type=repositories&s=stars
 ```
 
+effort: high
 ---
 
 ## gpt-researcher 統合
@@ -2166,6 +2214,7 @@ API別の特徴活用:
 > - 4つの実行パターン → [統合実行パターン](#統合実行パターン)
 > **api-*モードは.envの5APIキーが必要**（下記「API強化リサーチ」セクション参照）
 
+effort: high
 ---
 
 ## API強化リサーチ（5API統合）
@@ -2313,6 +2362,7 @@ Step 5: 統合レポート出力
 5. **結果は複数ソースで確認された情報を優先**
 >>>>>>> 8677f4ae478c391e8e8c80004ceb6206a740cb87
 
+effort: high
 ---
 
 ## 実行テンプレート
@@ -2425,6 +2475,7 @@ Step 5: 統合レポート出力
 # - 研究者プロフィールレポート
 ```
 
+effort: high
 ---
 
 ## 出力形式
@@ -2440,12 +2491,14 @@ Step 5: 統合レポート出力
 **プラットフォーム数**: {platform_count}
 **モード**: {quick|standard|deep|academic|survey|ecosystem}
 
+effort: high
 ---
 
 ## エグゼクティブサマリー
 
 {3-5行の要約}
 
+effort: high
 ---
 
 ## 学術論文（Layer 1）
@@ -2458,6 +2511,7 @@ Step 5: 統合レポート出力
 ### 研究トレンド
 {research_trends}
 
+effort: high
 ---
 
 ## 注目キュレーション（Layer 2）
@@ -2468,6 +2522,7 @@ Step 5: 統合レポート出力
 ### 論文速報（@_akhaliq等）
 {paper_alerts}
 
+effort: high
 ---
 
 ## 技術解説（Layer 3）
@@ -2477,6 +2532,7 @@ Step 5: 統合レポート出力
 |--------|---------|-----|
 {blog_posts}
 
+effort: high
 ---
 
 ## 実装エコシステム（Layer 4）
@@ -2489,6 +2545,7 @@ Step 5: 統合レポート出力
 ### フレームワーク比較
 {framework_comparison}
 
+effort: high
 ---
 
 ## SNS動向（Layer 5）
@@ -2518,6 +2575,7 @@ Step 5: 統合レポート出力
 |----------------|-------------|---------------|-----|
 {top_chinese}
 
+effort: high
 ---
 
 ## コミュニティ動向（Layer 6）
@@ -2528,6 +2586,7 @@ Step 5: 統合レポート出力
 ### Discord / Slack
 {community_discussions}
 
+effort: high
 ---
 
 ## 研究トラック分析
@@ -2538,6 +2597,7 @@ Step 5: 統合レポート出力
 ### 引用グラフ（Connected Papers）
 {citation_graph}
 
+effort: high
 ---
 
 ## トレンド分析
@@ -2551,17 +2611,20 @@ Step 5: 統合レポート出力
 ### 時系列トレンド
 {timeline_trends}
 
+effort: high
 ---
 
 ## 引用・ソース
 {citations}
 
+effort: high
 ---
 
 ## 推奨アクション
 {recommended_actions}
 ```
 
+effort: high
 ---
 
 ## 暗号通貨注目研究者・開発者・学術機関
@@ -2625,6 +2688,7 @@ Step 5: 統合レポート出力
 | **CryptoMiso** | `https://www.cryptomiso.com` | GitHubコミット数ランキング |
 | **Token Terminal** | `https://tokenterminal.com` | コア開発者メトリクス |
 
+effort: high
 ---
 
 ## 制限事項

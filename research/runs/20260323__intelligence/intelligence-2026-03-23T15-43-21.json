@@ -1,0 +1,3877 @@
+{
+  "items": [
+    {
+      "id": "1682e10097d4a644",
+      "title": "The Download: animal welfare gets AGI-pilled, and the White House unveils its AI policy",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/23/1134509/the-download-animal-welfare-agi-pilled-white-house-unveils-ai-policy/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-23T12:17:33.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "d4e3e2927d1b8ce5",
+      "title": "The Bay Area’s animal welfare movement wants to recruit AI",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/23/1134491/the-bay-areas-animal-welfare-movement-wants-to-recruit-ai/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-23T09:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "d6535594db05ca1c",
+      "title": "NousResearch/hermes-agent",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        NousResearch /\n\n      hermes-agent  \n\n    \n      The agent that grows with you (+874 stars today)",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.213Z",
+      "fetchedAt": "2026-03-23T15:43:20.213Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "6bdfb64a7944951d",
+      "title": "jingyaogong/minimind",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        jingyaogong /\n\n      minimind  \n\n    \n      🚀🚀 「大模型」2小时完全从0训练26M的小参数GPT！🌏 Train a 26M-parameter GPT from scratch in just 2h! (+478 stars today)",
+      "url": "https://github.com/jingyaogong/minimind",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.213Z",
+      "fetchedAt": "2026-03-23T15:43:20.213Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "25d9ab9c39eee64f",
+      "title": "hsliuping/TradingAgents-CN",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        hsliuping /\n\n      TradingAgents-CN  \n\n    \n      基于多智能体LLM的中文金融交易框架 - TradingAgents中文增强版 (+672 stars today)",
+      "url": "https://github.com/hsliuping/TradingAgents-CN",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.213Z",
+      "fetchedAt": "2026-03-23T15:43:20.213Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "458d60870242c061",
+      "title": "sponsors/kepano",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        kepano /\n\n      obsidian-skills  \n\n    \n      Agent skills for Obsidian. Teach your agent to use Markdown, Bases, JSON Canvas, and use the CLI. (+367 stars today)",
+      "url": "https://github.com/sponsors/kepano",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.213Z",
+      "fetchedAt": "2026-03-23T15:43:20.213Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "2fac94120b8d428d",
+      "title": "sponsors/czlonkowski",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        czlonkowski /\n\n      n8n-mcp  \n\n    \n      A MCP for Claude Desktop / Claude Code / Windsurf / Cursor to build n8n workflows for you (+136 stars today)",
+      "url": "https://github.com/sponsors/czlonkowski",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.213Z",
+      "fetchedAt": "2026-03-23T15:43:20.213Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "f1cd130fbca1db19",
+      "title": "iptv-org/iptv",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        iptv-org /\n\n      iptv  \n\n    \n      Collection of publicly available IPTV channels from all over the world (+125 stars today)",
+      "url": "https://github.com/iptv-org/iptv",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.213Z",
+      "fetchedAt": "2026-03-23T15:43:20.213Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "ffc7bae770ac0d0c",
+      "title": "sponsors/hesreallyhim",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        hesreallyhim /\n\n      awesome-claude-code  \n\n    \n      A curated list of awesome skills, hooks, slash-commands, agent orchestrators, applications, and plugins for Claude Code by Anthropic (+413 stars today)",
+      "url": "https://github.com/sponsors/hesreallyhim",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.213Z",
+      "fetchedAt": "2026-03-23T15:43:20.213Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "1fc0cb9b0f7426fe",
+      "title": "sponsors/FujiwaraChoki",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        FujiwaraChoki /\n\n      MoneyPrinterV2  \n\n    \n      Automate the process of making money online. (+2902 stars today)",
+      "url": "https://github.com/sponsors/FujiwaraChoki",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.212Z",
+      "fetchedAt": "2026-03-23T15:43:20.212Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "3e72d1f627bd637e",
+      "title": "bytedance/deer-flow",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        bytedance /\n\n      deer-flow  \n\n    \n      An open-source SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours. (+3569 stars today)",
+      "url": "https://github.com/bytedance/deer-flow",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.212Z",
+      "fetchedAt": "2026-03-23T15:43:20.212Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "5064d59cb86d19fc",
+      "title": "Crosstalk-Solutions/project-nomad",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        Crosstalk-Solutions /\n\n      project-nomad  \n\n    \n      Project N.O.M.A.D, is a self-contained, offline survival computer packed with critical tools, knowledge, and AI to keep you informed and empowered—anytime, anywhere. (+4148 stars today)",
+      "url": "https://github.com/Crosstalk-Solutions/project-nomad",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.212Z",
+      "fetchedAt": "2026-03-23T15:43:20.212Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "f06b649dae81cf13",
+      "title": "vxcontrol/pentagi",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        vxcontrol /\n\n      pentagi  \n\n    \n      Fully autonomous AI Agents system capable of performing complex penetration testing tasks (+1307 stars today)",
+      "url": "https://github.com/vxcontrol/pentagi",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.212Z",
+      "fetchedAt": "2026-03-23T15:43:20.212Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "c7ea662c7fb4a748",
+      "title": "browser-use/browser-use",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        browser-use /\n\n      browser-use  \n\n    \n      🌐 Make websites accessible for AI agents. Automate tasks online with ease. (+1160 stars today)",
+      "url": "https://github.com/browser-use/browser-use",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.212Z",
+      "fetchedAt": "2026-03-23T15:43:20.212Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "41210d9dffc5a064",
+      "title": "TauricResearch/TradingAgents",
+      "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        TauricResearch /\n\n      TradingAgents  \n\n    \n      TradingAgents: Multi-Agents LLM Financial Trading Framework (+2521 stars today)",
+      "url": "https://github.com/TauricResearch/TradingAgents",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.212Z",
+      "fetchedAt": "2026-03-23T15:43:20.212Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "7fc4efeb9e1efe72",
+      "title": "sponsors/tinygrad",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        tinygrad /\n\n      tinygrad  \n\n    \n      You like pytorch? You like micrograd? You love tinygrad! ❤️ (+58 stars today)",
+      "url": "https://github.com/sponsors/tinygrad",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.212Z",
+      "fetchedAt": "2026-03-23T15:43:20.212Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "28040e995e9c3aad",
+      "title": "sponsors/affaan-m",
+      "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        affaan-m /\n\n      everything-claude-code  \n\n    \n      The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond. (+4453 stars today)",
+      "url": "https://github.com/sponsors/affaan-m",
+      "source": "GitHub Trending",
+      "sourceType": "scraper",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:43:20.212Z",
+      "fetchedAt": "2026-03-23T15:43:20.212Z",
+      "reliability": 4,
+      "tags": [
+        "github",
+        "trending",
+        "oss"
+      ]
+    },
+    {
+      "id": "86056afdd18f2939",
+      "title": "Amazon hasn&#x2019;t been this cheap since 2008. Here&#x2019;s how the stock could rally 46% from here.",
+      "summary": "Amazon&#x2019;s $200 billion AI spending plans have weighed on the stock, overshadowing robust cloud and retail growth, Jefferies argues.",
+      "url": "https://www.marketwatch.com/story/amazon-hasnt-been-this-cheap-since-2008-heres-how-the-stock-could-rally-46-from-here-78daf054?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T15:27:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "1088f70167f457c8",
+      "title": "Drivers paying nearly $4 a gallon for gas see hope in oil prices&#x2019; fall",
+      "summary": "Gasoline prices were close to $1 a gallon higher than a month ago.",
+      "url": "https://www.marketwatch.com/story/drivers-paying-nearly-4-a-gallon-for-gas-see-hope-in-oil-prices-fall-9f06b196?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T15:27:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "1ccf7740529a1b43",
+      "title": "Elizabeth Warren calls Pentagon&#8217;s decision to bar Anthropic &#8216;retaliation&#8217;",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/23/elizabeth-warren-anthropic-pentagon-defense-supply-chain-risk-retaliation/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-23T15:22:57.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "699a5ae49a90de43",
+      "title": "Did Trump just pull a &#x2018;TACO&#x2019; on Iran? Why markets will remain volatile, even if investors see some relief from the selling this week.",
+      "summary": "The Dow was up about 1,000 points, or 2.2%, early Monday after President Trump  gave markets a reason to hope for a de-escalation of the Iran conflict.",
+      "url": "https://www.marketwatch.com/story/did-trump-just-pull-a-taco-on-iran-why-markets-will-remain-volatile-even-if-investors-see-some-relief-from-the-selling-this-week-50312b6f?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T15:17:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "69f4c570773ff420",
+      "title": "Sam Altman-backed fusion startup Helion in talks with OpenAI",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/23/sam-altman-backed-fusion-startup-helion-in-talks-with-openai/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "celebrity",
+      "publishedAt": "2026-03-23T15:03:36.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": [],
+      "speaker": "Sam Altman"
+    },
+    {
+      "id": "cea513b69aaa9ced",
+      "title": "Americans are about to get a crash course in the global economy: Higher prices are coming for pineapples, plastic, chocolate and berries",
+      "summary": "Rising costs for fertilizer, feed, packaging and shipping are going to seep into the prices that people see on grocery shelves, experts say.",
+      "url": "https://www.marketwatch.com/story/americans-are-about-to-get-a-crash-course-in-the-global-economy-higher-prices-are-coming-for-pineapples-plastic-chocolate-and-berries-0be67162?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T14:19:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "edf2c97f0e7eb9e6",
+      "title": "&#x2018;My careful planning was derailed&#x2019;: I can&#x2019;t rollover my $800,000 401(k) from my prior employer. What did I do wrong?",
+      "summary": "&#x201c;While I recognize this is a first-world problem &#x2014; a high earner, still working at 73, fretting over less than $10,000 in taxes &#x2014; I am frustrated.&#x201d;",
+      "url": "https://www.marketwatch.com/story/this-is-a-first-world-problem-im-72-my-company-wont-accept-my-800-000-401-k-rollover-what-now-93c5eb20?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T14:15:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "b6ad87acc3671f8b",
+      "title": "Why gold&#x2019;s plunge into a bear market is a good signal for stocks, according to Morgan Stanley",
+      "summary": "Bullion&#x2019;s rise in previous months shows investors were wary of geopolitics, suggests Morgan Stanley strategist Mike Wilson.",
+      "url": "https://www.marketwatch.com/story/why-golds-plunge-into-a-bear-market-is-a-good-signal-for-stocks-according-to-morgan-stanley-bacf5d35?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T14:08:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "ce72d64aa0082fc1",
+      "title": "Global oil prices fall 10% to $100 a barrel after Trump says he&#x2019;s postponing attacks on Iran power plants following &#x2018;productive conversations&#x2019; with Tehran to end the war",
+      "summary": "Oil prices fell sharply on Monday after President Donald Trump said the U.S. and Iran had &#x201c;very good and productive conversations&#x201d; in the past two days.",
+      "url": "https://www.marketwatch.com/story/oil-climbs-after-trump-issues-iran-48-hour-ultimatum-e1e0f002?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T13:58:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "fba856f965b42943",
+      "title": "Pfizer and French partner to seek approval for Lyme disease vaccine after late-stage trial",
+      "summary": "Pharmaceutical giant Pfizer and French partner Valneva on Monday said they planned to seek regulatory approval for a Lyme disease vaccine after a late-stage trial.",
+      "url": "https://www.marketwatch.com/story/pfizer-and-french-partner-to-seek-approval-for-lyme-disease-vaccine-after-late-stage-trial-c05adf3f?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T13:45:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "8a5d7390bde28087",
+      "title": "Stocks are teetering on the edge of correction territory. Why the &#x2018;TACO trade&#x2019; could flop.",
+      "summary": "The once-reliable trade on Wall Street, that President Trump &#x201c;always chickens out,&#x201d; could be torpedoed by the Iran conflict.",
+      "url": "https://www.marketwatch.com/story/stocks-are-teetering-on-the-edge-of-correction-territory-why-the-taco-trade-could-flop-e1010039?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T12:25:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "bb176f8f9d61ecac",
+      "title": "Why oil had been nearing peak even before Trump statement on Iran, according to top economists",
+      "summary": "Well-respected economists Krugman and Brooks believe we are near to the peak in oil prices because demand destruction takes place if it goes much higher",
+      "url": "https://www.marketwatch.com/story/why-oil-had-been-nearing-peak-even-before-trump-statement-on-iran-according-to-top-economists-abfb11ff?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "sourceType": "rss",
+      "category": "finance",
+      "publishedAt": "2026-03-23T11:44:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.449Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "d070eb7178880e5e",
+      "title": "初の“長考”できる国産フルスクラッチLLM「PLaMo 3.0 Prime」　Qwen3-235Bやgpt-oss-120bに肉薄　PFN",
+      "summary": "Preferred Networksが既存モデルを下敷きにせず、ゼロベースで構築した大規模言語モデル「PLaMo 3.0 Prime」のβ版をリリースした。中国産モデル「DeepSeek R-1」などの開発手法を参考に、同様の形で開発したモデルとしては国内で初めて、長考によってクオリティーの高い回答（reasoning）が可能な機能を搭載した。",
+      "url": "https://www.itmedia.co.jp/aiplus/articles/2603/23/news112.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-23T10:20:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.033Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "787eefd820870541",
+      "title": "東大とNECを「AI分野での産学協創協定締結」に突き動かしたものとは",
+      "summary": "東京大学とNECが「信頼できるAI」を目指して産学協創協定を締結した。強力なタッグだが、難しいテーマに向けて果たして世の中に大きなインパクトをもたらすことができるか。",
+      "url": "https://www.itmedia.co.jp/enterprise/articles/2603/23/news073.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-23T07:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.033Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "e79d60dcc6a5cf24",
+      "title": "[Boost]",
+      "summary": "<div class=\"ltag__link--embedded\">\n  <div class=\"crayons-story \">\n  <a href=\"https://dev.to/devtouserotved/the-ceos-autonomous-war-room-ai-corporate-espionage-with-notion-mcp-ddd-1e22\" class=\"crayons-story__hidden-navigation-link\">The CEO's Autonomous War Room: AI Corporate Espionage with Notion MCP",
+      "url": "https://dev.to/devtouserotved/-3dh7",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:39:01.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.846Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "8325e37391fc68b9",
+      "title": "The Complete Guide to Building Developer CLI Tools in 2026",
+      "summary": "<h1>\n  \n  \n  The Complete Guide to Building Developer CLI Tools in 2026\n</h1>\n\n<p>Command-line interfaces aren't relics of a bygone era. They're experiencing a renaissance. In 2026, CLI tools sit at the intersection of AI integration, developer experience, and automation — three forces reshaping how",
+      "url": "https://dev.to/chengyixu/the-complete-guide-to-building-developer-cli-tools-in-2026-a96",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:38:15.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.846Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "eda74f263440ac69",
+      "title": "Chainguard Assemble 2026 and the Security Factory Mindset",
+      "summary": "<p>New York knows how to turn rough ground into something human-friendly. For example, <a href=\"http://www.lizchristygarden.us/?ref=blog.gitguardian.com\" rel=\"noopener noreferrer\">the Liz Christy Garden</a> began in 1973 as the city's first community garden, carved out of an overgrown vacant lot on ",
+      "url": "https://dev.to/gitguardian/chainguard-assemble-2026-and-the-security-factory-mindset-3ib1",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:37:55.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.846Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "980c1e4e2575d1af",
+      "title": "Building A Zero-Config Development Environment Scanner With Node.js",
+      "summary": "<h1>\n  \n  \n  Building A Zero-Config Development Environment Scanner With Node.js\n</h1>\n\n<p><strong>How to build a CLI tool that automatically detects every tool, runtime, and configuration in a developer's environment -- without any setup.</strong></p>\n\n<p>Every developer has been there: you clone a",
+      "url": "https://dev.to/chengyixu/building-a-zero-config-development-environment-scanner-with-nodejs-2hln",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:37:47.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.848Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "04be94a0935d4325",
+      "title": "The 5 LLM Architecture Patterns That Scale (And 2 That Do Not)",
+      "summary": "<p>After building LLM features for 18 months, here are the architecture patterns I have seen work at scale. And the two that consistently fail.</p>\n\n<h2>\n  \n  \n  Patterns That Scale\n</h2>\n\n<h3>\n  \n  \n  1. Prompt-as-a-Service\n</h3>\n\n\n\n<div class=\"highlight js-code-highlight\">\n<pre class=\"highlight pl",
+      "url": "https://dev.to/clawgenesis/the-5-llm-architecture-patterns-that-scale-and-2-that-do-not-33j0",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:37:41.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.848Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "316c4b12b030b8c3",
+      "title": "Building a GraphQL Explorer CLI — Query Any API from Your Terminal",
+      "summary": "<h1>\n  \n  \n  Building a GraphQL Explorer CLI — Query Any API from Your Terminal\n</h1>\n\n<p>Testing GraphQL APIs shouldn't require firing up a browser. GraphQL Playground, Insomnia, and Altair are excellent tools, but they pull you out of your terminal workflow. If you're already SSH'd into a server, ",
+      "url": "https://dev.to/chengyixu/building-a-graphql-explorer-cli-query-any-api-from-your-terminal-5f9n",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:37:40.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.849Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "41972b2de75d1d3a",
+      "title": "I Built a £500/mo Side Project Using Only Free AI Tools (Here's What Actually Worked)",
+      "summary": "<p>Six months ago I built a SaaS tool using only free AI tools. No paid APIs, no expensive infrastructure. Here's what I learned about what actually works.</p>\n\n<h2>\n  \n  \n  The Project\n</h2>\n\n<p>An LLM monitoring tool. Drift detection, cost tracking, alerting. The stack:</p>\n\n<ul>\n<li>\n<strong>Fron",
+      "url": "https://dev.to/clawgenesis/i-built-a-ps500mo-side-project-using-only-free-ai-tools-heres-what-actually-worked-10k8",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:37:38.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.850Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "4bb2b0c1bebf8211",
+      "title": "What If You Could Replay Production Bugs Locally?",
+      "summary": "<p>Debugging production bugs is still… guesswork.</p>\n\n<p>You look at logs.<br>\nYou try to reproduce the issue locally.<br>\nYou add more logs.<br>\nYou redeploy.</p>\n\n<p>And hope the bug shows up again.</p>\n\n<p>⸻</p>\n\n<p>The problem</p>\n\n<p>We’ve accepted a broken workflow:</p>\n\n<p>• Logs don’t show ",
+      "url": "https://dev.to/shashisrun/what-if-you-could-replay-production-bugs-locally-34mj",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:37:10.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.850Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "cc5cf754c777f8e0",
+      "title": "Automating Code Reviews with AST Parsing in Node.js",
+      "summary": "<h1>\n  \n  \n  Automating Code Reviews with AST Parsing in Node.js\n</h1>\n\n<p>Code reviews catch bugs, enforce conventions, and keep codebases healthy. But humans are inconsistent. We miss things on Friday afternoons. We forget which patterns were deprecated last sprint. We overlook a <code>console.log",
+      "url": "https://dev.to/chengyixu/automating-code-reviews-with-ast-parsing-in-nodejs-eok",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:37:06.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.851Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "3ab4d4569cc726f7",
+      "title": "🚀 Local AI in 2026: My Journey Through the Desert (From Terminal to GPU)",
+      "summary": "<blockquote>\n<p><em><strong>Disclaimer &amp; Context:</strong> This article is based on my personal experience using a MacBook Pro M1 Pro with 32GB of RAM and VS Code. While I use Claude as the primary reference for Cloud AI (given its current leadership in coding tasks), the same logic applies to o",
+      "url": "https://dev.to/quentin_merle/local-ai-in-2026-my-journey-through-the-desert-from-terminal-to-gpu-k35",
+      "source": "Dev.to Trending",
+      "sourceType": "rss",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T15:37:05.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.851Z",
+      "reliability": 3,
+      "tags": []
+    },
+    {
+      "id": "b6485250d526eae5",
+      "title": "チャッピーは「笑ゥせぇるすまん」？　米国チームが“AIへの悩み相談”に警告　イエスマン化に懸念",
+      "summary": "米スタンフォード大学や米カーネギーメロン大学に所属する研究者らは、AIがユーザーに過剰に同調して機嫌をとるイエスマン化のまん延と、それが人間に与える悪影響を実証した研究報告を発表した。",
+      "url": "https://www.itmedia.co.jp/aiplus/articles/2603/23/news035.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-23T03:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.033Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "df5cb9a25464839a",
+      "title": "「鳥貴族」のノウハウ、大倉社長のAIアバターが伝授　DXで個別におすすめメニュー提案",
+      "summary": "居酒屋チェーン「鳥貴族」を展開するエターナルホスピタリティグループが、AIや顧客データを活用して事業変革を図るDX（デジタルトランスフォーメーション）戦略を発表した。",
+      "url": "https://www.itmedia.co.jp/news/articles/2603/23/news060.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-23T01:33:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.033Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "4d98623e2df37cdc",
+      "title": "AIエージェントが図面を読み取り3D化、寸法精度を確保するWebアプリ",
+      "summary": "renueは、2D図面から3Dモデルを生成する、Webアプリケーション「Drawing Agent」を開発した。AIエージェントが寸法や形状を読み取ることで、製造業に必要な寸法精度を確保する。",
+      "url": "https://monoist.itmedia.co.jp/mn/articles/2603/23/news021.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-23T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.033Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "bceed92df62aed64",
+      "title": "「罰を与えるには銃を使え」──10代の凶悪犯罪に加担するAI、銃撃や爆破の計画に助言　海外団体が調査",
+      "summary": "カナダで起きた10代容疑者による銃を乱射して6人を殺害した事件で、容疑者は事前の計画や準備にChatGPTを利用していた。生成AIがそうした10代の犯行に簡単に「加担」してしまう現実は実験でも実証され、衝撃が広がっている。",
+      "url": "https://www.itmedia.co.jp/aiplus/articles/2603/23/news036.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T23:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.033Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "5a5ef6f87e80c845",
+      "title": "足りないデータは「世界モデル」が生成　産業用ロボット大手も採用するNVIDIAのフィジカルAI基盤",
+      "summary": "NVIDIAはフィジカルAI実用化を促進させる新技術群とデータ基盤を発表し、産業や医療分野での開発・検証効率化を図る。",
+      "url": "https://www.itmedia.co.jp/enterprise/articles/2603/23/news034.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T23:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.034Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "3799c104671f4fe9",
+      "title": "Migrating to the EU",
+      "summary": "HackerNews - Score: 555, Comments: 469",
+      "url": "https://rz01.org/eu-migration/",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-23T10:17:32.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "b2b54e9f72e9f165",
+      "title": "「2040年に売上40兆円」の勝ち筋は？　経産省が描く「AI・半導体・ロボット」三位一体の産業戦略",
+      "summary": "特集「AI革命、日本企業の勝ち筋」では、AIインフラを担う国内トップ企業や識者にインタビューし、AI経済圏における日本企業の展望を探っていく。1回目は概論として、生成AIも含めた半導体・デジタル産業戦略の政策立案を担う経済産業省商務情報政策局の担当者に、戦略の全体像と民間企業に期待される役割について聞いた。",
+      "url": "https://www.itmedia.co.jp/business/articles/2603/23/news024.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T22:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.034Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "73832c9f1d52d9b8",
+      "title": "マスク氏、次世代半導体工場「Terafab」発表　計算リソースは宇宙空間へ",
+      "summary": "イーロン・マスク氏は、次世代半導体工場「Terafab」の構想を発表した。テキサス州に建設予定の同施設は、2nmプロセスを採用し、ロジックからパッケージングまでを統合する。製造されたチップは人型ロボットや自動運転、AI衛星に活用され、将来的には計算リソースの大部分を宇宙へ配置する計画だ。",
+      "url": "https://www.itmedia.co.jp/news/articles/2603/23/news053.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "celebrity",
+      "publishedAt": "2026-03-22T21:25:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.034Z",
+      "reliability": 4,
+      "tags": [],
+      "speaker": "Elon Musk"
+    },
+    {
+      "id": "aeeb92d7d042150e",
+      "title": "VS Codeチームは週次リリースをどう実現したのか　AIエージェント活用で見えた6つのポイント",
+      "summary": "VS Codeが月次リリースから週次リリースへ移行するためにエージェントをどう活用しているのか。エージェントを使って開発する全ての人に参考になる内容だ。",
+      "url": "https://atmarkit.itmedia.co.jp/ait/articles/2603/23/news022.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T20:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.034Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "5ddb1adf4ffdd3b1",
+      "title": "Do you want to build a robot snowman?",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/22/do-you-want-to-build-a-robot-snowman/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T19:45:07.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "79cc2edceeaaade2",
+      "title": "Cursor admits its new coding model was built on top of Moonshot AI’s Kimi",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/22/cursor-admits-its-new-coding-model-was-built-on-top-of-moonshot-ais-kimi/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T18:41:09.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "57ca86da659ca83a",
+      "title": "Elon Musk unveils chip manufacturing plans for SpaceX and Tesla",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/22/elon-musk-unveils-chip-manufacturing-plans-for-spacex-and-tesla/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "celebrity",
+      "publishedAt": "2026-03-22T16:20:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": [],
+      "speaker": "Elon Musk"
+    },
+    {
+      "id": "8006203f7cffaf71",
+      "title": "hn-tech-signal-mcp added to PyPI",
+      "summary": "MCP server for tech & AI intelligence – aggregates HackerNews, arXiv, Lobste.rs and GitHub. No API key required.",
+      "url": "https://pypi.org/project/hn-tech-signal-mcp/",
+      "source": "Pypi.org",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T14:54:53.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "d463b6d5969dd1ad",
+      "title": "Delve accused of misleading customers with ‘fake compliance’",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/22/delve-accused-of-misleading-customers-with-fake-compliance/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T14:43:51.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "bdb8d1ded2078fd0",
+      "title": "Sunday Summary: War, Oil Blockades, Interest Rates — Oh My!",
+      "summary": "As of yesterday, the United States and Israel entered week four of their conflict with Iran — and there are a lot of nervous people watching and waiting. On a purely self-interested level, we have to wonder what a global shock like a war and the subsequent cl…",
+      "url": "http://commercialobserver.com/2026/03/sunday-summary-war-oil-blockades-interest-rates-oh-my/",
+      "source": "Commercial Observer",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-22T13:00:38.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "5b5ffd32e6a1846d",
+      "title": "An exclusive tour of Amazon&#8217;s Trainium lab, the chip that&#8217;s won over Anthropic, OpenAI, even Apple",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/22/an-exclusive-tour-of-amazons-trainium-lab-the-chip-thats-won-over-anthropic-openai-even-apple/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T12:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "92294844aeb11bf9",
+      "title": "MCP in .NET: How to Connect Your Applications to AI Using the Model Context Protocol",
+      "summary": "Unlock AI integration in .NET using MCP! This guide covers building MCP servers with C#, exposing tools, resources, and prompts for AI agents. Future-proof your apps!",
+      "url": "https://www.c-sharpcorner.com/article/mcp-in-net-how-to-connect-your-applications-to-ai-using-the-model-context-prot2/",
+      "source": "C-sharpcorner.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T11:09:13.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "f92d3bf0d5f8daa2",
+      "title": "From SEO And CRO To Agentic AI Optimization (AAIO): Why Your Website Needs To Speak To Machines via @sejournal, @slobodanmanic",
+      "summary": "Agentic browsers and commerce protocols are redefining how users interact with websites, and who actually completes transactions.\nThe post From SEO And CRO To Agentic AI Optimization (AAIO): Why Your Website Needs To Speak To Machines appeared first on Search…",
+      "url": "https://www.nohackspod.com/blog/seo-to-aaio",
+      "source": "Nohackspod.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T11:00:57.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "3fe54465629a8e8e",
+      "title": "GrapheneOS will remain usable by anyone without requiring personal information",
+      "summary": "HackerNews - Score: 539, Comments: 152",
+      "url": "https://grapheneos.social/@GrapheneOS/116261301913660830",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T21:14:11.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "b48a5f3f09535940",
+      "title": "genagent-core added to PyPI",
+      "summary": "A generic autonomous AI agent framework with two-tier architecture, CodeAct, and modular prompt system.",
+      "url": "https://pypi.org/project/genagent-core/",
+      "source": "Pypi.org",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T08:35:52.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "14fe946395ee2309",
+      "title": "Property stocks in S’pore fall while banks gain as higher-for-longer rates reshape market outlook",
+      "summary": "Property stocks fell this week as the US Federal Reserve signalled rates may stay higher for longer. Read more at straitstimes.com. Read more at straitstimes.com.",
+      "url": "https://www.straitstimes.com/business/companies-markets/property-stocks-in-spore-fall-while-banks-gain-as-higher-for-longer-rates-reshape-market-outlook",
+      "source": "The Straits Times",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-22T07:01:57.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "258dd93ec02cc4ef",
+      "title": "PC Gamer recommends RSS readers in a 37mb article that just keeps downloading",
+      "summary": "HackerNews - Score: 734, Comments: 341",
+      "url": "https://stuartbreckenridge.net/2026-03-19-pc-gamer-recommends-rss-readers-in-a-37mb-article/",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T18:23:40.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "08a86424f318c596",
+      "title": "Are AI tokens the new signing bonus or just a cost of doing business?",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/21/are-ai-tokens-the-new-signing-bonus-or-just-a-cost-of-doing-business/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-22T06:20:43.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "c8300353c9cd454d",
+      "title": "Developer’s Guide to AI Agent Protocols - Google Developers Blog",
+      "summary": "This blog post introduces a suite of six protocols, such as MCP and A2A, designed to eliminate custom integration code by standardizing how AI agents access data and communicate. Using a \"kitchen manager\" agent as a practical example, it demonstrates how thes…",
+      "url": "https://developers.googleblog.com/developers-guide-to-ai-agent-protocols/",
+      "source": "Googleblog.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T05:47:01.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "7b27bc71c27e7613",
+      "title": "The Download: OpenAI is building a fully automated researcher, and a psychedelic trial blind spot",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/20/1134448/the-download-openai-building-fully-automated-researcher-psychedelic-drug-trial/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-20T13:15:45.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "187c836dd274e84f",
+      "title": "OpenAI is throwing everything into building a fully automated researcher",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-20T11:57:16.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "73c51b8bee2f02c3",
+      "title": "Mind-altering substances are (still) falling short in clinical trials",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/20/1134419/psychedelics-overhyped-psilocybin-depression-placebo/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-20T09:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "8942d4fe912c7a06",
+      "title": "The Download: Quantum computing for health, and why the world doesn&#8217;t recycle more nuclear waste",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/19/1134413/the-download-quantum-computing-health-recycling-nuclear-waste/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-19T12:17:02.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "b5fe7c6adc3e1a49",
+      "title": "Can quantum computers now solve health care problems? We&#8217;ll soon find out.",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/19/1134409/a-5-million-prize-awaits-proof-that-quantum-computers-can-solve-health-care-problems/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-19T10:51:43.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "306a68d006edb24e",
+      "title": "Why the world doesn’t recycle more nuclear waste",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/19/1134399/nuclear-waste-reprocessing/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-19T10:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "6ee9f3cc0069e231",
+      "title": "The Download: The Pentagon&#8217;s new AI plans, and next-gen nuclear reactors",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/18/1134371/the-download-the-pentagons-new-ai-plans-and-next-gen-nuclear-reactors/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-18T12:38:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "990f6c07310c4612",
+      "title": "What do new nuclear reactors mean for waste?",
+      "summary": "",
+      "url": "https://www.technologyreview.com/2026/03/18/1134345/advanced-nuclear-reactors-waste/",
+      "source": "MIT Technology Review",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-18T09:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.318Z",
+      "reliability": 5,
+      "tags": []
+    },
+    {
+      "id": "5158d0aa08056373",
+      "title": "World World GDP (current USD): 110982661180013.00",
+      "summary": "World Bank data - World GDP (current USD) for World (2024): 110982661180013.00",
+      "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:21.054Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "wld"
+      ],
+      "indicator": {
+        "name": "World GDP (current USD)",
+        "value": 110982661180013,
+        "unit": "",
+        "country": "WLD",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "f030645323df505c",
+      "title": "World Inflation (CPI %): 2.97",
+      "summary": "World Bank data - Inflation (CPI %) for World (2024): 2.97",
+      "url": "https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:21.054Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "wld"
+      ],
+      "indicator": {
+        "name": "Inflation (CPI %)",
+        "value": 2.97200477643618,
+        "unit": "",
+        "country": "WLD",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "b2f0a0176d71fd2d",
+      "title": "Japan GDP Growth Rate (%): 0.10",
+      "summary": "World Bank data - GDP Growth Rate (%) for Japan (2024): 0.10",
+      "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:21.054Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "jpn"
+      ],
+      "indicator": {
+        "name": "GDP Growth Rate (%)",
+        "value": 0.104309021773304,
+        "unit": "",
+        "country": "JPN",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "5bde36f2b911539a",
+      "title": "Japan Unemployment Rate (%): 2.45",
+      "summary": "World Bank data - Unemployment Rate (%) for Japan (2025): 2.45",
+      "url": "https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2025-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:21.054Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "jpn"
+      ],
+      "indicator": {
+        "name": "Unemployment Rate (%)",
+        "value": 2.451,
+        "unit": "",
+        "country": "JPN",
+        "date": "2025"
+      }
+    },
+    {
+      "id": "067cef84d7383c28",
+      "title": "The future of version control",
+      "summary": "HackerNews - Score: 590, Comments: 334",
+      "url": "https://bramcohen.com/p/manyana",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T15:16:28.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "0121e5597edf2038",
+      "title": "Shockwave of war is rippling through the global economy",
+      "summary": "Global business surveys for March are expected to show a synchronized weakening across manufacturing and services, offering an initial glimpse of economic damage from the Middle East conflict. Central banks are responding to rising energy prices and inflation…",
+      "url": "https://economictimes.indiatimes.com/news/international/business/shockwave-of-war-is-rippling-through-the-global-economy/articleshow/129727176.cms",
+      "source": "The Times of India",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-22T01:12:32.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "2a5c1793a5092dce",
+      "title": "Project Nomad – Knowledge That Never Goes Offline",
+      "summary": "HackerNews - Score: 526, Comments: 191",
+      "url": "https://www.projectnomad.us",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T12:28:38.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "4629eca43cb7fc6b",
+      "title": "Show HN: ClawMem – Open-source agent memory with SOTA local GPU retrieval",
+      "summary": "So I've been building ClawMem, an open-source context engine that gives AI coding agents persistent memory across sessions. It works with Claude Code (hooks + MCP) and OpenClaw (ContextEngine plugin + REST API), and both can share the same SQLite vault, so yo…",
+      "url": "https://github.com/yoloshii/ClawMem",
+      "source": "Github.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T00:13:15.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "a98e121674010a58",
+      "title": "workos-jira-mcp-server added to PyPI",
+      "summary": "MCP server for Jira project management — create issues, search with JQL, manage workflows, and track sprints.",
+      "url": "https://pypi.org/project/workos-jira-mcp-server/",
+      "source": "Pypi.org",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-21T23:12:06.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "b00ec164112f2602",
+      "title": "workos-github-mcp-server added to PyPI",
+      "summary": "MCP server for GitHub operations — manage repos, issues, pull requests, commits, gists, and more.",
+      "url": "https://pypi.org/project/workos-github-mcp-server/",
+      "source": "Pypi.org",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-21T23:11:15.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "5a7e9aa8516fcf97",
+      "title": "Reports of code's death are greatly exaggerated",
+      "summary": "HackerNews - Score: 506, Comments: 356",
+      "url": "https://stevekrouse.com/precision",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T11:09:34.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "56beec0a2bf2b328",
+      "title": "Show HN: An MCP server that helps coding agents find the full change surface",
+      "summary": "Article URL: https://github.com/ftrou/Decodifier3.1\nComments URL: https://news.ycombinator.com/item?id=47471385\nPoints: 1\n# Comments: 0",
+      "url": "https://github.com/ftrou/Decodifier3.1",
+      "source": "Github.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-21T21:08:36.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "c85a3819a57cd3c3",
+      "title": "Hormuz Minesweeper – Are you tired of winning?",
+      "summary": "HackerNews - Score: 643, Comments: 432",
+      "url": "https://hormuz.pythonic.ninja/",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-22T09:00:37.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "349773c88b28ffe1",
+      "title": "Publisher pulls horror novel ‘Shy Girl’ over AI concerns",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/21/publisher-pulls-horror-novel-shy-girl-over-ai-concerns/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-21T19:30:27.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "78a2c4d23fcec892",
+      "title": "What is stagflation and what can we do about it?",
+      "summary": "As the Iran war dries up oil and gas supplies, should we prepare for stagflation?",
+      "url": "https://www.abc.net.au/news/2026-03-22/what-is-stagflation-and-what-can-we-do-about-it/106472996",
+      "source": "ABC News (AU)",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-21T19:14:40.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "405edfe2e0f91bba",
+      "title": "Show HN: Vessel Browser – An open-source browser built for AI agents, not humans",
+      "summary": "I'm Tyler - the solo operator of Quanta Intellect based in Portland, Oregon. I recently participated in Nous Research's Hermes Agent Hackathon, which is where this project was born.I've used agents extensively in my workflows for the better part of the last y…",
+      "url": "https://quantaintellect.com/",
+      "source": "Quantaintellect.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-21T19:02:57.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "83546b4a0f6e4797",
+      "title": "AI could reverse social media’s worst consequence",
+      "summary": "For more than four decades, technological progress has been undermining expert authority, democratizing public debate, and steering individuals toward ever-more bespoke conceptions of reality. In the mid-20th century, the high costs of television production —…",
+      "url": "https://www.vox.com/technology/483455/ai-social-media-misinformation",
+      "source": "Vox",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-21T18:28:30.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "e18b775bbada534b",
+      "title": "Why Wall Street wasn&#8217;t won over by Nvidia&#8217;s big conference",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/21/why-wall-street-wasnt-won-over-by-nvidias-big-conference/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "ai_news",
+      "publishedAt": "2026-03-21T16:28:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": []
+    },
+    {
+      "id": "844ca9596d38e941",
+      "title": "Google Begins Beta Testing Native Gemini Client For macOS",
+      "summary": "Google has reportedly begun the initial testing phase for a dedicated Gemini application for macOS. Currently, Mac users can only access Google’s generative AI through a web browser. This move aims to bring the service in line with competitors like OpenAI and…",
+      "url": "https://www.ubergizmo.com/2026/03/google-gemini-for-macos/",
+      "source": "Ubergizmo",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-21T15:00:52.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "d5d530a514ac57f0",
+      "title": "Women are avoiding the very technology that threatens them most, as expert warns of a ‘two-tiered AI economy’ approaching",
+      "summary": "Women are more skeptical of AI. Their hesitation will make AI safer, says Harvard researcher Mara Bolis.",
+      "url": "https://fortune.com/2026/03/21/ai-gender-gap-two-tier-economy-adoption-inequality/",
+      "source": "Fortune",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-21T09:13:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "226ec5607e26b904",
+      "title": "New MiniMax M2.7 proprietary AI model is 'self-evolving' and can perform 30-50% of reinforcement learning research workflow | VentureBeat",
+      "summary": "That makes M2.7 one of the most affordable frontier AI models to run in the world — only xAI's Grok 4.1 Fast is cheaper.",
+      "url": "https://venturebeat.com/technology/new-minimax-m2-7-proprietary-ai-model-is-self-evolving-and-can-perform-30-50",
+      "source": "VentureBeat",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-21T05:47:01.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "24a24e2661e4cc11",
+      "title": "OpenAI to launch ChatGPT superapp, ‘AI research intern’",
+      "summary": "OpenAI Group PBC plans to merge ChatGPT and two of its other services into a single “superapp.” The Wall Street Journal broke the news on Thursday. Today, MIT Technology Review reported that OpenAI is also working on an artificial intelligence tool designed t…",
+      "url": "https://siliconangle.com/2026/03/20/openai-launch-chatgpt-superapp-ai-research-intern/",
+      "source": "SiliconANGLE News",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-20T21:32:45.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "5aeff905dd62a00b",
+      "title": "Ask Paul: March 20 ⭐️",
+      "summary": "Happy Friday! We're on the cusp of spring; well, you are. It's always spring here in Mexico City.\nThe post Ask Paul: March 20 ⭐️ appeared first on Thurrott.com.",
+      "url": "https://www.thurrott.com/paul/334026/ask-paul-march-20-2",
+      "source": "Thurrott.com",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-20T17:32:44.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "acbc35089e3fefbb",
+      "title": "How AI Is Reshaping the Battlefield",
+      "summary": "Anthropic, the Pentagon, and the question of AI use in the military",
+      "url": "https://www.theatlantic.com/podcasts/2026/03/how-ai-is-reshaping-the-battlefield/686476/",
+      "source": "The Atlantic",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-20T17:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "dd437305a6f99ef6",
+      "title": "Russia to give itself sweeping powers to ban or restrict foreign AI tools",
+      "summary": "Russia is set to introduce new rules for artificial intelligence. Foreign AI tools may face bans or restrictions if they fail to comply. These regulations aim to protect citizens and promote domestic AI development. The new regime will likely come into effect…",
+      "url": "https://economictimes.indiatimes.com/tech/artificial-intelligence/russia-to-give-itself-sweeping-powers-to-ban-or-restrict-foreign-ai-tools/articleshow/129702520.cms",
+      "source": "The Times of India",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-20T13:54:17.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "485d50a0631eb989",
+      "title": "Comparing AI chips: GPU, ASIC, and NPU",
+      "summary": "This article breaks down the three main categories of AI chips—GPUs, ASICs, and NPUs—and compares the leading hardware defining the future of artificial intelligence. You might think of NVIDIA as the undisputed king of artificial intelligence hardware, but th…",
+      "url": "https://4sysops.com/archives/comparing-ai-chips-gpu-asic-and-npu/",
+      "source": "4sysops.com",
+      "sourceType": "api",
+      "category": "ai_news",
+      "publishedAt": "2026-03-20T12:26:44.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "0feee98f34002087",
+      "title": "Show HN: GAAI – One agent plans, one codes. A Markdown folder governs both",
+      "summary": "Turns AI coding tools into reliable software delivery systems. Drop a .gaai/ folder into any project — Discovery defines what to build, Delivery executes autonomously until criteria pass. Works wit...",
+      "url": "https://github.com/Fr-e-d/GAAI-framework",
+      "source": "Github.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-12T12:52:08.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "7dfc4916fd39e49b",
+      "title": "Show HN: AI-assisted coding landscape without the hype",
+      "summary": "Article URL: https://danielball.com/notes/ai_assisted_coding.html\nComments URL: https://news.ycombinator.com/item?id=47144069\nPoints: 1\n# Comments: 1",
+      "url": "http://danielball.com/notes/ai_assisted_coding.html",
+      "source": "Danielball.com",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-02-24T22:16:27.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "db6b5fe181acfa72",
+      "title": "The Iran war has already hit your gas budget. Here's what it's coming for next.",
+      "summary": "The U.S.-Iran war has begun cutting into discretionary spending, raising mortgage rates, battering stock markets and souring consumer sentiment.",
+      "url": "https://www.nbcnews.com/business/consumer/iran-war-mortgage-rates-stocks-gas-rcna264499",
+      "source": "NBC News",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-21T13:17:04.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "57d6de15651a70cb",
+      "title": "Gold Price Falls to One-Month Low Amid Shifting Federal Reserve Expectations",
+      "summary": "The price of gold declined to its lowest level in one month on Wednesday, pressured by a stronger U.S. dollar and shifting market expectations regarding the timing of potential interest rate cuts by the Federal Reserve. Spot gold fell by as much as 3% to $4,8…",
+      "url": "https://www.naturalnews.com/2026-03-21-gold-cost-falls-to-one-month-low.html",
+      "source": "Naturalnews.com",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-21T06:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "fb30b1de8f1c27e7",
+      "title": "High Oil Prices Knock Down Stocks And Erase Wall Street's Hopes For A Cut To Interest Rates",
+      "summary": "Another climb for oil prices shook stock markets, as hopes collapsed for a possible cut to interest rates this year by the Federal Reserve.",
+      "url": "https://www.huffpost.com/entry/financial-markets-oil-stocks_n_69bdd013e4b048411914ebfc",
+      "source": "HuffPost",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-20T22:56:48.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "2ff9d90159500a0d",
+      "title": "Oil Prices Depress Stocks, End Notion of Interest Rate Cuts",
+      "summary": "Another climb for oil prices shook stock markets on Friday, as hopes collapsed for a possible cut to interest rates this year by the Federal Reserve. The Dow fell 443.96 points, or 1%, to 45,577.47, ending the week down 2.1%. The S&P 500 fell 100.01...",
+      "url": "https://www.newser.com/story/385839/oil-prices-depress-stocks-end-notion-of-interest-rate-cuts.html",
+      "source": "Newser",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-20T20:49:13.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "3a7690e10dc5d7e3",
+      "title": "Traders pricing in TACO trade may be in for 'rude awakening' — Analyst",
+      "summary": "The disruption to oil markets caused by the war in the Middle East has not been fully priced in by investors, who forecast a quick end to the conflict.",
+      "url": "https://cointelegraph.com/news/traders-taco-trade-rude-awakening",
+      "source": "Cointelegraph",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-20T17:35:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "57861c26f42e02ae",
+      "title": "What Happens to Bitcoin if Bank of America's 'Three Conditions' for Fed Rate Hikes Hit?",
+      "summary": "Analysts acknowledged that Bitcoin would likely face pressure if the Fed hikes rates, but they highlighted the asset’s recent resilience.",
+      "url": "https://decrypt.co/361919/what-happens-bitcoin-bank-america-conditions-fed-rate-hikes-hit",
+      "source": "Decrypt",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-20T16:54:48.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "a59291419add9382",
+      "title": "Grayscale Files For HYPE ETF – Here’s What To Know",
+      "summary": "Prominent asset manager Grayscale has moved to launch a HYPE exchange-traded fund (ETF) following a recent application with the SEC. This development means Grayscale joins a list of growing asset managers with the intention to add an HYPE fund to their portfo…",
+      "url": "http://www.newsbtc.com/altcoin/grayscale-files-for-hype-etf-heres-what-to-know/",
+      "source": "newsBTC",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-21T07:00:15.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "a731fa919ee40126",
+      "title": "Citigroup Reportedly Lowers 2026 Bitcoin And Ethereum Targets, Cites Stalling Legislation",
+      "summary": "Citigroup (NYSE:C) has cut its targets for Bitcoin and Ethereum for this year, according to media reports. The investment bank reportedly expects Bitcoin and...",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/citigroup-reportedly-lowers-2026-bitcoin-194918720.html",
+      "source": "Yahoo Entertainment",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-20T19:49:18.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "23e31a91353fcdd3",
+      "title": "Following the Fed's Rate Decision, the S&P 500 and Dow Fall to New Closing Lows for 2026",
+      "summary": "The S&P 500 Index ($SPX ) (SPY ) and the Dow Jones Industrial Average ($DOWI ) (DIA ) both fell to new 2026 closing lows today. The S&P 500 dropped 1.36...",
+      "url": "https://www.barchart.com/story/news/822574/stocks-pressured-by-inflation-concerns-and-iran-war-jitters",
+      "source": "Barchart.com",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-18T15:20:17.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "da820c61257cbdbb",
+      "title": "From Tokenized Oil to Treasuries: CFOs Map the Real-World Asset Boom",
+      "summary": "Blockchains don’t take bank holidays. It is a core promise of blockchain finance that has persisted for years despite 24/7 crypto trading not finding much traction compared to traditional financial venues and platforms. But as oil futures began moving rapidly…",
+      "url": "https://www.pymnts.com/blockchain/2026/from-tokenized-oil-to-treasuries-cfos-map-the-real-world-asset-boom/",
+      "source": "pymnts.com",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-16T21:24:39.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "7cc850cad29cf94b",
+      "title": "Why is Dow Jones up by 0.32%, S&P 500 by 0.64% and Nasdaq by 1.06%, and will US stock market indexes stay up or go down again? Wall Street rise, biggest gainers, losers, analysts insights and market outlook explained. Here's what should investors do now",
+      "summary": "Why is Dow Jones up by 0.32%, S&P 500 by 0.64% and Nasdaq by 1.06%, and will US stock market indexes stay up or go down again? Wall Street opened higher as technology stocks gained and investors tracked the Middle East conflict, oil prices, Federal Reserve ou…",
+      "url": "https://economictimes.indiatimes.com/news/international/us/why-is-dow-jones-up-by-0-32-sp-500-by-0-64-and-nasdaq-by-1-06-and-will-us-stock-market-indexes-stay-up-or-go-down-again-wall-street-rise-biggest-gainers-losers-analysts-insights-and-market-outlook-explained-heres-what-should-investors-do-now/articleshow/129611625.cms",
+      "source": "The Times of India",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-16T14:01:56.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "20db9f49db7a9c3a",
+      "title": "Galaxy Digital (GLXY) Shares Surge 8% on Bitcoin Rally and Data Center Momentum",
+      "summary": "Galaxy Digital Inc. (Nasdaq: GLXY), the digital asset and infrastructure company led by Mike Novogratz, saw its shares climb sharply in recent trading, closing up 8.34% at $22.35 on March 13, 2026, amid a broader cryptocurrency market rebound and optimism aro…",
+      "url": "https://www.ibtimes.com.au/galaxy-digital-glxy-shares-surge-8-bitcoin-rally-data-center-momentum-1863426",
+      "source": "Ibtimes.com.au",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-15T17:17:26.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "1558dd21f6e61a96",
+      "title": "Bitcoin's early crash to $60,000 now looks like a warning for stocks",
+      "summary": "Bitcoin has once again acted as a leading indicator for risk assets, plunging sharply before the ongoing global stock market swoon.",
+      "url": "https://www.coindesk.com/markets/2026/03/13/bitcoin-crashed-first-now-stocks-follow-cementing-btc-s-lead-indicator-cred",
+      "source": "CoinDesk",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-13T07:24:03.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "f227a7ae0ed22a3b",
+      "title": "Bitcoin climbs the wall of worry amid escalating Iran war and stock market losses",
+      "summary": "BTC holds near $70,000 and outperforms major assets during Middle East tensions, even as derivatives data and fear indicators signal deep market pessimism.",
+      "url": "https://www.coindesk.com/markets/2026/03/12/bitcoin-climbs-the-wall-of-worry-amid-escalating-iran-war-and-stock-market-losses",
+      "source": "CoinDesk",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-12T10:51:33.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "16419b6fb54969d9",
+      "title": "Bitcoin steady near $70,000 as rising open interest hints at cautious, bearish positioning",
+      "summary": "Bitcoin traded around $69,800 as open interest rose to $102 billion, suggesting defensive, bearish bets while altcoins outperformed in a risk-off macro backdrop.",
+      "url": "https://www.coindesk.com/markets/2026/03/12/bitcoin-steady-near-usd70-000-as-rising-open-interest-hints-at-cautious-bearish-positioning",
+      "source": "CoinDesk",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-12T10:33:01.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "94b8949bdab50199",
+      "title": "Circle shares surge as Bernstein sees upside from stablecoin adoption",
+      "summary": "Circle stock has surged 49% in 2026 and doubled since February as Bernstein maintains a $190 price target, citing accelerating stablecoin adoption.",
+      "url": "https://cointelegraph.com/news/circle-stock-surges-bernstein-stablecoin-adoption",
+      "source": "Cointelegraph",
+      "sourceType": "api",
+      "category": "finance",
+      "publishedAt": "2026-03-10T21:13:08.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "be63104e78b7eab6",
+      "title": "Do Not Turn Child Protection into Internet Access Control",
+      "summary": "HackerNews - Score: 823, Comments: 440",
+      "url": "https://news.dyne.org/child-protection-is-not-access-control/",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-21T20:32:20.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "c2a7b264871be64c",
+      "title": "Tinybox – A powerful computer for deep learning",
+      "summary": "HackerNews - Score: 584, Comments: 341",
+      "url": "https://tinygrad.org/#tinybox",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-21T20:08:37.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    },
+    {
+      "id": "de207ed037045d07",
+      "title": "Some things just take time",
+      "summary": "HackerNews - Score: 827, Comments: 269",
+      "url": "https://lucumr.pocoo.org/2026/3/20/some-things-just-take-time/",
+      "source": "Hacker News",
+      "sourceType": "api",
+      "category": "dev_tools",
+      "publishedAt": "2026-03-21T14:46:56.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.491Z",
+      "reliability": 3,
+      "tags": [
+        "hackernews",
+        "tech"
+      ]
+    }
+  ],
+  "byCategory": {
+    "finance": [
+      {
+        "id": "86056afdd18f2939",
+        "title": "Amazon hasn&#x2019;t been this cheap since 2008. Here&#x2019;s how the stock could rally 46% from here.",
+        "summary": "Amazon&#x2019;s $200 billion AI spending plans have weighed on the stock, overshadowing robust cloud and retail growth, Jefferies argues.",
+        "url": "https://www.marketwatch.com/story/amazon-hasnt-been-this-cheap-since-2008-heres-how-the-stock-could-rally-46-from-here-78daf054?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T15:27:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "1088f70167f457c8",
+        "title": "Drivers paying nearly $4 a gallon for gas see hope in oil prices&#x2019; fall",
+        "summary": "Gasoline prices were close to $1 a gallon higher than a month ago.",
+        "url": "https://www.marketwatch.com/story/drivers-paying-nearly-4-a-gallon-for-gas-see-hope-in-oil-prices-fall-9f06b196?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T15:27:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "699a5ae49a90de43",
+        "title": "Did Trump just pull a &#x2018;TACO&#x2019; on Iran? Why markets will remain volatile, even if investors see some relief from the selling this week.",
+        "summary": "The Dow was up about 1,000 points, or 2.2%, early Monday after President Trump  gave markets a reason to hope for a de-escalation of the Iran conflict.",
+        "url": "https://www.marketwatch.com/story/did-trump-just-pull-a-taco-on-iran-why-markets-will-remain-volatile-even-if-investors-see-some-relief-from-the-selling-this-week-50312b6f?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T15:17:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "cea513b69aaa9ced",
+        "title": "Americans are about to get a crash course in the global economy: Higher prices are coming for pineapples, plastic, chocolate and berries",
+        "summary": "Rising costs for fertilizer, feed, packaging and shipping are going to seep into the prices that people see on grocery shelves, experts say.",
+        "url": "https://www.marketwatch.com/story/americans-are-about-to-get-a-crash-course-in-the-global-economy-higher-prices-are-coming-for-pineapples-plastic-chocolate-and-berries-0be67162?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T14:19:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "edf2c97f0e7eb9e6",
+        "title": "&#x2018;My careful planning was derailed&#x2019;: I can&#x2019;t rollover my $800,000 401(k) from my prior employer. What did I do wrong?",
+        "summary": "&#x201c;While I recognize this is a first-world problem &#x2014; a high earner, still working at 73, fretting over less than $10,000 in taxes &#x2014; I am frustrated.&#x201d;",
+        "url": "https://www.marketwatch.com/story/this-is-a-first-world-problem-im-72-my-company-wont-accept-my-800-000-401-k-rollover-what-now-93c5eb20?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T14:15:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "b6ad87acc3671f8b",
+        "title": "Why gold&#x2019;s plunge into a bear market is a good signal for stocks, according to Morgan Stanley",
+        "summary": "Bullion&#x2019;s rise in previous months shows investors were wary of geopolitics, suggests Morgan Stanley strategist Mike Wilson.",
+        "url": "https://www.marketwatch.com/story/why-golds-plunge-into-a-bear-market-is-a-good-signal-for-stocks-according-to-morgan-stanley-bacf5d35?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T14:08:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "ce72d64aa0082fc1",
+        "title": "Global oil prices fall 10% to $100 a barrel after Trump says he&#x2019;s postponing attacks on Iran power plants following &#x2018;productive conversations&#x2019; with Tehran to end the war",
+        "summary": "Oil prices fell sharply on Monday after President Donald Trump said the U.S. and Iran had &#x201c;very good and productive conversations&#x201d; in the past two days.",
+        "url": "https://www.marketwatch.com/story/oil-climbs-after-trump-issues-iran-48-hour-ultimatum-e1e0f002?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T13:58:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "fba856f965b42943",
+        "title": "Pfizer and French partner to seek approval for Lyme disease vaccine after late-stage trial",
+        "summary": "Pharmaceutical giant Pfizer and French partner Valneva on Monday said they planned to seek regulatory approval for a Lyme disease vaccine after a late-stage trial.",
+        "url": "https://www.marketwatch.com/story/pfizer-and-french-partner-to-seek-approval-for-lyme-disease-vaccine-after-late-stage-trial-c05adf3f?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T13:45:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "8a5d7390bde28087",
+        "title": "Stocks are teetering on the edge of correction territory. Why the &#x2018;TACO trade&#x2019; could flop.",
+        "summary": "The once-reliable trade on Wall Street, that President Trump &#x201c;always chickens out,&#x201d; could be torpedoed by the Iran conflict.",
+        "url": "https://www.marketwatch.com/story/stocks-are-teetering-on-the-edge-of-correction-territory-why-the-taco-trade-could-flop-e1010039?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T12:25:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "bb176f8f9d61ecac",
+        "title": "Why oil had been nearing peak even before Trump statement on Iran, according to top economists",
+        "summary": "Well-respected economists Krugman and Brooks believe we are near to the peak in oil prices because demand destruction takes place if it goes much higher",
+        "url": "https://www.marketwatch.com/story/why-oil-had-been-nearing-peak-even-before-trump-statement-on-iran-according-to-top-economists-abfb11ff?mod=mw_rss_topstories",
+        "source": "MarketWatch",
+        "sourceType": "rss",
+        "category": "finance",
+        "publishedAt": "2026-03-23T11:44:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.449Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "a59291419add9382",
+        "title": "Grayscale Files For HYPE ETF – Here’s What To Know",
+        "summary": "Prominent asset manager Grayscale has moved to launch a HYPE exchange-traded fund (ETF) following a recent application with the SEC. This development means Grayscale joins a list of growing asset managers with the intention to add an HYPE fund to their portfo…",
+        "url": "http://www.newsbtc.com/altcoin/grayscale-files-for-hype-etf-heres-what-to-know/",
+        "source": "newsBTC",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-21T07:00:15.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "a731fa919ee40126",
+        "title": "Citigroup Reportedly Lowers 2026 Bitcoin And Ethereum Targets, Cites Stalling Legislation",
+        "summary": "Citigroup (NYSE:C) has cut its targets for Bitcoin and Ethereum for this year, according to media reports. The investment bank reportedly expects Bitcoin and...",
+        "url": "https://finance.yahoo.com/markets/crypto/articles/citigroup-reportedly-lowers-2026-bitcoin-194918720.html",
+        "source": "Yahoo Entertainment",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-20T19:49:18.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "23e31a91353fcdd3",
+        "title": "Following the Fed's Rate Decision, the S&P 500 and Dow Fall to New Closing Lows for 2026",
+        "summary": "The S&P 500 Index ($SPX ) (SPY ) and the Dow Jones Industrial Average ($DOWI ) (DIA ) both fell to new 2026 closing lows today. The S&P 500 dropped 1.36...",
+        "url": "https://www.barchart.com/story/news/822574/stocks-pressured-by-inflation-concerns-and-iran-war-jitters",
+        "source": "Barchart.com",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-18T15:20:17.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "da820c61257cbdbb",
+        "title": "From Tokenized Oil to Treasuries: CFOs Map the Real-World Asset Boom",
+        "summary": "Blockchains don’t take bank holidays. It is a core promise of blockchain finance that has persisted for years despite 24/7 crypto trading not finding much traction compared to traditional financial venues and platforms. But as oil futures began moving rapidly…",
+        "url": "https://www.pymnts.com/blockchain/2026/from-tokenized-oil-to-treasuries-cfos-map-the-real-world-asset-boom/",
+        "source": "pymnts.com",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-16T21:24:39.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "7cc850cad29cf94b",
+        "title": "Why is Dow Jones up by 0.32%, S&P 500 by 0.64% and Nasdaq by 1.06%, and will US stock market indexes stay up or go down again? Wall Street rise, biggest gainers, losers, analysts insights and market outlook explained. Here's what should investors do now",
+        "summary": "Why is Dow Jones up by 0.32%, S&P 500 by 0.64% and Nasdaq by 1.06%, and will US stock market indexes stay up or go down again? Wall Street opened higher as technology stocks gained and investors tracked the Middle East conflict, oil prices, Federal Reserve ou…",
+        "url": "https://economictimes.indiatimes.com/news/international/us/why-is-dow-jones-up-by-0-32-sp-500-by-0-64-and-nasdaq-by-1-06-and-will-us-stock-market-indexes-stay-up-or-go-down-again-wall-street-rise-biggest-gainers-losers-analysts-insights-and-market-outlook-explained-heres-what-should-investors-do-now/articleshow/129611625.cms",
+        "source": "The Times of India",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-16T14:01:56.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "20db9f49db7a9c3a",
+        "title": "Galaxy Digital (GLXY) Shares Surge 8% on Bitcoin Rally and Data Center Momentum",
+        "summary": "Galaxy Digital Inc. (Nasdaq: GLXY), the digital asset and infrastructure company led by Mike Novogratz, saw its shares climb sharply in recent trading, closing up 8.34% at $22.35 on March 13, 2026, amid a broader cryptocurrency market rebound and optimism aro…",
+        "url": "https://www.ibtimes.com.au/galaxy-digital-glxy-shares-surge-8-bitcoin-rally-data-center-momentum-1863426",
+        "source": "Ibtimes.com.au",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-15T17:17:26.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "1558dd21f6e61a96",
+        "title": "Bitcoin's early crash to $60,000 now looks like a warning for stocks",
+        "summary": "Bitcoin has once again acted as a leading indicator for risk assets, plunging sharply before the ongoing global stock market swoon.",
+        "url": "https://www.coindesk.com/markets/2026/03/13/bitcoin-crashed-first-now-stocks-follow-cementing-btc-s-lead-indicator-cred",
+        "source": "CoinDesk",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-13T07:24:03.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "f227a7ae0ed22a3b",
+        "title": "Bitcoin climbs the wall of worry amid escalating Iran war and stock market losses",
+        "summary": "BTC holds near $70,000 and outperforms major assets during Middle East tensions, even as derivatives data and fear indicators signal deep market pessimism.",
+        "url": "https://www.coindesk.com/markets/2026/03/12/bitcoin-climbs-the-wall-of-worry-amid-escalating-iran-war-and-stock-market-losses",
+        "source": "CoinDesk",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-12T10:51:33.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "16419b6fb54969d9",
+        "title": "Bitcoin steady near $70,000 as rising open interest hints at cautious, bearish positioning",
+        "summary": "Bitcoin traded around $69,800 as open interest rose to $102 billion, suggesting defensive, bearish bets while altcoins outperformed in a risk-off macro backdrop.",
+        "url": "https://www.coindesk.com/markets/2026/03/12/bitcoin-steady-near-usd70-000-as-rising-open-interest-hints-at-cautious-bearish-positioning",
+        "source": "CoinDesk",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-12T10:33:01.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "94b8949bdab50199",
+        "title": "Circle shares surge as Bernstein sees upside from stablecoin adoption",
+        "summary": "Circle stock has surged 49% in 2026 and doubled since February as Bernstein maintains a $190 price target, citing accelerating stablecoin adoption.",
+        "url": "https://cointelegraph.com/news/circle-stock-surges-bernstein-stablecoin-adoption",
+        "source": "Cointelegraph",
+        "sourceType": "api",
+        "category": "finance",
+        "publishedAt": "2026-03-10T21:13:08.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      }
+    ],
+    "economics": [
+      {
+        "id": "bdb8d1ded2078fd0",
+        "title": "Sunday Summary: War, Oil Blockades, Interest Rates — Oh My!",
+        "summary": "As of yesterday, the United States and Israel entered week four of their conflict with Iran — and there are a lot of nervous people watching and waiting. On a purely self-interested level, we have to wonder what a global shock like a war and the subsequent cl…",
+        "url": "http://commercialobserver.com/2026/03/sunday-summary-war-oil-blockades-interest-rates-oh-my/",
+        "source": "Commercial Observer",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-22T13:00:38.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "14fe946395ee2309",
+        "title": "Property stocks in S’pore fall while banks gain as higher-for-longer rates reshape market outlook",
+        "summary": "Property stocks fell this week as the US Federal Reserve signalled rates may stay higher for longer. Read more at straitstimes.com. Read more at straitstimes.com.",
+        "url": "https://www.straitstimes.com/business/companies-markets/property-stocks-in-spore-fall-while-banks-gain-as-higher-for-longer-rates-reshape-market-outlook",
+        "source": "The Straits Times",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-22T07:01:57.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "5158d0aa08056373",
+        "title": "World World GDP (current USD): 110982661180013.00",
+        "summary": "World Bank data - World GDP (current USD) for World (2024): 110982661180013.00",
+        "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD",
+        "source": "World Bank Open Data",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2024-01-01T00:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:21.054Z",
+        "reliability": 5,
+        "tags": [
+          "world-bank",
+          "economic-indicator",
+          "wld"
+        ],
+        "indicator": {
+          "name": "World GDP (current USD)",
+          "value": 110982661180013,
+          "unit": "",
+          "country": "WLD",
+          "date": "2024"
+        }
+      },
+      {
+        "id": "f030645323df505c",
+        "title": "World Inflation (CPI %): 2.97",
+        "summary": "World Bank data - Inflation (CPI %) for World (2024): 2.97",
+        "url": "https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG",
+        "source": "World Bank Open Data",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2024-01-01T00:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:21.054Z",
+        "reliability": 5,
+        "tags": [
+          "world-bank",
+          "economic-indicator",
+          "wld"
+        ],
+        "indicator": {
+          "name": "Inflation (CPI %)",
+          "value": 2.97200477643618,
+          "unit": "",
+          "country": "WLD",
+          "date": "2024"
+        }
+      },
+      {
+        "id": "b2f0a0176d71fd2d",
+        "title": "Japan GDP Growth Rate (%): 0.10",
+        "summary": "World Bank data - GDP Growth Rate (%) for Japan (2024): 0.10",
+        "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG",
+        "source": "World Bank Open Data",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2024-01-01T00:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:21.054Z",
+        "reliability": 5,
+        "tags": [
+          "world-bank",
+          "economic-indicator",
+          "jpn"
+        ],
+        "indicator": {
+          "name": "GDP Growth Rate (%)",
+          "value": 0.104309021773304,
+          "unit": "",
+          "country": "JPN",
+          "date": "2024"
+        }
+      },
+      {
+        "id": "5bde36f2b911539a",
+        "title": "Japan Unemployment Rate (%): 2.45",
+        "summary": "World Bank data - Unemployment Rate (%) for Japan (2025): 2.45",
+        "url": "https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS",
+        "source": "World Bank Open Data",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2025-01-01T00:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:21.054Z",
+        "reliability": 5,
+        "tags": [
+          "world-bank",
+          "economic-indicator",
+          "jpn"
+        ],
+        "indicator": {
+          "name": "Unemployment Rate (%)",
+          "value": 2.451,
+          "unit": "",
+          "country": "JPN",
+          "date": "2025"
+        }
+      },
+      {
+        "id": "0121e5597edf2038",
+        "title": "Shockwave of war is rippling through the global economy",
+        "summary": "Global business surveys for March are expected to show a synchronized weakening across manufacturing and services, offering an initial glimpse of economic damage from the Middle East conflict. Central banks are responding to rising energy prices and inflation…",
+        "url": "https://economictimes.indiatimes.com/news/international/business/shockwave-of-war-is-rippling-through-the-global-economy/articleshow/129727176.cms",
+        "source": "The Times of India",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-22T01:12:32.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "78a2c4d23fcec892",
+        "title": "What is stagflation and what can we do about it?",
+        "summary": "As the Iran war dries up oil and gas supplies, should we prepare for stagflation?",
+        "url": "https://www.abc.net.au/news/2026-03-22/what-is-stagflation-and-what-can-we-do-about-it/106472996",
+        "source": "ABC News (AU)",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-21T19:14:40.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "db6b5fe181acfa72",
+        "title": "The Iran war has already hit your gas budget. Here's what it's coming for next.",
+        "summary": "The U.S.-Iran war has begun cutting into discretionary spending, raising mortgage rates, battering stock markets and souring consumer sentiment.",
+        "url": "https://www.nbcnews.com/business/consumer/iran-war-mortgage-rates-stocks-gas-rcna264499",
+        "source": "NBC News",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-21T13:17:04.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "57d6de15651a70cb",
+        "title": "Gold Price Falls to One-Month Low Amid Shifting Federal Reserve Expectations",
+        "summary": "The price of gold declined to its lowest level in one month on Wednesday, pressured by a stronger U.S. dollar and shifting market expectations regarding the timing of potential interest rate cuts by the Federal Reserve. Spot gold fell by as much as 3% to $4,8…",
+        "url": "https://www.naturalnews.com/2026-03-21-gold-cost-falls-to-one-month-low.html",
+        "source": "Naturalnews.com",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-21T06:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "fb30b1de8f1c27e7",
+        "title": "High Oil Prices Knock Down Stocks And Erase Wall Street's Hopes For A Cut To Interest Rates",
+        "summary": "Another climb for oil prices shook stock markets, as hopes collapsed for a possible cut to interest rates this year by the Federal Reserve.",
+        "url": "https://www.huffpost.com/entry/financial-markets-oil-stocks_n_69bdd013e4b048411914ebfc",
+        "source": "HuffPost",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-20T22:56:48.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "2ff9d90159500a0d",
+        "title": "Oil Prices Depress Stocks, End Notion of Interest Rate Cuts",
+        "summary": "Another climb for oil prices shook stock markets on Friday, as hopes collapsed for a possible cut to interest rates this year by the Federal Reserve. The Dow fell 443.96 points, or 1%, to 45,577.47, ending the week down 2.1%. The S&P 500 fell 100.01...",
+        "url": "https://www.newser.com/story/385839/oil-prices-depress-stocks-end-notion-of-interest-rate-cuts.html",
+        "source": "Newser",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-20T20:49:13.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "3a7690e10dc5d7e3",
+        "title": "Traders pricing in TACO trade may be in for 'rude awakening' — Analyst",
+        "summary": "The disruption to oil markets caused by the war in the Middle East has not been fully priced in by investors, who forecast a quick end to the conflict.",
+        "url": "https://cointelegraph.com/news/traders-taco-trade-rude-awakening",
+        "source": "Cointelegraph",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-20T17:35:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "57861c26f42e02ae",
+        "title": "What Happens to Bitcoin if Bank of America's 'Three Conditions' for Fed Rate Hikes Hit?",
+        "summary": "Analysts acknowledged that Bitcoin would likely face pressure if the Fed hikes rates, but they highlighted the asset’s recent resilience.",
+        "url": "https://decrypt.co/361919/what-happens-bitcoin-bank-america-conditions-fed-rate-hikes-hit",
+        "source": "Decrypt",
+        "sourceType": "api",
+        "category": "economics",
+        "publishedAt": "2026-03-20T16:54:48.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      }
+    ],
+    "ai_news": [
+      {
+        "id": "1682e10097d4a644",
+        "title": "The Download: animal welfare gets AGI-pilled, and the White House unveils its AI policy",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/23/1134509/the-download-animal-welfare-agi-pilled-white-house-unveils-ai-policy/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-23T12:17:33.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "d4e3e2927d1b8ce5",
+        "title": "The Bay Area’s animal welfare movement wants to recruit AI",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/23/1134491/the-bay-areas-animal-welfare-movement-wants-to-recruit-ai/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-23T09:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "1ccf7740529a1b43",
+        "title": "Elizabeth Warren calls Pentagon&#8217;s decision to bar Anthropic &#8216;retaliation&#8217;",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/23/elizabeth-warren-anthropic-pentagon-defense-supply-chain-risk-retaliation/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-23T15:22:57.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "69f4c570773ff420",
+        "title": "Sam Altman-backed fusion startup Helion in talks with OpenAI",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/23/sam-altman-backed-fusion-startup-helion-in-talks-with-openai/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "celebrity",
+        "publishedAt": "2026-03-23T15:03:36.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": [],
+        "speaker": "Sam Altman"
+      },
+      {
+        "id": "d070eb7178880e5e",
+        "title": "初の“長考”できる国産フルスクラッチLLM「PLaMo 3.0 Prime」　Qwen3-235Bやgpt-oss-120bに肉薄　PFN",
+        "summary": "Preferred Networksが既存モデルを下敷きにせず、ゼロベースで構築した大規模言語モデル「PLaMo 3.0 Prime」のβ版をリリースした。中国産モデル「DeepSeek R-1」などの開発手法を参考に、同様の形で開発したモデルとしては国内で初めて、長考によってクオリティーの高い回答（reasoning）が可能な機能を搭載した。",
+        "url": "https://www.itmedia.co.jp/aiplus/articles/2603/23/news112.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-23T10:20:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.033Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "787eefd820870541",
+        "title": "東大とNECを「AI分野での産学協創協定締結」に突き動かしたものとは",
+        "summary": "東京大学とNECが「信頼できるAI」を目指して産学協創協定を締結した。強力なタッグだが、難しいテーマに向けて果たして世の中に大きなインパクトをもたらすことができるか。",
+        "url": "https://www.itmedia.co.jp/enterprise/articles/2603/23/news073.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-23T07:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.033Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "b6485250d526eae5",
+        "title": "チャッピーは「笑ゥせぇるすまん」？　米国チームが“AIへの悩み相談”に警告　イエスマン化に懸念",
+        "summary": "米スタンフォード大学や米カーネギーメロン大学に所属する研究者らは、AIがユーザーに過剰に同調して機嫌をとるイエスマン化のまん延と、それが人間に与える悪影響を実証した研究報告を発表した。",
+        "url": "https://www.itmedia.co.jp/aiplus/articles/2603/23/news035.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-23T03:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.033Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "df5cb9a25464839a",
+        "title": "「鳥貴族」のノウハウ、大倉社長のAIアバターが伝授　DXで個別におすすめメニュー提案",
+        "summary": "居酒屋チェーン「鳥貴族」を展開するエターナルホスピタリティグループが、AIや顧客データを活用して事業変革を図るDX（デジタルトランスフォーメーション）戦略を発表した。",
+        "url": "https://www.itmedia.co.jp/news/articles/2603/23/news060.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-23T01:33:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.033Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "4d98623e2df37cdc",
+        "title": "AIエージェントが図面を読み取り3D化、寸法精度を確保するWebアプリ",
+        "summary": "renueは、2D図面から3Dモデルを生成する、Webアプリケーション「Drawing Agent」を開発した。AIエージェントが寸法や形状を読み取ることで、製造業に必要な寸法精度を確保する。",
+        "url": "https://monoist.itmedia.co.jp/mn/articles/2603/23/news021.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-23T00:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.033Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "bceed92df62aed64",
+        "title": "「罰を与えるには銃を使え」──10代の凶悪犯罪に加担するAI、銃撃や爆破の計画に助言　海外団体が調査",
+        "summary": "カナダで起きた10代容疑者による銃を乱射して6人を殺害した事件で、容疑者は事前の計画や準備にChatGPTを利用していた。生成AIがそうした10代の犯行に簡単に「加担」してしまう現実は実験でも実証され、衝撃が広がっている。",
+        "url": "https://www.itmedia.co.jp/aiplus/articles/2603/23/news036.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T23:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.033Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "5a5ef6f87e80c845",
+        "title": "足りないデータは「世界モデル」が生成　産業用ロボット大手も採用するNVIDIAのフィジカルAI基盤",
+        "summary": "NVIDIAはフィジカルAI実用化を促進させる新技術群とデータ基盤を発表し、産業や医療分野での開発・検証効率化を図る。",
+        "url": "https://www.itmedia.co.jp/enterprise/articles/2603/23/news034.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T23:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.034Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "b2b54e9f72e9f165",
+        "title": "「2040年に売上40兆円」の勝ち筋は？　経産省が描く「AI・半導体・ロボット」三位一体の産業戦略",
+        "summary": "特集「AI革命、日本企業の勝ち筋」では、AIインフラを担う国内トップ企業や識者にインタビューし、AI経済圏における日本企業の展望を探っていく。1回目は概論として、生成AIも含めた半導体・デジタル産業戦略の政策立案を担う経済産業省商務情報政策局の担当者に、戦略の全体像と民間企業に期待される役割について聞いた。",
+        "url": "https://www.itmedia.co.jp/business/articles/2603/23/news024.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T22:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.034Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "73832c9f1d52d9b8",
+        "title": "マスク氏、次世代半導体工場「Terafab」発表　計算リソースは宇宙空間へ",
+        "summary": "イーロン・マスク氏は、次世代半導体工場「Terafab」の構想を発表した。テキサス州に建設予定の同施設は、2nmプロセスを採用し、ロジックからパッケージングまでを統合する。製造されたチップは人型ロボットや自動運転、AI衛星に活用され、将来的には計算リソースの大部分を宇宙へ配置する計画だ。",
+        "url": "https://www.itmedia.co.jp/news/articles/2603/23/news053.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "celebrity",
+        "publishedAt": "2026-03-22T21:25:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.034Z",
+        "reliability": 4,
+        "tags": [],
+        "speaker": "Elon Musk"
+      },
+      {
+        "id": "aeeb92d7d042150e",
+        "title": "VS Codeチームは週次リリースをどう実現したのか　AIエージェント活用で見えた6つのポイント",
+        "summary": "VS Codeが月次リリースから週次リリースへ移行するためにエージェントをどう活用しているのか。エージェントを使って開発する全ての人に参考になる内容だ。",
+        "url": "https://atmarkit.itmedia.co.jp/ait/articles/2603/23/news022.html",
+        "source": "ITmedia AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T20:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.034Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "5ddb1adf4ffdd3b1",
+        "title": "Do you want to build a robot snowman?",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/22/do-you-want-to-build-a-robot-snowman/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T19:45:07.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "79cc2edceeaaade2",
+        "title": "Cursor admits its new coding model was built on top of Moonshot AI’s Kimi",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/22/cursor-admits-its-new-coding-model-was-built-on-top-of-moonshot-ais-kimi/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T18:41:09.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "57ca86da659ca83a",
+        "title": "Elon Musk unveils chip manufacturing plans for SpaceX and Tesla",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/22/elon-musk-unveils-chip-manufacturing-plans-for-spacex-and-tesla/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "celebrity",
+        "publishedAt": "2026-03-22T16:20:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": [],
+        "speaker": "Elon Musk"
+      },
+      {
+        "id": "d463b6d5969dd1ad",
+        "title": "Delve accused of misleading customers with ‘fake compliance’",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/22/delve-accused-of-misleading-customers-with-fake-compliance/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T14:43:51.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "5b5ffd32e6a1846d",
+        "title": "An exclusive tour of Amazon&#8217;s Trainium lab, the chip that&#8217;s won over Anthropic, OpenAI, even Apple",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/22/an-exclusive-tour-of-amazons-trainium-lab-the-chip-thats-won-over-anthropic-openai-even-apple/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T12:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "08a86424f318c596",
+        "title": "Are AI tokens the new signing bonus or just a cost of doing business?",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/21/are-ai-tokens-the-new-signing-bonus-or-just-a-cost-of-doing-business/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-22T06:20:43.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "7b27bc71c27e7613",
+        "title": "The Download: OpenAI is building a fully automated researcher, and a psychedelic trial blind spot",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/20/1134448/the-download-openai-building-fully-automated-researcher-psychedelic-drug-trial/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-20T13:15:45.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "187c836dd274e84f",
+        "title": "OpenAI is throwing everything into building a fully automated researcher",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-20T11:57:16.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "73c51b8bee2f02c3",
+        "title": "Mind-altering substances are (still) falling short in clinical trials",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/20/1134419/psychedelics-overhyped-psilocybin-depression-placebo/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-20T09:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "8942d4fe912c7a06",
+        "title": "The Download: Quantum computing for health, and why the world doesn&#8217;t recycle more nuclear waste",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/19/1134413/the-download-quantum-computing-health-recycling-nuclear-waste/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-19T12:17:02.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "b5fe7c6adc3e1a49",
+        "title": "Can quantum computers now solve health care problems? We&#8217;ll soon find out.",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/19/1134409/a-5-million-prize-awaits-proof-that-quantum-computers-can-solve-health-care-problems/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-19T10:51:43.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "306a68d006edb24e",
+        "title": "Why the world doesn’t recycle more nuclear waste",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/19/1134399/nuclear-waste-reprocessing/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-19T10:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "6ee9f3cc0069e231",
+        "title": "The Download: The Pentagon&#8217;s new AI plans, and next-gen nuclear reactors",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/18/1134371/the-download-the-pentagons-new-ai-plans-and-next-gen-nuclear-reactors/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-18T12:38:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "990f6c07310c4612",
+        "title": "What do new nuclear reactors mean for waste?",
+        "summary": "",
+        "url": "https://www.technologyreview.com/2026/03/18/1134345/advanced-nuclear-reactors-waste/",
+        "source": "MIT Technology Review",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-18T09:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.318Z",
+        "reliability": 5,
+        "tags": []
+      },
+      {
+        "id": "349773c88b28ffe1",
+        "title": "Publisher pulls horror novel ‘Shy Girl’ over AI concerns",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/21/publisher-pulls-horror-novel-shy-girl-over-ai-concerns/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-21T19:30:27.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "83546b4a0f6e4797",
+        "title": "AI could reverse social media’s worst consequence",
+        "summary": "For more than four decades, technological progress has been undermining expert authority, democratizing public debate, and steering individuals toward ever-more bespoke conceptions of reality. In the mid-20th century, the high costs of television production —…",
+        "url": "https://www.vox.com/technology/483455/ai-social-media-misinformation",
+        "source": "Vox",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-21T18:28:30.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "e18b775bbada534b",
+        "title": "Why Wall Street wasn&#8217;t won over by Nvidia&#8217;s big conference",
+        "summary": "",
+        "url": "https://techcrunch.com/2026/03/21/why-wall-street-wasnt-won-over-by-nvidias-big-conference/",
+        "source": "TechCrunch AI",
+        "sourceType": "rss",
+        "category": "ai_news",
+        "publishedAt": "2026-03-21T16:28:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.119Z",
+        "reliability": 4,
+        "tags": []
+      },
+      {
+        "id": "844ca9596d38e941",
+        "title": "Google Begins Beta Testing Native Gemini Client For macOS",
+        "summary": "Google has reportedly begun the initial testing phase for a dedicated Gemini application for macOS. Currently, Mac users can only access Google’s generative AI through a web browser. This move aims to bring the service in line with competitors like OpenAI and…",
+        "url": "https://www.ubergizmo.com/2026/03/google-gemini-for-macos/",
+        "source": "Ubergizmo",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-21T15:00:52.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "d5d530a514ac57f0",
+        "title": "Women are avoiding the very technology that threatens them most, as expert warns of a ‘two-tiered AI economy’ approaching",
+        "summary": "Women are more skeptical of AI. Their hesitation will make AI safer, says Harvard researcher Mara Bolis.",
+        "url": "https://fortune.com/2026/03/21/ai-gender-gap-two-tier-economy-adoption-inequality/",
+        "source": "Fortune",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-21T09:13:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "226ec5607e26b904",
+        "title": "New MiniMax M2.7 proprietary AI model is 'self-evolving' and can perform 30-50% of reinforcement learning research workflow | VentureBeat",
+        "summary": "That makes M2.7 one of the most affordable frontier AI models to run in the world — only xAI's Grok 4.1 Fast is cheaper.",
+        "url": "https://venturebeat.com/technology/new-minimax-m2-7-proprietary-ai-model-is-self-evolving-and-can-perform-30-50",
+        "source": "VentureBeat",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-21T05:47:01.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "24a24e2661e4cc11",
+        "title": "OpenAI to launch ChatGPT superapp, ‘AI research intern’",
+        "summary": "OpenAI Group PBC plans to merge ChatGPT and two of its other services into a single “superapp.” The Wall Street Journal broke the news on Thursday. Today, MIT Technology Review reported that OpenAI is also working on an artificial intelligence tool designed t…",
+        "url": "https://siliconangle.com/2026/03/20/openai-launch-chatgpt-superapp-ai-research-intern/",
+        "source": "SiliconANGLE News",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-20T21:32:45.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "5aeff905dd62a00b",
+        "title": "Ask Paul: March 20 ⭐️",
+        "summary": "Happy Friday! We're on the cusp of spring; well, you are. It's always spring here in Mexico City.\nThe post Ask Paul: March 20 ⭐️ appeared first on Thurrott.com.",
+        "url": "https://www.thurrott.com/paul/334026/ask-paul-march-20-2",
+        "source": "Thurrott.com",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-20T17:32:44.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "acbc35089e3fefbb",
+        "title": "How AI Is Reshaping the Battlefield",
+        "summary": "Anthropic, the Pentagon, and the question of AI use in the military",
+        "url": "https://www.theatlantic.com/podcasts/2026/03/how-ai-is-reshaping-the-battlefield/686476/",
+        "source": "The Atlantic",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-20T17:00:00.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "dd437305a6f99ef6",
+        "title": "Russia to give itself sweeping powers to ban or restrict foreign AI tools",
+        "summary": "Russia is set to introduce new rules for artificial intelligence. Foreign AI tools may face bans or restrictions if they fail to comply. These regulations aim to protect citizens and promote domestic AI development. The new regime will likely come into effect…",
+        "url": "https://economictimes.indiatimes.com/tech/artificial-intelligence/russia-to-give-itself-sweeping-powers-to-ban-or-restrict-foreign-ai-tools/articleshow/129702520.cms",
+        "source": "The Times of India",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-20T13:54:17.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "485d50a0631eb989",
+        "title": "Comparing AI chips: GPU, ASIC, and NPU",
+        "summary": "This article breaks down the three main categories of AI chips—GPUs, ASICs, and NPUs—and compares the leading hardware defining the future of artificial intelligence. You might think of NVIDIA as the undisputed king of artificial intelligence hardware, but th…",
+        "url": "https://4sysops.com/archives/comparing-ai-chips-gpu-asic-and-npu/",
+        "source": "4sysops.com",
+        "sourceType": "api",
+        "category": "ai_news",
+        "publishedAt": "2026-03-20T12:26:44.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      }
+    ],
+    "dev_tools": [
+      {
+        "id": "d6535594db05ca1c",
+        "title": "NousResearch/hermes-agent",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        NousResearch /\n\n      hermes-agent  \n\n    \n      The agent that grows with you (+874 stars today)",
+        "url": "https://github.com/NousResearch/hermes-agent",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.213Z",
+        "fetchedAt": "2026-03-23T15:43:20.213Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "6bdfb64a7944951d",
+        "title": "jingyaogong/minimind",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        jingyaogong /\n\n      minimind  \n\n    \n      🚀🚀 「大模型」2小时完全从0训练26M的小参数GPT！🌏 Train a 26M-parameter GPT from scratch in just 2h! (+478 stars today)",
+        "url": "https://github.com/jingyaogong/minimind",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.213Z",
+        "fetchedAt": "2026-03-23T15:43:20.213Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "25d9ab9c39eee64f",
+        "title": "hsliuping/TradingAgents-CN",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        hsliuping /\n\n      TradingAgents-CN  \n\n    \n      基于多智能体LLM的中文金融交易框架 - TradingAgents中文增强版 (+672 stars today)",
+        "url": "https://github.com/hsliuping/TradingAgents-CN",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.213Z",
+        "fetchedAt": "2026-03-23T15:43:20.213Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "458d60870242c061",
+        "title": "sponsors/kepano",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        kepano /\n\n      obsidian-skills  \n\n    \n      Agent skills for Obsidian. Teach your agent to use Markdown, Bases, JSON Canvas, and use the CLI. (+367 stars today)",
+        "url": "https://github.com/sponsors/kepano",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.213Z",
+        "fetchedAt": "2026-03-23T15:43:20.213Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "2fac94120b8d428d",
+        "title": "sponsors/czlonkowski",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        czlonkowski /\n\n      n8n-mcp  \n\n    \n      A MCP for Claude Desktop / Claude Code / Windsurf / Cursor to build n8n workflows for you (+136 stars today)",
+        "url": "https://github.com/sponsors/czlonkowski",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.213Z",
+        "fetchedAt": "2026-03-23T15:43:20.213Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "f1cd130fbca1db19",
+        "title": "iptv-org/iptv",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        iptv-org /\n\n      iptv  \n\n    \n      Collection of publicly available IPTV channels from all over the world (+125 stars today)",
+        "url": "https://github.com/iptv-org/iptv",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.213Z",
+        "fetchedAt": "2026-03-23T15:43:20.213Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "ffc7bae770ac0d0c",
+        "title": "sponsors/hesreallyhim",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        hesreallyhim /\n\n      awesome-claude-code  \n\n    \n      A curated list of awesome skills, hooks, slash-commands, agent orchestrators, applications, and plugins for Claude Code by Anthropic (+413 stars today)",
+        "url": "https://github.com/sponsors/hesreallyhim",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.213Z",
+        "fetchedAt": "2026-03-23T15:43:20.213Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "1fc0cb9b0f7426fe",
+        "title": "sponsors/FujiwaraChoki",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        FujiwaraChoki /\n\n      MoneyPrinterV2  \n\n    \n      Automate the process of making money online. (+2902 stars today)",
+        "url": "https://github.com/sponsors/FujiwaraChoki",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.212Z",
+        "fetchedAt": "2026-03-23T15:43:20.212Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "3e72d1f627bd637e",
+        "title": "bytedance/deer-flow",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        bytedance /\n\n      deer-flow  \n\n    \n      An open-source SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours. (+3569 stars today)",
+        "url": "https://github.com/bytedance/deer-flow",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.212Z",
+        "fetchedAt": "2026-03-23T15:43:20.212Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "5064d59cb86d19fc",
+        "title": "Crosstalk-Solutions/project-nomad",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        Crosstalk-Solutions /\n\n      project-nomad  \n\n    \n      Project N.O.M.A.D, is a self-contained, offline survival computer packed with critical tools, knowledge, and AI to keep you informed and empowered—anytime, anywhere. (+4148 stars today)",
+        "url": "https://github.com/Crosstalk-Solutions/project-nomad",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.212Z",
+        "fetchedAt": "2026-03-23T15:43:20.212Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "f06b649dae81cf13",
+        "title": "vxcontrol/pentagi",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        vxcontrol /\n\n      pentagi  \n\n    \n      Fully autonomous AI Agents system capable of performing complex penetration testing tasks (+1307 stars today)",
+        "url": "https://github.com/vxcontrol/pentagi",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.212Z",
+        "fetchedAt": "2026-03-23T15:43:20.212Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "c7ea662c7fb4a748",
+        "title": "browser-use/browser-use",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        browser-use /\n\n      browser-use  \n\n    \n      🌐 Make websites accessible for AI agents. Automate tasks online with ease. (+1160 stars today)",
+        "url": "https://github.com/browser-use/browser-use",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.212Z",
+        "fetchedAt": "2026-03-23T15:43:20.212Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "41210d9dffc5a064",
+        "title": "TauricResearch/TradingAgents",
+        "summary": "GitHub Trending: Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        TauricResearch /\n\n      TradingAgents  \n\n    \n      TradingAgents: Multi-Agents LLM Financial Trading Framework (+2521 stars today)",
+        "url": "https://github.com/TauricResearch/TradingAgents",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.212Z",
+        "fetchedAt": "2026-03-23T15:43:20.212Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "7fc4efeb9e1efe72",
+        "title": "sponsors/tinygrad",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        tinygrad /\n\n      tinygrad  \n\n    \n      You like pytorch? You like micrograd? You love tinygrad! ❤️ (+58 stars today)",
+        "url": "https://github.com/sponsors/tinygrad",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.212Z",
+        "fetchedAt": "2026-03-23T15:43:20.212Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "28040e995e9c3aad",
+        "title": "sponsors/affaan-m",
+        "summary": "GitHub Trending: Sponsor\n    \n  \n\n\n\n      \n            \n    \n\n    \n\n        \n          Star\n\n\n  \n\n  \n    \n    \n\n\n      \n        affaan-m /\n\n      everything-claude-code  \n\n    \n      The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond. (+4453 stars today)",
+        "url": "https://github.com/sponsors/affaan-m",
+        "source": "GitHub Trending",
+        "sourceType": "scraper",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:43:20.212Z",
+        "fetchedAt": "2026-03-23T15:43:20.212Z",
+        "reliability": 4,
+        "tags": [
+          "github",
+          "trending",
+          "oss"
+        ]
+      },
+      {
+        "id": "e79d60dcc6a5cf24",
+        "title": "[Boost]",
+        "summary": "<div class=\"ltag__link--embedded\">\n  <div class=\"crayons-story \">\n  <a href=\"https://dev.to/devtouserotved/the-ceos-autonomous-war-room-ai-corporate-espionage-with-notion-mcp-ddd-1e22\" class=\"crayons-story__hidden-navigation-link\">The CEO's Autonomous War Room: AI Corporate Espionage with Notion MCP",
+        "url": "https://dev.to/devtouserotved/-3dh7",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:39:01.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.846Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "8325e37391fc68b9",
+        "title": "The Complete Guide to Building Developer CLI Tools in 2026",
+        "summary": "<h1>\n  \n  \n  The Complete Guide to Building Developer CLI Tools in 2026\n</h1>\n\n<p>Command-line interfaces aren't relics of a bygone era. They're experiencing a renaissance. In 2026, CLI tools sit at the intersection of AI integration, developer experience, and automation — three forces reshaping how",
+        "url": "https://dev.to/chengyixu/the-complete-guide-to-building-developer-cli-tools-in-2026-a96",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:38:15.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.846Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "eda74f263440ac69",
+        "title": "Chainguard Assemble 2026 and the Security Factory Mindset",
+        "summary": "<p>New York knows how to turn rough ground into something human-friendly. For example, <a href=\"http://www.lizchristygarden.us/?ref=blog.gitguardian.com\" rel=\"noopener noreferrer\">the Liz Christy Garden</a> began in 1973 as the city's first community garden, carved out of an overgrown vacant lot on ",
+        "url": "https://dev.to/gitguardian/chainguard-assemble-2026-and-the-security-factory-mindset-3ib1",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:37:55.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.846Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "980c1e4e2575d1af",
+        "title": "Building A Zero-Config Development Environment Scanner With Node.js",
+        "summary": "<h1>\n  \n  \n  Building A Zero-Config Development Environment Scanner With Node.js\n</h1>\n\n<p><strong>How to build a CLI tool that automatically detects every tool, runtime, and configuration in a developer's environment -- without any setup.</strong></p>\n\n<p>Every developer has been there: you clone a",
+        "url": "https://dev.to/chengyixu/building-a-zero-config-development-environment-scanner-with-nodejs-2hln",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:37:47.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.848Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "04be94a0935d4325",
+        "title": "The 5 LLM Architecture Patterns That Scale (And 2 That Do Not)",
+        "summary": "<p>After building LLM features for 18 months, here are the architecture patterns I have seen work at scale. And the two that consistently fail.</p>\n\n<h2>\n  \n  \n  Patterns That Scale\n</h2>\n\n<h3>\n  \n  \n  1. Prompt-as-a-Service\n</h3>\n\n\n\n<div class=\"highlight js-code-highlight\">\n<pre class=\"highlight pl",
+        "url": "https://dev.to/clawgenesis/the-5-llm-architecture-patterns-that-scale-and-2-that-do-not-33j0",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:37:41.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.848Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "316c4b12b030b8c3",
+        "title": "Building a GraphQL Explorer CLI — Query Any API from Your Terminal",
+        "summary": "<h1>\n  \n  \n  Building a GraphQL Explorer CLI — Query Any API from Your Terminal\n</h1>\n\n<p>Testing GraphQL APIs shouldn't require firing up a browser. GraphQL Playground, Insomnia, and Altair are excellent tools, but they pull you out of your terminal workflow. If you're already SSH'd into a server, ",
+        "url": "https://dev.to/chengyixu/building-a-graphql-explorer-cli-query-any-api-from-your-terminal-5f9n",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:37:40.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.849Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "41972b2de75d1d3a",
+        "title": "I Built a £500/mo Side Project Using Only Free AI Tools (Here's What Actually Worked)",
+        "summary": "<p>Six months ago I built a SaaS tool using only free AI tools. No paid APIs, no expensive infrastructure. Here's what I learned about what actually works.</p>\n\n<h2>\n  \n  \n  The Project\n</h2>\n\n<p>An LLM monitoring tool. Drift detection, cost tracking, alerting. The stack:</p>\n\n<ul>\n<li>\n<strong>Fron",
+        "url": "https://dev.to/clawgenesis/i-built-a-ps500mo-side-project-using-only-free-ai-tools-heres-what-actually-worked-10k8",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:37:38.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.850Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "4bb2b0c1bebf8211",
+        "title": "What If You Could Replay Production Bugs Locally?",
+        "summary": "<p>Debugging production bugs is still… guesswork.</p>\n\n<p>You look at logs.<br>\nYou try to reproduce the issue locally.<br>\nYou add more logs.<br>\nYou redeploy.</p>\n\n<p>And hope the bug shows up again.</p>\n\n<p>⸻</p>\n\n<p>The problem</p>\n\n<p>We’ve accepted a broken workflow:</p>\n\n<p>• Logs don’t show ",
+        "url": "https://dev.to/shashisrun/what-if-you-could-replay-production-bugs-locally-34mj",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:37:10.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.850Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "cc5cf754c777f8e0",
+        "title": "Automating Code Reviews with AST Parsing in Node.js",
+        "summary": "<h1>\n  \n  \n  Automating Code Reviews with AST Parsing in Node.js\n</h1>\n\n<p>Code reviews catch bugs, enforce conventions, and keep codebases healthy. But humans are inconsistent. We miss things on Friday afternoons. We forget which patterns were deprecated last sprint. We overlook a <code>console.log",
+        "url": "https://dev.to/chengyixu/automating-code-reviews-with-ast-parsing-in-nodejs-eok",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:37:06.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.851Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "3ab4d4569cc726f7",
+        "title": "🚀 Local AI in 2026: My Journey Through the Desert (From Terminal to GPU)",
+        "summary": "<blockquote>\n<p><em><strong>Disclaimer &amp; Context:</strong> This article is based on my personal experience using a MacBook Pro M1 Pro with 32GB of RAM and VS Code. While I use Claude as the primary reference for Cloud AI (given its current leadership in coding tasks), the same logic applies to o",
+        "url": "https://dev.to/quentin_merle/local-ai-in-2026-my-journey-through-the-desert-from-terminal-to-gpu-k35",
+        "source": "Dev.to Trending",
+        "sourceType": "rss",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T15:37:05.000Z",
+        "fetchedAt": "2026-03-23T15:43:18.851Z",
+        "reliability": 3,
+        "tags": []
+      },
+      {
+        "id": "3799c104671f4fe9",
+        "title": "Migrating to the EU",
+        "summary": "HackerNews - Score: 555, Comments: 469",
+        "url": "https://rz01.org/eu-migration/",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-23T10:17:32.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "8006203f7cffaf71",
+        "title": "hn-tech-signal-mcp added to PyPI",
+        "summary": "MCP server for tech & AI intelligence – aggregates HackerNews, arXiv, Lobste.rs and GitHub. No API key required.",
+        "url": "https://pypi.org/project/hn-tech-signal-mcp/",
+        "source": "Pypi.org",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T14:54:53.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "92294844aeb11bf9",
+        "title": "MCP in .NET: How to Connect Your Applications to AI Using the Model Context Protocol",
+        "summary": "Unlock AI integration in .NET using MCP! This guide covers building MCP servers with C#, exposing tools, resources, and prompts for AI agents. Future-proof your apps!",
+        "url": "https://www.c-sharpcorner.com/article/mcp-in-net-how-to-connect-your-applications-to-ai-using-the-model-context-prot2/",
+        "source": "C-sharpcorner.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T11:09:13.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "f92d3bf0d5f8daa2",
+        "title": "From SEO And CRO To Agentic AI Optimization (AAIO): Why Your Website Needs To Speak To Machines via @sejournal, @slobodanmanic",
+        "summary": "Agentic browsers and commerce protocols are redefining how users interact with websites, and who actually completes transactions.\nThe post From SEO And CRO To Agentic AI Optimization (AAIO): Why Your Website Needs To Speak To Machines appeared first on Search…",
+        "url": "https://www.nohackspod.com/blog/seo-to-aaio",
+        "source": "Nohackspod.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T11:00:57.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "3fe54465629a8e8e",
+        "title": "GrapheneOS will remain usable by anyone without requiring personal information",
+        "summary": "HackerNews - Score: 539, Comments: 152",
+        "url": "https://grapheneos.social/@GrapheneOS/116261301913660830",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T21:14:11.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "b48a5f3f09535940",
+        "title": "genagent-core added to PyPI",
+        "summary": "A generic autonomous AI agent framework with two-tier architecture, CodeAct, and modular prompt system.",
+        "url": "https://pypi.org/project/genagent-core/",
+        "source": "Pypi.org",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T08:35:52.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "258dd93ec02cc4ef",
+        "title": "PC Gamer recommends RSS readers in a 37mb article that just keeps downloading",
+        "summary": "HackerNews - Score: 734, Comments: 341",
+        "url": "https://stuartbreckenridge.net/2026-03-19-pc-gamer-recommends-rss-readers-in-a-37mb-article/",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T18:23:40.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "c8300353c9cd454d",
+        "title": "Developer’s Guide to AI Agent Protocols - Google Developers Blog",
+        "summary": "This blog post introduces a suite of six protocols, such as MCP and A2A, designed to eliminate custom integration code by standardizing how AI agents access data and communicate. Using a \"kitchen manager\" agent as a practical example, it demonstrates how thes…",
+        "url": "https://developers.googleblog.com/developers-guide-to-ai-agent-protocols/",
+        "source": "Googleblog.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T05:47:01.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "067cef84d7383c28",
+        "title": "The future of version control",
+        "summary": "HackerNews - Score: 590, Comments: 334",
+        "url": "https://bramcohen.com/p/manyana",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T15:16:28.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "2a5c1793a5092dce",
+        "title": "Project Nomad – Knowledge That Never Goes Offline",
+        "summary": "HackerNews - Score: 526, Comments: 191",
+        "url": "https://www.projectnomad.us",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T12:28:38.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "4629eca43cb7fc6b",
+        "title": "Show HN: ClawMem – Open-source agent memory with SOTA local GPU retrieval",
+        "summary": "So I've been building ClawMem, an open-source context engine that gives AI coding agents persistent memory across sessions. It works with Claude Code (hooks + MCP) and OpenClaw (ContextEngine plugin + REST API), and both can share the same SQLite vault, so yo…",
+        "url": "https://github.com/yoloshii/ClawMem",
+        "source": "Github.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T00:13:15.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "a98e121674010a58",
+        "title": "workos-jira-mcp-server added to PyPI",
+        "summary": "MCP server for Jira project management — create issues, search with JQL, manage workflows, and track sprints.",
+        "url": "https://pypi.org/project/workos-jira-mcp-server/",
+        "source": "Pypi.org",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-21T23:12:06.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "b00ec164112f2602",
+        "title": "workos-github-mcp-server added to PyPI",
+        "summary": "MCP server for GitHub operations — manage repos, issues, pull requests, commits, gists, and more.",
+        "url": "https://pypi.org/project/workos-github-mcp-server/",
+        "source": "Pypi.org",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-21T23:11:15.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "5a7e9aa8516fcf97",
+        "title": "Reports of code's death are greatly exaggerated",
+        "summary": "HackerNews - Score: 506, Comments: 356",
+        "url": "https://stevekrouse.com/precision",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T11:09:34.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "56beec0a2bf2b328",
+        "title": "Show HN: An MCP server that helps coding agents find the full change surface",
+        "summary": "Article URL: https://github.com/ftrou/Decodifier3.1\nComments URL: https://news.ycombinator.com/item?id=47471385\nPoints: 1\n# Comments: 0",
+        "url": "https://github.com/ftrou/Decodifier3.1",
+        "source": "Github.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-21T21:08:36.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "c85a3819a57cd3c3",
+        "title": "Hormuz Minesweeper – Are you tired of winning?",
+        "summary": "HackerNews - Score: 643, Comments: 432",
+        "url": "https://hormuz.pythonic.ninja/",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-22T09:00:37.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "405edfe2e0f91bba",
+        "title": "Show HN: Vessel Browser – An open-source browser built for AI agents, not humans",
+        "summary": "I'm Tyler - the solo operator of Quanta Intellect based in Portland, Oregon. I recently participated in Nous Research's Hermes Agent Hackathon, which is where this project was born.I've used agents extensively in my workflows for the better part of the last y…",
+        "url": "https://quantaintellect.com/",
+        "source": "Quantaintellect.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-21T19:02:57.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.363Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "0feee98f34002087",
+        "title": "Show HN: GAAI – One agent plans, one codes. A Markdown folder governs both",
+        "summary": "Turns AI coding tools into reliable software delivery systems. Drop a .gaai/ folder into any project — Discovery defines what to build, Delivery executes autonomously until criteria pass. Works wit...",
+        "url": "https://github.com/Fr-e-d/GAAI-framework",
+        "source": "Github.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-12T12:52:08.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "7dfc4916fd39e49b",
+        "title": "Show HN: AI-assisted coding landscape without the hype",
+        "summary": "Article URL: https://danielball.com/notes/ai_assisted_coding.html\nComments URL: https://news.ycombinator.com/item?id=47144069\nPoints: 1\n# Comments: 1",
+        "url": "http://danielball.com/notes/ai_assisted_coding.html",
+        "source": "Danielball.com",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-02-24T22:16:27.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.362Z",
+        "reliability": 4,
+        "tags": [
+          "newsapi"
+        ]
+      },
+      {
+        "id": "be63104e78b7eab6",
+        "title": "Do Not Turn Child Protection into Internet Access Control",
+        "summary": "HackerNews - Score: 823, Comments: 440",
+        "url": "https://news.dyne.org/child-protection-is-not-access-control/",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-21T20:32:20.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "c2a7b264871be64c",
+        "title": "Tinybox – A powerful computer for deep learning",
+        "summary": "HackerNews - Score: 584, Comments: 341",
+        "url": "https://tinygrad.org/#tinybox",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-21T20:08:37.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      },
+      {
+        "id": "de207ed037045d07",
+        "title": "Some things just take time",
+        "summary": "HackerNews - Score: 827, Comments: 269",
+        "url": "https://lucumr.pocoo.org/2026/3/20/some-things-just-take-time/",
+        "source": "Hacker News",
+        "sourceType": "api",
+        "category": "dev_tools",
+        "publishedAt": "2026-03-21T14:46:56.000Z",
+        "fetchedAt": "2026-03-23T15:43:19.491Z",
+        "reliability": 3,
+        "tags": [
+          "hackernews",
+          "tech"
+        ]
+      }
+    ],
+    "celebrity": [],
+    "crypto": [],
+    "business": [],
+    "tech_community": []
+  },
+  "celebrities": [
+    {
+      "id": "69f4c570773ff420",
+      "title": "Sam Altman-backed fusion startup Helion in talks with OpenAI",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/23/sam-altman-backed-fusion-startup-helion-in-talks-with-openai/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "celebrity",
+      "publishedAt": "2026-03-23T15:03:36.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": [],
+      "speaker": "Sam Altman"
+    },
+    {
+      "id": "73832c9f1d52d9b8",
+      "title": "マスク氏、次世代半導体工場「Terafab」発表　計算リソースは宇宙空間へ",
+      "summary": "イーロン・マスク氏は、次世代半導体工場「Terafab」の構想を発表した。テキサス州に建設予定の同施設は、2nmプロセスを採用し、ロジックからパッケージングまでを統合する。製造されたチップは人型ロボットや自動運転、AI衛星に活用され、将来的には計算リソースの大部分を宇宙へ配置する計画だ。",
+      "url": "https://www.itmedia.co.jp/news/articles/2603/23/news053.html",
+      "source": "ITmedia AI",
+      "sourceType": "rss",
+      "category": "celebrity",
+      "publishedAt": "2026-03-22T21:25:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.034Z",
+      "reliability": 4,
+      "tags": [],
+      "speaker": "Elon Musk"
+    },
+    {
+      "id": "57ca86da659ca83a",
+      "title": "Elon Musk unveils chip manufacturing plans for SpaceX and Tesla",
+      "summary": "",
+      "url": "https://techcrunch.com/2026/03/22/elon-musk-unveils-chip-manufacturing-plans-for-spacex-and-tesla/",
+      "source": "TechCrunch AI",
+      "sourceType": "rss",
+      "category": "celebrity",
+      "publishedAt": "2026-03-22T16:20:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:18.119Z",
+      "reliability": 4,
+      "tags": [],
+      "speaker": "Elon Musk"
+    }
+  ],
+  "economics": [
+    {
+      "id": "bdb8d1ded2078fd0",
+      "title": "Sunday Summary: War, Oil Blockades, Interest Rates — Oh My!",
+      "summary": "As of yesterday, the United States and Israel entered week four of their conflict with Iran — and there are a lot of nervous people watching and waiting. On a purely self-interested level, we have to wonder what a global shock like a war and the subsequent cl…",
+      "url": "http://commercialobserver.com/2026/03/sunday-summary-war-oil-blockades-interest-rates-oh-my/",
+      "source": "Commercial Observer",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-22T13:00:38.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "14fe946395ee2309",
+      "title": "Property stocks in S’pore fall while banks gain as higher-for-longer rates reshape market outlook",
+      "summary": "Property stocks fell this week as the US Federal Reserve signalled rates may stay higher for longer. Read more at straitstimes.com. Read more at straitstimes.com.",
+      "url": "https://www.straitstimes.com/business/companies-markets/property-stocks-in-spore-fall-while-banks-gain-as-higher-for-longer-rates-reshape-market-outlook",
+      "source": "The Straits Times",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-22T07:01:57.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.362Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "5158d0aa08056373",
+      "title": "World World GDP (current USD): 110982661180013.00",
+      "summary": "World Bank data - World GDP (current USD) for World (2024): 110982661180013.00",
+      "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:21.054Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "wld"
+      ],
+      "indicator": {
+        "name": "World GDP (current USD)",
+        "value": 110982661180013,
+        "unit": "",
+        "country": "WLD",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "f030645323df505c",
+      "title": "World Inflation (CPI %): 2.97",
+      "summary": "World Bank data - Inflation (CPI %) for World (2024): 2.97",
+      "url": "https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:21.054Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "wld"
+      ],
+      "indicator": {
+        "name": "Inflation (CPI %)",
+        "value": 2.97200477643618,
+        "unit": "",
+        "country": "WLD",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "b2f0a0176d71fd2d",
+      "title": "Japan GDP Growth Rate (%): 0.10",
+      "summary": "World Bank data - GDP Growth Rate (%) for Japan (2024): 0.10",
+      "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2024-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:21.054Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "jpn"
+      ],
+      "indicator": {
+        "name": "GDP Growth Rate (%)",
+        "value": 0.104309021773304,
+        "unit": "",
+        "country": "JPN",
+        "date": "2024"
+      }
+    },
+    {
+      "id": "5bde36f2b911539a",
+      "title": "Japan Unemployment Rate (%): 2.45",
+      "summary": "World Bank data - Unemployment Rate (%) for Japan (2025): 2.45",
+      "url": "https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS",
+      "source": "World Bank Open Data",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2025-01-01T00:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:21.054Z",
+      "reliability": 5,
+      "tags": [
+        "world-bank",
+        "economic-indicator",
+        "jpn"
+      ],
+      "indicator": {
+        "name": "Unemployment Rate (%)",
+        "value": 2.451,
+        "unit": "",
+        "country": "JPN",
+        "date": "2025"
+      }
+    },
+    {
+      "id": "0121e5597edf2038",
+      "title": "Shockwave of war is rippling through the global economy",
+      "summary": "Global business surveys for March are expected to show a synchronized weakening across manufacturing and services, offering an initial glimpse of economic damage from the Middle East conflict. Central banks are responding to rising energy prices and inflation…",
+      "url": "https://economictimes.indiatimes.com/news/international/business/shockwave-of-war-is-rippling-through-the-global-economy/articleshow/129727176.cms",
+      "source": "The Times of India",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-22T01:12:32.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "78a2c4d23fcec892",
+      "title": "What is stagflation and what can we do about it?",
+      "summary": "As the Iran war dries up oil and gas supplies, should we prepare for stagflation?",
+      "url": "https://www.abc.net.au/news/2026-03-22/what-is-stagflation-and-what-can-we-do-about-it/106472996",
+      "source": "ABC News (AU)",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-21T19:14:40.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "db6b5fe181acfa72",
+      "title": "The Iran war has already hit your gas budget. Here's what it's coming for next.",
+      "summary": "The U.S.-Iran war has begun cutting into discretionary spending, raising mortgage rates, battering stock markets and souring consumer sentiment.",
+      "url": "https://www.nbcnews.com/business/consumer/iran-war-mortgage-rates-stocks-gas-rcna264499",
+      "source": "NBC News",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-21T13:17:04.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "57d6de15651a70cb",
+      "title": "Gold Price Falls to One-Month Low Amid Shifting Federal Reserve Expectations",
+      "summary": "The price of gold declined to its lowest level in one month on Wednesday, pressured by a stronger U.S. dollar and shifting market expectations regarding the timing of potential interest rate cuts by the Federal Reserve. Spot gold fell by as much as 3% to $4,8…",
+      "url": "https://www.naturalnews.com/2026-03-21-gold-cost-falls-to-one-month-low.html",
+      "source": "Naturalnews.com",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-21T06:00:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "fb30b1de8f1c27e7",
+      "title": "High Oil Prices Knock Down Stocks And Erase Wall Street's Hopes For A Cut To Interest Rates",
+      "summary": "Another climb for oil prices shook stock markets, as hopes collapsed for a possible cut to interest rates this year by the Federal Reserve.",
+      "url": "https://www.huffpost.com/entry/financial-markets-oil-stocks_n_69bdd013e4b048411914ebfc",
+      "source": "HuffPost",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-20T22:56:48.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "2ff9d90159500a0d",
+      "title": "Oil Prices Depress Stocks, End Notion of Interest Rate Cuts",
+      "summary": "Another climb for oil prices shook stock markets on Friday, as hopes collapsed for a possible cut to interest rates this year by the Federal Reserve. The Dow fell 443.96 points, or 1%, to 45,577.47, ending the week down 2.1%. The S&P 500 fell 100.01...",
+      "url": "https://www.newser.com/story/385839/oil-prices-depress-stocks-end-notion-of-interest-rate-cuts.html",
+      "source": "Newser",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-20T20:49:13.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "3a7690e10dc5d7e3",
+      "title": "Traders pricing in TACO trade may be in for 'rude awakening' — Analyst",
+      "summary": "The disruption to oil markets caused by the war in the Middle East has not been fully priced in by investors, who forecast a quick end to the conflict.",
+      "url": "https://cointelegraph.com/news/traders-taco-trade-rude-awakening",
+      "source": "Cointelegraph",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-20T17:35:00.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    },
+    {
+      "id": "57861c26f42e02ae",
+      "title": "What Happens to Bitcoin if Bank of America's 'Three Conditions' for Fed Rate Hikes Hit?",
+      "summary": "Analysts acknowledged that Bitcoin would likely face pressure if the Fed hikes rates, but they highlighted the asset’s recent resilience.",
+      "url": "https://decrypt.co/361919/what-happens-bitcoin-bank-america-conditions-fed-rate-hikes-hit",
+      "source": "Decrypt",
+      "sourceType": "api",
+      "category": "economics",
+      "publishedAt": "2026-03-20T16:54:48.000Z",
+      "fetchedAt": "2026-03-23T15:43:19.363Z",
+      "reliability": 4,
+      "tags": [
+        "newsapi"
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "source": "Apify (Trending)",
+      "error": "Error: Apify run failed 401: {\n  \"error\": {\n    \"type\": \"user-or-token-not-found\",\n    \"message\": \"User was not found or authentication token is not valid\"\n  }\n}"
+    }
+  ],
+  "fetchedAt": "2026-03-23T15:43:21.056Z",
+  "totalCount": 120,
+  "durationMs": 3682
+}

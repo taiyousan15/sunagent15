@@ -1,9 +1,11 @@
+effort: low
 ---
 name: keyword-free
 description: API-free keyword extraction
 argument-hint: "[シードキーワード] [--type=all|longtail|niche|trending|buying]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 model: opus
+effort: low
 ---
 
 # keyword-free - APIキー不要キーワード抽出システム

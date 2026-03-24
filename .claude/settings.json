@@ -7,8 +7,6 @@
     "n8n-mcp",
     "meta-ads",
     "facebook-ads-library",
-    "obsidian",
-    "twitter-client",
     "mcp-memory-service",
     "sequential-thinking",
     "pexels"
@@ -28,6 +26,28 @@
     "deny": []
   },
   "preferredModel": "sonnet",
+  "mcpServers": {
+    "codebase-memory": {
+      "type": "stdio",
+      "command": "/Users/matsumototoshihiko/taisun_agent/tools/codebase-memory-mcp/codebase-memory-mcp",
+      "args": [],
+      "disabled": false,
+      "defer_loading": true,
+      "search_keywords": [
+        "codegraph",
+        "コードグラフ",
+        "依存関係",
+        "影響分析",
+        "コード検索",
+        "関数呼び出し",
+        "code search",
+        "dependency",
+        "impact"
+      ],
+      "description": "CodeGraph - コードベース知識グラフ検索・影響分析（64言語対応）",
+      "category": "code-intelligence"
+    }
+  },
   "maxParallelAgents": 5,
   "qualityGates": {
     "codeReviewMinScore": 80,
@@ -43,6 +63,16 @@
             "type": "command",
             "command": "node .claude/hooks/workflow-sessionstart-injector.js",
             "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/codegraph-oss-monitor.js",
+            "timeout": 10
           }
         ]
       }
@@ -173,12 +203,42 @@
         ]
       },
       {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-usage-logger.js",
+            "timeout": 2
+          }
+        ]
+      },
+      {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
             "command": "node .claude/hooks/output-verifier.js",
             "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Grep|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/codegraph-roi-meter.js",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/codegraph-auto-index.js",
+            "timeout": 12
           }
         ]
       }
@@ -195,6 +255,18 @@
         ]
       }
     ],
-    "Stop": []
+    "Stop": [],
+    "StopFailure": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/stop-failure-logger.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
   }
 }

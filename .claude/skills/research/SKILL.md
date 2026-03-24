@@ -1,8 +1,10 @@
+effort: high
 ---
 name: research
 description: Deep research with report generation
 argument-hint: "[トピック]"
 allowed-tools: Read, Write, Grep, Glob, WebSearch, WebFetch, Bash(python:*)
+effort: high
 ---
 
 # research - ワンコマンド深層調査

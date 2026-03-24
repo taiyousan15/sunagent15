@@ -1,0 +1,36 @@
+%% TAISUN CodeGraph — C4 Container Diagram
+%% 既存MITツール2つ + TAISUN独自差別化レイヤー
+
+graph TB
+    subgraph "開発者環境"
+        DEV["開発者<br/>Claude Code / Cursor"]
+    end
+
+    subgraph "TAISUN Agent (既存)"
+        HOOKS["PostToolUse Hook<br/>Write/Edit検知 → 自動トリガー"]
+        SKILLS["700+ Skills<br/>planner / architect / code-reviewer"]
+        MEMORY["階層的メモリ<br/>session / project / user"]
+        PROXY["taisun-proxy MCP<br/>統合エントリポイント"]
+    end
+
+    subgraph "CodeGraph Layer (新規追加)"
+        CBM["codebase-memory-mcp<br/>MIT | Go Binary<br/>64言語 | Cypher | 28M LOC 3min"]
+        CTXP["contextplus<br/>MIT | Node.js<br/>43言語 | GraphRAG | 17 MCPツール"]
+        BRIDGE["CodeGraph Bridge<br/>PostToolUse → 自動再索引<br/>スキル連携 → クエリルーティング"]
+    end
+
+    subgraph "ストレージ"
+        SQLITE["SQLite<br/>codebase-memory内蔵<br/>FTS5 + LZ4圧縮"]
+        MEMGRAPH["Memory Graph<br/>contextplus内蔵<br/>Obsidianリンク形式"]
+    end
+
+    DEV -->|MCP Protocol| PROXY
+    PROXY --> CBM
+    PROXY --> CTXP
+    HOOKS -->|FileChanged| BRIDGE
+    BRIDGE -->|re-index| CBM
+    BRIDGE -->|update memory| CTXP
+    BRIDGE -->|query results| SKILLS
+    CBM --> SQLITE
+    CTXP --> MEMGRAPH
+    CTXP -.->|cross-session| MEMORY

@@ -118,7 +118,7 @@
 
   "whitelist": {
     "paths": [
-      "/Users/matsumototoshihiko/Desktop/テスト開発/taisun_agent/"
+      "./"
     ],
     "commands": [
       "npm test",

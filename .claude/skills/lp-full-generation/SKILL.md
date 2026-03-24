@@ -72,8 +72,11 @@ RAG検索 → Ollama生成 → taiyo-analyzer評価 → 品質保証 → 保存 
 ### CLI実行
 
 ```bash
-# venv有効化
-source /Users/matsumototoshihiko/Desktop/開発2026/LP制作2026年2月/.venv/bin/activate
+# venv有効化（プロジェクト内にvenvがある場合）
+# macOS/Linux:
+source .venv/bin/activate
+# Windows:
+# .venv\Scripts\activate
 
 # フルLP生成
 python scripts/generate-with-quality.py full \

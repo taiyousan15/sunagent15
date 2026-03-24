@@ -1,3 +1,4 @@
+effort: high
 ---
 name: gem-research
 description: 9層マーケティングリサーチ（競合AI分析・顧客の声・マーケティングパターン特化）。業界別プリセット（美容院/飲食/コンサル/EC）対応。トリガー:「gemリサーチ」「マーケティングリサーチ」「競合AI分析」
@@ -20,6 +21,7 @@ allowed-tools:
   - Skill
 model: opus
 disable-model-invocation: true
+effort: high
 ---
 
 # Gem Research - 9層マーケティングリサーチシステム v1.0
@@ -105,6 +107,7 @@ disable-model-invocation: true
 /gem-research 整体院 --layers=7,8,9
 ```
 
+effort: high
 ---
 
 ## 4つのモード
@@ -161,6 +164,7 @@ disable-model-invocation: true
 └── 統合: プリセット + 最新データのマージ → SkillConfig JSON
 ```
 
+effort: high
 ---
 
 ## Layer 7: Competitor AI Analysis（競合AI分析）
@@ -238,6 +242,7 @@ site:note.com "{業界}" ChatGPT プロンプト 有料
 site:note.com "{業界}" AI 活用 テンプレート
 ```
 
+effort: high
 ---
 
 ## Layer 8: Customer Voice（顧客の声）
@@ -323,6 +328,7 @@ site:note.com "{業界}" 体験談 感想
 "{industry_en}" honest review pros cons
 ```
 
+effort: high
 ---
 
 ## Layer 9: Marketing Pattern（マーケティングパターン）
@@ -444,6 +450,7 @@ marketing_patterns:
 "{業界}" ステップメール 構成
 ```
 
+effort: high
 ---
 
 ## 信頼スコアエンジン (Trust Score)
@@ -474,6 +481,7 @@ Trust Score = DA(0.25) + Freshness(0.2) + CrossValidation(0.3) + Citations(0.15)
 | C | 30-49 | 個人ブログ、SNS投稿 |
 | D | 10-29 | 匿名掲示板、未検証情報 |
 
+effort: high
 ---
 
 ## 実行フロー詳細
@@ -614,6 +622,7 @@ Step 3: プリセットデータ + 最新検索データをマージ
 Step 4: SkillConfig JSON + レポート出力
 ```
 
+effort: high
 ---
 
 ## 委譲パターン
@@ -636,6 +645,7 @@ Skill("note-research", args="キーワード={topic}")
 # note-research の出力を Layer 8 (Customer Voice) に統合
 ```
 
+effort: high
 ---
 
 ## SkillConfig互換 出力スキーマ
@@ -814,6 +824,7 @@ gem-researchの出力は、Marketing AI Factory の `system_instructions.py` で
 }
 ```
 
+effort: high
 ---
 
 ## バッチ制限ルール
@@ -841,6 +852,7 @@ WebSearch x6 → カスケード障害リスク
 | deep | 10-12 | 24-30 | 6-9 | 30-39 |
 | industry | 3-4 | 9-12 | 0-2 | 9-14 |
 
+effort: high
 ---
 
 ## 出力ディレクトリ
@@ -857,6 +869,7 @@ research/gem/<timestamp>__<topic>/
 └── trust_scores.json    # 信頼スコア詳細
 ```
 
+effort: high
 ---
 
 ## 出力テンプレート（レポート）
@@ -872,12 +885,14 @@ research/gem/<timestamp>__<topic>/
 **使用レイヤー**: {layers_used}
 **信頼スコア**: {overall_trust_score}/100
 
+effort: high
 ---
 
 ## エグゼクティブサマリー
 
 {executive_summary}
 
+effort: high
 ---
 
 ## 1. キーワード分析
@@ -891,6 +906,7 @@ research/gem/<timestamp>__<topic>/
 ### ペインポイントキーワード
 {pain_point_keywords}
 
+effort: high
 ---
 
 ## 2. ペルソナ
@@ -904,6 +920,7 @@ research/gem/<timestamp>__<topic>/
 ### セカンダリペルソナ
 {secondary_persona}
 
+effort: high
 ---
 
 ## 3. 競合AI分析（Layer 7）
@@ -916,6 +933,7 @@ research/gem/<timestamp>__<topic>/
 ### 差別化機会
 {differentiation_opportunities}
 
+effort: high
 ---
 
 ## 4. 顧客の声（Layer 8）
@@ -929,6 +947,7 @@ research/gem/<timestamp>__<topic>/
 ### 購入障壁
 {barriers_list}
 
+effort: high
 ---
 
 ## 5. マーケティングパターン（Layer 9）
@@ -945,6 +964,7 @@ research/gem/<timestamp>__<topic>/
 ### コンテンツカレンダーヒント
 {content_calendar}
 
+effort: high
 ---
 
 ## 6. 信頼スコア
@@ -959,12 +979,14 @@ research/gem/<timestamp>__<topic>/
 ### 要追加調査
 {low_confidence}
 
+effort: high
 ---
 
 ## 7. 推奨アクション
 
 {recommended_actions}
 
+effort: high
 ---
 
 ## ソース一覧
@@ -972,6 +994,7 @@ research/gem/<timestamp>__<topic>/
 {sources_list}
 ```
 
+effort: high
 ---
 
 ## 制限事項
