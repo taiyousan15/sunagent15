@@ -107,6 +107,40 @@ git pull origin main
 
 ---
 
+### 📂 別のプロジェクトフォルダで使う
+
+taisun_agentの機能を他のプロジェクトでも使いたい場合、セットアップスクリプトを1行実行するだけです。
+`.claude/` と `.mcp.json` がリンクされ、そのフォルダでClaude Codeを開くと全機能が使えます。
+
+**Mac:**
+```bash
+cd /path/to/your/project
+~/taisun_agent/scripts/setup-project.sh
+```
+
+**Windows:**
+```powershell
+cd C:\Users\you\Projects\MyProject
+~\taisun_agent\scripts\setup-project.ps1
+```
+
+実行後の結果:
+```
+  ┌──────────────┬──────────────────────────────────────────┐
+  │     項目     │                   状態                    │
+  ├──────────────┼──────────────────────────────────────────┤
+  │ .git         │ 初期化済み                                │
+  │ .claude/     │ → ~/taisun_agent/.claude/                │
+  │ .mcp.json    │ → ~/taisun_agent/.mcp.json               │
+  │ スキル       │ 120個                                     │
+  │ エージェント │ 114個                                     │
+  └──────────────┴──────────────────────────────────────────┘
+```
+
+> `.gitignore` に `.claude/` `.mcp.json` `.env` が自動追加されるので、リンク先がgitに入ることはありません。
+
+---
+
 ## 🛠 インストール後に使えるコマンド
 
 ### バージョン確認
