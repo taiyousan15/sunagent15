@@ -49,11 +49,12 @@
 
 ## 🚀 インストール（5分）
 
-> **全ての操作は Claude Code のチャットにコピペするだけ！ターミナル操作は不要です。**
+> **Claude Code のチャットにコピペするだけ！** スキル・エージェント・MCPは全て自動でグローバル登録されます。
+> インストール後はどのフォルダで Claude Code を開いても使えます。
 
 ### 🍎 Mac
 
-**1. インストール（初回のみ）**
+**インストール（初回のみ）**
 
 ```
 以下のコマンドを順番に実行して：
@@ -65,47 +66,7 @@ cd taisun_agent
 
 **完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
 
-**プロファイル選択（オプション）**
-
-| コマンド | スキル数 | 内容 |
-|---------|---------|------|
-| `./scripts/install.sh` | 113個 | 標準構成（デフォルト） |
-| `./scripts/install.sh --profile minimal` | 92個 | コアのみ（リサーチ・SDD・LP・コピー） |
-| `./scripts/install.sh --profile full` | 120個 | 全スキル |
-| `./scripts/install.sh --list-profiles` | — | プロファイル一覧表示 |
-
-追加オプション: `--with-docker` `--with-figma` `--with-voice` `--with-deep-research`
-
-> **別フォルダにインストールしたい場合**（例: `/opt/taisun_agent` や `~/dev/taisun_agent`）
->
-> ```
-> 以下のコマンドを順番に実行して（パスは好みの場所に変更してOK）：
-> git clone https://github.com/san15/taisun_agent.git ~/dev/taisun_agent
-> cd ~/dev/taisun_agent
-> TAISUN_HOME=~/dev/taisun_agent ./scripts/install.sh
-> ```
->
-> スキル・エージェントは `~/.claude/` にシンボリックリンクされるので、
-> インストール先フォルダが変わっても Claude Code からは同じように使えます。
-
-**2. プロジェクトで使えるようにする（自動）**
-
-`install.sh` 実行時に **MCPはグローバル登録済み** のため、どのプロジェクトでもそのまま使えます。
-
-> スキル・エージェントは `~/.claude/skills/` と `~/.claude/agents/` に登録済み。
-> MCPは `~/.claude/settings.json` にグローバル登録済み。
-> 追加のコマンド入力は不要です。
-
-**（オプション）プロジェクトに .mcp.json を追加したい場合**
-
-```
-以下のコマンドを実行して（~/taisun_agent は自分のインストール先に変更）：
-ln -sf ~/taisun_agent/.mcp.json .mcp.json && echo "✅ 完了"
-```
-
-**3. アップデート**
-
-以下のコマンドを実行して（新しいエージェント・スキルも自動反映）：
+**アップデート**
 
 ```
 cd ~/taisun_agent && git pull origin main && ./scripts/update.sh
@@ -117,13 +78,13 @@ cd ~/taisun_agent && git pull origin main && ./scripts/update.sh
 
 > PowerShell を開いて実行してください。
 
-**0. 事前準備（初回のみ）**
+**事前準備（初回のみ）**
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-**1. インストール（初回のみ）**
+**インストール（初回のみ）**
 
 ```powershell
 cd $HOME
@@ -134,40 +95,7 @@ cd taisun_agent
 
 **完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
 
-**プロファイル選択（オプション）**
-
-| コマンド | スキル数 | 内容 |
-|---------|---------|------|
-| `.\scripts\install.ps1` | 113個 | 標準構成（デフォルト） |
-| `.\scripts\install.ps1 -Profile minimal` | 92個 | コアのみ |
-| `.\scripts\install.ps1 -Profile full` | 120個 | 全スキル |
-| `.\scripts\install.ps1 -ListProfiles` | — | プロファイル一覧表示 |
-
-追加オプション: `-WithDocker` `-WithFigma` `-WithVoice` `-WithDeepResearch`
-
-**2. .env を設定**
-
-```powershell
-notepad .env
-```
-
-`ANTHROPIC_API_KEY=sk-ant-...` を設定して保存
-
-**3. プロジェクトで使えるようにする（自動）**
-
-`install.ps1` 実行時に **MCPはグローバル登録済み** のため、どのプロジェクトでもそのまま使えます。
-
-> スキル・エージェントは `~\.claude\skills\` と `~\.claude\agents\` に登録済み。
-> MCPは `~\.claude\settings.json` にグローバル登録済み。
-> 追加のコマンド入力は不要です。
-
-**（オプション）プロジェクトに .mcp.json を追加したい場合**
-
-```powershell
-Copy-Item "$HOME\taisun_agent\.mcp.json" .mcp.json
-```
-
-**4. アップデート**
+**アップデート**
 
 ```powershell
 cd $HOME\taisun_agent
@@ -213,6 +141,42 @@ npm run mcp:secure       # セキュアモード（最小権限）
 npm run mcp:marketing    # マーケティングモード（Meta Ads・Twitter・Firecrawl等）
 npm run mcp:status       # 現在の状態を確認
 ```
+
+### スキルプロファイル変更
+
+インストール後でもスキル構成を変更できます。
+
+**Mac:**
+```bash
+./scripts/install.sh --list-profiles          # 一覧表示
+./scripts/install.sh --profile minimal        # 最小構成（92個）
+./scripts/install.sh --profile full           # 全スキル（120個）
+./scripts/install.sh --with-docker --with-figma  # 個別追加
+```
+
+**Windows:**
+```powershell
+.\scripts\install.ps1 -ListProfiles           # 一覧表示
+.\scripts\install.ps1 -Profile minimal        # 最小構成（92個）
+.\scripts\install.ps1 -Profile full           # 全スキル（120個）
+.\scripts\install.ps1 -WithDocker -WithFigma  # 個別追加
+```
+
+### APIキー設定
+
+`.env` ファイルに設定します。**ANTHROPIC_API_KEY だけあれば基本機能は全て使えます。**
+
+```bash
+# 必須（これがないとClaude Codeが動きません）
+ANTHROPIC_API_KEY=sk-ant-...
+
+# 推奨（リサーチ機能が大幅に強化されます・全て無料枠あり）
+TAVILY_API_KEY=tvly-...          # Web検索（1,000 req/月 無料）
+FRED_API_KEY=...                 # 経済指標（無制限・要登録）
+NEWSAPI_KEY=...                  # ニュース収集（100 req/日 無料）
+```
+
+> 他のAPIキーは `.env.example` に一覧があります。必要になった時に追加すればOKです。
 
 ### スキル早見表
 
