@@ -113,3 +113,19 @@ google-auth-system/
 # Circular symlink (created when ln -sf taisun_agent/.claude .claude is run from inside repo)
 .claude/.claude
 logs/approvals/
+
+# hooks/data/ ログ・メトリクスファイル（各環境で自動生成）
+.claude/hooks/data/*.log
+.claude/hooks/data/*.jsonl
+.claude/hooks/data/unified-metrics.jsonl
+.claude/hooks/data/model-switch.log
+.claude/hooks/data/compact-metrics.jsonl
+.claude/hooks/data/session-metrics.jsonl
+.claude/hooks/data/hook-profile-metrics.jsonl
+.claude/hooks/data/alerts.jsonl
+.claude/hooks/data/metrics_final.jsonl
+.claude/hooks/data/semantic-metrics.jsonl
+.claude/hooks/data/dynamic-compressor-metrics.jsonl
+.claude/hooks/data/weekly-dashboard.md
+.claude/hooks/data/metrics-dashboard.md
+.claude/hooks/data/agent-usage-log.jsonl
