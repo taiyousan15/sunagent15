@@ -20,8 +20,8 @@ const path = require('path');
 const PROJECT_DIR = process.cwd();
 
 const CONFIG = {
-  sessionCompactMinutes: 20,
-  toolCallThreshold: 30,
+  sessionCompactMinutes: 15,      // GSD式: 早めにcompact提案（20→15分）
+  toolCallThreshold: 25,           // GSD式: 30-40%コンテキスト制御（30→25回）
   cooldownMs: 120000,
   stateFile: path.join(PROJECT_DIR, '.claude/temp/compact-optimizer-state.json'),
   metricsFile: path.join(PROJECT_DIR, '.claude/hooks/data/compact-metrics.jsonl'),

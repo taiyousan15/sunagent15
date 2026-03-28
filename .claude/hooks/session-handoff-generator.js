@@ -65,6 +65,34 @@ function generateHandoff(dir) {
 
 function buildHandoffContent(dir, scripts, workflows, outputs) {
   const timestamp = new Date().toISOString();
+
+  // === GSD式: 構造化JSONデータを生成 ===
+  const handoffData = {
+    version: 2,
+    timestamp,
+    workDir: dir,
+    scripts: scripts.map(s => {
+      try {
+        const stat = fs.statSync(s);
+        return { path: path.relative(dir, s), size: stat.size, modified: stat.mtime.toISOString() };
+      } catch (e) { return { path: path.relative(dir, s) }; }
+    }),
+    workflows: workflows.map(w => path.relative(dir, w)),
+    outputs: outputs.slice(0, 10).map(o => path.relative(dir, o)),
+    blockers: [],
+    decisions: [],
+    nextActions: []
+  };
+
+  // === JSONデータをファイル先頭にも保存（機械可読） ===
+  const jsonPath = path.join(dir, '.claude', 'handoff.json');
+  try {
+    const jsonDir = path.dirname(jsonPath);
+    if (!fs.existsSync(jsonDir)) fs.mkdirSync(jsonDir, { recursive: true });
+    fs.writeFileSync(jsonPath, JSON.stringify(handoffData, null, 2), 'utf8');
+  } catch (e) {}
+
+  // === Markdown出力（人間可読 + Claude可読） ===
   const lines = [];
 
   lines.push('# SESSION HANDOFF DOCUMENT');
@@ -73,17 +101,14 @@ function buildHandoffContent(dir, scripts, workflows, outputs) {
   lines.push('');
   lines.push(`**最終更新**: ${timestamp}`);
   lines.push(`**作業ディレクトリ**: ${dir}`);
+  lines.push(`**構造化データ**: \`.claude/handoff.json\``);
   lines.push('');
 
   // 既存スクリプト
   if (scripts.length > 0) {
     lines.push('## 既存スクリプト（MUST READ）');
     lines.push('');
-    lines.push('```');
-    lines.push('┌─────────────────────────────────────────────────────────┐');
-    lines.push('│  「同じワークフロー」指示がある場合、以下を必ず使用    │');
-    lines.push('└─────────────────────────────────────────────────────────┘');
-    lines.push('```');
+    lines.push('> 「同じワークフロー」指示がある場合、以下を必ず使用');
     lines.push('');
     scripts.forEach(script => {
       const stat = fs.statSync(script);
@@ -134,7 +159,7 @@ function buildHandoffContent(dir, scripts, workflows, outputs) {
   lines.push('');
   lines.push('---');
   lines.push('');
-  lines.push('*このファイルはセッション終了時に自動生成されます*');
+  lines.push('*このファイルはセッション終了時に自動生成されます（v2: JSON構造化データ併記）*');
 
   return lines.join('\n');
 }

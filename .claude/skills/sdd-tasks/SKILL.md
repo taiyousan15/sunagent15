@@ -49,6 +49,8 @@ model: ollama-qwen25-72b
 - **クリティカルパスを特定する**（Ganttチャートの critical キーワードを使用）
 - **Phase 0は環境構築のみ**（ビジネスロジックを含めない）
 - Phase 4（Validation）には **全機能要件の統合テスト**と**セキュリティテスト**を含める
+- **Atomic Git Commits**: 各タスク完了時に個別コミットする（`feat(phase-N/task-M): タスク名`形式）。git bisect での問題特定を可能にする
+- **Wave並列実行**: 依存関係のないタスクは同一Waveとしてグループ化し、並列実行を推奨。後続Waveは前Wave完了を待つ
 
 ## 3. フェーズ構造（6フェーズ）
 
