@@ -89,9 +89,39 @@ effort: high
 4. NewsAPI → 最新ニュース（10件）
 5. Reddit → コミュニティ意見（5スレッド）
 6. Perplexity → AI要約生成
-7. 統合 → 重複排除 + スコアリング + クロス検証
-8. レポート → 出典付きマークダウン
+7. opencli-rs → 直接データ取得（API不要、下記参照）
+8. 統合 → 重複排除 + スコアリング + クロス検証
+9. レポート → 出典付きマークダウン
 ```
+
+#### Step 7: opencli-rs 補完データ取得（Deep Mode）
+
+WebSearch/WebFetchのレート制限を回避し、構造化JSONで直接取得する。
+`$HOME/.local/bin/opencli-rs` が存在する場合のみ実行。
+
+```bash
+OPENCLI="$HOME/.local/bin/opencli-rs"
+if [ -x "$OPENCLI" ]; then
+  # テック系トレンド（認証不要）
+  $OPENCLI hackernews search "${QUERY}" --limit 5 --format json
+  $OPENCLI arxiv search "${QUERY}" --limit 3 --format json
+  $OPENCLI devto search "${QUERY}" --limit 5 --format json
+
+  # YouTube 動画分析（認証不要・高価値）
+  $OPENCLI youtube search "${QUERY}" --limit 5 --format json
+  # → 上位動画のURLがあれば transcript で文字起こし取得
+  # $OPENCLI youtube transcript "${VIDEO_URL}" --format json
+
+  # 金融・ニュース（認証不要）
+  $OPENCLI bloomberg --format json
+  $OPENCLI reuters --format json
+fi
+```
+
+**使い分けルール**:
+- opencli-rs の結果は Step 1-6 の API 結果と同等に `evidence.jsonl` に追加する
+- 既存 API と重複する情報はクロス検証に使用（信頼度向上）
+- YouTube transcript は動画内容のテキスト分析に特に有効
 
 ### 2. Quick Mode
 高速検索。2-3秒で結果を返す。

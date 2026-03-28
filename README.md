@@ -17,10 +17,11 @@
 
 ## 📋 最新バージョン
 
-**v2.44.0** (2026-03-25) — プロファイルインストール・Windows強化・CodeGraph統合・配布互換性修正
+**v2.45.0** (2026-03-29) — opencli-rs統合・ディープリサーチ強化・Windows UX改善
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.45.0 | 2026-03-29 | **opencli-rs統合**（55サイト333コマンドをリサーチスキルに接続）— world-research Layer 5にSNS直接取得追加 / mega-research Deep Modeにopencli-rs補完Step追加 / intelligence-researchに金融3+テック3ソース自動追加 / opencli-research v2（5Tier・6パターン）全面書き直し / **YouTube transcript**で動画文字起こし取得対応 / Twitter trending・Reddit・LinkedIn・Instagram・TikTok・Facebook のブラウザ認証経由取得対応 / **Windows UX改善** — README/setup-project.ps1のハードコードパス(`C:\Users\you`)を`~`に修正 / `git pull` エラー時のZIPダウンロード手順を追加 |
 | v2.44.0 | 2026-03-25 | **プロファイルインストール**（minimal/standard/full）— install.sh + install.ps1 両対応 / **CodeGraph統合**（codebase-memory-mcp・自動インデックス・ROI計測）/ **配布互換性修正**（ハードコードパス5箇所→環境変数化）/ StopFailure自動記録Hook / effortフロントマター（コスト制御）/ MCP最適化（twitter-client・obsidian有効化、9個無効化）/ video-downloadスキル復活 / スキル114エージェント数更新 |
 | v2.43.0 | 2026-03-18 | BUG-001/004/005/006/007 全解消 / スキル早見表4枚（リサーチTier・taiyo-style・LP・SDD）追加 / `taisun:version` `taisun:support` コマンド新設 / 承認モデル実装（投稿系=警告・課金系=ブロック）/ Ollamaランタイムガード / プロファイル整合性チェック / gem-research・unified-research 命名修正 / research-system v2.4（QA Gate・61件URL・外部ファイル不要） |
 | v2.42.0 | 2026-03-17 | install.sh / update.sh / install.ps1 を全面日本語化（70歳でも使える初心者UX）/ フォルダ説明・エラー案内・完了後3ステップガイドを追加 / MCPプロファイル切替スキル（`/mcp-profile`）追加 / `npm run mcp:dev\|secure\|marketing\|status` コマンド追加 |
@@ -72,6 +73,8 @@ cd taisun_agent
 cd ~/taisun_agent && git pull origin main && ./scripts/update.sh
 ```
 
+> `git pull` で `repository not found` エラーが出る場合は、[GitHub](https://github.com/san15/taisun_agent) から最新版の ZIP をダウンロードして上書きしてから `./scripts/update.sh` を実行してください。
+
 ---
 
 ### 🪟 Windows
@@ -103,6 +106,8 @@ git pull origin main
 .\scripts\install.ps1
 ```
 
+> `git pull` で `repository not found` エラーが出る場合は、[GitHub](https://github.com/san15/taisun_agent) から最新版の ZIP をダウンロードして上書きしてから `.\scripts\install.ps1` を実行してください。
+
 > スキルは Junction リンク（git pull で自動更新）、エージェントはコピー（再インストールで更新）。
 
 ---
@@ -120,7 +125,7 @@ cd /path/to/your/project
 
 **Windows:**
 ```powershell
-cd C:\Users\you\Projects\MyProject
+cd ~\Projects\MyProject
 ~\taisun_agent\scripts\setup-project.ps1
 ```
 

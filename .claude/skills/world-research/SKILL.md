@@ -1145,6 +1145,67 @@ effort: high
 effort: high
 ---
 
+### 5-8. opencli-rs 統合（高速直接取得）
+
+**opencli-rs** (v0.1.2) を使うと、WebSearch/WebFetch を経由せず55サイトからJSON形式で直接データ取得できる。
+WebSearchのレート制限を回避でき、高速（1-2秒/リクエスト）。
+
+```bash
+OPENCLI="$HOME/.local/bin/opencli-rs"
+```
+
+#### Layer 5 で使える opencli-rs コマンド
+
+| Layer 5 ソース | opencli-rs コマンド | 認証 |
+|---------------|-------------------|------|
+| X（Twitter） | `$OPENCLI twitter search "{keyword}" --limit 20 --format json` | 要ブラウザ認証 |
+| X トレンド | `$OPENCLI twitter trending --format json` | 要ブラウザ認証 |
+| X プロフィール | `$OPENCLI twitter profile {username} --format json` | 要ブラウザ認証 |
+| Reddit | `$OPENCLI reddit hot --subreddit {sub} --limit 10 --format json` | 要ブラウザ認証 |
+| Reddit 検索 | `$OPENCLI reddit search "{keyword}" --limit 10 --format json` | 要ブラウザ認証 |
+| YouTube 検索 | `$OPENCLI youtube search "{keyword}" --limit 10 --format json` | 不要 |
+| YouTube 文字起こし | `$OPENCLI youtube transcript "{url}" --format json` | 不要 |
+| YouTube メタデータ | `$OPENCLI youtube video "{url}" --format json` | 不要 |
+| Bilibili | `$OPENCLI bilibili hot --limit 20 --format json` | 要ブラウザ認証 |
+| 知乎 | `$OPENCLI zhihu search "{keyword_zh}" --format json` | 要ブラウザ認証 |
+| 小紅書 | `$OPENCLI xiaohongshu search "{keyword_zh}" --format json` | 要ブラウザ認証 |
+| Weibo | `$OPENCLI weibo search "{keyword_zh}" --format json` | 要ブラウザ認証 |
+| Instagram | `$OPENCLI instagram --format json` | 要ブラウザ認証 |
+| TikTok | `$OPENCLI tiktok --format json` | 要ブラウザ認証 |
+| Facebook | `$OPENCLI facebook --format json` | 要ブラウザ認証 |
+| LinkedIn | `$OPENCLI linkedin search "{keyword}" --format json` | 要ブラウザ認証 |
+| Medium | `$OPENCLI medium search "{keyword}" --format json` | 不要 |
+| HackerNews | `$OPENCLI hackernews top --limit 10 --format json` | 不要 |
+| Dev.to | `$OPENCLI devto search "{keyword}" --format json` | 不要 |
+
+#### Layer 1/2/3 で使える opencli-rs コマンド
+
+| Layer | ソース | opencli-rs コマンド | 認証 |
+|-------|--------|-------------------|------|
+| Layer 1 | ArXiv | `$OPENCLI arxiv search "{keyword}" --limit 5 --format json` | 不要 |
+| Layer 3 | Substack | `$OPENCLI substack search "{keyword}" --format json` | 不要 |
+| Layer 6 | StackOverflow | `$OPENCLI stackoverflow search "{keyword}" --format json` | 不要 |
+| Layer 6 | Lobsters | `$OPENCLI lobsters hot --limit 10 --format json` | 不要 |
+
+#### 金融・ニュースソース
+
+| ソース | opencli-rs コマンド | 認証 |
+|--------|-------------------|------|
+| Bloomberg | `$OPENCLI bloomberg --format json` | 不要 |
+| Reuters | `$OPENCLI reuters --format json` | 不要 |
+| BBC | `$OPENCLI bbc --format json` | 不要 |
+| Yahoo Finance | `$OPENCLI yahoo-finance --format json` | 不要 |
+
+#### 使い分けルール
+
+1. **認証不要コマンド**: WebSearch/WebFetch より優先して使う（高速・構造化データ）
+2. **認証必要コマンド**: ブラウザ認証済みの場合のみ使用（未認証ならWebSearch にフォールバック）
+3. **YouTube transcript**: 動画分析で最も価値が高い。動画URLがある場合は必ず使う
+4. **並列実行**: 1バッチ3コマンドまで（research-delegation.md ルール準拠）
+
+effort: high
+---
+
 ## Layer 6: コミュニティ・フォーラム
 
 ### 6-1. Discord

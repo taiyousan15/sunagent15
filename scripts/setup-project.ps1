@@ -4,11 +4,11 @@
 # .claude/ と .mcp.json を Junction/コピーで反映する。
 #
 # 使い方:
-#   cd C:\Users\you\Projects\MyProject
+#   cd ~\Projects\MyProject
 #   ~\taisun_agent\scripts\setup-project.ps1
 #
 #   または:
-#   .\scripts\setup-project.ps1 C:\Users\you\Projects\MyProject
+#   .\scripts\setup-project.ps1 ~\Projects\MyProject
 
 param(
     [string]$ProjectPath
