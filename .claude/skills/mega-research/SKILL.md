@@ -10,6 +10,26 @@ effort: high
 
 # mega-research - 最強統合リサーチシステム
 
+## パイプラインコンテキスト連携（v2.5）
+
+`/tmp/taisun-pipeline/pipeline_context.json` が存在する場合、research-systemパイプラインの一部として実行中。
+以下を自動で調整する:
+
+1. **キーワード**: `ctx.keywords` があれば検索クエリに反映
+2. **前STEPの発見事項**: `ctx.previous_findings` があればギャップ補完に集中
+3. **品質基準**: `ctx.scoring` の閾値に従って結果のフィルタリング強度を調整
+4. **返答サイズ**: パイプライン内では500文字以内に要約してメインコンテキスト保護
+
+```bash
+# コンテキスト読み込み（存在する場合のみ）
+CTX_FILE="/tmp/taisun-pipeline/pipeline_context.json"
+if [ -f "$CTX_FILE" ]; then
+  echo "[Pipeline Mode] research-system STEP: $(python3 -c \"import json; print(json.load(open('$CTX_FILE'))['step'])\" 2>/dev/null)"
+fi
+```
+
+単独実行時（JSONが存在しない場合）は従来通り動作する。
+
 ## 概要
 
 6つの検索APIを統合し、用途に応じて最適な情報収集を行う最強リサーチスキル。

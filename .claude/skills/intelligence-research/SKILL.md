@@ -9,6 +9,13 @@ effort: high
 
 # intelligence-research - ワンコマンドグローバル情報収集
 
+## パイプラインコンテキスト連携（v2.5）
+
+`/tmp/taisun-pipeline/pipeline_context.json` が存在する場合、research-systemパイプラインの一部として実行中。
+STEP 1で並行起動される際に、targetフィールドを認識してカテゴリを自動選択する。
+
+単独実行時（JSONが存在しない場合）は従来通り動作する。
+
 ## 使い方
 
 ```

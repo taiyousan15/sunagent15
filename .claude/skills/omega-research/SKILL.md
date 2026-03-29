@@ -10,6 +10,16 @@ effort: high
 
 # Omega Research - 最高精度統合リサーチシステム v2
 
+## パイプラインコンテキスト連携（v2.5）
+
+`/tmp/taisun-pipeline/pipeline_context.json` が存在する場合、research-systemパイプラインの一部として実行中。
+STEP 2 Pass 2（ギャップ補完）で呼ばれる際に、前STEPの発見事項と未解決項目に集中する。
+品質基準 `ctx.scoring` に従い、hallucination_rate閾値を超える結果は自動除外する。
+
+単独実行時（JSONが存在しない場合）は従来通り動作する。
+
+---
+
 Grok-4 + Exa API + 全API + GIS 31ソース + smolagents を統合した最強リサーチスキル。
 旧 `deep-research-grok` の機能を完全統合済み（`--mode=quick` または `--mode=grok` で同等動作）。
 

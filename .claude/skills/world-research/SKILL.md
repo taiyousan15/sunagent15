@@ -22,6 +22,18 @@ effort: high
 
 # World Research - 全世界総合リサーチシステム v2.0
 
+## パイプラインコンテキスト連携（v2.5）
+
+`/tmp/taisun-pipeline/pipeline_context.json` が存在する場合、research-systemパイプラインの一部として実行中。
+以下を自動で調整する:
+
+1. **キーワード**: `ctx.keywords` があれば全Layer検索クエリに反映
+2. **前STEPの発見事項**: `ctx.previous_findings` があれば未調査領域に集中
+3. **品質基準**: `ctx.scoring` の閾値に従って結果のフィルタリング強度を調整
+4. **返答サイズ**: パイプライン内では500文字以内に要約してメインコンテキスト保護
+
+単独実行時（JSONが存在しない場合）は従来通り動作する。
+
 ## 概要
 
 ```
