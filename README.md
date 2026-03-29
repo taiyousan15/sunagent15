@@ -67,13 +67,13 @@ cd taisun_agent
 
 **完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
 
-**アップデート**
+**アップデート（1行で完了）**
 
 ```
-cd ~/taisun_agent && git pull origin main && ./scripts/update.sh
+cd ~/taisun_agent && ./scripts/update.sh
 ```
 
-> `git pull` で `repository not found` エラーが出る場合は、[GitHub](https://github.com/san15/taisun_agent) から最新版の ZIP をダウンロードして上書きしてから `./scripts/update.sh` を実行してください。
+> git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。手動操作は不要です。
 
 ---
 
@@ -98,17 +98,13 @@ cd taisun_agent
 
 **完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
 
-**アップデート**
+**アップデート（1行で完了）**
 
 ```powershell
-cd $HOME\taisun_agent
-git pull origin main
-.\scripts\install.ps1
+cd $HOME\taisun_agent; .\scripts\install.ps1 -Update
 ```
 
-> `git pull` で `repository not found` エラーが出る場合は、[GitHub](https://github.com/san15/taisun_agent) から最新版の ZIP をダウンロードして上書きしてから `.\scripts\install.ps1` を実行してください。
-
-> スキルは Junction リンク（git pull で自動更新）、エージェントはコピー（再インストールで更新）。
+> git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。手動操作は不要です。
 
 ---
 

@@ -1,4 +1,4 @@
-# TAISUN Agent - プロジェクトセットアップ (Windows)
+﻿# TAISUN Agent - プロジェクトセットアップ (Windows)
 #
 # 別のプロジェクトフォルダでtaisun_agentの機能を使えるようにする。
 # .claude/ と .mcp.json を Junction/コピーで反映する。
@@ -90,8 +90,15 @@ if (Test-Path $CLAUDE_LINK) {
         }
     }
 } else {
-    New-Item -ItemType Junction -Path $CLAUDE_LINK -Target "$TAISUN_DIR\.claude" | Out-Null
-    Write-Ok ".claude\ → $TAISUN_DIR\.claude\"
+    try {
+        New-Item -ItemType Junction -Path $CLAUDE_LINK -Target "$TAISUN_DIR\.claude" | Out-Null
+        Write-Ok ".claude\ → $TAISUN_DIR\.claude\ (Junction)"
+    } catch {
+        Write-Warn "Junction の作成に失敗しました（管理者権限が必要な場合があります）"
+        Write-Info "コピー方式で代替します..."
+        Copy-Item "$TAISUN_DIR\.claude" -Destination $CLAUDE_LINK -Recurse -Force
+        Write-Ok ".claude\ をコピーしました（※ git pull で自動更新されません。再実行で更新してください）"
+    }
 }
 
 # ─────────────────────────────────────────

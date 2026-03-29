@@ -1,4 +1,4 @@
-# TAISUN Agent - Windowsインストールスクリプト (PowerShell)
+﻿# TAISUN Agent - Windowsインストールスクリプト (PowerShell)
 #
 # 使い方 (PowerShell):
 #   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
@@ -19,8 +19,13 @@ param(
     [switch]$WithFigma,
     [switch]$WithVoice,
     [switch]$WithDeepResearch,
-    [switch]$ListProfiles
+    [switch]$ListProfiles,
+    [switch]$Update
 )
+
+# PowerShell 5.1 UTF-8 出力対応
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
 
 $ErrorActionPreference = "Stop"
 
@@ -57,6 +62,57 @@ function Write-Warn { param($msg) Write-Host "  !!  $msg" -ForegroundColor Yello
 function Write-Info { param($msg) Write-Host "  ->  $msg" -ForegroundColor Cyan }
 function Write-Fail { param($msg) Write-Host "  NG  $msg" -ForegroundColor Red }
 function Write-Step { param($msg) Write-Host ""; Write-Host "━━━ $msg ━━━" -ForegroundColor White }
+
+# ─────────────────────────────────────────
+# アップデートモード（-Update フラグ時）
+# ─────────────────────────────────────────
+if ($Update) {
+    Write-Host ""
+    Write-Host "  TAISUN Agent アップデート (Windows)" -ForegroundColor Cyan
+    Write-Host ""
+
+    # git pull を試行、失敗したらZIPダウンロードにフォールバック
+    Write-Host "  最新版を取得しています..."
+    try {
+        $gitResult = git pull origin main 2>&1
+        if ($LASTEXITCODE -ne 0) { throw "git pull failed" }
+        Write-Ok "git pull 成功"
+    } catch {
+        Write-Warn "git pull に失敗しました（リポジトリにアクセスできません）"
+        Write-Info "ZIPダウンロードで更新します..."
+
+        $zipUrl = "https://github.com/san15/taisun_agent/archive/refs/heads/main.zip"
+        $zipPath = "$env:TEMP\taisun_agent_update.zip"
+        $extractPath = "$env:TEMP\taisun_agent_extract"
+
+        try {
+            Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath -UseBasicParsing
+            if (Test-Path $extractPath) { Remove-Item $extractPath -Recurse -Force }
+            Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+
+            $sourceDir = Get-ChildItem $extractPath -Directory | Select-Object -First 1
+            Get-ChildItem $sourceDir.FullName -Force | ForEach-Object {
+                $dest = Join-Path $REPO_DIR $_.Name
+                if ($_.PSIsContainer) {
+                    if ($_.Name -eq "node_modules" -or $_.Name -eq ".git") { return }
+                    Copy-Item $_.FullName -Destination $dest -Recurse -Force
+                } else {
+                    Copy-Item $_.FullName -Destination $dest -Force
+                }
+            }
+            Write-Ok "ZIPダウンロードで更新しました"
+            Remove-Item $zipPath -Force -ErrorAction SilentlyContinue
+            Remove-Item $extractPath -Recurse -Force -ErrorAction SilentlyContinue
+        } catch {
+            Write-Fail "更新に失敗しました: $_"
+            Write-Info "手動でZIPをダウンロードしてください: $zipUrl"
+            exit 1
+        }
+    }
+    Write-Host ""
+    Write-Host "  引き続きインストールを実行します..." -ForegroundColor Cyan
+    Write-Host ""
+}
 
 # ─────────────────────────────────────────
 # ヘッダー
