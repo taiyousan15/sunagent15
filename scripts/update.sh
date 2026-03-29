@@ -3,7 +3,8 @@
 #
 # 使い方: ./scripts/update.sh
 
-set -e
+# set -e を使わない（1つの失敗で全体が止まるのを防ぐ）
+set +e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
@@ -19,7 +20,7 @@ step() { echo ""; echo "━━━ $1 ━━━"; }
 # ─────────────────────────────────────────
 # ヘッダー
 # ─────────────────────────────────────────
-clear
+# clear は使わない（Claude Code内でログが消えるのを防ぐ）
 echo ""
 echo "╔══════════════════════════════════════════════════╗"
 echo "║     TAISUN Agent アップデート                      ║"
@@ -76,8 +77,18 @@ git pull origin main --ff-only 2>/dev/null || {
         unzip -q "$ZIP_PATH" -d "$EXTRACT_PATH"
         SOURCE_DIR=$(ls -d "$EXTRACT_PATH"/*/ | head -1)
 
-        # node_modules と .git を除外してコピー
-        rsync -a --exclude='node_modules' --exclude='.git' "$SOURCE_DIR" "$REPO_DIR/"
+        # node_modules と .git を除外してコピー（rsyncがない環境も考慮）
+        if command -v rsync &> /dev/null; then
+            rsync -a --exclude='node_modules' --exclude='.git' "$SOURCE_DIR" "$REPO_DIR/"
+        else
+            # rsyncがない場合はcpで代替
+            cd "$SOURCE_DIR"
+            for item in *; do
+                [ "$item" = "node_modules" ] && continue
+                [ "$item" = ".git" ] && continue
+                cp -R "$item" "$REPO_DIR/" 2>/dev/null || true
+            done
+        fi
         ok "ZIPダウンロードで更新しました"
         rm -f "$ZIP_PATH"
         rm -rf "$EXTRACT_PATH"

@@ -117,7 +117,7 @@ if ($Update) {
 # ─────────────────────────────────────────
 # ヘッダー
 # ─────────────────────────────────────────
-Clear-Host
+# Clear-Host は使わない（Claude Code内でログが消えるのを防ぐ）
 Write-Host ""
 Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Cyan
 Write-Host "║     TAISUN Agent インストール (Windows)            ║" -ForegroundColor Cyan
@@ -135,7 +135,13 @@ Write-Host "  ⚠  途中で文字が流れますが正常な動作です。"
 Write-Host "     最後まで待ってください。"
 Write-Host ""
 Write-Host "  何かキーを押すと始まります..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+try {
+    if ([Environment]::UserInteractive -and $Host.UI.RawUI.KeyAvailable -ne $null) {
+        $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    }
+} catch {
+    # 非対話環境（Claude Code等）では自動続行
+}
 Write-Host ""
 
 # ─────────────────────────────────────────

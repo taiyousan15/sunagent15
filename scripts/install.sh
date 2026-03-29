@@ -10,7 +10,8 @@
 #   ./scripts/install.sh --with-voice       # 標準 + 音声AI スキル追加
 #   ./scripts/install.sh --list-profiles    # プロファイル一覧を表示
 
-set -e
+# set -e を使わない（1つの失敗で全体が止まるのを防ぐ）
+set +e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
@@ -82,7 +83,7 @@ step() { echo ""; echo "━━━ $1 ━━━"; }
 # ─────────────────────────────────────────
 # ヘッダー
 # ─────────────────────────────────────────
-clear
+# clear は使わない（Claude Code内でログが消えるのを防ぐ）
 echo ""
 echo "╔══════════════════════════════════════════════════╗"
 echo "║     TAISUN Agent v${VERSION} インストール          ║"
@@ -101,7 +102,10 @@ echo ""
 echo "  ⚠️  途中でフォルダが作られたり、画面に文字が流れますが"
 echo "      正常な動作です。最後まで待ってください。"
 echo ""
-read -p "  インストールを開始しますか？ [Enter でスタート / Ctrl+C でキャンセル]" _
+# read -p はClaude Code内で動かないため、対話型ターミナルの場合のみ表示
+if [ -t 0 ]; then
+    read -p "  インストールを開始しますか？ [Enter でスタート / Ctrl+C でキャンセル]" _
+fi
 
 # ─────────────────────────────────────────
 # Step 1: 必要なソフトウェアの確認
@@ -181,8 +185,11 @@ echo ""
 cd "$REPO_DIR"
 
 echo "  📦 ファイルをダウンロード中..."
-npm install --silent 2>/dev/null || npm install
-ok "ファイルのダウンロードが完了しました"
+if npm install --silent 2>/dev/null || npm install 2>&1; then
+    ok "ファイルのダウンロードが完了しました"
+else
+    warn "一部のダウンロードに問題がありましたが、続行します"
+fi
 
 echo ""
 echo "  🔨 システムを構築中..."
