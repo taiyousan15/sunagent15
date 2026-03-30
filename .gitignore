@@ -129,3 +129,7 @@ logs/approvals/
 .claude/hooks/data/weekly-dashboard.md
 .claude/hooks/data/metrics-dashboard.md
 .claude/hooks/data/agent-usage-log.jsonl
+
+# 別プロジェクト（taisun_agentに不要）
+marketing-hub/
+mario-game/
