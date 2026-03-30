@@ -11,7 +11,7 @@
 #   または:
 #   bash ~/taisun_agent/scripts/setup-project.sh /path/to/your/project
 
-set -e
+set +e
 
 # ─────────────────────────────────────────
 # taisun_agent のルートを検出
@@ -80,8 +80,11 @@ if [ -L "$CLAUDE_LINK" ]; then
     fi
 elif [ -d "$CLAUDE_LINK" ]; then
     warn ".claude/ が通常フォルダとして存在します"
-    warn "既存の .claude/ をバックアップしてからリンクしますか？ [y/N]"
-    read -r REPLY
+    warn "既存の .claude/ をバックアップしてリンクします"
+    REPLY="y"
+    if [ -t 0 ]; then
+        read -p "  バックアップしてリンクしますか？ [y/N] " -r REPLY
+    fi
     if [[ "$REPLY" =~ ^[Yy]$ ]]; then
         mv "$CLAUDE_LINK" "${CLAUDE_LINK}.backup.$(date +%Y%m%d%H%M%S)"
         ln -sf "$TAISUN_DIR/.claude" "$CLAUDE_LINK"
@@ -133,6 +136,88 @@ if [ "$NEEDS_ADD" = true ]; then
         [ ! -f "$GITIGNORE" ] || ! grep -qxF ".env" "$GITIGNORE" && echo ".env"
     } >> "$GITIGNORE"
     ok ".gitignore に .claude/ .mcp.json .env を追加しました"
+fi
+
+# ─────────────────────────────────────────
+# グローバルスキル・エージェント・MCP登録（install.sh相当）
+# ─────────────────────────────────────────
+echo ""
+echo "  🔗 グローバルスキル・エージェントを登録しています..."
+
+TARGET_SKILLS="$HOME/.claude/skills"
+SOURCE_SKILLS="$TAISUN_DIR/.claude/skills"
+mkdir -p "$TARGET_SKILLS"
+
+SKILL_INSTALLED=0
+if [ -d "$SOURCE_SKILLS" ]; then
+    for skill_dir in "$SOURCE_SKILLS"/*/; do
+        skill_name=$(basename "$skill_dir")
+        [[ "$skill_name" == "_archived" || "$skill_name" == "_guides" || "$skill_name" == "data" ]] && continue
+        [[ ! -f "$skill_dir/SKILL.md" ]] && [[ ! -f "$skill_dir/CLAUDE.md" ]] && continue
+        target="$TARGET_SKILLS/$skill_name"
+        if [ -d "$target" ] && [ ! -L "$target" ]; then rm -rf "$target"; fi
+        if [ ! -L "$target" ]; then
+            ln -sf "$skill_dir" "$target"
+            ((SKILL_INSTALLED++)) || true
+        fi
+    done
+fi
+
+TARGET_AGENTS="$HOME/.claude/agents"
+SOURCE_AGENTS="$TAISUN_DIR/.claude/agents"
+mkdir -p "$TARGET_AGENTS"
+
+AGENT_INSTALLED=0
+if [ -d "$SOURCE_AGENTS" ]; then
+    for agent_file in "$SOURCE_AGENTS"/*.md; do
+        agent_name=$(basename "$agent_file")
+        [[ "$agent_name" == "CLAUDE.md" ]] && continue
+        target="$TARGET_AGENTS/$agent_name"
+        if [ ! -L "$target" ]; then
+            ln -sf "$agent_file" "$target"
+            ((AGENT_INSTALLED++)) || true
+        fi
+    done
+fi
+
+# MCP グローバル登録
+SETTINGS_FILE="$HOME/.claude/settings.json"
+mkdir -p "$(dirname "$SETTINGS_FILE")"
+if command -v node &> /dev/null && [ -f "$TAISUN_DIR/.mcp.json" ]; then
+    node -e "
+const fs = require('fs');
+const path = require('path');
+const REPO_DIR = '$TAISUN_DIR';
+const SETTINGS_FILE = '$SETTINGS_FILE';
+let settings = {};
+try { settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8')); } catch(e) {}
+if (!settings.mcpServers) settings.mcpServers = {};
+let mcp = {};
+try { mcp = JSON.parse(fs.readFileSync(path.join(REPO_DIR, '.mcp.json'), 'utf8')); } catch(e) {}
+for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
+  if (key.startsWith('_comment')) continue;
+  const server = JSON.parse(JSON.stringify(val));
+  if (Array.isArray(server.args)) {
+    server.args = server.args.map(arg => {
+      if (typeof arg === 'string' && !path.isAbsolute(arg) && (arg.startsWith('dist/') || arg.startsWith('mcp-servers/'))) {
+        return path.join(REPO_DIR, arg);
+      }
+      return arg;
+    });
+  }
+  settings.mcpServers[key] = server;
+}
+fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+const count = Object.keys(settings.mcpServers).filter(k=>!k.startsWith('_')).length;
+console.log('  OK MCP ' + count + ' 件登録');
+" 2>/dev/null || info "MCP登録をスキップしました"
+fi
+
+if [ "$SKILL_INSTALLED" -gt 0 ]; then
+    ok "スキル ${SKILL_INSTALLED}件を新規登録しました"
+fi
+if [ "$AGENT_INSTALLED" -gt 0 ]; then
+    ok "エージェント ${AGENT_INSTALLED}件を新規登録しました"
 fi
 
 # ─────────────────────────────────────────

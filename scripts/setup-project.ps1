@@ -14,7 +14,11 @@ param(
     [string]$ProjectPath
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
+
+# PowerShell 5.1 UTF-8 出力対応
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
 
 # ─────────────────────────────────────────
 # taisun_agent のルートを検出
@@ -79,7 +83,8 @@ if (Test-Path $CLAUDE_LINK) {
         Write-Ok ".claude\ は既にリンク済み"
     } else {
         Write-Warn ".claude\ が通常フォルダとして存在します"
-        $reply = Read-Host "  バックアップしてリンクしますか？ [y/N]"
+        $reply = "y"
+        try { $reply = Read-Host "  バックアップしてリンクしますか？ [y/N]" } catch {}
         if ($reply -match '^[Yy]$') {
             $backup = "${CLAUDE_LINK}.backup.$(Get-Date -Format 'yyyyMMddHHmmss')"
             Move-Item $CLAUDE_LINK $backup
@@ -139,6 +144,91 @@ if ($needsAdd) {
     $additions | Out-File -FilePath $GITIGNORE -Append -Encoding UTF8
     Write-Ok ".gitignore に .claude/ .mcp.json .env を追加しました"
 }
+
+# ─────────────────────────────────────────
+# グローバルスキル・エージェント・MCP登録
+# ─────────────────────────────────────────
+Write-Host ""
+Write-Host "  グローバルスキル・エージェントを登録しています..."
+
+$TARGET_SKILLS = "$env:USERPROFILE\.claude\skills"
+$SOURCE_SKILLS = "$TAISUN_DIR\.claude\skills"
+if (-not (Test-Path $TARGET_SKILLS)) { New-Item -ItemType Directory -Path $TARGET_SKILLS -Force | Out-Null }
+
+$SKILL_NEW = 0
+if (Test-Path $SOURCE_SKILLS) {
+    Get-ChildItem -Path $SOURCE_SKILLS -Directory | ForEach-Object {
+        $skillName = $_.Name
+        $skillDir = $_.FullName
+        if ($skillName -in @("_archived", "_guides", "data")) { return }
+        if (-not (Test-Path "$skillDir\SKILL.md") -and -not (Test-Path "$skillDir\CLAUDE.md")) { return }
+        $target = "$TARGET_SKILLS\$skillName"
+        if ((Test-Path $target) -and (-not ((Get-Item $target).Attributes -band [IO.FileAttributes]::ReparsePoint))) {
+            Remove-Item $target -Recurse -Force
+        }
+        if (-not (Test-Path $target)) {
+            try {
+                New-Item -ItemType Junction -Path $target -Target $skillDir | Out-Null
+            } catch {
+                Copy-Item $skillDir -Destination $target -Recurse -Force
+            }
+            $SKILL_NEW++
+        }
+    }
+}
+
+$TARGET_AGENTS = "$env:USERPROFILE\.claude\agents"
+$SOURCE_AGENTS = "$TAISUN_DIR\.claude\agents"
+if (-not (Test-Path $TARGET_AGENTS)) { New-Item -ItemType Directory -Path $TARGET_AGENTS -Force | Out-Null }
+
+$AGENT_NEW = 0
+if (Test-Path $SOURCE_AGENTS) {
+    Get-ChildItem -Path $SOURCE_AGENTS -Filter "*.md" | ForEach-Object {
+        if ($_.Name -eq "CLAUDE.md") { return }
+        $target = "$TARGET_AGENTS\$($_.Name)"
+        Copy-Item $_.FullName -Destination $target -Force
+        $AGENT_NEW++
+    }
+}
+
+# MCP グローバル登録
+$SETTINGS_FILE = "$env:USERPROFILE\.claude\settings.json"
+$settingsDir = Split-Path $SETTINGS_FILE
+if (-not (Test-Path $settingsDir)) { New-Item -ItemType Directory -Path $settingsDir -Force | Out-Null }
+
+if (Test-Path "$TAISUN_DIR\.mcp.json") {
+    $mcpScript = @"
+const fs = require('fs');
+const path = require('path');
+const REPO_DIR = '$($TAISUN_DIR -replace '\\', '/')';
+const SETTINGS_FILE = '$($SETTINGS_FILE -replace '\\', '/')';
+let settings = {};
+try { settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8')); } catch(e) {}
+if (!settings.mcpServers) settings.mcpServers = {};
+let mcp = {};
+try { mcp = JSON.parse(fs.readFileSync(path.join(REPO_DIR, '.mcp.json'), 'utf8')); } catch(e) {}
+for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
+  if (key.startsWith('_comment')) continue;
+  const server = JSON.parse(JSON.stringify(val));
+  if (Array.isArray(server.args)) {
+    server.args = server.args.map(arg => {
+      if (typeof arg === 'string' && !path.isAbsolute(arg) && (arg.startsWith('dist/') || arg.startsWith('mcp-servers/'))) {
+        return path.join(REPO_DIR, arg).replace(/\//g, '\\\\');
+      }
+      return arg;
+    });
+  }
+  settings.mcpServers[key] = server;
+}
+fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+const count = Object.keys(settings.mcpServers).filter(k => !k.startsWith('_')).length;
+console.log('  OK MCP ' + count + ' servers registered');
+"@
+    try { node -e $mcpScript 2>$null } catch { Write-Info "MCP登録をスキップしました" }
+}
+
+if ($SKILL_NEW -gt 0) { Write-Ok "スキル ${SKILL_NEW}件を新規登録しました" }
+if ($AGENT_NEW -gt 0) { Write-Ok "エージェント ${AGENT_NEW}件を登録しました" }
 
 # ─────────────────────────────────────────
 # 結果表示
