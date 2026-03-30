@@ -63,8 +63,11 @@
 cd ~
 git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
-./scripts/install.sh
+bash scripts/install.sh
 ```
+
+> `Permission denied` が出た場合は `bash scripts/install.sh` で実行してください。
+> `git: command not found` が出た場合は `xcode-select --install` を先に実行してください。
 
 **完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
 
@@ -96,6 +99,9 @@ git clone https://github.com/san15/taisun_agent.git
 cd taisun_agent
 .\scripts\install.ps1
 ```
+
+> `スクリプトの実行が無効` エラーが出た場合は `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` を先に実行してください。
+> `git: 用語 'git' は〜` エラーが出た場合は https://git-scm.com/download/win から git をインストールしてください。
 
 **完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
 

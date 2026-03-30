@@ -14,6 +14,27 @@
 set +e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+# ─────────────────────────────────────────
+# Mac: Xcode Command Line Tools 確認（gitが動くために必須）
+# ─────────────────────────────────────────
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # スクリプト自身に実行権限を付与（git clone直後はpermission deniedになる場合がある）
+    chmod +x "$0" 2>/dev/null || true
+    chmod +x "$REPO_DIR/scripts/"*.sh 2>/dev/null || true
+
+    if ! xcode-select -p &>/dev/null; then
+        echo ""
+        echo "  ⚠️  Xcode Command Line Tools がインストールされていません"
+        echo "     git や Node.js を使うために必要です。"
+        echo ""
+        echo "  以下のコマンドを実行してインストールしてください:"
+        echo "    xcode-select --install"
+        echo ""
+        echo "  インストール完了後、このスクリプトを再実行してください。"
+        exit 1
+    fi
+fi
 VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
 
 # ─────────────────────────────────────────
