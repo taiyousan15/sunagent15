@@ -135,14 +135,8 @@ Write-Host ""
 Write-Host "  ⚠  途中で文字が流れますが正常な動作です。"
 Write-Host "     最後まで待ってください。"
 Write-Host ""
-Write-Host "  何かキーを押すと始まります..."
-try {
-    if ([Environment]::UserInteractive -and $Host.UI.RawUI.KeyAvailable -ne $null) {
-        $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-    }
-} catch {
-    # 非対話環境（Claude Code等）では自動続行
-}
+Write-Host "  3秒後に自動で開始します..."
+Start-Sleep -Seconds 3
 Write-Host ""
 
 # ─────────────────────────────────────────

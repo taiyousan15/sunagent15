@@ -17,7 +17,8 @@
 # Declare files that will always have CRLF line endings on checkout
 *.bat text eol=crlf
 *.cmd text eol=crlf
-*.ps1 text eol=crlf
+# *.ps1 は LF で統一（CRLFにするとgit pullで競合する問題を防止）
+*.ps1 text eol=lf
 
 # Denote binary files
 *.png binary
