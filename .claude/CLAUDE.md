@@ -83,6 +83,22 @@ Before starting work:
 | セキュリティに関わるコード変更時 | cc-skill-security-review を適用 |
 | コンテキスト圧迫を検知した時 | strategic-compact の基準で判断 |
 
+### リサーチ自動発動ルール（MUST）
+
+以下のキーワードを検出したら、**必ず `/research-system` を起点として全リサーチスキルを使うこと**:
+
+| トリガーワード | 使うスキル |
+|--------------|-----------|
+| 「リサーチして」「調査して」「調べて」「深掘りして」 | `/research-system`（全STEP実行） |
+| 「ディープリサーチ」「徹底調査」「全力リサーチ」 | `/research-system`（全STEP実行） |
+| 「市場調査」「競合調査」「トレンド調査」 | `/research-system`（全STEP実行） |
+
+`/research-system` は内部で以下を全て自動起動する:
+- `/intelligence-research` `/mega-research` `/mega-research-plus`
+- `/deep-research` `/deep-research-grok` `/omega-research`
+- `/world-research` `/gem-research` `/opencli-research`
+- `/note-research` `/exa-search` `/firecrawl`
+
 ### OpenCode（セカンドエンジン）
 - 通常時: 使わない（Claude Code + TAISUNで十分）
 - テストが通らないバグ: `/opencode-fix` で別視点の修正案を取得
