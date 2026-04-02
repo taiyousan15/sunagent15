@@ -17,10 +17,11 @@
 
 ## 📋 最新バージョン
 
-**v2.46.0** (2026-03-30) — パイプラインコンテキスト連携・GSD移植・.claude最適化・Windows根本修正
+**v2.47.0** (2026-04-03) — research-system-free追加・リサーチ自動発動・Windows git pull修正・配布用ファイル同梱
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.47.0 | 2026-04-03 | **research-system-free** 完全無料リサーチスキル追加（APIキーゼロ・WebSearch+opencli-rs+Ollamaで動作） / research-system配布用ファイル同梱（scripts/distributions/） / CLAUDE.mdにリサーチ自動発動ルール追加（「リサーチして」等で全13スキル自動起動） / Windows git pull競合修正（.gitattributes ps1 eol=lf） / install.ps1 ReadKey廃止→Start-Sleep 3秒（キー入力待ち停止修正） |
 | v2.46.0 | 2026-03-30 | **パイプラインコンテキスト連携v2.5** — research-systemから各リサーチスキル（mega/world/intelligence/omega）へSTEPコンテキスト（キーワード・前STEP発見事項・品質基準）をJSON経由で自動伝搬。設計書v3.0完全接続 / **GSD移植3件** — SESSION_HANDOFF JSON構造化・Atomic Git Commits・コンテキスト30-40%制御 / **.claude最適化** — hooks/data 1.06MB削除・rules重複8ファイル解消・mistakes.md 224→75行圧縮 / **Windows根本修正** — UTF-8 BOM追加・set -e廃止・非対話対応・git pull失敗→ZIP自動フォールバック・Junction失敗→コピーフォールバック / **Mac修正** — set -e廃止・clear廃止・read -p対話判定・rsyncなしcp代替 |
 | v2.45.0 | 2026-03-29 | **opencli-rs統合**（55サイト333コマンドをリサーチスキルに接続）— world-research Layer 5にSNS直接取得追加 / mega-research Deep Modeにopencli-rs補完Step追加 / intelligence-researchに金融3+テック3ソース自動追加 / opencli-research v2（5Tier・6パターン）全面書き直し / **YouTube transcript**で動画文字起こし取得対応 / Twitter trending・Reddit・LinkedIn・Instagram・TikTok・Facebook のブラウザ認証経由取得対応 / **Windows UX改善** — README/setup-project.ps1のハードコードパス(`C:\Users\you`)を`~`に修正 / `git pull` エラー時のZIPダウンロード手順を追加 |
 | v2.44.0 | 2026-03-25 | **プロファイルインストール**（minimal/standard/full）— install.sh + install.ps1 両対応 / **CodeGraph統合**（codebase-memory-mcp・自動インデックス・ROI計測）/ **配布互換性修正**（ハードコードパス5箇所→環境変数化）/ StopFailure自動記録Hook / effortフロントマター（コスト制御）/ MCP最適化（twitter-client・obsidian有効化、9個無効化）/ video-downloadスキル復活 / スキル114エージェント数更新 |

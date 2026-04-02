@@ -1,7 +1,7 @@
 ---
 name: shorts-create
-description: Auto-generate Shorts/Reels videos
-version: "1.0.0"
+description: Auto-generate Shorts/Reels videos (3 styles supported)
+version: "2.0.0"
 author: TAISUN
 triggers:
   - "shorts"
@@ -10,12 +10,166 @@ triggers:
   - "YouTube Shorts"
   - "リール"
   - "縦動画"
+  - "マーケ博士風"
+  - "図解動画"
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # /shorts-create - Instagram Shorts 完全自動生成パイプライン
 
-トピックまたはURLを渡すだけで、リサーチからレンダリングまで全7フェーズを自動実行し、Instagram/YouTube Shorts動画を完成させる。
+トピックまたはURLを渡すだけで、リサーチからレンダリングまで全自動実行し、Instagram/YouTube Shorts動画を完成させる。
+
+---
+
+## スタイル一覧（v2.0）
+
+| スタイル | 説明 | 使用ツール | 例 |
+|---------|------|-----------|-----|
+| **marke** | マーケ博士風（ベージュ背景+図解+マスコット） | HTML+Playwright+VOICEVOX+ffmpeg | `/shorts-create "SNS副業3ステップ" --style marke` |
+| **ranking** | ランキング形式（サンバーストBG+テロップ） | short-video-factory Remotion | `/shorts-create "やばい習慣ランキング" --style ranking` |
+| **2ch** | 2ch風ストーリー | short-video-factory Remotion | `/shorts-create "コンビニバイトの修羅場" --style 2ch` |
+| **comic** | コミック風（NanoBanana Pro画像+テロップ） | NanoBanana+Remotion | `/shorts-create "選択的盲目" --style comic` |
+
+---
+
+## Style: marke（マーケ博士風 図解動画）
+
+### 概要
+ベージュ背景 + 番号バッジ + Before/After図解 + マスコットキャラで構成される教育系ショート動画。Instagram Reelで人気の「マーケ博士」スタイルを再現。
+
+### 使い方
+```
+/shorts-create "OpenClaw AI活用3ステップ" --style marke
+/shorts-create "SNS副業で月10万稼ぐ方法" --style marke
+```
+
+### パイプライン
+```
+テーマ入力
+  ↓
+Phase 1: 台本生成（3ステップ構成のテキスト + 図解要素）
+Phase 2: HTMLスライド生成（イントロ + 01 + 02 + 03 + アウトロ = 5枚）
+Phase 3: Playwrightスクリーンショット（1080x1920 PNG × 5枚）
+Phase 4: VOICEVOX音声合成（5音声）
+Phase 5: ffmpeg動画組立（スライド+音声→個別MP4→結合→BGM合成）
+  ↓
+出力: 完成MP4（1080x1920, 55-70秒）
+```
+
+### デザイン定数
+
+| 要素 | 値 |
+|------|-----|
+| 背景色 | `#E8DED0`（ベージュ） |
+| メイン文字色 | `#1B2270`（紺） |
+| 強調色 | `#E91E8C`（ピンク） |
+| 番号バッジ | 白丸(130px) + ピンク数字(72px italic) + 紺ラベル(44px) |
+| ボックス枠 | 紺 `#1B2270` 3px solid, border-radius: 16px |
+| Before枠 | グレー `#999` 3px solid + ピンク✕オーバーレイ |
+| ラベル「これまで」 | 紺背景 白文字 |
+| ラベル「改善後」 | ピンク背景 白文字 |
+| アイコン | 80px丸 + 22pxテキスト |
+| 強調テキスト | 44-46px 900weight |
+| ポイントボックス | 白背景 + 紺枠 + 💡アイコン + 28-30pxテキスト |
+| マスコット | 250px丸アイコン + 吹き出し（画面下部固定） |
+| フォント | Noto Sans JP 700/900 |
+
+### 素材パス
+
+| 素材 | パス |
+|------|------|
+| マスコット画像 | `short-video-factory/local-files/mascot.jpg` |
+| BGM | `short-video-factory/assets/bgm/ukiuki_lalala.mp3` |
+| スライドHTML | `short-video-factory/local-files/slides-{project}/` |
+| スライドPNG | `short-video-factory/local-files/slides-{project}/output/` |
+| 完成動画 | `short-video-factory/generated/` |
+
+### HTMLテンプレート構造
+
+各スライドHTMLの共通CSS:
+```css
+body { width: 1080px; height: 1920px; background: #E8DED0; font-family: 'Noto Sans JP', sans-serif; }
+.badge { position: absolute; top: 60px; /* 白丸+ピンク数字+紺ラベル */ }
+.area { position: absolute; top: 240px; left: 50px; right: 50px; /* 図解エリア */ }
+.mascot { position: absolute; bottom: 20px; /* マスコット固定 */ }
+```
+
+### VOICEVOX設定
+
+| 項目 | 値 |
+|------|-----|
+| URL | `http://localhost:50021` |
+| Speaker | 3（ずんだもん） |
+| API | `/audio_query` → `/synthesis` |
+
+### ffmpeg動画組立コマンド
+
+```bash
+# 1. 各スライド → 個別MP4（音声長+1秒）
+ffmpeg -y -loop 1 -i slide.png -i audio.wav \
+  -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p \
+  -t {duration} -vf "scale=1080:1920" vid.mp4
+
+# 2. 結合
+ffmpeg -y -f concat -safe 0 -i concat.txt -c copy combined.mp4
+
+# 3. BGM合成
+ffmpeg -y -i combined.mp4 -i bgm.mp3 \
+  -filter_complex "[0:a]volume=3.0[voice];[1:a]volume=0.12,afade=t=in:st=0:d=1,afade=t=out:st={fade}:d=2[bgm];[voice][bgm]amix=inputs=2:duration=first[out]" \
+  -map 0:v -map "[out]" -c:v copy -c:a aac -b:a 192k output.mp4
+```
+
+### コスト
+
+| 項目 | コスト |
+|------|--------|
+| HTML生成 | $0（セッション内） |
+| Playwright | $0（ローカル） |
+| VOICEVOX | $0（ローカル） |
+| ffmpeg | $0（ローカル） |
+| **合計** | **$0**（セッション料金のみ） |
+
+---
+
+## Style: ranking / 2ch（short-video-factory連携）
+
+### プロジェクトパス
+```
+/Users/matsumototoshihiko/Desktop/dev/ショート動画システム4月1日/short-video-factory
+```
+
+### 使い方
+```
+/shorts-create "やばい習慣ランキング" --style ranking
+/shorts-create "コンビニバイトの修羅場" --style 2ch
+```
+
+### パイプライン
+```
+テーマ入力
+  ↓
+Phase 1: 台本JSON生成（fixtures/sample-script.json）
+Phase 2: pnpm render:v3（VOICEVOX + いらすとや + Remotion + ffmpeg）
+  ↓
+出力: generated/latest/output.mp4（約59秒）
+```
+
+### 台本スキーマ（ランキング）
+- `videoTitle`: max 40文字（\nで改行、7文字×3行推奨）
+- `intro`: max 40文字
+- `items`: 3-10個（rank降順）
+  - `topic`: max 24文字（**8文字以下で1行強制**）
+  - `comment1`: max 50文字（青枠・共感系）
+  - `comment2`: max 50文字（赤枠・ツッコミ系）
+  - `body`: max 100文字（読み上げ専用）
+  - `imageKeywords`: 2要素以上の配列
+  - `imageKeywordsEn`: 英語キーワード
+- `outro`: max 30文字
+
+### コスト
+- 全てローカル処理: **$0**
+
+---
 
 ---
 
