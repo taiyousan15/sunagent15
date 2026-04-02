@@ -92,6 +92,7 @@ Before starting work:
 | 「リサーチして」「調査して」「調べて」「深掘りして」 | `/research-system`（全STEP実行） |
 | 「ディープリサーチ」「徹底調査」「全力リサーチ」 | `/research-system`（全STEP実行） |
 | 「市場調査」「競合調査」「トレンド調査」 | `/research-system`（全STEP実行） |
+| 「無料リサーチ」「フリーリサーチ」「コストゼロで調査」 | `/research-system-free`（APIキー不要版） |
 
 `/research-system` は内部で以下を全て自動起動する:
 - `/intelligence-research` `/mega-research` `/mega-research-plus`
