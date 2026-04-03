@@ -144,3 +144,6 @@ research/
 .kiro/
 .opencode/
 SESSION_HANDOFF.md
+
+# Large binary (130MB, exceeds GitHub 100MB limit)
+tools/codebase-memory-mcp/codebase-memory-mcp
