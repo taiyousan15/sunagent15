@@ -2,6 +2,7 @@ effort: high
 ---
 name: world-research
 description: Global SNS/academic cross-search
+disable-model-invocation: true
   全世界SNS・学術論文・コミュニティ横断キーワード検索リサーチスキル。
   【SNS層】X/Reddit/YouTube/Instagram/TikTok/note.com/Bilibili/Zhihu/小红書/WeChat/Weibo/Medium/Naver等
   【学術層】Arxiv/Papers with Code/OpenReview/Google Scholar/Semantic Scholar/Connected Papers/DBLP/ACL Anthology

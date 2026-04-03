@@ -1,7 +1,7 @@
 ---
 name: note-research
 description: note.com research tool
-disable-model-invocation: false
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - Read

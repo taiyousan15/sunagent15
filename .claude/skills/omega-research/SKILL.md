@@ -5,6 +5,7 @@ description: "最高精度統合リサーチ。Grok-4 Agent Tools Live Search + 
 argument-hint: "[トピック] [--mode=deep|grok|api|intel|quick|academic|smolagents]"
 allowed-tools: Read, Write, Bash(python3:*, pip:*, npx:*, cd:*)
 model: opus
+disable-model-invocation: true
 effort: high
 ---
 

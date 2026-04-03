@@ -5,6 +5,7 @@ description: API-free integrated research
 argument-hint: "[トピック] [--depth=quick|standard|deep]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 model: opus
+disable-model-invocation: true
 effort: low
 ---
 

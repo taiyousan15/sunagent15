@@ -5,6 +5,7 @@ description: 8-source integrated research system
 argument-hint: "[トピック] [--mode=deep|quick|news|social|free]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python:*, node:*)
 model: opus
+disable-model-invocation: true
 effort: high
 ---
 

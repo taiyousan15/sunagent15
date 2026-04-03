@@ -5,6 +5,7 @@ description: 6-API integrated research system
 argument-hint: "[トピック] [--mode=deep|quick|news|trend]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python:*, node:*)
 model: opus
+disable-model-invocation: true
 effort: high
 ---
 

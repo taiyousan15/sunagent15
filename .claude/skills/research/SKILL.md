@@ -4,6 +4,7 @@ name: research
 description: Deep research with report generation
 argument-hint: "[トピック]"
 allowed-tools: Read, Write, Grep, Glob, WebSearch, WebFetch, Bash(python:*)
+disable-model-invocation: true
 effort: high
 ---
 

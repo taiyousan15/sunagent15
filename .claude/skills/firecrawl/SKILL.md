@@ -1,3 +1,9 @@
+---
+name: firecrawl
+description: Web scraping, crawling, and structural analysis
+disable-model-invocation: true
+---
+
 # firecrawl - Webスクレイピング・クロール・構造分析
 
 ## 使い方

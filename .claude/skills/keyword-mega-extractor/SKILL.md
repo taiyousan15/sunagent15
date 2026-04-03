@@ -4,6 +4,7 @@ description: SEO keyword extraction and analysis
 argument-hint: "[シードキーワード] [--type=all|longtail|niche|trending|buying]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python:*, node:*)
 model: opus
+disable-model-invocation: true
 ---
 
 # keyword-mega-extractor - キーワード最強抽出システム
