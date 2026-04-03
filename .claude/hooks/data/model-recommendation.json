@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-03-06T01:54:27.043Z",
+  "timestamp": "2026-04-03T19:08:20.811Z",
   "complexity": "complex",
-  "confidence": 74,
+  "confidence": 87,
   "taskModel": "sonnet",
   "claudeCodeModel": "sonnet",
   "litellmModel": "minimax-m2-5",
   "description": "新機能実装・API構築・マルチファイル変更",
-  "reason": "キーワード検出: agent",
-  "previousModel": "sonnet",
-  "switched": false
+  "reason": "キーワード検出: 実装して",
+  "previousModel": "haiku",
+  "switched": true
 }

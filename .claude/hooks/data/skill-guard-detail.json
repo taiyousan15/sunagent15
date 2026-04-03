@@ -1,12 +1,16 @@
 {
-  "timestamp": "2026-03-21T00:00:05.922Z",
-  "autoMapped": [],
-  "explicit": [
-    "hooks",
-    "data",
-    "compact-metrics",
-    "model-recommendation",
-    "taisun_agent"
+  "timestamp": "2026-04-03T19:04:18.896Z",
+  "autoMapped": [
+    {
+      "name": "基本リサーチ（簡易調査）",
+      "description": "基本リサーチ（簡易調査）",
+      "required_skills": [
+        "research"
+      ],
+      "strict": false,
+      "skill_path": null
+    }
   ],
+  "explicit": [],
   "requiresSameWorkflow": false
 }

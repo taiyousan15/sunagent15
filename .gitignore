@@ -104,8 +104,8 @@ unused_resources_report.json
 # Removed submodule directories (do not re-add)
 taisun_agent/
 
-# Google Auth browser profile (large cache, 959MB)
-google-auth-system/
+# Google Auth browser profile cache (submodule itself is tracked)
+google-auth-system/chrome-profile/
 
 # Large binary files (GitHub 100MB limit)
 完成版.pdf
@@ -133,3 +133,14 @@ logs/approvals/
 # 別プロジェクト（taisun_agentに不要）
 marketing-hub/
 mario-game/
+
+# Runtime-generated (do not track)
+.agent-trace/
+.playwright-mcp/
+.taisun/
+.workflow_state_backups/
+agent-output/
+research/
+.kiro/
+.opencode/
+SESSION_HANDOFF.md
