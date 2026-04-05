@@ -93,6 +93,10 @@ Before starting work:
 | 「ディープリサーチ」「徹底調査」「全力リサーチ」 | `/research-system`（全STEP実行） |
 | 「市場調査」「競合調査」「トレンド調査」 | `/research-system`（全STEP実行） |
 | 「無料リサーチ」「フリーリサーチ」「コストゼロで調査」 | `/research-system-free`（APIキー不要版） |
+| 「動画ダウンロード」「動画を保存」「YouTubeダウンロード」 | `/video-download`（yt-dlp） |
+| 「Instagramダウンロード」「TikTokダウンロード」「リール保存」 | `/video-download`（yt-dlp） |
+| 「Udemyダウンロード」「コースダウンロード」「講座を保存」 | `/udemy-download`（コース一括DL） |
+| 「文字起こし」「トランスクリプト」「字幕取得」 | `/video-download` + 字幕オプション |
 
 `/research-system` は内部で以下を全て自動起動する:
 - `/intelligence-research` `/mega-research` `/mega-research-plus`
