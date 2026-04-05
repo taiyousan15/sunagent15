@@ -90,8 +90,10 @@ Before starting work:
 | トリガーワード | 使うスキル |
 |--------------|-----------|
 | 「リサーチして」「調査して」「調べて」「深掘りして」 | `/research-system`（全STEP実行） |
+| 「リサーチスキル」「リサーチのスキル」「リサーチを使って」 | `/research-system`（全STEP実行） |
 | 「ディープリサーチ」「徹底調査」「全力リサーチ」 | `/research-system`（全STEP実行） |
 | 「市場調査」「競合調査」「トレンド調査」 | `/research-system`（全STEP実行） |
+| 「情報を探して」「詳しく調べて」「全部調べて」 | `/research-system`（全STEP実行） |
 | 「無料リサーチ」「フリーリサーチ」「コストゼロで調査」 | `/research-system-free`（APIキー不要版） |
 | 「動画ダウンロード」「動画を保存」「YouTubeダウンロード」 | `/video-download`（yt-dlp） |
 | 「Instagramダウンロード」「TikTokダウンロード」「リール保存」 | `/video-download`（yt-dlp） |
