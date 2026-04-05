@@ -66,35 +66,40 @@ if ! git diff --quiet HEAD 2>/dev/null; then
 fi
 
 git pull origin main --ff-only 2>/dev/null || {
-    warn "git pull に失敗しました。ZIPダウンロードで更新します..."
-
-    ZIP_URL="https://github.com/san15/taisun_agent/archive/refs/heads/main.zip"
-    ZIP_PATH="/tmp/taisun_agent_update.zip"
-    EXTRACT_PATH="/tmp/taisun_agent_extract"
-
-    if curl -fsSL "$ZIP_URL" -o "$ZIP_PATH" 2>/dev/null; then
-        rm -rf "$EXTRACT_PATH"
-        unzip -q "$ZIP_PATH" -d "$EXTRACT_PATH"
-        SOURCE_DIR=$(ls -d "$EXTRACT_PATH"/*/ | head -1)
-
-        # node_modules と .git を除外してコピー（rsyncがない環境も考慮）
-        if command -v rsync &> /dev/null; then
-            rsync -a --exclude='node_modules' --exclude='.git' "$SOURCE_DIR" "$REPO_DIR/"
-        else
-            # rsyncがない場合はcpで代替
-            cd "$SOURCE_DIR"
-            for item in *; do
-                [ "$item" = "node_modules" ] && continue
-                [ "$item" = ".git" ] && continue
-                cp -R "$item" "$REPO_DIR/" 2>/dev/null || true
-            done
-        fi
-        ok "ZIPダウンロードで更新しました"
-        rm -f "$ZIP_PATH"
-        rm -rf "$EXTRACT_PATH"
+    info "通常の更新ができませんでした。最新版に強制同期します..."
+    if git reset --hard origin/main 2>/dev/null; then
+        ok "最新版に同期しました"
     else
-        warn "ZIPダウンロードにも失敗しました"
-        warn "手動でダウンロード: $ZIP_URL"
+        warn "git同期に失敗しました。ZIPダウンロードで更新します..."
+
+        ZIP_URL="https://github.com/san15/taisun_agent/archive/refs/heads/main.zip"
+        ZIP_PATH="/tmp/taisun_agent_update.zip"
+        EXTRACT_PATH="/tmp/taisun_agent_extract"
+
+        if curl -fsSL "$ZIP_URL" -o "$ZIP_PATH" 2>/dev/null; then
+            rm -rf "$EXTRACT_PATH"
+            unzip -q "$ZIP_PATH" -d "$EXTRACT_PATH"
+            SOURCE_DIR=$(ls -d "$EXTRACT_PATH"/*/ | head -1)
+
+            # node_modules と .git を除外してコピー（rsyncがない環境も考慮）
+            if command -v rsync &> /dev/null; then
+                rsync -a --exclude='node_modules' --exclude='.git' "$SOURCE_DIR" "$REPO_DIR/"
+            else
+                # rsyncがない場合はcpで代替
+                cd "$SOURCE_DIR"
+                for item in *; do
+                    [ "$item" = "node_modules" ] && continue
+                    [ "$item" = ".git" ] && continue
+                    cp -R "$item" "$REPO_DIR/" 2>/dev/null || true
+                done
+            fi
+            ok "ZIPダウンロードで更新しました"
+            rm -f "$ZIP_PATH"
+            rm -rf "$EXTRACT_PATH"
+        else
+            warn "ZIPダウンロードにも失敗しました"
+            warn "手動でダウンロード: $ZIP_URL"
+        fi
     fi
 }
 

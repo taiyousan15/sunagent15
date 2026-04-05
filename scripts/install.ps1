@@ -72,15 +72,21 @@ if ($Update) {
     Write-Host "  TAISUN Agent アップデート (Windows)" -ForegroundColor Cyan
     Write-Host ""
 
-    # git pull を試行、失敗したらZIPダウンロードにフォールバック
+    # git pull を試行、失敗したら強制同期、それもダメならZIPフォールバック
     Write-Host "  最新版を取得しています..."
     try {
-        $gitResult = git pull origin main 2>&1
+        git fetch origin 2>&1 | Out-Null
+        $gitResult = git pull origin main --ff-only 2>&1
         if ($LASTEXITCODE -ne 0) { throw "git pull failed" }
         Write-Ok "git pull 成功"
     } catch {
-        Write-Warn "git pull に失敗しました（リポジトリにアクセスできません）"
-        Write-Info "ZIPダウンロードで更新します..."
+        Write-Info "通常の更新ができませんでした。最新版に強制同期します..."
+        try {
+            git reset --hard origin/main 2>&1 | Out-Null
+            if ($LASTEXITCODE -ne 0) { throw "reset failed" }
+            Write-Ok "最新版に同期しました"
+        } catch {
+        Write-Warn "git同期に失敗しました。ZIPダウンロードで更新します..."
 
         $zipUrl = "https://github.com/san15/taisun_agent/archive/refs/heads/main.zip"
         $zipPath = "$env:TEMP\taisun_agent_update.zip"
@@ -109,7 +115,7 @@ if ($Update) {
             Write-Info "手動でZIPをダウンロードしてください: $zipUrl"
             exit 1
         }
-    }
+    }}
     Write-Host ""
     Write-Host "  引き続きインストールを実行します..." -ForegroundColor Cyan
     Write-Host ""
