@@ -21,7 +21,7 @@
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
-| v2.49.0 | 2026-04-05 | **agent-browser v0.24.1 をデフォルトブラウザツールに採用** — Playwright MCPからの移行でコンテキストトークン93%削減（114k→7k/10ステップ操作）。Opus 4.6×GPT 5.4の8ラウンド議論（全ラウンド一致）に基づく判定。CLI方式のためMCP枠を消費しない / **udemy-downloadスキル復活** — Udemyコース全動画+字幕一括ダウンロード（video-downloadでは代替不可） / Playwright MCPはオプション降格（disabled: true、特殊用途で残す） |
+| v2.49.0 | 2026-04-05 | **agent-browser v0.24.1 をデフォルトブラウザツールに採用** — Playwright MCPからの移行でコンテキストトークン93%削減（114k→7k/10ステップ操作）。Opus 4.6×GPT 5.4の8ラウンド議論（全ラウンド一致）に基づく判定。CLI方式のためMCP枠を消費しない / **udemy-downloadスキル復活** — Udemyコース全動画+字幕一括ダウンロード（video-downloadでは代替不可） / Playwright MCPはオプション降格（disabled: true、特殊用途で残す） / **git履歴衝突の自動回復** — update.sh/install.ps1にgit reset --hard自動フォールバック追加。Mac/Windows両対応で今後の更新時に衝突で止まらなくなった |
 |-----------|------|------|
 | v2.48.0 | 2026-04-04 | **リポジトリ大規模クリーンアップ** — Opus 4.6×GPT 5.4の10ラウンドレビューに基づき909ファイル削除（約199MB削減）/ ルートファイル105→32（-70%）/ スキル125→62（-50%）不要スキル58件削除+リサーチ子スキル12件をdisable-model-invocation化 / google-auth-system壊れたsubmodule→正しいsubmoduleに修正 / sdd-fullの質問を素人でも答えられる平易な日本語に改善 / .gitignore強化（.agent-trace, research, dist等の実行時生成物を追跡除外） |
 | v2.47.0 | 2026-04-03 | **research-system-free** 完全無料リサーチスキル追加（APIキーゼロ・WebSearch+opencli-rs+Ollamaで動作） / research-system配布用ファイル同梱（scripts/distributions/） / CLAUDE.mdにリサーチ自動発動ルール追加（「リサーチして」等で全13スキル自動起動） / Windows git pull競合修正（.gitattributes ps1 eol=lf） / install.ps1 ReadKey廃止→Start-Sleep 3秒（キー入力待ち停止修正） |
