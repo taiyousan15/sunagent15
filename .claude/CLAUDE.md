@@ -24,14 +24,7 @@ When user says "same workflow" or "use XX skill", it is a **contract**.
 ### 5. Skill Compliance
 When "use XX skill" is specified: **MUST use Skill tool**. Manual implementation is PROHIBITED.
 
-## System Overview
-
-| Component | Count | Reference |
-|-----------|-------|-----------|
-| Agents | 96 | `/agent-catalog` |
-| Skills | 110+ | `/skill-catalog` |
-| Commands | 110 | Shortcut commands |
-| MCP Servers | 15+ | Core servers |
+**VIOLATION = CRITICAL ERROR** -> Stop -> Apologize -> Record in `.claude/hooks/mistakes.md` -> Re-execute correctly
 
 ## Pre-Flight Checks
 
@@ -41,76 +34,41 @@ Before starting work:
 - [ ] SESSION_HANDOFF.md exists? -> Read it
 - [ ] Summary ratio specified? -> Follow exactly
 
-**VIOLATION = CRITICAL ERROR** -> Stop -> Apologize -> Record in `.claude/hooks/mistakes.md` -> Re-execute correctly
-
-## Language
-- Japanese priority
-- Technical terms in English OK
-- Use marketing terminology appropriately
-
 ## Sub-Agent Context Protection (MANDATORY)
 
-### Result Size Control (MUST)
+### Result Size Control
 - **通常タスク**: `結果は500文字以内で要約して返してください`
 - **リサーチ・列挙タスク**: `事実・URL・数値を省略せず返してください。不要な修飾語のみ削減`
 - **ALL** research/analysis agents MUST use `run_in_background: true`
-- Read background agent output files selectively (use `offset`/`limit`)
 
-### Web Research Quality (MUST)
+### Web Research Quality
 - WebSearchで検索したら、**結果URLのうち最低3件はWebFetchで実際にページを開くこと**
 - 検索結果のスニペットだけでレポートを書くことは**禁止**
-- サブエージェントが「十分な情報が集まった」と自己判断して停止することは**禁止**。指示された件数・サイト数を全て完了すること
-- 列挙タスク（「N件調査」「全サイト巡回」）では、完了数を明示報告すること（例: 「14サイト中14サイト巡回完了」）
+- サブエージェントが「十分な情報が集まった」と自己判断して停止することは**禁止**
+- 列挙タスク（「N件調査」）では、完了数を明示報告すること
 
-### Delegation Pattern (MUST)
+### Delegation Pattern
 - 3+ parallel agents: `run_in_background: true` **REQUIRED** (violation = context exhaustion)
 - After background agent completes: Read output file, extract key findings only
-- Task result >2000chars → run `mcp__praetorian__praetorian_compact` if available, otherwise use `/compact`
-
-### Strategic /compact Timing
-- **Before** launching 3+ parallel agents
-- **Immediately after** receiving large agent results (hook: task-overflow-guard)
-- Hook auto-suggests at dynamic intervals (compact-optimizer)
+- Task result >2000chars → `/compact`
 
 ### Agent Checkpoint（重要Agent起動時の品質ゲート）
 
-以下のAgent/スキル起動時、プロンプト末尾に **checkpoint 3問** を必ず追加すること:
+以下のAgent/スキル起動時、プロンプト末尾に **checkpoint 3問** を必ず追加:
 
-**対象（checkpoint必須）:**
-- リサーチ系: researcher, Explore(very thorough), research-system, mega-research, omega-research
-- 実装系: implementer, feature-builder, bug-fixer, backend-developer, frontend-developer
-- 設計系: architect, system-architect, api-designer, database-designer
-- 要件定義系: requirements-elicitation, gather-requirements
-- レビュー系（重要）: ReviewAgent, security-architect
+**対象:** researcher, Explore(very thorough), implementer, feature-builder, bug-fixer, backend-developer, frontend-developer, architect, system-architect, api-designer, database-designer, requirements-elicitation, ReviewAgent, security-architect
 
-**対象外（checkpoint不要）:**
-- Explore(quick/medium), code-searcher, Grep/Read のみの軽量タスク
-- multi-agent-debate, multi-agent-competition
-- haiku モデル指定のAgent
+**対象外:** Explore(quick/medium), code-searcher, debate, competition, haiku
 
-**追加するcheckpoint（プロンプト末尾に挿入）:**
+**追加するcheckpoint:**
 ```
---- AGENT CHECKPOINT（作業開始前に必ず内部回答せよ）---
-Q1. あなたの役割を1行で述べよ（プロンプトから抽出）
-Q2. 成果物の形式と制約は？（文字数制限・必須項目・WebFetch最低件数）
-Q3. 完了条件は何か？（何をもって「完了」とするか）
-回答後に作業開始。回答できない項目があればプロンプトを再読せよ。
+--- AGENT CHECKPOINT ---
+Q1. あなたの役割を1行で述べよ
+Q2. 成果物の形式と制約は？（文字数・WebFetch件数）
+Q3. 完了条件は何か？
 ```
 
-## ECC（Everything Claude Code）スキル活用ルール
-
-### 自動適用するECCスキル
-| 場面 | 使用スキル |
-|------|-----------|
-| コードレビュー時 | coding-standards の基準を適用 |
-| 新機能実装時 | tdd-workflow に従いテストファースト |
-| 実装完了の判断時 | verification-loop で自動検証 |
-| セキュリティに関わるコード変更時 | cc-skill-security-review を適用 |
-| コンテキスト圧迫を検知した時 | strategic-compact の基準で判断 |
-
-### リサーチ自動発動ルール（MUST）
-
-以下のキーワードを検出したら、**必ず `/research-system` を起点として全リサーチスキルを使うこと**:
+## リサーチ自動発動ルール（MUST）
 
 | トリガーワード | 使うスキル |
 |--------------|-----------|
@@ -119,65 +77,15 @@ Q3. 完了条件は何か？（何をもって「完了」とするか）
 | 「ディープリサーチ」「徹底調査」「全力リサーチ」 | `/research-system`（全STEP実行） |
 | 「市場調査」「競合調査」「トレンド調査」 | `/research-system`（全STEP実行） |
 | 「情報を探して」「詳しく調べて」「全部調べて」 | `/research-system`（全STEP実行） |
-| 「無料リサーチ」「フリーリサーチ」「コストゼロで調査」 | `/research-system-free`（APIキー不要版） |
-| 「動画ダウンロード」「動画を保存」「YouTubeダウンロード」 | `/video-download`（yt-dlp） |
-| 「Instagramダウンロード」「TikTokダウンロード」「リール保存」 | `/video-download`（yt-dlp） |
-| 「Udemyダウンロード」「コースダウンロード」「講座を保存」 | `/udemy-download`（コース一括DL） |
-| 「文字起こし」「トランスクリプト」「字幕取得」 | `/video-download` + 字幕オプション |
+| 「無料リサーチ」「フリーリサーチ」 | `/research-system-free` |
+| 「動画ダウンロード」「動画を保存」「YouTubeダウンロード」 | `/video-download` |
+| 「Instagramダウンロード」「TikTokダウンロード」 | `/video-download` |
+| 「Udemyダウンロード」「コースダウンロード」 | `/udemy-download` |
+| 「文字起こし」「トランスクリプト」 | `/video-download` + 字幕 |
 
-`/research-system` は内部で以下を全て自動起動する:
-- `/intelligence-research` `/mega-research` `/mega-research-plus`
-- `/deep-research` `/deep-research-grok` `/omega-research`
-- `/world-research` `/gem-research` `/opencli-research`
-- `/note-research` `/exa-search` `/firecrawl`
-
-### OpenCode（セカンドエンジン）
-- 通常時: 使わない（Claude Code + TAISUNで十分）
-- テストが通らないバグ: `/opencode-fix` で別視点の修正案を取得
-- TDDサイクル自動化: `/opencode-ralph-loop` を一時的に有効化（仕様が明確なタスクのみ）
-- Ralph Loopは既定OFF。使う時だけONにし、完了後は必ずOFFに戻す
-
-## CodeGraph（コードベース知識グラフ）
-
-### 概要
-codebase-memory-mcp がMCPサーバーとして登録済み。コード構造（関数/クラス/依存関係）を知識グラフ化し、query/search/impact分析が可能。
-
-### メモリ責務分離（MUST）
-| 保存データ | 保存先 | 理由 |
-|-----------|--------|------|
-| ユーザー情報・フィードバック | MEMORY.md（SSoT） | 人間が確認・編集可能 |
-| プロジェクトルール | MEMORY.md | バージョン管理でチーム共有 |
-| コード構造（関数/クラス/依存） | codebase-memory-mcp | 構造化データはDBが最適 |
-| コード検索インデックス | codebase-memory-mcp | ファイル変更時に自動更新 |
-
-### 矛盾時のルール
-- SSoT = MEMORY.md（最高優先度）
-- 矛盾はSESSION_HANDOFF.mdに記録してユーザーに確認
-
-### 活用方法
-- コード探索時: Grep/Readの前にcodebase-memoryのsearch_code/query_graphを優先使用
-- 変更影響分析: trace_call_path/detect_changesで事前確認
-- アーキテクチャ把握: get_architectureで全体像を即取得
-
-## Self-Improvement Loop
-
-- **Cross-session lessons**: See `AGENTS.md` (project root) — auto-loaded every session
-- **Record new lessons**: Run `/learn` after resolving non-obvious problems
-
-## Hook Safety (Advisory-only)
-
-Project-level hooks **never block** (shared system):
-- `deviation-approval-guard` / `agent-enforcement-guard` / `definition-lint-gate` → exit 0, warning only
-- Only `unified-guard` blocks: `rm -rf /`, `mkfs`, `dd if=/dev`, fork bombs
-
-## MCP Caution
-
-- Each MCP server consumes 1,000–26,000 tokens on load
-- Keep active MCP ≤ 10 (GitHub MCP alone = 26k tokens)
-- Disable unnecessary servers in `.claude/settings.json` → `disabledMcpServers`
+## Language
+- Japanese priority / Technical terms in English OK
 
 ## Detailed References
-
-For detailed rules, mappings, and expert workflows:
-- **L2** (defense layers, skill mapping, guidelines): `.claude/references/CLAUDE-L2.md`
-- **L3** (specialized workflows, audio preprocessing): `.claude/references/CLAUDE-L3.md`
+- **ECC・自動適用スキル・OpenCode・CodeGraph・MCP・Hook Safety**: `.claude/references/CLAUDE-L2.md`
+- **Specialized workflows**: `.claude/references/CLAUDE-L3.md`
