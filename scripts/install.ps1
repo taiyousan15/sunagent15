@@ -30,6 +30,9 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 # ErrorActionPreference を Continue に変更（1つの失敗で全体停止を防止）
 $ErrorActionPreference = "Continue"
 
+# TLS 1.2 強制（古い Windows 10 対応）
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
 $REPO_DIR = Split-Path -Parent $PSScriptRoot
 $VERSION = (Get-Content "$REPO_DIR\package.json" | ConvertFrom-Json).version
 
@@ -233,16 +236,19 @@ Write-Step "ステップ 2/5：ファイルをインストールしています�
 Write-Host ""
 Write-Host "  📦 必要なファイルをダウンロードしています..."
 Set-Location $REPO_DIR
+$npmLog = "$REPO_DIR\npm-install.log"
 try {
-    npm install --silent 2>$null
+    $npmOutput = npm install 2>&1
+    $npmOutput | Out-File $npmLog -Encoding UTF8
+    if ($LASTEXITCODE -ne 0) { throw "npm install failed" }
     Write-Ok "ファイルのインストールが完了しました"
 } catch {
-    try {
-        npm install 2>&1 | Out-Null
-        Write-Ok "ファイルのインストールが完了しました"
-    } catch {
-        Write-Warn "一部のダウンロードに問題がありましたが、続行します"
+    Write-Warn "npm install で問題が発生しました"
+    Write-Info "詳細ログ: $npmLog"
+    if (Test-Path $npmLog) {
+        Get-Content $npmLog -Tail 5 | ForEach-Object { Write-Host "       $_" -ForegroundColor Gray }
     }
+    Write-Info "続行します..."
 }
 
 Write-Host ""
@@ -363,7 +369,7 @@ if (Test-Path $SOURCE_SKILLS) {
         }
     }
 
-    $total = (Get-ChildItem $TARGET_SKILLS -Directory -ErrorAction SilentlyContinue).Count
+    $total = @(Get-ChildItem $TARGET_SKILLS -Directory -ErrorAction SilentlyContinue).Count
     Write-Ok "スキルを設定しました（新規: ${INSTALLED}件 / スキップ: ${SKIPPED}件 / 合計: ${total}件）"
     if ($PROFILE_SKIPPED -gt 0) {
         Write-Info "プロファイル外スキル: ${PROFILE_SKIPPED}件（-Profile full で全て登録可能）"
@@ -398,7 +404,7 @@ if (Test-Path $SOURCE_AGENTS) {
         Copy-Item $_.FullName -Destination $target -Force
         $AGENT_INSTALLED++
     }
-    $total = (Get-ChildItem $TARGET_AGENTS -Filter "*.md" -ErrorAction SilentlyContinue).Count
+    $total = @(Get-ChildItem $TARGET_AGENTS -Filter "*.md" -ErrorAction SilentlyContinue).Count
     Write-Ok "エージェントを設定しました（更新: ${AGENT_INSTALLED}件 / 合計: ${total}件）"
     Write-Info "Windows版はエージェントをコピーしています。git pull 後に再実行して更新してください。"
 }
@@ -553,8 +559,8 @@ if (Test-Path "$REPO_DIR\.claude\CLAUDE.md") {
     Write-Ok "設定ファイルが正しく配置されています"
 }
 
-$SKILL_COUNT = (Get-ChildItem $TARGET_SKILLS -Directory -ErrorAction SilentlyContinue).Count
-$EXPECTED_SKILLS = (Get-ChildItem $SOURCE_SKILLS -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -notin @("_archived", "_guides", "data") } | Where-Object { (Test-Path "$($_.FullName)\SKILL.md") -or (Test-Path "$($_.FullName)\CLAUDE.md") }).Count
+$SKILL_COUNT = @(Get-ChildItem $TARGET_SKILLS -Directory -ErrorAction SilentlyContinue).Count
+$EXPECTED_SKILLS = @(Get-ChildItem $SOURCE_SKILLS -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -notin @("_archived", "_guides", "data") } | Where-Object { (Test-Path "$($_.FullName)\SKILL.md") -or (Test-Path "$($_.FullName)\CLAUDE.md") }).Count
 if ($SKILL_COUNT -ge $EXPECTED_SKILLS) {
     Write-Ok "スキル: $SKILL_COUNT 個が利用可能です（期待値: ${EXPECTED_SKILLS}個）"
 } elseif ($SKILL_COUNT -ge 50) {
