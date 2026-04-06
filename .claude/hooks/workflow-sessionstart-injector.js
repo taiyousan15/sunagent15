@@ -88,6 +88,25 @@ async function main() {
     context.push('');
   }
 
+  // ─────────────────────────────────────────
+  // CHECKPOINT: 動的質問生成（5問）
+  // mistakes.md + SESSION_HANDOFF.md から質問を生成し、
+  // Claudeが本当にファイルを読んだか検証する
+  // ─────────────────────────────────────────
+  const checkpoint = generateCheckpointQuestions(cwd);
+  if (checkpoint.length > 0) {
+    context.push('');
+    context.push('=== BOOT CHECKPOINT（必須・スキップ禁止） ===');
+    context.push('');
+    context.push('作業開始前に以下の5問に回答せよ。回答できない場合は該当ファイルをReadせよ。');
+    context.push('回答は内部処理のみ（ユーザーに表示不要）。全問回答後に作業開始。');
+    context.push('');
+    checkpoint.forEach((q, i) => {
+      context.push(`Q${i + 1}. ${q}`);
+    });
+    context.push('');
+  }
+
   // コンテキストを出力
   if (context.length > 0) {
     console.log(context.join('\n'));
@@ -151,6 +170,78 @@ function findSessionHandoffs(cwd) {
   } catch (e) {}
 
   return [...new Set(handoffs)].slice(0, 5);
+}
+
+/**
+ * BOOT CHECKPOINT — 動的質問生成
+ *
+ * mistakes.md / SESSION_HANDOFF.md / workflow_state.json から
+ * 5つの質問を動的に生成する。Claudeが本当にファイルを読んだか検証する仕組み。
+ * ファイル内容が変わるたびに質問も変わるので丸暗記はできない。
+ */
+function generateCheckpointQuestions(cwd) {
+  const questions = [];
+
+  try {
+    // Q1: mistakes.md から最新のミスを質問
+    const mistakesPath = path.join(__dirname, 'mistakes.md');
+    if (fs.existsSync(mistakesPath)) {
+      const content = fs.readFileSync(mistakesPath, 'utf8');
+      const patterns = content.match(/### Pattern \d+: (.+)/g);
+      if (patterns && patterns.length > 0) {
+        const count = patterns.length;
+        const lastPattern = patterns[patterns.length - 1].replace(/### Pattern \d+: /, '');
+        questions.push(
+          `mistakes.md には何個のPatternが記録されている？ また最後のPatternの名前は？（Read .claude/hooks/mistakes.md で確認）`
+        );
+      }
+    }
+
+    // Q2: SESSION_HANDOFF.md から現在の状態を質問
+    const handoffPath = path.join(cwd, 'SESSION_HANDOFF.md');
+    if (fs.existsSync(handoffPath)) {
+      const content = fs.readFileSync(handoffPath, 'utf8');
+      const dateMatch = content.match(/\d{4}-\d{2}-\d{2}/);
+      questions.push(
+        `SESSION_HANDOFF.md の最終更新日は？（Read SESSION_HANDOFF.md で確認）`
+      );
+    } else {
+      questions.push(
+        `SESSION_HANDOFF.md は存在するか？ 存在しない場合は「なし」と回答`
+      );
+    }
+
+    // Q3: workflow_state.json から現在フェーズを質問
+    const statePath = path.join(cwd, '.workflow_state.json');
+    if (fs.existsSync(statePath)) {
+      try {
+        const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+        const mode = state.meta?.mode || 'unknown';
+        questions.push(
+          `現在のワークフローモードは何か？（STRICT / NORMAL / GUIDED のいずれか）`
+        );
+      } catch (e) {
+        questions.push('workflow_state.json は正常に読めるか？');
+      }
+    }
+
+    // Q4: ユーザー指示のスキル検出（常に質問）
+    questions.push(
+      `ユーザーの指示にスキル名（/xxx）やトリガーワード（「リサーチして」「調べて」等）が含まれているか？ → YES/NO。YESならSkill tool必須。`
+    );
+
+    // Q5: 未読ファイル編集禁止の確認（常に質問）
+    questions.push(
+      `これから編集するファイルを事前にReadしたか？ 未読ファイルへのEdit/Writeは禁止。→ 確認済/未確認`
+    );
+
+  } catch (e) {
+    // エラー時は最低限の質問のみ
+    questions.push('mistakes.md を確認したか？ → YES/NO');
+    questions.push('未読ファイルの編集禁止ルールを認識しているか？ → YES/NO');
+  }
+
+  return questions.slice(0, 5);
 }
 
 main().catch(() => process.exit(0));
