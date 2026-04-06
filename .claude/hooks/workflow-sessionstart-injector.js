@@ -183,27 +183,30 @@ function generateCheckpointQuestions(cwd) {
   const questions = [];
 
   try {
-    // Q1: mistakes.md から最新のミスを質問
+    // Q1: mistakes.md — 特定行の内容を答えさせる（推測不可能）
     const mistakesPath = path.join(__dirname, 'mistakes.md');
     if (fs.existsSync(mistakesPath)) {
       const content = fs.readFileSync(mistakesPath, 'utf8');
+      const lines = content.split('\n').filter(l => l.trim());
       const patterns = content.match(/### Pattern \d+: (.+)/g);
       if (patterns && patterns.length > 0) {
-        const count = patterns.length;
-        const lastPattern = patterns[patterns.length - 1].replace(/### Pattern \d+: /, '');
+        // ランダムなPatternを選んで質問
+        const idx = Math.floor(Math.random() * patterns.length);
+        const patternNum = idx + 1;
         questions.push(
-          `mistakes.md には何個のPatternが記録されている？ また最後のPatternの名前は？（Read .claude/hooks/mistakes.md で確認）`
+          `Read .claude/hooks/mistakes.md → Pattern ${patternNum} の「✅ 正解」の内容を1行で答えよ（推測禁止・必ずReadで確認）`
         );
       }
     }
 
-    // Q2: SESSION_HANDOFF.md から現在の状態を質問
+    // Q2: SESSION_HANDOFF.md — 特定セクションの内容を答えさせる
     const handoffPath = path.join(cwd, 'SESSION_HANDOFF.md');
     if (fs.existsSync(handoffPath)) {
       const content = fs.readFileSync(handoffPath, 'utf8');
-      const dateMatch = content.match(/\d{4}-\d{2}-\d{2}/);
+      const lines = content.split('\n').filter(l => l.trim());
+      // ファイルの行数を使った質問（推測不可能）
       questions.push(
-        `SESSION_HANDOFF.md の最終更新日は？（Read SESSION_HANDOFF.md で確認）`
+        `Read SESSION_HANDOFF.md → 全体の行数と、最初の見出し（# で始まる行）の内容を答えよ`
       );
     } else {
       questions.push(
@@ -211,34 +214,27 @@ function generateCheckpointQuestions(cwd) {
       );
     }
 
-    // Q3: workflow_state.json から現在フェーズを質問
+    // Q3: workflow_state.json — 開始日時を答えさせる（推測不可能）
     const statePath = path.join(cwd, '.workflow_state.json');
     if (fs.existsSync(statePath)) {
-      try {
-        const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
-        const mode = state.meta?.mode || 'unknown';
-        questions.push(
-          `現在のワークフローモードは何か？（STRICT / NORMAL / GUIDED のいずれか）`
-        );
-      } catch (e) {
-        questions.push('workflow_state.json は正常に読めるか？');
-      }
+      questions.push(
+        `workflow_state.json の meta.startedAt の値を答えよ（ISO 8601形式の日時文字列）`
+      );
     }
 
-    // Q4: ユーザー指示のスキル検出（常に質問）
+    // Q4: スキル/トリガーワード検出（これは毎回必要）
     questions.push(
-      `ユーザーの指示にスキル名（/xxx）やトリガーワード（「リサーチして」「調べて」等）が含まれているか？ → YES/NO。YESならSkill tool必須。`
+      `ユーザーの指示を読み、スキル名（/xxx）またはトリガーワード（CLAUDE.mdの「リサーチ自動発動ルール」表を参照）が含まれるか判定せよ → 含まれる場合はSkill tool使用が必須`
     );
 
-    // Q5: 未読ファイル編集禁止の確認（常に質問）
+    // Q5: 編集対象ファイルの事前Read確認
     questions.push(
-      `これから編集するファイルを事前にReadしたか？ 未読ファイルへのEdit/Writeは禁止。→ 確認済/未確認`
+      `これから編集・作成するファイルがあるか？ ある場合は必ず事前にReadせよ。未読ファイルへのEdit/Writeは実行禁止。`
     );
 
   } catch (e) {
-    // エラー時は最低限の質問のみ
-    questions.push('mistakes.md を確認したか？ → YES/NO');
-    questions.push('未読ファイルの編集禁止ルールを認識しているか？ → YES/NO');
+    questions.push('Read .claude/hooks/mistakes.md を実行して内容を把握せよ');
+    questions.push('未読ファイルの編集禁止ルールを確認せよ');
   }
 
   return questions.slice(0, 5);
