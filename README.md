@@ -17,10 +17,11 @@
 
 ## 📋 最新バージョン
 
-**v2.49.0** (2026-04-05) — agent-browser採用でトークン93%削減・udemy-download復活
+**v2.50.0** (2026-04-07) — BOOT CHECKPOINT・Agent Checkpoint・CLAUDE.md 50%削減・Windows Quick Installer
 
 | バージョン | 日付 | 内容 |
 |-----------|------|------|
+| v2.50.0 | 2026-04-07 | **BOOT CHECKPOINT** — セッション開始時に動的5問チェック（mistakes.mdランダムPattern確認・SESSION_HANDOFF検証・ワークフロー状態確認・スキル/トリガー検出・未読ファイル編集禁止確認）。推測不可能な質問で確実にファイルを読ませる仕組み / **Agent Checkpoint** — 重要Agent（リサーチ・実装・設計・要件定義）起動時に3問の品質ゲートをプロンプト末尾に自動挿入。Agent成功率75%→90%+予測 / **CLAUDE.md 50%削減** — 183行→91行に構造改善。重要ルールを先頭配置、低頻度ルールをL2に移動。15ラウンドOpus×GPT議論に基づく段階的改善 / **Windows Quick Installer** — `irm https://raw.githubusercontent.com/.../quick-install.ps1 \| iex` の1行でC:\taisun_agentに自動インストール。OneDrive・日本語パス・LongPath問題を根絶 / **install.ps1バグ修正** — .Countバグ全5箇所修正・TLS 1.2強制・npmエラーログ保存 / **research系9スキルeffort:正規化** — frontmatter外のeffort:を内に移動し高品質思考モードが正しく適用されるように修正 / **スキル数検証チェック** — install/updateスクリプトに期待値照合を追加 |
 | v2.49.0 | 2026-04-05 | **agent-browser v0.24.1 をデフォルトブラウザツールに採用** — Playwright MCPからの移行でコンテキストトークン93%削減（114k→7k/10ステップ操作）。Opus 4.6×GPT 5.4の8ラウンド議論（全ラウンド一致）に基づく判定。CLI方式のためMCP枠を消費しない / **udemy-downloadスキル復活** — Udemyコース全動画+字幕一括ダウンロード（video-downloadでは代替不可） / Playwright MCPはオプション降格（disabled: true、特殊用途で残す） / **git履歴衝突の自動回復** — update.sh/install.ps1にgit reset --hard自動フォールバック追加。Mac/Windows両対応 / **動画ダウンロード自動発動** — 「動画ダウンロード」「YouTube保存」「Instagram/TikTokダウンロード」「Udemyコース保存」「文字起こし」等の日本語トリガーでvideo-download/udemy-downloadが自動起動 |
 |-----------|------|------|
 | v2.48.0 | 2026-04-04 | **リポジトリ大規模クリーンアップ** — Opus 4.6×GPT 5.4の10ラウンドレビューに基づき909ファイル削除（約199MB削減）/ ルートファイル105→32（-70%）/ スキル125→62（-50%）不要スキル58件削除+リサーチ子スキル12件をdisable-model-invocation化 / google-auth-system壊れたsubmodule→正しいsubmoduleに修正 / sdd-fullの質問を素人でも答えられる平易な日本語に改善 / .gitignore強化（.agent-trace, research, dist等の実行時生成物を追跡除外） |
