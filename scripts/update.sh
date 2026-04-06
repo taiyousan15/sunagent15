@@ -218,7 +218,16 @@ step "ステップ 4/4：動作を確認しています"
 
 echo ""
 SKILL_COUNT=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
-ok "スキル: ${SKILL_COUNT} 個が利用可能です"
+EXPECTED_SKILLS=$(ls -d "$SOURCE_SKILLS"/*/ 2>/dev/null | grep -v '_archived' | grep -v 'data' | wc -l | tr -d ' ')
+if [ "$SKILL_COUNT" -ge "$EXPECTED_SKILLS" ] 2>/dev/null; then
+    ok "スキル: ${SKILL_COUNT} 個が利用可能です ✅（期待値: ${EXPECTED_SKILLS}個）"
+elif [ "$SKILL_COUNT" -ge 50 ] 2>/dev/null; then
+    warn "スキル: ${SKILL_COUNT} 個（期待値: ${EXPECTED_SKILLS}個 — 一部欠落の可能性）"
+    info "全スキルを入れるには: ./scripts/install.sh --profile full"
+else
+    warn "スキル: ${SKILL_COUNT} 個（期待値: ${EXPECTED_SKILLS}個 — 大幅に不足しています）"
+    warn "install.sh を再実行してください: ./scripts/install.sh"
+fi
 
 AGENT_COUNT=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
 ok "エージェント: ${AGENT_COUNT} 個が利用可能です"

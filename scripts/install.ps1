@@ -554,7 +554,16 @@ if (Test-Path "$REPO_DIR\.claude\CLAUDE.md") {
 }
 
 $SKILL_COUNT = (Get-ChildItem $TARGET_SKILLS -Directory -ErrorAction SilentlyContinue).Count
-Write-Ok "スキル: $SKILL_COUNT 個が利用可能です"
+$EXPECTED_SKILLS = (Get-ChildItem $SOURCE_SKILLS -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -notin @("_archived", "_guides", "data") } | Where-Object { (Test-Path "$($_.FullName)\SKILL.md") -or (Test-Path "$($_.FullName)\CLAUDE.md") }).Count
+if ($SKILL_COUNT -ge $EXPECTED_SKILLS) {
+    Write-Ok "スキル: $SKILL_COUNT 個が利用可能です（期待値: ${EXPECTED_SKILLS}個）"
+} elseif ($SKILL_COUNT -ge 50) {
+    Write-Warn "スキル: $SKILL_COUNT 個（期待値: ${EXPECTED_SKILLS}個 — 一部欠落の可能性）"
+    Write-Info "全スキルを入れるには: .\scripts\install.ps1 -Profile full"
+} else {
+    Write-Warn "スキル: $SKILL_COUNT 個（期待値: ${EXPECTED_SKILLS}個 — 大幅に不足しています）"
+    Write-Warn "install.ps1 を再実行してください: .\scripts\install.ps1"
+}
 
 $AGENT_COUNT = (Get-ChildItem $TARGET_AGENTS -Filter "*.md" -ErrorAction SilentlyContinue).Count
 Write-Ok "エージェント: $AGENT_COUNT 個が利用可能です"
