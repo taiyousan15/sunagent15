@@ -1,4 +1,3 @@
-effort: high
 ---
 name: research
 description: Deep research with report generation

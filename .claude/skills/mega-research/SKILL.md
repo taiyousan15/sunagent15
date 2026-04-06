@@ -1,4 +1,3 @@
-effort: high
 ---
 name: mega-research
 description: 6-API integrated research system

@@ -1,4 +1,3 @@
-effort: low
 ---
 name: research-free
 description: API-free integrated research

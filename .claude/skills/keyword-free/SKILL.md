@@ -1,4 +1,3 @@
-effort: low
 ---
 name: keyword-free
 description: API-free keyword extraction

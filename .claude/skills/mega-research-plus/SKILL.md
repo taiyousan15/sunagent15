@@ -1,4 +1,3 @@
-effort: high
 ---
 name: mega-research-plus
 description: 8-source integrated research system

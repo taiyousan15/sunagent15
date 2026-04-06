@@ -1,4 +1,3 @@
-effort: high
 ---
 name: intelligence-research
 description: Global Intelligence System - 31ソースから金融・AI・開発・著名人発言・経済指標を並列収集しMarkdownレポート生成

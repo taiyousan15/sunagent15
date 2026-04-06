@@ -1,4 +1,3 @@
-effort: high
 ---
 name: world-research
 description: Global SNS/academic cross-search
