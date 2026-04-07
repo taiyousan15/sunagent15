@@ -161,6 +161,16 @@
         ]
       },
       {
+        "matcher": "Write|Edit|Bash|Task|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/rules-enforce-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
         "matcher": "Bash",
         "hooks": [
           {
