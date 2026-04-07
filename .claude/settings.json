@@ -141,6 +141,16 @@
         ]
       },
       {
+        "matcher": "Write|Edit|Bash|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/checkpoint-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
         "matcher": "Bash",
         "hooks": [
           {

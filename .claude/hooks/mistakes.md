@@ -69,6 +69,7 @@
 | 2026-02-08 | wrong-tts-engine | Fish Audio→macOS say代替 | 修正済（Pattern 6で防止） |
 | 2026-02-08 | text-heavy-images | AI画像テキスト文字化け | 修正済（品質検証必須化） |
 | 2026-02-27 | skill-ignored-gem-prompt | Gemプロンプト作成でスキル無視 | 修正済（Pattern 1で防止） |
+| 2026-04-07 | checkpoint-self-skip | BOOT CHECKPOINTを自己判断でスキップして作業開始 | 対策実装中（hookによるブロッキング強制化） |
 
 ---
 
