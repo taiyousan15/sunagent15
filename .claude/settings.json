@@ -151,6 +151,16 @@
         ]
       },
       {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-checkpoint-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
         "matcher": "Bash",
         "hooks": [
           {
@@ -162,6 +172,16 @@
       }
     ],
     "PostToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/rules-read-tracker.js",
+            "timeout": 3
+          }
+        ]
+      },
       {
         "matcher": "Write|Edit",
         "hooks": [
