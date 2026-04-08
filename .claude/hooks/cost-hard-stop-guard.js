@@ -52,9 +52,42 @@ function currentMonth() {
 }
 
 // 既存ログを読んで累積コストを計算
+// 30日以上前のエントリを削除（月次cleanup）
+// 確率的実行: 1% の確率で起動時に実行
+function cleanupOldEntries() {
+  try {
+    if (!fs.existsSync(COST_LOG)) return;
+    if (Math.random() > 0.01) return; // 1% のみ実行
+
+    const lines = fs.readFileSync(COST_LOG, 'utf8').split('\n').filter(Boolean);
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - 30);
+    const cutoffStr = cutoff.toISOString().split('T')[0];
+
+    const keptLines = [];
+    for (const line of lines) {
+      try {
+        const entry = JSON.parse(line);
+        if (entry.date && entry.date >= cutoffStr) {
+          keptLines.push(line);
+        }
+      } catch (e) {}
+    }
+
+    // atomic rename で安全に書き換え
+    const tmpFile = COST_LOG + '.tmp';
+    fs.writeFileSync(tmpFile, keptLines.join('\n') + (keptLines.length > 0 ? '\n' : ''));
+    fs.renameSync(tmpFile, COST_LOG);
+  } catch (e) {
+    console.error('cost-hard-stop cleanup error:', e.message);
+  }
+}
+
 function getCumulativeCost() {
   try {
     if (!fs.existsSync(COST_LOG)) return { daily: 0, monthly: 0 };
+
+    cleanupOldEntries(); // 月次cleanup（確率的）
 
     const lines = fs.readFileSync(COST_LOG, 'utf8').split('\n').filter(Boolean);
     const today_str = today();

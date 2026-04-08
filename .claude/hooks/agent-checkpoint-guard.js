@@ -68,13 +68,24 @@ function check(toolName, toolInput) {
     const subagentType = (toolInput.subagent_type || '').toLowerCase();
     const prompt = toolInput.prompt || '';
 
+    // 境界マッチヘルパー: ハイフン/アンダースコア/開始終端で区切る
+    // 'architect' が 'system-architect' にもマッチするが 'chart-something' にはマッチしない
+    const matchesAgent = (name, pattern) => {
+      const n = name.toLowerCase();
+      const p = pattern.toLowerCase();
+      if (n === p) return true;
+      // 単語境界での一致（ハイフン/アンダースコア区切り）
+      const regex = new RegExp(`(^|[-_])${p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([-_]|$)`);
+      return regex.test(n);
+    };
+
     // 対象外Agentは通過
-    if (EXCLUDED_AGENTS.some(a => subagentType.includes(a.toLowerCase()))) {
+    if (EXCLUDED_AGENTS.some(a => matchesAgent(subagentType, a))) {
       return null;
     }
 
     // 対象Agentかチェック
-    const isTargeted = TARGETED_AGENTS.some(a => subagentType.includes(a.toLowerCase()));
+    const isTargeted = TARGETED_AGENTS.some(a => matchesAgent(subagentType, a));
     if (!isTargeted) return null;
 
     // checkpointマーカーの存在確認
