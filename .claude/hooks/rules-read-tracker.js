@@ -8,6 +8,12 @@
  *
  * このフラグは rules-enforce-guard.js で参照される。
  *
+ * 2026-04-09 更新:
+ * - JSON → JSONL に変更（race condition対策・append-onlyで競合消失防止）
+ * - safeSessionFile によるパストラバーサル対策
+ * - stdin timeout 追加
+ * - catch 内 console.error でデバッグ性向上
+ *
  * 安全設計: フェイルオープン・常に exit 0
  */
 
@@ -15,6 +21,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { getSessionId, safeSessionFile } = require('./utils/session-path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '../../');
 const READ_LOG_DIR = path.join(PROJECT_ROOT, '.claude', 'checkpoints');
@@ -27,12 +34,6 @@ const TRACKED_PATTERNS = [
   /SESSION_HANDOFF\.md$/,
 ];
 
-function getSessionId() {
-  if (process.env.CLAUDE_SESSION_ID) return process.env.CLAUDE_SESSION_ID;
-  const today = new Date().toISOString().split('T')[0];
-  return `${today}_${process.pid}`;
-}
-
 function recordRead(filePath) {
   try {
     if (!filePath) return;
@@ -41,28 +42,56 @@ function recordRead(filePath) {
     const isTracked = TRACKED_PATTERNS.some(p => p.test(filePath));
     if (!isTracked) return;
 
-    // 記録先ファイル
+    // 記録先ファイル（パストラバーサル対策）
     const sessionId = getSessionId();
-    const logFile = path.join(READ_LOG_DIR, `read_${sessionId}.json`);
+    const logFile = safeSessionFile(READ_LOG_DIR, `read_${sessionId}.jsonl`);
+    if (!logFile) return; // 不正なsessionIdは無視
 
     fs.mkdirSync(READ_LOG_DIR, { recursive: true });
 
-    let data = { reads: [] };
-    if (fs.existsSync(logFile)) {
+    // JSONL append-only（race condition対策）
+    // appendFileSync は atomic で並行実行でもエントリが消えない
+    const entry = JSON.stringify({
+      ts: new Date().toISOString(),
+      file: filePath,
+    }) + '\n';
+    fs.appendFileSync(logFile, entry);
+  } catch (e) {
+    console.error('rules-read-tracker recordRead error:', e.message);
+  }
+}
+
+/**
+ * 既読ファイルの一覧を取得（rules-enforce-guardから呼ばれる）
+ * @param {string} sessionId
+ * @returns {string[]}
+ */
+function getReadFiles(sessionId) {
+  try {
+    const logFile = safeSessionFile(READ_LOG_DIR, `read_${sessionId}.jsonl`);
+    if (!logFile || !fs.existsSync(logFile)) return [];
+
+    const content = fs.readFileSync(logFile, 'utf8');
+    const files = new Set();
+    for (const line of content.split('\n')) {
+      if (!line.trim()) continue;
       try {
-        data = JSON.parse(fs.readFileSync(logFile, 'utf8'));
+        const entry = JSON.parse(line);
+        if (entry.file) files.add(entry.file);
       } catch (e) {}
     }
-
-    if (!data.reads.includes(filePath)) {
-      data.reads.push(filePath);
-      data.lastUpdate = new Date().toISOString();
-      fs.writeFileSync(logFile, JSON.stringify(data, null, 2));
-    }
-  } catch (e) {}
+    return Array.from(files);
+  } catch (e) {
+    console.error('rules-read-tracker getReadFiles error:', e.message);
+    return [];
+  }
 }
 
 async function main() {
+  // stdin timeout (3秒)
+  const timer = setTimeout(() => process.exit(0), 3000);
+  timer.unref();
+
   try {
     const chunks = [];
     for await (const chunk of process.stdin) chunks.push(chunk);
@@ -82,10 +111,11 @@ async function main() {
 
     process.exit(0);
   } catch (e) {
+    console.error('rules-read-tracker main error:', e.message);
     process.exit(0); // フェイルオープン
   }
 }
 
 if (require.main === module) main();
 
-module.exports = { recordRead, getSessionId };
+module.exports = { recordRead, getReadFiles, getSessionId };

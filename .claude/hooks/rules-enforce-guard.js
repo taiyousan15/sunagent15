@@ -58,20 +58,26 @@ const ALWAYS_ALLOW_BASH_PATTERNS = [
   /^git\s+(status|diff|log)/,
 ];
 
-function getSessionId() {
-  if (process.env.CLAUDE_SESSION_ID) return process.env.CLAUDE_SESSION_ID;
-  const today = new Date().toISOString().split('T')[0];
-  return `${today}_${process.pid}`;
-}
+const { getSessionId, safeSessionFile } = require('./utils/session-path');
 
-// 今セッションで Read されたファイル一覧を取得
+// 今セッションで Read されたファイル一覧を取得（JSONL形式対応）
 function getReadFiles(sessionId) {
   try {
-    const logFile = path.join(READ_LOG_DIR, `read_${sessionId}.json`);
-    if (!fs.existsSync(logFile)) return [];
-    const data = JSON.parse(fs.readFileSync(logFile, 'utf8'));
-    return data.reads || [];
+    const logFile = safeSessionFile(READ_LOG_DIR, `read_${sessionId}.jsonl`);
+    if (!logFile || !fs.existsSync(logFile)) return [];
+
+    const content = fs.readFileSync(logFile, 'utf8');
+    const files = new Set();
+    for (const line of content.split('\n')) {
+      if (!line.trim()) continue;
+      try {
+        const entry = JSON.parse(line);
+        if (entry.file) files.add(entry.file);
+      } catch (e) {}
+    }
+    return Array.from(files);
   } catch (e) {
+    console.error('rules-enforce getReadFiles error:', e.message);
     return [];
   }
 }
@@ -162,6 +168,10 @@ function check(toolName, toolInput) {
 }
 
 async function main() {
+  // stdin timeout (3秒)
+  const timer = setTimeout(() => process.exit(0), 3000);
+  timer.unref();
+
   try {
     const chunks = [];
     for await (const chunk of process.stdin) chunks.push(chunk);
@@ -178,6 +188,7 @@ async function main() {
     }
     process.exit(0);
   } catch (e) {
+    console.error('rules-enforce-guard main error:', e.message);
     process.exit(0);
   }
 }
