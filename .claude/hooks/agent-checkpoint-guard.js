@@ -114,6 +114,10 @@ function check(toolName, toolInput) {
 }
 
 async function main() {
+  // stdin timeout (3秒)
+  const timer = setTimeout(() => process.exit(0), 3000);
+  timer.unref();
+
   try {
     const chunks = [];
     for await (const chunk of process.stdin) chunks.push(chunk);
@@ -130,6 +134,7 @@ async function main() {
     }
     process.exit(0);
   } catch (e) {
+    console.error('agent-checkpoint-guard main error:', e.message);
     process.exit(0);
   }
 }

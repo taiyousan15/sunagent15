@@ -241,6 +241,10 @@ function check(toolName, toolInput) {
 }
 
 async function main() {
+  // stdin timeout (3秒)
+  const timer = setTimeout(() => process.exit(0), 3000);
+  timer.unref();
+
   try {
     const chunks = [];
     for await (const chunk of process.stdin) chunks.push(chunk);
@@ -252,6 +256,7 @@ async function main() {
     if (result) console.log(JSON.stringify(result));
     process.exit(0);
   } catch (e) {
+    console.error('mistake-pattern-matcher main error:', e.message);
     process.exit(0);
   }
 }

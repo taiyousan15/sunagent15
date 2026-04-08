@@ -187,6 +187,10 @@ function cleanupOldSessions() {
 // CLI EXECUTION
 // ─────────────────────────────────────────
 async function main() {
+  // stdin timeout (3秒)
+  const timer = setTimeout(() => process.exit(0), 3000);
+  timer.unref();
+
   try {
     if (PHASE === '0') { process.exit(0); return; }
 
@@ -249,6 +253,7 @@ async function main() {
 
     process.exit(0);
   } catch (e) {
+    console.error('context-snapshot-manager main error:', e.message);
     process.exit(0); // フェイルオープン
   }
 }

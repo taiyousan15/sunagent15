@@ -181,6 +181,10 @@ function check(toolName, toolInput) {
 
 // === スタンドアロン実行（テスト用 + hook単体動作） ===
 async function main() {
+  // stdin timeout (3秒)
+  const timer = setTimeout(() => process.exit(0), 3000);
+  timer.unref();
+
   try {
     // stdinから読む
     const chunks = [];
@@ -199,6 +203,7 @@ async function main() {
     process.exit(0);
   } catch (e) {
     // フェイルオープン
+    console.error('checkpoint-guard main error:', e.message);
     process.exit(0);
   }
 }
