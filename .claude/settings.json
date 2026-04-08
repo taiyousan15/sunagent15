@@ -137,6 +137,16 @@
         "hooks": [
           {
             "type": "command",
+            "command": "node .claude/hooks/mid-session-reminder.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
             "command": "node .claude/hooks/agent-enforcement-guard.js",
             "timeout": 3
           }
@@ -221,6 +231,16 @@
             "type": "command",
             "command": "node .claude/hooks/cost-hard-stop-guard.js",
             "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|Bash|Task|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/mistake-pattern-matcher.js",
+            "timeout": 5
           }
         ]
       },
