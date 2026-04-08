@@ -29,7 +29,7 @@ const RESEARCH_OUTPUT_PATTERNS = [
 
 // 必須カテゴリ（最低1件以上の参照が必要）
 const REQUIRED_SOURCES = {
-  'X/Twitter': ['twitter.com', 'x.com', 'TWITTER_AUTH_TOKEN'],
+  'X/Twitter': ['twitter.com/search', 'x.com/', 'nitter.'],
   'YouTube': ['youtube.com', 'youtu.be', 'yt-dlp'],
   'arxiv論文': ['arxiv.org/abs/', 'arxiv.org/pdf/'],
   'GitHub': ['github.com/'],
@@ -95,7 +95,7 @@ function check(toolName, toolInput) {
           ...missing.map(m => `  - ${m}`),
           '',
           '各カテゴリから最低1件以上のソースを取得してください:',
-          '  - X/Twitter: TWITTER_AUTH_TOKEN を使った検索',
+          '  - X/Twitter: nitter.net または opencli-rs 経由の検索',
           '  - YouTube: youtube検索またはyt-dlp',
           '  - arxiv: 論文検索API',
           '  - GitHub: リポジトリ・Issues調査',

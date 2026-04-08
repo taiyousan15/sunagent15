@@ -117,7 +117,9 @@ function check(toolName, toolInput) {
 
     if (toolName === 'Bash') {
       const cmd = (toolInput.command || '').trim();
-      if (ALWAYS_ALLOW_BASH_PATTERNS.some(p => p.test(cmd))) return null;
+      // コマンド連結文字を含む場合はホワイトリスト適用外（迂回防止）
+      const hasDangerousChars = /[;&|`$()<>]/.test(cmd);
+      if (!hasDangerousChars && ALWAYS_ALLOW_BASH_PATTERNS.some(p => p.test(cmd))) return null;
     }
 
     // 必須Read確認

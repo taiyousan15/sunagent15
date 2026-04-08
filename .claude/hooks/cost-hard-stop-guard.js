@@ -115,11 +115,11 @@ function check(toolName, toolInput) {
     const estimatedCost = TOOL_ESTIMATED_COST[toolName] || 0;
     if (estimatedCost === 0) return null;
 
-    // 実行前コスト記録
-    recordCost(toolName, estimatedCost);
-
-    // 累積取得
+    // 累積取得（recordCost前に判定 — 上限超過時の二重計上を防止）
     const { daily, monthly } = getCumulativeCost();
+
+    // 実行前コスト記録（上限チェック後）
+    recordCost(toolName, estimatedCost);
 
     // 閾値チェック
     const dailyExceeded = daily > DAILY_LIMIT;

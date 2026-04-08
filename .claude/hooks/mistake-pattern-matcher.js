@@ -183,6 +183,9 @@ function check(toolName, toolInput) {
 
     if (action.length < 20) return null; // 短すぎる場合スキップ
 
+    // 大ファイル対策: n-gram爆発防止（Write全コンテンツ等を先頭2KBに制限）
+    action = action.substring(0, 2000);
+
     // 類似パターン検索
     const matches = findSimilarPatterns(action, 0.25);
     if (matches.length === 0) return null;
