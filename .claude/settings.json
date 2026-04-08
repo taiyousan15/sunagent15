@@ -171,6 +171,26 @@
         ]
       },
       {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/research-quality-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|Bash|Task|MultiEdit|WebFetch|WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/cost-hard-stop-guard.js",
+            "timeout": 3
+          }
+        ]
+      },
+      {
         "matcher": "Bash",
         "hooks": [
           {
