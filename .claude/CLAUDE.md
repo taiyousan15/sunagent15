@@ -34,9 +34,21 @@ Check `.workflow_state.json` + `SESSION_HANDOFF.md` if present. Never contradict
 - 「十分な情報」の自己判断停止は**禁止**、指示件数を全て完了
 - 列挙タスクは完了数を明示報告
 
+### Delegation Pattern (MUST)
+- **3+並列Agent: `run_in_background: true` 必須**（違反=context exhaustion）
+- バックグラウンドAgent完了後: Read output file, extract key findings only
+- Task結果 >2000文字 → 一時保存場所に退避 → `/compact`
+
+### Context Safe Compact（コンパクト時の記憶保護・MUST）
+巨大コンテキスト時は必ず以下の順序で実行:
+1. **一時保存**: `.claude/temp-context/${session_id}/` に重要情報を書き出す
+2. **/compact実行**: 要約済み内容も同ディレクトリに配置
+3. **次ステップで参照**: `temp-context/` を必ずRead
+4. **セッション終了時**: `temp-context/` を自動削除（session-end hook）
+
 ### Agent Checkpoint（重要Agent起動時）
 
-**対象:** researcher, implementer, feature-builder, bug-fixer, backend/frontend-developer, architect, api-designer, database-designer, requirements-elicitation, ReviewAgent, security-architect
+**対象:** researcher, Explore(very thorough), research-system, mega-research, omega-research, implementer, feature-builder, bug-fixer, backend/frontend-developer, architect, system-architect, api-designer, database-designer, requirements-elicitation, ReviewAgent, security-architect
 
 **対象外:** Explore(quick), code-searcher, debate, haiku
 
