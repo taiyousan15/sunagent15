@@ -7,6 +7,218 @@
 
 ---
 
+## [2.53.0] - 2026-04-09
+
+### 🔧 修正 (Fixed)
+
+#### 3エージェント合同コードレビュー + 緊急修正・堅牢化
+- **Codex Pro + GPT 5.4 Pro Thinking + Opus 4.6** による15ラウンド議論に基づく修正
+- research-quality-guard: APIトークン名を検索キーワードから除外（機密情報誘導リスク削除）
+- mistake-pattern-matcher: `action.substring(0, 2000)` で大ファイル書込み時のn-gram爆発防止
+- cost-hard-stop-guard: recordCost順序修正で上限超過時の二重計上を解消
+- rules-enforce-guard + checkpoint-guard: Bashホワイトリスト迂回対策（コマンド連結文字検出）
+- utils/session-path.js 新規helper（Path Traversal対策）
+- rules-read-tracker: JSON→JSONL append-only化でrace condition解消
+- 全9 hookに stdin timeout(3秒) 追加
+- catch ハンドラに console.error 追加
+
+#### システム全体クリーンアップ (583a75d)
+- cli残骸3ファイル削除、postinstall fail-fast化
+- tsx devDependencies追加、jest worktree ignore追加
+- シンボリックリンク57個削除（スキル63個全て認識OK）
+- settings.json MCP相対パス化（`./tools/...`）
+- ESLint 87→0 errors
+- hook-profiler: execSync→execFileSync（セキュリティ改善）
+- ドキュメント8ファイル+launchd 2ファイルの絶対パス汎用化
+- .gitignore セッション固有ファイル追加、tracked テレメトリ/キャッシュ git追跡解除
+
+### 🧪 テスト
+- 56/56 suites, 1091/1091 tests 全パス
+
+---
+
+## [2.52.0] - 2026-04-08
+
+### ✨ 追加 (Added)
+
+#### 3層ミス対策システム完成（97/100点）
+- **context-snapshot-manager.js** — PreCompact hookで一時保存→SessionStartで自動復元→SessionEndで自動削除
+- **mid-session-reminder.js** — 5回プロンプトごとにコアルールを自動再注入
+- **mistake-pattern-matcher.js** — Write/Edit/Bash/Task前にmistakes.mdパターンとJaccard類似度で自動照合（日本語2-gram/3-gram対応）
+- **cost-hard-stop-guard.js** — 日次$50/月次$500上限でツール実行をハードストップ
+- **research-quality-guard.js** — リサーチ出力時の10カテゴリ網羅を物理確認
+- research-system SKILL.md強化（720件以上/10カテゴリ最低件数ルール追加）
+- CLAUDE.md 91行→76行に段階圧縮
+
+---
+
+## [2.51.0] - 2026-04-07
+
+### ✨ 追加 (Added)
+
+#### チェックポイント物理強制システム（92/100点）
+- **checkpoint-guard.js** — PreToolUse hookでboot sequence完了を物理確認（Phase 1:警告→Phase 2:Writeブロック→Phase 3:全ブロック）
+- **agent-checkpoint-guard.js** — Task tool起動時に「AGENT CHECKPOINT」マーカー必須化
+- **rules-read-tracker.js** — PostToolUse Read hookでルールファイル読み込み履歴を記録
+- **rules-enforce-guard.js** — mistakes.md未読時はWrite/Edit/Bash/Task全てブロック（サブエージェント迂回も防止）
+- 安全設計: フェイルオープン・タイムアウト3秒・環境変数で完全停止可能
+
+---
+
+## [2.50.0] - 2026-04-07
+
+### ✨ 追加 (Added)
+
+#### BOOT CHECKPOINT
+- セッション開始時に動的5問チェック（mistakes.mdランダムPattern確認・SESSION_HANDOFF検証等）
+- 推測不可能な質問でファイル読み込みを確実に実行
+
+#### Agent Checkpoint
+- 重要Agent起動時に3問の品質ゲートをプロンプト末尾に自動挿入
+
+#### Windows Quick Installer
+- `irm ... | iex` の1行でインストール可能に
+- install.ps1 .Countバグ全5箇所修正・TLS 1.2強制
+
+### 🔧 修正 (Fixed)
+- CLAUDE.md 183行→91行に構造改善（重要ルール先頭配置）
+- research系9スキルのeffort:をfrontmatter内に正規化
+
+---
+
+## [2.49.0] - 2026-04-05
+
+### ✨ 追加 (Added)
+
+#### agent-browser v0.24.1 をデフォルトブラウザツールに採用
+- Playwright MCPからの移行でコンテキストトークン93%削減（114k→7k/10ステップ）
+- CLI方式のためMCP枠を消費しない
+- Playwright MCPはオプション降格（disabled: true）
+
+#### udemy-download スキル復活
+- Udemyコース全動画+字幕一括ダウンロード対応
+
+### 🔧 修正 (Fixed)
+- git履歴衝突時の自動回復を追加（Mac/Windows両対応）
+- 動画ダウンロード系トリガーワードをCLAUDE.mdに追加
+
+---
+
+## [2.48.0] - 2026-04-04
+
+### 🗑 削除 (Removed)
+
+#### リポジトリ大規模クリーンアップ
+- 909ファイル削除（約199MB削減）
+- ルートファイル 105→32（-70%）
+- スキル 125→62（-50%）— 不要スキル58件削除+リサーチ子スキル12件をdisable-model-invocation化
+
+### 🔧 修正 (Fixed)
+- google-auth-system 壊れたsubmodule→正しいsubmoduleに修正
+- sdd-fullの質問を素人でも答えられる平易な日本語に改善
+- .gitignore強化
+
+---
+
+## [2.47.0] - 2026-04-03
+
+### ✨ 追加 (Added)
+- **research-system-free** — 完全無料リサーチスキル（APIキーゼロ・WebSearch+opencli-rs+Ollamaで動作）
+- research-system配布用ファイル同梱（scripts/distributions/）
+- CLAUDE.mdにリサーチ自動発動ルール追加
+
+### 🔧 修正 (Fixed)
+- Windows git pull競合修正（.gitattributes ps1 eol=lf）
+- install.ps1 ReadKey廃止→Start-Sleep 3秒
+
+---
+
+## [2.46.0] - 2026-03-30
+
+### ✨ 追加 (Added)
+
+#### パイプラインコンテキスト連携 v2.5
+- research-systemから各リサーチスキルへSTEPコンテキストをJSON経由で自動伝搬
+- GSD移植3件（SESSION_HANDOFF JSON構造化・Atomic Git Commits・コンテキスト制御）
+
+### 🔧 修正 (Fixed)
+- hooks/data 1.06MB削除・rules重複8ファイル解消・mistakes.md圧縮
+- Windows: UTF-8 BOM追加・set -e廃止・非対話対応・git pull失敗→ZIP自動フォールバック
+- Mac: set -e廃止・clear廃止・read -p対話判定・rsyncなしcp代替
+
+---
+
+## [2.45.0] - 2026-03-29
+
+### ✨ 追加 (Added)
+
+#### opencli-rs 統合（55サイト333コマンド）
+- world-research Layer 5にSNS直接取得追加
+- mega-research Deep Modeにopencli-rs補完Step追加
+- intelligence-researchに金融3+テック3ソース自動追加
+- Twitter/Reddit/LinkedIn/Instagram/TikTok/Facebookのブラウザ認証経由取得対応
+- YouTube transcript（動画文字起こし）取得対応
+
+### 🔧 修正 (Fixed)
+- README/setup-project.ps1のハードコードパス修正
+
+---
+
+## [2.44.0] - 2026-03-25
+
+### ✨ 追加 (Added)
+
+#### プロファイルインストール（minimal/standard/full）
+- install.sh + install.ps1 両対応
+
+#### CodeGraph 統合
+- codebase-memory-mcp・自動インデックス・ROI計測
+
+### 🔧 修正 (Fixed)
+- 配布互換性修正（ハードコードパス5箇所→環境変数化）
+- StopFailure自動記録Hook追加
+- effortフロントマター追加（コスト制御）
+- video-downloadスキル復活
+
+---
+
+## [2.43.0] - 2026-03-18
+
+### ✨ 追加 (Added)
+- スキル早見表4枚（リサーチTier・taiyo-style・LP・SDD）追加
+- `taisun:version` `taisun:support` コマンド新設
+- 承認モデル実装（投稿系=警告・課金系=ブロック）
+- Ollamaランタイムガード
+- research-system v2.4（QA Gate・61件URL・外部ファイル不要）
+
+### 🔧 修正 (Fixed)
+- BUG-001/004/005/006/007 全解消
+- gem-research・unified-research 命名修正
+- プロファイル整合性チェック追加
+
+---
+
+## [2.42.0] - 2026-03-17
+
+### 🔧 修正 (Fixed)
+- install.sh / update.sh / install.ps1 を全面日本語化（初心者UX改善）
+- フォルダ説明・エラー案内・完了後3ステップガイドを追加
+- MCPプロファイル切替スキル（`/mcp-profile`）追加
+- `npm run mcp:dev|secure|marketing|status` コマンド追加
+
+---
+
+## [2.41.0] - 2026-03-17
+
+### ✨ 追加 (Added)
+- README に everything-claude-code インストール・アップデート手順セクション追加
+
+### 🔧 修正 (Fixed)
+- MCP 29→21個に整理（不要5サーバー削除）
+- proxy-mcp resilience 強化（リトライ5回・エラークラス分類）
+
+---
+
 ## [2.40.0] - 2026-03-14
 
 ### ✨ 追加 (Added)

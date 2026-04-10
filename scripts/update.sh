@@ -182,7 +182,7 @@ TOTAL_SKILLS=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
 ok "スキルを更新しました（新規: ${INSTALLED}件 / 更新: ${UPDATED}件 / 合計: ${TOTAL_SKILLS}件）"
 
 TARGET_AGENTS="$HOME/.claude/agents"
-SOURCE_AGENTS="$REPO_DIR/.claude/agents"
+SOURCE_AGENTS="$REPO_DIR/.claude/agent-source"
 mkdir -p "$TARGET_AGENTS"
 
 AGENT_NEW=0; AGENT_UPDATED=0; AGENT_SKIPPED=0

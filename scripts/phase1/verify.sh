@@ -85,11 +85,11 @@ else
     check_fail ".claude directory not found"
 fi
 
-if [ -d "$PROJECT_ROOT/.claude/agents" ]; then
-    AGENT_COUNT=$(ls -1 "$PROJECT_ROOT/.claude/agents"/*.md 2>/dev/null | wc -l | tr -d ' ')
-    check_pass "Agents directory exists ($AGENT_COUNT agents)"
+if [ -d "$PROJECT_ROOT/.claude/agent-source" ]; then
+    AGENT_COUNT=$(ls -1 "$PROJECT_ROOT/.claude/agent-source"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    check_pass "Agent source directory exists ($AGENT_COUNT agents)"
 else
-    check_fail "Agents directory not found"
+    check_fail "Agent source directory not found"
 fi
 
 if [ -d "$PROJECT_ROOT/.claude/skills" ]; then

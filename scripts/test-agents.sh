@@ -81,7 +81,7 @@ echo -e "${CYAN}=== Agent Definition Validation ===${NC}"
 agent_count=0
 valid_agents=0
 
-for agent in "$PROJECT_ROOT"/.claude/agents/*.md; do
+for agent in "$PROJECT_ROOT"/.claude/agent-source/*.md; do
     if [[ -f "$agent" ]]; then
         ((agent_count++))
         name=$(basename "$agent" .md)

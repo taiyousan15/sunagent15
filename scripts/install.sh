@@ -324,7 +324,7 @@ echo "     ※ エージェントとは「特定の仕事を自動で行うAI」
 echo ""
 
 TARGET_AGENTS="$HOME/.claude/agents"
-SOURCE_AGENTS="$REPO_DIR/.claude/agents"
+SOURCE_AGENTS="$REPO_DIR/.claude/agent-source"
 mkdir -p "$TARGET_AGENTS"
 
 AGENT_INSTALLED=0; AGENT_UPDATED=0; AGENT_SKIPPED=0
@@ -334,18 +334,16 @@ if [ -d "$SOURCE_AGENTS" ]; then
         agent_name=$(basename "$agent_file")
         [[ "$agent_name" == "CLAUDE.md" ]] && continue
         target="$TARGET_AGENTS/$agent_name"
-        if [ -f "$target" ] && [ ! -L "$target" ]; then rm -f "$target"; fi
-        if [ ! -L "$target" ]; then
-            ln -sf "$agent_file" "$target"
+        # Replace symlinks with real copies to avoid double-loading in project directories
+        if [ -L "$target" ]; then rm -f "$target"; fi
+        if [ ! -f "$target" ]; then
+            cp "$agent_file" "$target"
             ((AGENT_INSTALLED++)) || true
+        elif ! diff -q "$agent_file" "$target" > /dev/null 2>&1; then
+            cp "$agent_file" "$target"
+            ((AGENT_UPDATED++)) || true
         else
-            current_target=$(readlink "$target")
-            if [ "$current_target" != "$agent_file" ]; then
-                ln -sf "$agent_file" "$target"
-                ((AGENT_UPDATED++)) || true
-            else
-                ((AGENT_SKIPPED++)) || true
-            fi
+            ((AGENT_SKIPPED++)) || true
         fi
     done
 fi

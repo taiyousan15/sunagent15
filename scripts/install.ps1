@@ -382,7 +382,7 @@ Write-Host ""
 
 # --- エージェントのインストール ---
 $TARGET_AGENTS = "$env:USERPROFILE\.claude\agents"
-$SOURCE_AGENTS = "$REPO_DIR\.claude\agents"
+$SOURCE_AGENTS = "$REPO_DIR\.claude\agent-source"
 
 Write-Host "  エージェントを設定しています..."
 Write-Info "エージェントの保存先: $TARGET_AGENTS"

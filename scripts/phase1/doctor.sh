@@ -174,7 +174,7 @@ echo -e "${BLUE}7️⃣  TAISUN Components${NC}"
 echo "-------------------------------------------"
 
 if [ -d "$PROJECT_ROOT/.claude" ]; then
-    AGENTS=$(ls -1 "$PROJECT_ROOT/.claude/agents"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    AGENTS=$(ls -1 "$PROJECT_ROOT/.claude/agent-source"/*.md 2>/dev/null | wc -l | tr -d ' ')
     SKILLS=$(ls -1d "$PROJECT_ROOT/.claude/skills"/*/ 2>/dev/null | wc -l | tr -d ' ')
     COMMANDS=$(ls -1 "$PROJECT_ROOT/.claude/commands"/*.md 2>/dev/null | wc -l | tr -d ' ')
 

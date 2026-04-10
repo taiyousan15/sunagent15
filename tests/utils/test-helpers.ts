@@ -6,8 +6,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'yaml';
 
-// Agent and Skill definitions paths
-const AGENTS_PATH = path.join(__dirname, '../../.claude/agents');
+// Agent and Skill definitions paths (agent-source for repo, global fallback for installed)
+const AGENT_SOURCE_PATH = path.join(__dirname, '../../.claude/agent-source');
+const GLOBAL_AGENTS_PATH = path.join(process.env.HOME || '~', '.claude/agents');
+const AGENTS_PATH = fs.existsSync(AGENT_SOURCE_PATH) &&
+  fs.readdirSync(AGENT_SOURCE_PATH).some(f => f.endsWith('.md'))
+  ? AGENT_SOURCE_PATH
+  : GLOBAL_AGENTS_PATH;
 const SKILLS_PATH = path.join(__dirname, '../../.claude/skills');
 
 /**

@@ -164,7 +164,7 @@ if [ -d "$SOURCE_SKILLS" ]; then
 fi
 
 TARGET_AGENTS="$HOME/.claude/agents"
-SOURCE_AGENTS="$TAISUN_DIR/.claude/agents"
+SOURCE_AGENTS="$TAISUN_DIR/.claude/agent-source"
 mkdir -p "$TARGET_AGENTS"
 
 AGENT_INSTALLED=0

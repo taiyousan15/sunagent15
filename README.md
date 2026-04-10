@@ -7,11 +7,11 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20.x%20%7C%2022.x-green)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-81%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
+[![Tests](https://img.shields.io/badge/Tests-1091%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
-> インストールするだけで 62スキル・96エージェント・110+コマンド が使えるようになります。
+> インストールするだけで 63スキル・95エージェント・110+コマンド が使えるようになります。
 
 ---
 
@@ -77,7 +77,7 @@ bash scripts/install.sh
 > `Permission denied` が出た場合は `bash scripts/install.sh` で実行してください。
 > `git: command not found` が出た場合は `xcode-select --install` を先に実行してください。
 
-**完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
+**完了の目安**: `スキル: 63 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
 
 **アップデート（1行で完了）**
 
@@ -111,7 +111,7 @@ cd taisun_agent
 > `スクリプトの実行が無効` エラーが出た場合は `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` を先に実行してください。
 > `git: 用語 'git' は〜` エラーが出た場合は https://git-scm.com/download/win から git をインストールしてください。
 
-**完了の目安**: `スキル: 100+ 個が利用可能です` と `エージェント: 100+ 個が利用可能です` が表示されれば成功
+**完了の目安**: `スキル: 63 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
 
 **アップデート（1行で完了）**
 
@@ -148,8 +148,8 @@ cd ~\Projects\MyProject
   │ .git         │ 初期化済み                                │
   │ .claude/     │ → ~/taisun_agent/.claude/                │
   │ .mcp.json    │ → ~/taisun_agent/.mcp.json               │
-  │ スキル       │ 120個                                     │
-  │ エージェント │ 114個                                     │
+  │ スキル       │ 63個                                      │
+  │ エージェント │ 95個                                      │
   └──────────────┴──────────────────────────────────────────┘
 ```
 
@@ -200,7 +200,7 @@ npm run mcp:status       # 現在の状態を確認
 ```bash
 ./scripts/install.sh --list-profiles          # 一覧表示
 ./scripts/install.sh --profile minimal        # 最小構成（92個）
-./scripts/install.sh --profile full           # 全スキル（120個）
+./scripts/install.sh --profile full           # 全スキル（63個）
 ./scripts/install.sh --with-docker --with-figma  # 個別追加
 ```
 
@@ -208,7 +208,7 @@ npm run mcp:status       # 現在の状態を確認
 ```powershell
 .\scripts\install.ps1 -ListProfiles           # 一覧表示
 .\scripts\install.ps1 -Profile minimal        # 最小構成（92個）
-.\scripts\install.ps1 -Profile full           # 全スキル（120個）
+.\scripts\install.ps1 -Profile full           # 全スキル（63個）
 .\scripts\install.ps1 -WithDocker -WithFigma  # 個別追加
 ```
 
@@ -406,8 +406,8 @@ npm run taisun:diagnose
 |------|------|
 | 13層防御Hookシステム | 30点 |
 | MCPサーバー接続 | 25点 |
-| スキル定義検証（101個） | 20点 |
-| エージェント定義（96個） | 15点 |
+| スキル定義検証（63個） | 20点 |
+| エージェント定義（95個） | 15点 |
 | ビルド状態 | 10点 |
 
 ---
@@ -430,8 +430,8 @@ YouTubeサムネイルを作って
 
 | カテゴリ | 数 | 例 |
 |---------|----|----|
-| スキル | 101個 | mega-research, taiyo-style-lp, sdd-full, world-research |
-| エージェント | 96個 | planner, code-reviewer, security-reviewer, tdd-guide |
+| スキル | 63個 | mega-research, taiyo-style-lp, sdd-full, world-research |
+| エージェント | 95個 | planner, code-reviewer, security-reviewer, tdd-guide |
 | コマンド | 190+個 | /learn, /research, /sdd-full, /summarize, /-*, /-* |
 | Hookシステム | 14層 | 危険コマンド防止・セッション継続・自動バックアップ・タスク結果オーバーフロー防止 |
 | MCPサーバー | 15+ | playwright, pexels, claude-historian, praetorian |
