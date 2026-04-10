@@ -10,6 +10,7 @@
 | File | Description |
 |------|-------------|
 | [00_RUNBOOK_0-12.md](./00_RUNBOOK_0-12.md) | 0〜12の「やること」を一本化した手順書 |
+| [01_STRUCTURAL_CHANGES_LOG.md](./01_STRUCTURAL_CHANGES_LOG.md) | プロジェクト構造変更ログ（なぜこうなっているかの事実記録） |
 
 ### Checklists (10-)
 | File | Description |
@@ -25,6 +26,7 @@
 | [18_CHECKLIST_URL_BUNDLE_PIPELINE.md](./18_CHECKLIST_URL_BUNDLE_PIPELINE.md) | URL Bundle Pipelineチェックリスト |
 | [19_CHECKLIST_ONE_COMMAND_PIPELINE.md](./19_CHECKLIST_ONE_COMMAND_PIPELINE.md) | One-Command Pipelineチェックリスト |
 | [30_CHECKLIST_SCHEDULED_OPS_JOBS.md](./30_CHECKLIST_SCHEDULED_OPS_JOBS.md) | Scheduled Ops Jobs有効化チェックリスト (P18) |
+| [20_CHECKLIST_CONTEXT_OPTIMIZATION.md](./20_CHECKLIST_CONTEXT_OPTIMIZATION.md) | コンテキスト最適化チェックリスト（CLAUDE.md増殖・二重読み込み防止） |
 
 ### Technical Docs (20-)
 | File | Description |
