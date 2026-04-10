@@ -192,18 +192,16 @@ if [ -d "$SOURCE_AGENTS" ]; then
         agent_name=$(basename "$agent_file")
         [[ "$agent_name" == "CLAUDE.md" ]] && continue
         target="$TARGET_AGENTS/$agent_name"
-        if [ -f "$target" ] && [ ! -L "$target" ]; then rm -f "$target"; fi
-        if [ ! -L "$target" ]; then
-            ln -sf "$agent_file" "$target"
+        # Replace symlinks with real copies to avoid broken links when repo moves
+        if [ -L "$target" ]; then rm -f "$target"; fi
+        if [ ! -f "$target" ]; then
+            cp "$agent_file" "$target"
             ((AGENT_NEW++)) || true
+        elif ! diff -q "$agent_file" "$target" > /dev/null 2>&1; then
+            cp "$agent_file" "$target"
+            ((AGENT_UPDATED++)) || true
         else
-            current_target=$(readlink "$target")
-            if [ "$current_target" != "$agent_file" ]; then
-                ln -sf "$agent_file" "$target"
-                ((AGENT_UPDATED++)) || true
-            else
-                ((AGENT_SKIPPED++)) || true
-            fi
+            ((AGENT_SKIPPED++)) || true
         fi
     done
 fi

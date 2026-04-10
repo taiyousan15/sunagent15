@@ -173,8 +173,9 @@ if [ -d "$SOURCE_AGENTS" ]; then
         agent_name=$(basename "$agent_file")
         [[ "$agent_name" == "CLAUDE.md" ]] && continue
         target="$TARGET_AGENTS/$agent_name"
-        if [ ! -L "$target" ]; then
-            ln -sf "$agent_file" "$target"
+        if [ -L "$target" ]; then rm -f "$target"; fi
+        if [ ! -f "$target" ]; then
+            cp "$agent_file" "$target"
             ((AGENT_INSTALLED++)) || true
         fi
     done
