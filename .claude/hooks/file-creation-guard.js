@@ -155,7 +155,7 @@ function findSimilarFiles(dir, filename) {
         }
       }
     });
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return [...new Set(similar)].slice(0, 5);
 }
@@ -166,7 +166,7 @@ function findDesktopSimilarFiles(filename) {
 
   try {
     searchDesktop(desktop, filename, similar, 3);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return [...new Set(similar)].slice(0, 5);
 }
@@ -186,7 +186,7 @@ function searchDesktop(dir, filename, results, depth) {
         searchDesktop(fullPath, filename, results, depth - 1);
       }
     });
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 function readStdin(timeout = 1000) {

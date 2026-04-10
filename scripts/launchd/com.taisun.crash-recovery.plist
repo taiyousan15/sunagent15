@@ -8,7 +8,7 @@
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>source '/Users/matsumototoshihiko/.taisun-scripts/launchd-recovery-wrapper.sh'</string>
+        <string>source '~/.taisun-scripts/launchd-recovery-wrapper.sh'</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

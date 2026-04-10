@@ -135,7 +135,7 @@ ffmpeg -y -i combined.mp4 -i bgm.mp3 \
 
 ### プロジェクトパス
 ```
-/Users/matsumototoshihiko/Desktop/dev/ショート動画システム4月1日/short-video-factory
+~/short-video-factory
 ```
 
 ### 使い方

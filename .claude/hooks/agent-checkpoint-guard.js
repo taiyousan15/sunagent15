@@ -56,7 +56,7 @@ function logSkip(agentType, hasMarker, promptPreview) {
     }) + '\n';
     fs.mkdirSync(path.dirname(SKIP_LOG), { recursive: true });
     fs.appendFileSync(SKIP_LOG, entry);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 function check(toolName, toolInput) {

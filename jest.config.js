@@ -20,7 +20,7 @@ module.exports = {
     '!src/proxy-mcp/observability/post-to-issue.ts', // requires gh CLI
     '!src/proxy-mcp/observability/service.ts', // metrics collector integration
   ],
-  testPathIgnorePatterns: ['/node_modules/'],
+  testPathIgnorePatterns: ['/node_modules/', '/.ait42/', '/.claude/worktrees/'],
   // Transform TypeScript files
   transform: {
     '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],

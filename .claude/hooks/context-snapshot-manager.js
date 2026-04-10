@@ -146,11 +146,11 @@ function cleanupSession(sessionId) {
     for (const f of files) {
       try {
         fs.unlinkSync(path.join(dir, f));
-      } catch (e) {}
+      } catch (e) { /* fail-open */ }
     }
     try {
       fs.rmdirSync(dir);
-    } catch (e) {}
+    } catch (e) { /* fail-open */ }
     return true;
   } catch (e) {
     return false;
@@ -174,13 +174,13 @@ function cleanupOldSessions() {
         if (now - stat.mtimeMs > TTL) {
           const files = fs.readdirSync(fullDir);
           for (const f of files) {
-            try { fs.unlinkSync(path.join(fullDir, f)); } catch (e) {}
+            try { fs.unlinkSync(path.join(fullDir, f)); } catch (e) { /* fail-open */ }
           }
-          try { fs.rmdirSync(fullDir); } catch (e) {}
+          try { fs.rmdirSync(fullDir); } catch (e) { /* fail-open */ }
         }
-      } catch (e) {}
+      } catch (e) { /* fail-open */ }
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 // ─────────────────────────────────────────

@@ -147,3 +147,26 @@ SESSION_HANDOFF.md
 
 # Large binary (130MB, exceeds GitHub 100MB limit)
 tools/codebase-memory-mcp/codebase-memory-mcp
+
+# Session-specific auto-generated files (machine-specific paths)
+.claude/handoff.json
+.claude/checkpoints/
+
+# Dynamic cache (contains absolute paths from original machine)
+.claude/hooks/data/dynamic-cache.json
+.claude/hooks/data/*.json
+
+# AI debate temp workspace
+.ait42/
+
+# Pre-compact context backups (session-specific)
+scripts/originals/backups/pre-compact-*.json
+
+# Skill runtime data with machine-specific paths
+.claude/skills/*/data/auth_info.json
+
+# Temp context (created by Context Safe Compact)
+.claude/temp-context/
+
+# CLAUDE.md backups (session-specific)
+.claude/CLAUDE.md.backup-*

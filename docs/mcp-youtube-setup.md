@@ -19,7 +19,7 @@ YouTube MCPサーバーは、YouTube動画から字幕（サブタイトル）�
    - YouTube動画のダウンロードに使用
 
 2. **mcp-youtube** (インストール済み)
-   - Location: `/Users/matsumototoshihiko/mcp-youtube`
+   - Location: `~/mcp-youtube`
    - Version: 0.6.0
    - Built with: bun
 
@@ -34,7 +34,7 @@ YouTube MCPサーバーは、YouTube動画から字幕（サブタイトル）�
     "youtube": {
       "type": "stdio",
       "command": "node",
-      "args": ["/Users/matsumototoshihiko/mcp-youtube/dist/index.js"],
+      "args": ["~/mcp-youtube/dist/index.js"],
       "disabled": false,
       "description": "YouTube downloader - download subtitles from YouTube videos",
       "category": "media"
@@ -50,7 +50,7 @@ YouTube MCPサーバーは、YouTube動画から字幕（サブタイトル）�
     "youtube": {
       "type": "stdio",
       "command": "node",
-      "args": ["/Users/matsumototoshihiko/mcp-youtube/dist/index.js"],
+      "args": ["~/mcp-youtube/dist/index.js"],
       "disabled": false,
       "description": "YouTube subtitle downloader using yt-dlp",
       "category": "media"

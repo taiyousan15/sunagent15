@@ -138,6 +138,7 @@ function readStdin(timeout = 1000) {
   });
 }
 
+// eslint-disable-next-line no-unused-vars
 function findRecentWorkDirs(cwd) {
   const dirs = [];
   try {
@@ -156,11 +157,11 @@ function findRecentWorkDirs(cwd) {
             if (stat.mtimeMs > oneHourAgo) {
               dirs.push(fullPath);
             }
-          } catch (e) {}
+          } catch (e) { /* fail-open */ }
         }
       });
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
   return dirs.slice(0, 5);
 }
 
@@ -175,7 +176,7 @@ function findExistingScripts(cwd) {
     // Desktop も検索
     const desktop = path.join(process.env.HOME, 'Desktop');
     searchDir(desktop, patterns, scripts, 2);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return [...new Set(scripts)].slice(0, 10);
 }
@@ -195,7 +196,7 @@ function searchDir(dir, patterns, results, depth) {
         searchDir(fullPath, patterns, results, depth - 1);
       }
     });
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 function findWorkflowFiles(cwd) {
@@ -212,7 +213,7 @@ function findWorkflowFiles(cwd) {
         }
       });
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return workflows.slice(0, 5);
 }
@@ -241,7 +242,7 @@ function findSessionHandoffs(cwd) {
         }
       });
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return [...new Set(handoffs)].slice(0, 5);
 }

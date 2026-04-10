@@ -16,7 +16,9 @@
  * - マーカー文字列の誤実行
  */
 
+// eslint-disable-next-line no-unused-vars
 const fs = require('fs');
+// eslint-disable-next-line no-unused-vars
 const path = require('path');
 
 // 検出パターン
@@ -54,6 +56,7 @@ const DANGEROUS_PATTERNS = [
 ];
 
 // 重大度による動作
+// eslint-disable-next-line no-unused-vars
 const SEVERITY_ACTIONS = {
   critical: 'block',    // exit code 2 でブロック
   warning: 'warn'       // 警告のみ（実行は許可）

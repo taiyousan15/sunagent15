@@ -81,6 +81,7 @@ function extractPatterns() {
 // ─────────────────────────────────────────
 function extractKeywords(text) {
   if (!text) return [];
+  // eslint-disable-next-line no-useless-escape
   const normalized = text.toLowerCase().replace(/[:\,\.\"\'\(\)\{\}\[\]「」『』【】、。]/g, ' ');
   const keywords = new Set();
 
@@ -159,7 +160,7 @@ function logMatch(toolName, action, matches) {
     }) + '\n';
     fs.mkdirSync(path.dirname(MATCH_LOG), { recursive: true });
     fs.appendFileSync(MATCH_LOG, entry);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 // ─────────────────────────────────────────

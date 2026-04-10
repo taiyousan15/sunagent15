@@ -117,6 +117,6 @@
 ## Appendix: Validation Script
 
 - Script: `scripts/validate-final.sh`
-- Metrics: `/Users/matsumototoshihiko/Desktop/開発2026/taisun_agent2026/.claude/hooks/data/metrics_final.jsonl`
+- Metrics: `~/taisun_agent/.claude/hooks/data/metrics_final.jsonl`
 - Date: 2026-02-15T13:33:17Z
 

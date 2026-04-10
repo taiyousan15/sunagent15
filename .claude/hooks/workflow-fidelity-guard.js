@@ -189,6 +189,7 @@ function evaluatePreToolUse(toolName, toolInput, state, isStrict, cwd) {
 
   // ===== Phase 1: Intent Contract First Gate =====
   // Read/Glob/Grep/Search 以外の危険操作は契約必須
+  // eslint-disable-next-line no-unused-vars
   const SAFE_TOOLS = ['Read', 'Glob', 'Grep', 'WebSearch'];
   const DANGEROUS_TOOLS = ['Bash', 'Write', 'Edit', 'Task', 'Skill'];
 

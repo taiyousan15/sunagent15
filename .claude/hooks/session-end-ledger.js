@@ -78,6 +78,7 @@ function updateLedger() {
 // ===== メイン =====
 
 async function main() {
+  // eslint-disable-next-line no-unused-vars
   let input = '';
   process.stdin.setEncoding('utf-8');
   process.stdin.on('data', d => { input += d; });

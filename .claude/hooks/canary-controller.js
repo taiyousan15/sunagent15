@@ -14,6 +14,7 @@
 
 const fs = require('fs');
 const path = require('path');
+// eslint-disable-next-line no-unused-vars
 const { checkLatest, scanAll } = require('./anomaly-detector');
 
 // ========================================
@@ -441,6 +442,7 @@ function main() {
 
   switch (command) {
     case 'status':
+      // eslint-disable-next-line no-case-declarations
       const status = getStatus();
       console.log('\n[CANARY STATUS]');
       console.log(`Version: ${status.version}`);
@@ -464,6 +466,7 @@ function main() {
       break;
 
     case 'promote':
+      // eslint-disable-next-line no-case-declarations
       const promoteResult = promote();
       if (promoteResult.success) {
         console.log(`✅ ${promoteResult.message}`);
@@ -474,6 +477,7 @@ function main() {
       break;
 
     case 'halt':
+      // eslint-disable-next-line no-case-declarations
       const haltResult = halt();
       if (haltResult.success) {
         console.log(`✅ ${haltResult.message}`);
@@ -484,6 +488,7 @@ function main() {
       break;
 
     case 'check':
+      // eslint-disable-next-line no-case-declarations
       const qualityCheck = checkQuality();
       console.log('\n[QUALITY CHECK]');
       console.log(`Completion Rate: ${(qualityCheck.details.completionRate.value * 100).toFixed(1)}% ${qualityCheck.details.completionRate.passed ? '✅' : '❌'}`);
@@ -497,6 +502,7 @@ function main() {
       break;
 
     case 'reset':
+      // eslint-disable-next-line no-case-declarations
       const resetResult = reset();
       console.log(`✅ ${resetResult.message}`);
       break;

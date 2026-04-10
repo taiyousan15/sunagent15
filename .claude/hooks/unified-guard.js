@@ -24,6 +24,7 @@ const path = require('path');
 const { readStdin } = require('./utils/read-stdin');
 
 // === キャッシュシステム ===
+// eslint-disable-next-line no-unused-vars
 const CACHE = {
   state: null,
   stateLoadedAt: 0,
@@ -32,10 +33,12 @@ const CACHE = {
   hashCache: new Map()
 };
 
+// eslint-disable-next-line no-unused-vars
 const CACHE_TTL_MS = 5000; // 5秒間キャッシュ
 
 // === 事前コンパイルされた正規表現パターン ===
 const DANGEROUS_PATTERNS = [
+  // eslint-disable-next-line no-useless-escape
   /rm\s+-rf\s+[\/~]/,
   /rm\s+-rf\s+\*/,
   />\s*\/dev\/sd[a-z]/,
@@ -66,6 +69,7 @@ const INJECTION_PATTERNS = [
 function buildUserInputFromContext(toolName, toolInput) {
   switch (toolName) {
     case 'Edit':
+      // eslint-disable-next-line no-case-declarations
       const oldPreview = (toolInput.old_string || '').split('\n')[0]?.substring(0, 50) || '';
       return `edit file ${toolInput.file_path} line ${oldPreview}...`;
 
@@ -73,6 +77,7 @@ function buildUserInputFromContext(toolName, toolInput) {
       return `write file ${toolInput.file_path}`;
 
     case 'Bash':
+      // eslint-disable-next-line no-case-declarations
       const cmd = (toolInput.command || '').substring(0, 100);
       return `run bash command: ${cmd}`;
 
@@ -89,6 +94,7 @@ function buildUserInputFromContext(toolName, toolInput) {
       return `invoke skill ${toolInput.skill}`;
 
     default:
+      // eslint-disable-next-line no-case-declarations
       const keys = Object.keys(toolInput).join(', ');
       return `tool ${toolName} with input keys: ${keys}`;
   }

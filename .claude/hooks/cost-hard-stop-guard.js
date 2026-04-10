@@ -71,7 +71,7 @@ function cleanupOldEntries() {
         if (entry.date && entry.date >= cutoffStr) {
           keptLines.push(line);
         }
-      } catch (e) {}
+      } catch (e) { /* fail-open */ }
     }
 
     // atomic rename で安全に書き換え
@@ -101,7 +101,7 @@ function getCumulativeCost() {
         const entry = JSON.parse(line);
         if (entry.date === today_str) daily += entry.cost || 0;
         if (entry.date && entry.date.startsWith(month_str)) monthly += entry.cost || 0;
-      } catch (e) {}
+      } catch (e) { /* fail-open */ }
     }
 
     return { daily, monthly };
@@ -121,7 +121,7 @@ function recordCost(toolName, cost) {
     }) + '\n';
     fs.mkdirSync(path.dirname(COST_LOG), { recursive: true });
     fs.appendFileSync(COST_LOG, entry);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 function logAlert(msg, daily, monthly) {
@@ -137,9 +137,10 @@ function logAlert(msg, daily, monthly) {
     }) + '\n';
     fs.mkdirSync(path.dirname(ALERT_LOG), { recursive: true });
     fs.appendFileSync(ALERT_LOG, entry);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
+// eslint-disable-next-line no-unused-vars
 function check(toolName, toolInput) {
   try {
     if (PHASE === '0') return null;

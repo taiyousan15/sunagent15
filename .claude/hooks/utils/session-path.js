@@ -64,7 +64,7 @@ function safeSessionDir(baseDir, sessionId) {
       try {
         const stat = fs.lstatSync(target);
         if (stat.isSymbolicLink()) return null;
-      } catch (e) {}
+      } catch (e) { /* fail-open */ }
     }
 
     return target;

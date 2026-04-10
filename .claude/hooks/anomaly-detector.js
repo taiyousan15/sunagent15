@@ -532,6 +532,7 @@ function main() {
 
   switch (command) {
     case 'scan':
+      // eslint-disable-next-line no-case-declarations
       const scanResult = scanAll();
       console.log('\n[SUMMARY]');
       console.log(`Total: ${scanResult.summary.total}`);
@@ -541,6 +542,7 @@ function main() {
       break;
 
     case 'check':
+      // eslint-disable-next-line no-case-declarations
       const checkResult = checkLatest();
       console.log('\n[SUMMARY]');
       console.log(`Total: ${checkResult.summary.total}`);
@@ -549,6 +551,7 @@ function main() {
       break;
 
     case 'config':
+      // eslint-disable-next-line no-case-declarations
       const config = getConfig();
       console.log('[CONFIG]');
       console.log(JSON.stringify(config, null, 2));

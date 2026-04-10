@@ -28,6 +28,7 @@ async function main() {
 
   const toolName = input.tool_name || '';
   const toolInput = input.tool_input || {};
+  // eslint-disable-next-line no-unused-vars
   const toolResult = input.tool_result || {};
 
   // Edit/Write ツールのみチェック

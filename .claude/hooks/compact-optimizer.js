@@ -186,6 +186,7 @@ async function main() {
     if (stdinData) {
       try {
         const input = JSON.parse(stdinData);
+        // eslint-disable-next-line no-unused-vars
         toolName = input.tool_name || input.toolName || 'unknown';
       } catch (e) { /* not JSON, ignore */ }
     }

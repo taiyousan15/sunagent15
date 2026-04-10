@@ -58,6 +58,7 @@ function loadWorkflowState(cwd) {
 
 function createIssueBody(cwd, sessionState, workflowState, gitInfo) {
   const timestamp = new Date().toISOString();
+  // eslint-disable-next-line no-unused-vars
   const date = new Date().toLocaleDateString('ja-JP');
 
   let body = `## セッション作業ログ\n\n`;

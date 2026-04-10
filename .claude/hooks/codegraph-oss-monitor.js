@@ -16,6 +16,7 @@ const CACHE_PATH = path.join(__dirname, 'data', 'oss-health-cache.json')
 const WARNING_DAYS = 60
 
 function fetchLastCommit(owner, repo) {
+  // eslint-disable-next-line no-unused-vars
   return new Promise((resolve, reject) => {
     const options = {
       hostname: 'api.github.com',

@@ -55,6 +55,7 @@ export default {
   /**
    * ツール使用前にコスト警告をチェック
    */
+  // eslint-disable-next-line no-unused-vars
   async run({ tool, input, session }) {
     // MCP名をチェック
     const mcpMatch = COST_MCPS.find(mcp =>

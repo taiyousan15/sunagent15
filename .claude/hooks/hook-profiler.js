@@ -17,7 +17,7 @@
  * @date 2026-02-15
  */
 
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -70,7 +70,7 @@ function profileHook(hook) {
   try {
     const start = process.hrtime.bigint();
     // Dry-run: just require and measure startup time
-    execSync(`node -e "require('./${scriptPath}')"`, {
+    execFileSync('node', ['-e', `require('./${scriptPath}')`], {
       cwd: PROJECT_DIR,
       timeout: 5000,
       stdio: 'pipe',

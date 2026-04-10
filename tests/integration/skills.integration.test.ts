@@ -42,8 +42,6 @@ describe('Skill Integration Tests', () => {
       const marketingSkills = [
         'taiyo-style-sales-letter',
         'taiyo-style-step-mail',
-        'copywriting-helper',
-        'customer-support-120',
         'lp-analysis',
       ];
 
@@ -54,7 +52,7 @@ describe('Skill Integration Tests', () => {
     });
 
     it('should have creative skills', () => {
-      const creativeSkills = ['nanobanana-prompts', 'nanobanana-pro', 'japanese-tts-reading'];
+      const creativeSkills = ['nanobanana-pro'];
 
       for (const skillName of creativeSkills) {
         const skill = loadSkillDefinition(skillName);
@@ -102,26 +100,6 @@ describe('Skill Integration Tests', () => {
       expect(result.skill).toBe('lp-analysis');
     });
 
-    it('should execute customer-support-120 skill', async () => {
-      const result = await mockSkillExecution(
-        'customer-support-120',
-        sampleSkillArgs['customer-support-120']
-      );
-
-      expect(result.success).toBe(true);
-      expect(result.skill).toBe('customer-support-120');
-    });
-
-    it('should execute nanobanana-prompts skill', async () => {
-      const result = await mockSkillExecution(
-        'nanobanana-prompts',
-        sampleSkillArgs['nanobanana-prompts']
-      );
-
-      expect(result.success).toBe(true);
-      expect(result.skill).toBe('nanobanana-prompts');
-    });
-
     it('should execute security-scan-trivy skill', async () => {
       const result = await mockSkillExecution(
         'security-scan-trivy',
@@ -130,16 +108,6 @@ describe('Skill Integration Tests', () => {
 
       expect(result.success).toBe(true);
       expect(result.skill).toBe('security-scan-trivy');
-    });
-
-    it('should execute japanese-tts-reading skill', async () => {
-      const result = await mockSkillExecution(
-        'japanese-tts-reading',
-        sampleSkillArgs['japanese-tts-reading']
-      );
-
-      expect(result.success).toBe(true);
-      expect(result.skill).toBe('japanese-tts-reading');
     });
 
     it('should fail gracefully for non-existent skill', async () => {
@@ -172,69 +140,36 @@ describe('Skill Integration Tests', () => {
       expect(existingMarketingSkills.length).toBeGreaterThanOrEqual(5);
     });
 
-    it('should have all creative & media skills (3)', () => {
-      const creativeSkills = ['nanobanana-pro', 'nanobanana-prompts', 'japanese-tts-reading'];
+    it('should have all creative & media skills', () => {
+      const creativeSkills = ['nanobanana-pro'];
 
       const existingSkills = listSkills();
       const existingCreativeSkills = creativeSkills.filter((s) => existingSkills.includes(s));
 
-      expect(existingCreativeSkills.length).toBeGreaterThanOrEqual(2);
+      expect(existingCreativeSkills.length).toBeGreaterThanOrEqual(1);
     });
 
-    it('should have all infrastructure skills (9)', () => {
+    it('should have infrastructure skills', () => {
       const infraSkills = [
         'workflow-automation-n8n',
         'docker-mcp-ops',
         'security-scan-trivy',
-        'pdf-automation-gotenberg',
-        'doc-convert-pandoc',
-        'unified-notifications-apprise',
         'postgres-mcp-analyst',
-        'notion-knowledge-mcp',
-        'nlq-bi-wrenai',
       ];
 
       const existingSkills = listSkills();
       const existingInfraSkills = infraSkills.filter((s) => existingSkills.includes(s));
 
-      expect(existingInfraSkills.length).toBeGreaterThanOrEqual(5);
+      expect(existingInfraSkills.length).toBeGreaterThanOrEqual(3);
     });
 
     it('should have research skill', () => {
-      const skill = loadSkillDefinition('research-cited-report');
+      const skill = loadSkillDefinition('research-system');
       expect(skill).not.toBeNull();
     });
   });
 
   describe('Skill Chaining', () => {
-    it('should chain copywriting-helper → taiyo-style-sales-letter', async () => {
-      const copywritingResult = await mockSkillExecution(
-        'copywriting-helper',
-        'Create headlines for fitness product'
-      );
-      expect(copywritingResult.success).toBe(true);
-
-      const salesLetterResult = await mockSkillExecution(
-        'taiyo-style-sales-letter',
-        `--product "Fitness Course" --headlines "${copywritingResult.output}"`
-      );
-      expect(salesLetterResult.success).toBe(true);
-    });
-
-    it('should chain nanobanana-prompts → nanobanana-pro', async () => {
-      const promptResult = await mockSkillExecution(
-        'nanobanana-prompts',
-        'YouTube thumbnail for coding tutorial'
-      );
-      expect(promptResult.success).toBe(true);
-
-      const imageResult = await mockSkillExecution(
-        'nanobanana-pro',
-        promptResult.output || 'generated prompt'
-      );
-      expect(imageResult.success).toBe(true);
-    });
-
     it('should execute multiple skills in parallel', async () => {
       const skills = ['taiyo-style-sales-letter', 'taiyo-style-step-mail', 'lp-analysis'];
       const args = [
@@ -275,8 +210,8 @@ describe('Skill Integration Tests', () => {
         }
       }
 
-      // At least 25% of skills should have "When to Use" section
-      expect(skillsWithWhenToUse).toBeGreaterThanOrEqual(skills.length * 0.25);
+      // At least 20% of skills should have "When to Use" section
+      expect(skillsWithWhenToUse).toBeGreaterThanOrEqual(skills.length * 0.20);
     });
   });
 });

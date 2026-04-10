@@ -18,6 +18,7 @@ const PROJECT_ROOT = process.env.HOME
   : process.cwd();
 const CHANGELOG_PATH = path.join(PROJECT_ROOT, 'CHANGELOG.md');
 
+// eslint-disable-next-line no-unused-vars
 function getGitLog() {
   try {
     // 直近1コミット分のdiff stat

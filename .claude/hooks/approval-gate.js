@@ -49,7 +49,7 @@ function classifyOperation(toolName, input) {
 
 function logApproval(toolName, action, approved) {
   const logDir = path.join(__dirname, '..', '..', 'logs', 'approvals');
-  try { fs.mkdirSync(logDir, { recursive: true }); } catch (_) {}
+  try { fs.mkdirSync(logDir, { recursive: true }); } catch (_) { /* fail-open */ }
 
   const date = new Date().toISOString().slice(0, 10);
   const logFile = path.join(logDir, `${date}.jsonl`);
@@ -60,7 +60,7 @@ function logApproval(toolName, action, approved) {
     approved: approved,
   });
 
-  try { fs.appendFileSync(logFile, entry + '\n'); } catch (_) {}
+  try { fs.appendFileSync(logFile, entry + '\n'); } catch (_) { /* fail-open */ }
 }
 
 let input = '';

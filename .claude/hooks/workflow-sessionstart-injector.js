@@ -134,12 +134,12 @@ function findDesktopWorkflowStates() {
                 workflowId: state.meta?.workflowId || 'unknown',
                 phase: state.meta?.currentPhase || 1
               });
-            } catch (e) {}
+            } catch (e) { /* fail-open */ }
           }
         }
       });
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
   return states.slice(0, 5);
 }
 
@@ -167,7 +167,7 @@ function findSessionHandoffs(cwd) {
         }
       });
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return [...new Set(handoffs)].slice(0, 5);
 }
@@ -187,6 +187,7 @@ function generateCheckpointQuestions(cwd) {
     const mistakesPath = path.join(__dirname, 'mistakes.md');
     if (fs.existsSync(mistakesPath)) {
       const content = fs.readFileSync(mistakesPath, 'utf8');
+      // eslint-disable-next-line no-unused-vars
       const lines = content.split('\n').filter(l => l.trim());
       const patterns = content.match(/### Pattern \d+: (.+)/g);
       if (patterns && patterns.length > 0) {
@@ -203,6 +204,7 @@ function generateCheckpointQuestions(cwd) {
     const handoffPath = path.join(cwd, 'SESSION_HANDOFF.md');
     if (fs.existsSync(handoffPath)) {
       const content = fs.readFileSync(handoffPath, 'utf8');
+      // eslint-disable-next-line no-unused-vars
       const lines = content.split('\n').filter(l => l.trim());
       // ファイルの行数を使った質問（推測不可能）
       questions.push(

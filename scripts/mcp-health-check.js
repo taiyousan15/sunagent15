@@ -80,7 +80,7 @@ try {
 console.log('Checking MCP Servers...');
 console.log('');
 
-const servers = Object.keys(mcpConfig.mcpServers || {});
+const servers = Object.keys(mcpConfig.mcpServers || {}).filter(name => !name.startsWith('_comment'));
 let total = 0;
 let ready = 0;
 let missingConfig = 0;

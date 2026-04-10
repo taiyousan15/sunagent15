@@ -40,7 +40,7 @@ ULTIMATE PIPELINE RESEARCH v1.0
 1回のReadで全文が読めない場合は、offset/limitで分割して最後まで必ず読むこと。
 読み飛ばし・部分読みは禁止。全965行を読み終えてからSTEP 1に進むこと。
 
-ファイル: /Users/matsumototoshihiko/Desktop/taisun開発２０２６/パイプライン最強設計書_v3.0.md
+ファイル: ~/taisun_agent/パイプライン最強設計書_v3.0.md
 
 読み込み完了後、以下を確認表示すること:
 - PART 1（10原則）: 読了 ✓

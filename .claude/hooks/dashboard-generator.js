@@ -331,9 +331,11 @@ function analyzeTrend(options = {}) {
   const compactMetrics = loadJsonl(COMPACT_METRICS_PATH);
 
   const rangeMetrics = getMetricsForRange(unifiedMetrics, days);
+  // eslint-disable-next-line no-unused-vars
   const rangeCompact = getMetricsForRange(compactMetrics, days);
 
   // Calculate week-over-week comparison
+  // eslint-disable-next-line no-unused-vars
   const midpoint = Math.floor(days / 2);
   const week1Unified = rangeMetrics.slice(0, Math.floor(rangeMetrics.length / 2));
   const week2Unified = rangeMetrics.slice(Math.floor(rangeMetrics.length / 2));

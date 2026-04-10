@@ -72,7 +72,7 @@ function isCheckpointDone(sessionId) {
     const stat = fs.statSync(flagFile);
     const age = Date.now() - stat.mtimeMs;
     if (age > TTL_MS) {
-      try { fs.unlinkSync(flagFile); } catch (e) {}
+      try { fs.unlinkSync(flagFile); } catch (e) { /* fail-open */ }
       return false;
     }
     return true;
@@ -95,9 +95,9 @@ function cleanupOldFlags() {
         if (now - stat.mtimeMs > TTL_MS) {
           fs.unlinkSync(fullPath);
         }
-      } catch (e) {}
+      } catch (e) { /* fail-open */ }
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 // === スキップ記録 ===
@@ -112,7 +112,7 @@ function logSkip(sessionId, toolName, detail) {
     }) + '\n';
     fs.mkdirSync(path.dirname(SKIP_LOG), { recursive: true });
     fs.appendFileSync(SKIP_LOG, entry);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 // === メインチェック関数 ===

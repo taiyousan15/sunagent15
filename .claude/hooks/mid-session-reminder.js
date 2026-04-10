@@ -42,7 +42,7 @@ function incrementCounter(sessionId) {
     const file = getCounterFile(sessionId);
     let data = { count: 0 };
     if (fs.existsSync(file)) {
-      try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) {}
+      try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { /* fail-open */ }
     }
     data.count = (data.count || 0) + 1;
     data.lastUpdate = new Date().toISOString();
@@ -98,7 +98,7 @@ async function main() {
     if (!input) { process.exit(0); return; }
 
     let data = {};
-    try { data = JSON.parse(input); } catch (e) {}
+    try { data = JSON.parse(input); } catch (e) { /* fail-open */ }
 
     const sessionId = data.session_id || getSessionId();
     const count = incrementCounter(sessionId);

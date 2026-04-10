@@ -82,7 +82,7 @@ function loadState(cwd) {
       const content = fs.readFileSync(statePath, 'utf8');
       return JSON.parse(content);
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
   return null;
 }
 

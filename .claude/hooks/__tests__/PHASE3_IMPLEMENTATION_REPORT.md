@@ -309,7 +309,7 @@ async generateCompletionReport(
 
 1. **Enable Hooks in Production**
    ```bash
-   cd /Users/matsumototoshihiko/Desktop/開発2026/taisun_agent2026
+   cd ~/taisun_agent
    mv .claude/hooks.disabled.local .claude/hooks
    ```
 

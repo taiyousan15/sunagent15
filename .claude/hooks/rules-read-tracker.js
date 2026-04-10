@@ -78,7 +78,7 @@ function getReadFiles(sessionId) {
       try {
         const entry = JSON.parse(line);
         if (entry.file) files.add(entry.file);
-      } catch (e) {}
+      } catch (e) { /* fail-open */ }
     }
     return Array.from(files);
   } catch (e) {

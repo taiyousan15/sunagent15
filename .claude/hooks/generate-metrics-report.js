@@ -66,6 +66,7 @@ async function generateReport(days = 7) {
 
     let totalEvents = 0;
     let totalBlocks = 0;
+    // eslint-disable-next-line no-unused-vars
     let allProcessingTimes = [];
     const hookStats = {};
 

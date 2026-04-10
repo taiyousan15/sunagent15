@@ -73,7 +73,7 @@ function getReadFiles(sessionId) {
       try {
         const entry = JSON.parse(line);
         if (entry.file) files.add(entry.file);
-      } catch (e) {}
+      } catch (e) { /* fail-open */ }
     }
     return Array.from(files);
   } catch (e) {
@@ -106,7 +106,7 @@ function logSkip(toolName, missing, detail) {
     }) + '\n';
     fs.mkdirSync(path.dirname(SKIP_LOG), { recursive: true });
     fs.appendFileSync(SKIP_LOG, entry);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 function check(toolName, toolInput) {

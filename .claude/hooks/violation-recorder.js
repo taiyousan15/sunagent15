@@ -32,7 +32,7 @@ async function main() {
     if (fs.existsSync(mistakesPath)) {
       content = fs.readFileSync(mistakesPath, 'utf8');
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   // ヘッダーがなければ追加
   if (!content.includes('# Mistakes Log')) {
@@ -63,7 +63,7 @@ async function main() {
   // 書き込み
   try {
     fs.writeFileSync(mistakesPath, content, 'utf8');
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   process.exit(0);
 }

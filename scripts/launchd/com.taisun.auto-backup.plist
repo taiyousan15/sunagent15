@@ -8,7 +8,7 @@
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>source '/Users/matsumototoshihiko/.taisun-scripts/launchd-backup-wrapper.sh'</string>
+        <string>source '~/.taisun-scripts/launchd-backup-wrapper.sh'</string>
     </array>
     <key>StartInterval</key>
     <integer>300</integer>

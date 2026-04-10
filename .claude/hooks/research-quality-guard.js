@@ -47,7 +47,7 @@ function logQualityCheck(filePath, missing, phase) {
     }) + '\n';
     fs.mkdirSync(path.dirname(LOG_FILE), { recursive: true });
     fs.appendFileSync(LOG_FILE, entry);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 function checkSourceCoverage(content) {

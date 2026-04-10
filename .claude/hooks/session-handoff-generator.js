@@ -90,7 +90,7 @@ function buildHandoffContent(dir, scripts, workflows, outputs) {
     const jsonDir = path.dirname(jsonPath);
     if (!fs.existsSync(jsonDir)) fs.mkdirSync(jsonDir, { recursive: true });
     fs.writeFileSync(jsonPath, JSON.stringify(handoffData, null, 2), 'utf8');
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   // === Markdown出力（人間可読 + Claude可読） ===
   const lines = [];
@@ -181,11 +181,11 @@ function findRecentWorkDirs() {
             if (stat.mtimeMs > oneHourAgo) {
               dirs.push(fullPath);
             }
-          } catch (e) {}
+          } catch (e) { /* fail-open */ }
         }
       });
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
   return dirs.slice(0, 5);
 }
 
@@ -195,7 +195,7 @@ function findScripts(dir) {
 
   try {
     searchFiles(dir, patterns, scripts, 3);
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return scripts.filter(s => {
     const name = path.basename(s);
@@ -220,7 +220,7 @@ function findWorkflows(dir) {
         }
       });
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return workflows.slice(0, 5);
 }
@@ -233,7 +233,7 @@ function findOutputs(dir) {
     if (fs.existsSync(outputDir)) {
       searchFiles(outputDir, ['.mp4', '.mp3', '.png', '.jpg', '.pdf'], outputs, 2);
     }
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 
   return outputs;
 }
@@ -256,7 +256,7 @@ function searchFiles(dir, extensions, results, depth) {
         searchFiles(fullPath, extensions, results, depth - 1);
       }
     });
-  } catch (e) {}
+  } catch (e) { /* fail-open */ }
 }
 
 function formatSize(bytes) {

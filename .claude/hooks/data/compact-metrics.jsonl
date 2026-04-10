@@ -544,3 +544,6 @@
 {"event":"compact_suggestion","reason":"tool_calls","session_minutes":15457.125816666667,"tool_calls":2285,"compact_count":0,"timestamp":"2026-04-03T17:55:57.449Z"}
 {"event":"compact_suggestion","reason":"tool_calls","session_minutes":15517.255566666667,"tool_calls":2310,"compact_count":0,"timestamp":"2026-04-03T18:56:05.235Z"}
 {"event":"compact_suggestion","reason":"tool_calls","session_minutes":15525.65425,"tool_calls":2335,"compact_count":0,"timestamp":"2026-04-03T19:04:29.156Z"}
+{"event":"compact_suggestion","reason":"tool_calls","session_minutes":25588.511933333335,"tool_calls":5810,"compact_count":0,"timestamp":"2026-04-10T18:47:20.616Z"}
+{"event":"compact_suggestion","reason":"tool_calls","session_minutes":25596.4274,"tool_calls":5835,"compact_count":0,"timestamp":"2026-04-10T18:55:15.544Z"}
+{"event":"compact_suggestion","reason":"tool_calls","session_minutes":25607.745133333334,"tool_calls":5860,"compact_count":0,"timestamp":"2026-04-10T19:06:34.608Z"}
