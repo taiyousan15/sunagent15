@@ -14,7 +14,7 @@ Claude Code が接続する MCP サーバーを **taisun-proxy 1本のみ** に�
 │                         ▼                                    │
 │              ┌─────────────────────┐                         │
 │              │   taisun-proxy      │  ← 唯一の MCP 接続      │
-│              │   (5 tools)         │                         │
+│              │   (13 tools)        │                         │
 │              └─────────────────────┘                         │
 │                         │                                    │
 │         ┌───────────────┼───────────────┐                    │
@@ -53,7 +53,7 @@ Claude Code が接続する MCP サーバーを **taisun-proxy 1本のみ** に�
 
 元の32サーバー設定を保持。内部テストやデバッグ時に参照可能。
 
-## 公開ツール (5個のみ)
+## 公開ツール (13個)
 
 | Tool | 説明 |
 |------|------|
@@ -62,6 +62,14 @@ Claude Code が接続する MCP サーバーを **taisun-proxy 1本のみ** に�
 | `skill_run` | スキル実行 |
 | `memory_add` | 大きなコンテンツを保存し refId を返す |
 | `memory_search` | refId またはキーワードで検索 |
+| `output_verify` | 出力検証 |
+| `rag_ground` | RAG グラウンディング |
+| `cove_verify` | CoVe 検証 |
+| `validation_pipeline` | バリデーションパイプライン |
+| `prospective_check` | 前方反省 |
+| `constitutional_check` | Constitutional AI チェック |
+| `reflexion_analyze` | Reflexion 分析 |
+| `reflexion_round` | Reflexion ラウンド |
 
 ## セキュリティ
 

@@ -30,12 +30,13 @@ export async function groundPrompt(
   prompt: string,
   options: GroundingOptions = {}
 ): Promise<GroundingResult> {
-  const { topK = 3 } = options;
+  const { topK = 3, minScore } = options;
 
   // Retrieve relevant snippets from in-memory index
   const snippets = retrieveSnippets(prompt, topK);
+  const filtered = minScore != null ? snippets.filter(s => s.score >= minScore) : snippets;
 
-  if (snippets.length === 0) {
+  if (filtered.length === 0) {
     return {
       groundedPrompt: prompt,
       snippetsUsed: 0,
@@ -44,7 +45,7 @@ export async function groundPrompt(
     };
   }
 
-  const contextBlock = snippets
+  const contextBlock = filtered
     .map((s, i) => `[Context ${i + 1}]: ${s.content}`)
     .join('\n\n');
 
@@ -52,7 +53,7 @@ export async function groundPrompt(
 
   return {
     groundedPrompt,
-    snippetsUsed: snippets.length,
+    snippetsUsed: filtered.length,
     contextLength: contextBlock.length,
     originalPrompt: prompt,
   };

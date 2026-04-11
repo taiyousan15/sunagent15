@@ -8,7 +8,7 @@
 
 import { systemHealth } from '../tools/system';
 import { skillSearch, skillRun } from '../tools/skill';
-import { memoryAdd, memorySearch } from '../tools/memory';
+import { memoryAdd, memorySearch, memoryStats } from '../tools/memory';
 import { verifyOutput } from '../validation/verification-layer';
 import { runCoVe } from '../validation/cove';
 import { analyzeReflexionRounds, evaluateRound } from '../validation/reflexion';
@@ -97,6 +97,9 @@ async function dispatchTool(
 
     case 'memory_search':
       return memorySearch(args?.query as string);
+
+    case 'memory_stats':
+      return memoryStats();
 
     case 'output_verify': {
       const verifyResult = await verifyOutput(args?.text as string, {
