@@ -86,21 +86,11 @@ export interface TabsList {
   tabsPreview: TabInfo[];
 }
 
-/** Patterns that indicate CAPTCHA or login requirements */
-export const CAPTCHA_PATTERNS = [
-  /captcha/i,
-  /verify.*human/i,
-  /are.*you.*robot/i,
-  /security.*check/i,
-  /prove.*not.*bot/i,
-  /recaptcha/i,
-  /hcaptcha/i,
-  /cloudflare.*challenge/i,
-  /access.*denied/i,
-  /please.*sign.*in/i,
-  /login.*required/i,
-  /authentication.*required/i,
-];
+// CAPTCHA patterns moved to shared captcha-patterns.ts — use unified patterns
+import { CAPTCHA_PATTERNS as SHARED_CAPTCHA_PATTERNS } from '../captcha-patterns';
+
+// Re-export for backward compatibility
+export const CAPTCHA_PATTERNS = SHARED_CAPTCHA_PATTERNS;
 
 /** Check if content indicates CAPTCHA or login requirement */
 export function detectCaptchaOrLogin(
@@ -110,7 +100,7 @@ export function detectCaptchaOrLogin(
 ): { detected: boolean; reason?: string } {
   const combined = `${title} ${content} ${url}`.toLowerCase();
 
-  for (const pattern of CAPTCHA_PATTERNS) {
+  for (const pattern of SHARED_CAPTCHA_PATTERNS) {
     if (pattern.test(combined)) {
       return {
         detected: true,

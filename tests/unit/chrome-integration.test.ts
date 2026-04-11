@@ -24,10 +24,15 @@ describe('Chrome Integration', () => {
         expect(['captcha', 'recaptcha']).toContain(result.pattern);
       });
 
-      it('should detect "cloudflare" pattern', () => {
-        const result = detectCaptcha('Checking if the site connection is secure Cloudflare');
+      it('should detect "cloudflare challenge" pattern', () => {
+        const result = detectCaptcha('Checking if the site connection is secure Cloudflare challenge');
         expect(result.detected).toBe(true);
-        expect(result.pattern).toBe('cloudflare');
+        expect(result.pattern).toBe('cloudflare challenge');
+      });
+
+      it('should NOT detect plain "cloudflare" (CDN, not CAPTCHA)', () => {
+        const result = detectCaptcha('Checking if the site connection is secure Cloudflare');
+        expect(result.detected).toBe(false);
       });
 
       it('should detect "verify you are human" pattern', () => {

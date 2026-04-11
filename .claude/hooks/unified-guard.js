@@ -249,6 +249,8 @@ async function main() {
       input = JSON.parse(stdinData);
     }
   } catch (e) {
+    // フェイルオープン: ガードのエラーで作業を止めない（意図的設計）
+    // セキュリティより可用性を優先する。ガードは補助的な安全網。
     process.exit(0);
     return;
   }
@@ -275,8 +277,21 @@ async function main() {
   // PHASE 1: Intent Parser チェック (confidence >= 85% で layer skip)
   const intentCheck = await performIntentCheck(toolName, toolInput);
 
+  // PHASE 2: 既存の高速チェック（危険パターン検査）— Intent結果に関わらず常に実行
+  const result = performQuickChecks(toolName, toolInput);
+
+  if (result.blocked) {
+    outputBlock(result);
+    process.exit(2);
+    return;
+  }
+
+  if (result.warning) {
+    outputWarning(result);
+  }
+
+  // Intent Parserが高確信度なら、非セキュリティレイヤーをスキップして早期終了
   if (intentCheck.shouldSkip && intentCheck.confidence >= 85 && intentCheck.skipLayers.length > 0) {
-    // Intent が検出され、高確信度の場合は許可
     const output = {
       hookSpecificOutput: {
         hookEventName: 'PreToolUse',
@@ -291,19 +306,6 @@ async function main() {
 
     process.exit(0);
     return;
-  }
-
-  // PHASE 2: 既存の高速チェック（危険パターン検査）
-  const result = performQuickChecks(toolName, toolInput);
-
-  if (result.blocked) {
-    outputBlock(result);
-    process.exit(2);
-    return;
-  }
-
-  if (result.warning) {
-    outputWarning(result);
   }
 
   // デバッグ: 処理時間を記録（環境変数で有効化）

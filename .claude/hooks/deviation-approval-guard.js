@@ -57,8 +57,8 @@ async function main() {
     process.exit(0);
   }
 
-  const tool = input.tool || '';
-  const params = input.params || {};
+  const tool = input.tool_name || '';
+  const params = input.tool_input || {};
   
   // Write/Edit/Bashツールのみ対象
   if (!['Write', 'Edit', 'Bash'].includes(tool)) {

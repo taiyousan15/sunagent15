@@ -221,6 +221,8 @@ async function main() {
     if (result) console.log(JSON.stringify(result));
     process.exit(0);
   } catch (e) {
+    // フェイルオープン: ガードのエラーで作業を止めない（意図的設計）
+    // セキュリティより可用性を優先する。ガードは補助的な安全網。
     console.error('cost-hard-stop-guard main error:', e.message);
     process.exit(0);
   }

@@ -285,7 +285,7 @@ function loadConfig(): MemoryConfig {
   return {
     version: '1.0.0',
     storage: {
-      defaultBackend: 'inmemory',
+      defaultBackend: 'jsonl',
       directory: '.taisun/memory',
     },
     namespaces: {

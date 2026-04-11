@@ -2,35 +2,34 @@
  * Regression Test: Chrome Origin Wildcard
  *
  * Date: 2026-01-07
+ * @issue chrome-origin-wildcard (mistakes.md)
  * Location: `src/proxy-mcp/browser/cdp/chrome-debug-cli.ts`
- * Root Cause: セキュリティ設定の見落とし
+ * Root Cause: --remote-allow-origins=* permitted all origins
+ * Fix: Restricted to localhost (127.0.0.1) only
  *
- * This test ensures the mistake does not recur.
+ * Verification method: fs.readFileSync + regex static analysis (debate Round 8 AGREE)
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
+
+const TARGET_FILE = path.resolve(__dirname, '../../src/proxy-mcp/browser/cdp/chrome-debug-cli.ts');
+
 describe('Regression: Chrome Origin Wildcard', () => {
-  /**
-   * Symptom: Chrome CDP の --remote-allow-origins=* で全オリジン許可
-   * Fix: localhost のみに制限
-   */
-  it('should not exhibit the original symptom', () => {
-    // TODO: Implement regression test
-    // Prevention checks:
-    // - ワイルドカード許可は本番環境で使わない
-    // - ネットワークアクセス設定はデフォルト deny
+  let content: string;
 
-    // Example assertions:
-    // expect(result.success).toBe(false); // Not true on error
-    // expect(spawnSync).toHaveBeenCalled(); // Not execSync
-
-    expect(true).toBe(true); // Placeholder - replace with actual test
+  beforeAll(() => {
+    content = fs.readFileSync(TARGET_FILE, 'utf-8');
+    expect(content.length).toBeGreaterThan(0);
   });
 
-  it('should follow the prevention guidelines', () => {
-    // TODO: Verify prevention measures are in place
-    // 1. ワイルドカード許可は本番環境で使わない
-    // 2. ネットワークアクセス設定はデフォルト deny
+  it('should not allow all origins with wildcard', () => {
+    // The vulnerable pattern: --remote-allow-origins=*
+    const wildcardOrigin = /--remote-allow-origins=\*/;
+    expect(content).not.toMatch(wildcardOrigin);
+  });
 
-    expect(true).toBe(true); // Placeholder - replace with actual test
+  it('should restrict to localhost (127.0.0.1)', () => {
+    expect(content).toMatch(/127\.0\.0\.1/);
   });
 });

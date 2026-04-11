@@ -2,35 +2,54 @@
  * Regression Test: Success True On Error
  *
  * Date: 2026-01-07
+ * @issue success-true-on-error (mistakes.md)
  * Location: `src/proxy-mcp/ops/schedule/runner.ts`
- * Root Cause: エラーハンドリングの設計ミス。失敗を成功として報告
+ * Root Cause: Optional dependency errors reported as success: true
+ * Fix: Changed to success: false with skipped: true flag
  *
- * This test ensures the mistake does not recur.
+ * Verification method: fs.readFileSync + regex static analysis (debate Round 8 AGREE)
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
+
+const TARGET_FILE = path.resolve(__dirname, '../../src/proxy-mcp/ops/schedule/runner.ts');
+
 describe('Regression: Success True On Error', () => {
-  /**
-   * Symptom: オプショナル依存エラー時に `success: true` を返していた
-   * Fix: `success: false, skipped: true` に変更
-   */
-  it('should not exhibit the original symptom', () => {
-    // TODO: Implement regression test
-    // Prevention checks:
-    // - catch ブロックで success: true を返す前に、本当に成功なのか確認する
-    // - オプショナル依存のエラーは skipped フラグで区別する
+  let content: string;
 
-    // Example assertions:
-    // expect(result.success).toBe(false); // Not true on error
-    // expect(spawnSync).toHaveBeenCalled(); // Not execSync
-
-    expect(true).toBe(true); // Placeholder - replace with actual test
+  beforeAll(() => {
+    content = fs.readFileSync(TARGET_FILE, 'utf-8');
+    expect(content.length).toBeGreaterThan(0);
   });
 
-  it('should follow the prevention guidelines', () => {
-    // TODO: Verify prevention measures are in place
-    // 1. catch ブロックで success: true を返す前に、本当に成功なのか確認する
-    // 2. オプショナル依存のエラーは skipped フラグで区別する
+  it('should use skipped flag for optional dependency failures', () => {
+    // The fix introduced `skipped: true` to distinguish from hard failures
+    expect(content).toMatch(/skipped:\s*true/);
+  });
 
-    expect(true).toBe(true); // Placeholder - replace with actual test
+  it('should not return success:true in catch blocks without skipped flag', () => {
+    // The original bug: catch block returned { success: true } masking errors
+    // After fix: catch blocks use { skipped: true } to distinguish optional failures
+    const lines = content.split('\n');
+    let inCatch = false;
+    let catchDepth = 0;
+
+    for (const line of lines) {
+      if (/\bcatch\b/.test(line)) {
+        inCatch = true;
+        catchDepth = 0;
+      }
+      if (inCatch) {
+        catchDepth += (line.match(/{/g) || []).length;
+        catchDepth -= (line.match(/}/g) || []).length;
+        // If we find success: true in a catch block, skipped must also be present nearby
+        if (/success:\s*true/.test(line)) {
+          // This is the anti-pattern we fixed — should not exist
+          expect(line).toMatch(/skipped/);
+        }
+        if (catchDepth <= 0) inCatch = false;
+      }
+    }
   });
 });

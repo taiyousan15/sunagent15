@@ -99,18 +99,6 @@
         ]
       }
     ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .claude/hooks/context-snapshot-manager.js",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
     "UserPromptSubmit": [
       {
         "matcher": "",
@@ -358,6 +346,16 @@
       }
     ],
     "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/context-snapshot-manager.js",
+            "timeout": 5
+          }
+        ]
+      },
       {
         "matcher": "",
         "hooks": [

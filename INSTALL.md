@@ -1,6 +1,6 @@
 # TAISUN Agent インストールガイド
 
-> **対応OS**: macOS (Air / Pro) | Windows 10/11
+> **対応OS**: macOS (Air / Pro) | Windows 10/11 | Linux (Ubuntu 22.04+ / Debian 12+)
 
 ---
 
@@ -8,7 +8,7 @@
 
 | 要件 | バージョン | 入手先 |
 |------|-----------|--------|
-| Node.js | 18 以上 | https://nodejs.org/ |
+| Node.js | 20 以上（推奨） | https://nodejs.org/ |
 | Git | 2.x 以上 | https://git-scm.com/ |
 | Claude Code | 最新 | https://claude.ai/download |
 | Python | 3.x 以上（推奨） | https://www.python.org/ |
@@ -66,6 +66,49 @@ source ~/.zshrc
 | `permission denied` | `chmod +x scripts/install.sh` を実行 |
 | `node: bad option` | Node.js 18 以上にアップグレード |
 | ビルドエラー | `rm -rf node_modules dist && npm install` |
+
+---
+
+## Linux (Ubuntu 22.04+ / Debian 12+)
+
+### クイックインストール
+
+```bash
+# 1. 必要パッケージの確認
+sudo apt update && sudo apt install -y git curl build-essential
+
+# 2. Node.js 20 以上（nvm 推奨）
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+nvm install 20
+
+# 3. リポジトリをクローン
+git clone https://github.com/san15/taisun_agent.git
+cd taisun_agent
+
+# 4. インストール実行
+bash scripts/install.sh
+```
+
+### トラブルシューティング
+
+| 症状 | 対処 |
+|------|------|
+| `EACCES` 権限エラー | `nvm` 経由でNode.jsをインストール（`sudo npm` は使わない） |
+| Playwright ブラウザ不足 | `npx playwright install --with-deps chromium` |
+| `build-essential` 未インストール | `sudo apt install build-essential` |
+
+### 環境変数の設定
+
+```bash
+# .env ファイルを作成
+cp .env.example .env
+
+# エディタで編集（nano, vim, etc.）
+nano .env
+
+# 最低限 ANTHROPIC_API_KEY を設定
+# ANTHROPIC_API_KEY=sk-ant-api03-xxxxxxxx
+```
 
 ---
 

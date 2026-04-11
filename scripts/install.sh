@@ -10,8 +10,8 @@
 #   ./scripts/install.sh --with-voice       # 標準 + 音声AI スキル追加
 #   ./scripts/install.sh --list-profiles    # プロファイル一覧を表示
 
-# set -e を使わない（1つの失敗で全体が止まるのを防ぐ）
-set +e
+# set -e: 致命的失敗で即停止（失敗許容操作には || true を付与）
+set -e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 

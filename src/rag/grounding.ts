@@ -3,6 +3,8 @@
  * Provides prompt grounding with retrieved context snippets
  */
 
+import { retrieve, RetrieveOptions } from './retriever';
+
 export interface GroundingOptions {
   topK?: number;
   minScore?: number;
@@ -30,8 +32,8 @@ export async function groundPrompt(
 ): Promise<GroundingResult> {
   const { topK = 3 } = options;
 
-  // Retrieve relevant snippets (stub implementation)
-  const snippets = await retrieveSnippets(prompt, topK);
+  // Retrieve relevant snippets from in-memory index
+  const snippets = retrieveSnippets(prompt, topK);
 
   if (snippets.length === 0) {
     return {
@@ -56,10 +58,17 @@ export async function groundPrompt(
   };
 }
 
-async function retrieveSnippets(
-  _query: string,
+function retrieveSnippets(
+  query: string,
   topK: number
-): Promise<Snippet[]> {
-  // Stub: In production, this would query a vector database (e.g., Qdrant)
-  return [];
+): Snippet[] {
+  // retrieve() is synchronous (keyword + tag-based in-memory search from retriever.ts)
+  const results = retrieve(query, { topK } as RetrieveOptions);
+  return results.map(r => ({
+    content: r.doc.body.length > 800
+      ? r.doc.body.substring(0, 800) + '\n...[truncated]'
+      : r.doc.body,
+    score: r.score,
+    source: r.doc.id,
+  }));
 }

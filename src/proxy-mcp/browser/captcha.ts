@@ -5,39 +5,47 @@
  */
 
 import { WebSkillResult } from './types';
+import { CAPTCHA_PATTERNS } from './captcha-patterns';
 
 /**
- * CAPTCHA detection patterns (case-insensitive)
+ * Human-readable pattern names for backward compatibility
+ * Maps regex source → user-facing string
  */
-const CAPTCHA_PATTERNS = [
-  'captcha',
-  'recaptcha',
-  'hcaptcha',
-  'cloudflare',
-  'verify you are human',
-  "verify you're human",
-  "i'm not a robot",
-  'please verify',
-  'security check',
-  'bot detection',
-  'challenge-platform',
-  'cf-turnstile',
-  'cf-challenge',
-  'challenge-running',
-];
+const PATTERN_LABELS: Record<string, string> = {
+  'captcha': 'captcha',
+  'recaptcha': 'recaptcha',
+  'hcaptcha': 'hcaptcha',
+  'cloudflare.*challenge': 'cloudflare challenge',
+  "verify.*(?:you.*(?:are|'re).*)?human": 'verify you are human',
+  "i'?m not a robot": "i'm not a robot",
+  'please.*verify': 'please verify',
+  'security.*check': 'security check',
+  'bot.*detection': 'bot detection',
+  'challenge-platform': 'challenge-platform',
+  'cf-turnstile': 'cf-turnstile',
+  'cf-challenge': 'cf-challenge',
+  'challenge-running': 'challenge-running',
+  'are.*you.*robot': 'are you robot',
+  'prove.*not.*bot': 'prove not bot',
+  'access.*denied': 'access denied',
+  'please.*sign.*in': 'please sign in',
+  'login.*required': 'login required',
+  'authentication.*required': 'authentication required',
+};
 
 /**
  * Check if content contains CAPTCHA patterns
+ * Uses shared CAPTCHA_PATTERNS with human-readable labels
  */
 export function detectCaptcha(content: string): { detected: boolean; pattern?: string } {
-  const lowerContent = content.toLowerCase();
-
   for (const pattern of CAPTCHA_PATTERNS) {
-    if (lowerContent.includes(pattern)) {
-      return { detected: true, pattern };
+    if (pattern.test(content)) {
+      return {
+        detected: true,
+        pattern: PATTERN_LABELS[pattern.source] || pattern.source,
+      };
     }
   }
-
   return { detected: false };
 }
 

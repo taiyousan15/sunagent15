@@ -3,8 +3,8 @@
 #
 # 使い方: ./scripts/update.sh
 
-# set -e を使わない（1つの失敗で全体が止まるのを防ぐ）
-set +e
+# set -e: 致命的失敗で即停止（失敗許容操作には || true を付与）
+set -e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
@@ -65,12 +65,23 @@ if ! git diff --quiet HEAD 2>/dev/null; then
     info "あなたの設定変更を一時的に退避しました（後で自動的に戻します）"
 fi
 
-git pull origin main --ff-only 2>/dev/null || {
-    info "通常の更新ができませんでした。最新版に強制同期します..."
-    if git reset --hard origin/main 2>/dev/null; then
-        ok "最新版に同期しました"
-    else
-        warn "git同期に失敗しました。ZIPダウンロードで更新します..."
+GIT_UPDATED=false
+git pull origin main --ff-only 2>/dev/null && GIT_UPDATED=true || {
+    info "通常の更新ができませんでした。別の方法で更新します..."
+
+    # git reset --hard はデータ破壊リスクがあるため FORCE_UPDATE 必須
+    if [ "$FORCE_UPDATE" = "true" ]; then
+        if git reset --hard origin/main 2>/dev/null; then
+            ok "最新版に強制同期しました（FORCE_UPDATE=true）"
+            # reset後はstashとコンフリクトするため復帰をスキップ
+            STASHED=false
+            GIT_UPDATED=true
+        fi
+    fi
+
+    # git更新が成功しなかった場合のみZIPフォールバック（非破壊）
+    if [ "$GIT_UPDATED" = false ]; then
+        info "ZIPダウンロードで更新します..."
 
         ZIP_URL="https://github.com/san15/taisun_agent/archive/refs/heads/main.zip"
         ZIP_PATH="/tmp/taisun_agent_update.zip"
@@ -81,12 +92,10 @@ git pull origin main --ff-only 2>/dev/null || {
             unzip -q "$ZIP_PATH" -d "$EXTRACT_PATH"
             SOURCE_DIR=$(ls -d "$EXTRACT_PATH"/*/ | head -1)
 
-            # node_modules と .git を除外してコピー（rsyncがない環境も考慮）
             if command -v rsync &> /dev/null; then
                 rsync -a --exclude='node_modules' --exclude='.git' "$SOURCE_DIR" "$REPO_DIR/"
             else
-                # rsyncがない場合はcpで代替
-                cd "$SOURCE_DIR"
+                cd "$SOURCE_DIR" || exit 1
                 for item in *; do
                     [ "$item" = "node_modules" ] && continue
                     [ "$item" = ".git" ] && continue
@@ -106,8 +115,13 @@ git pull origin main --ff-only 2>/dev/null || {
 # 退避した変更を戻す
 if [ "$STASHED" = true ]; then
     git stash pop 2>/dev/null && \
-        ok "退避した設定変更を元に戻しました" || \
-        warn "設定変更の復元に失敗しました。git stash pop を実行してください"
+        ok "退避した設定変更を元に戻しました" || {
+        warn "設定変更の復元に失敗しました（コンフリクトの可能性）"
+        info "以下のコマンドで確認・手動復元してください:"
+        info "  git stash list           # 退避した変更一覧"
+        info "  git stash show --stat    # 退避内容の確認"
+        info "  git stash pop            # 再適用を試みる"
+    }
 fi
 
 NEW_VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)

@@ -13,6 +13,7 @@
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
+import { AsyncLocalStorage } from 'async_hooks';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -86,15 +87,10 @@ function generateSpanId(): string {
 // Context propagation (async-local storage based)
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Node.js 12.17+ built-in AsyncLocalStorage
-let activeSpanContext: SpanContext | null = null;
+const spanContextStorage = new AsyncLocalStorage<SpanContext | null>();
 
 function getActiveSpanContext(): SpanContext | null {
-  return activeSpanContext;
-}
-
-function setActiveSpanContext(ctx: SpanContext | null): void {
-  activeSpanContext = ctx;
+  return spanContextStorage.getStore() ?? null;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -186,25 +182,23 @@ export async function withSpan<T>(
 ): Promise<T> {
   const parent = parentContext ?? getActiveSpanContext();
   const span = startSpan(name, parent ?? undefined);
-  const prevContext = getActiveSpanContext();
 
-  setActiveSpanContext(span.context);
-
-  try {
-    const result = await fn(span);
-    if (span instanceof SpanImpl) {
-      span.setStatus('ok');
+  return spanContextStorage.run(span.context, async () => {
+    try {
+      const result = await fn(span);
+      if (span instanceof SpanImpl) {
+        span.setStatus('ok');
+      }
+      return result;
+    } catch (error) {
+      if (span instanceof SpanImpl) {
+        span.recordException(error as Error);
+      }
+      throw error;
+    } finally {
+      span.end();
     }
-    return result;
-  } catch (error) {
-    if (span instanceof SpanImpl) {
-      span.recordException(error as Error);
-    }
-    throw error;
-  } finally {
-    span.end();
-    setActiveSpanContext(prevContext);
-  }
+  });
 }
 
 /**

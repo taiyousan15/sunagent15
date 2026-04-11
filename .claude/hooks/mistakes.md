@@ -49,6 +49,33 @@
 ✅ 正解: スキル定義の mandatory_tools を確認し、指定されたツールを使用
 ```
 
+### Pattern 7: エージェント報告の未検証転記
+```
+状況: 15ラウンドdebate-reviewの結果を集計
+❌ 間違い: エージェント報告の35件を自分で検証せず「4 Critical + 12 High」と転記
+✅ 正解: 各件を自分でファイルを開いて目視確認し、重大度を独立判定する
+Why: エージェントはseverityを過大申告する傾向がある。自分で検証した結果、Critical 4→1、High 12→6に修正された
+How to apply: エージェント報告は必ず目視で突合してから報告する
+```
+
+### Pattern 8: 修正が新たなバグを導入
+```
+状況: C2 update.shのFORCE_UPDATEガード追加
+❌ 間違い: FORCE_UNDEF時にexit 1 → ZIPフォールバックに到達不能。元の「pullダメ→reset→ZIP」フローが壊れた
+✅ 正解: git reset --hardのみをFORCE_UPDATEで保護し、非破壊なZIPフォールバックは常に到達可能にする
+Why: セキュリティ修正に集中し、既存のフォールバックフローへの影響を検証しなかった
+How to apply: 分岐変更時は全パスのフロー図を書いて検証する
+```
+
+### Pattern 9: compact処理のデータ安全性未考慮
+```
+状況: H6 JsonlStoreに自動コンパクション追加
+❌ 間違い: appendLogがcompact中もブロックされない → rename時にデータ欠落
+✅ 正解: compact中のappendをバッファリングし、rename後にflushする
+Why: isCompactingフラグを「compact起動防止」にしか使わず、「append保護」に使わなかった
+How to apply: 並行書き込みがある追記専用ストアの変更時は、必ずwrite-write競合を検証する
+```
+
 ---
 
 ## 修正済みミス（圧縮版）

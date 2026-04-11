@@ -77,6 +77,13 @@ module.exports = {
         '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
       },
     },
+    // Hook tests: run separately via `npx jest --selectProjects hooks`
+    // These are JS files outside src/tests roots, connected to CI as a separate step
+    // {
+    //   displayName: 'hooks',
+    //   testMatch: ['<rootDir>/.claude/hooks/__tests__/**/*.test.js'],
+    //   testEnvironment: 'node',
+    // },
   ],
   // Coverage thresholds
   coverageThreshold: {

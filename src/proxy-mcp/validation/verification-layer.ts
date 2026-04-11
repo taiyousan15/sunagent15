@@ -56,9 +56,10 @@ async function fetchVerifiedContext(contextId: string): Promise<string[]> {
       namespace: 'short-term',
       limit: 3,
     });
-    if (!result.success || !Array.isArray(result.data)) return [];
-    return (result.data as Array<{ content?: string }>)
-      .map(r => r.content ?? '')
+    const data = result.data as { found?: boolean; results?: Array<{ contentPreview?: string; summary?: string }> } | undefined;
+    if (!result.success || !data?.found || !Array.isArray(data.results)) return [];
+    return data.results
+      .map(r => r.contentPreview ?? r.summary ?? '')
       .filter(Boolean);
   } catch {
     return [];

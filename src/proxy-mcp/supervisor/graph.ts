@@ -24,7 +24,7 @@ import {
 } from './github';
 import { route as routeToMcp } from '../router';
 import { getAllMcps, getRouterConfig } from '../internal/registry';
-import { memoryAdd, memorySearch } from '../tools/memory';
+import { memoryAdd, memorySearch, memoryGetContent } from '../tools/memory';
 import { MemoryNamespace } from '../memory/types';
 import { recordEvent, startTimer } from '../observability';
 
@@ -82,27 +82,51 @@ async function loadState(runId: string): Promise<SupervisorState | null> {
     const stateKey = `${STATE_KEY_PREFIX}${runId}`;
     const result = await memorySearch(stateKey, {
       tags: ['supervisor', 'state', runId],
-      includeContent: true,
       limit: 1,
     });
 
     // Type assertion for the data structure
-    const data = result.data as { found?: boolean; results?: Array<{ contentPreview?: string; summary?: string }> } | undefined;
+    const data = result.data as { found?: boolean; results?: Array<{ id?: string; contentPreview?: string; summary?: string }> } | undefined;
 
     if (!result.success || !data?.found || !data.results?.length) {
       return null;
     }
 
     const entry = data.results[0];
-    const content = entry.contentPreview || entry.summary;
 
+    // Use memoryGetContent to retrieve full JSON, avoiding contentPreview truncation (1200 chars)
+    // that would break JSON.parse on large SupervisorState objects
+    if (entry.id) {
+      const fullContent = await memoryGetContent(entry.id);
+      const contentData = fullContent.data as { content?: string } | undefined;
+      if (fullContent.success && contentData?.content) {
+        return JSON.parse(contentData.content) as SupervisorState;
+      }
+    }
+
+    // Fallback: try contentPreview (only works for small states that fit within preview limit)
+    const content = entry.contentPreview || entry.summary;
     if (!content) {
+      return null;
+    }
+
+    // Guard: if content ends with '...' it was truncated and JSON.parse will fail
+    if (content.endsWith('...')) {
+      console.error('[supervisor] State content was truncated, cannot parse. Use memoryGetContent instead.');
+      recordEvent('supervisor_step', runId, 'fail', {
+        errorType: 'state_truncated',
+        errorMessage: `Content truncated at ${content.length} chars, entry.id=${entry.id || 'unknown'}`,
+      });
       return null;
     }
 
     return JSON.parse(content) as SupervisorState;
   } catch (error) {
     console.error('[supervisor] Failed to load state:', error);
+    recordEvent('supervisor_step', runId, 'fail', {
+      errorType: 'state_load_failed',
+      errorMessage: error instanceof Error ? error.message : String(error),
+    });
     return null;
   }
 }

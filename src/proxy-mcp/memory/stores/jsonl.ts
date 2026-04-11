@@ -31,6 +31,9 @@ export class JsonlStore implements MemoryStore {
   private entries: Map<string, MemoryEntry> = new Map();
   private logFile: string;
   private initialized = false;
+  private dirtyOps = 0;
+  private isCompacting = false;
+  private pendingDuringCompact: LogEntry[] = [];
 
   constructor(directory: string) {
     this.directory = directory;
@@ -80,8 +83,22 @@ export class JsonlStore implements MemoryStore {
   }
 
   private appendLog(logEntry: LogEntry): void {
+    if (this.isCompacting) {
+      // Buffer writes during compaction to prevent data loss on rename
+      this.pendingDuringCompact.push(logEntry);
+      return;
+    }
     const line = JSON.stringify(logEntry) + '\n';
     fs.appendFileSync(this.logFile, line, 'utf-8');
+    this.dirtyOps++;
+    this.maybeCompact();
+  }
+
+  private maybeCompact(): void {
+    // Auto-compact when dirty ops exceed 2x the number of live entries
+    if (!this.isCompacting && this.dirtyOps > Math.max(this.entries.size * 2, 100)) {
+      this.compact().catch(() => { /* best-effort */ });
+    }
   }
 
   async add(entry: MemoryEntry): Promise<void> {
@@ -209,6 +226,10 @@ export class JsonlStore implements MemoryStore {
    * Compact the log file by rewriting only current entries
    */
   async compact(): Promise<void> {
+    if (this.isCompacting) return;
+    this.isCompacting = true;
+
+    try {
     await this.ensureInitialized();
 
     const tempFile = this.logFile + '.tmp';
@@ -222,6 +243,19 @@ export class JsonlStore implements MemoryStore {
 
     // Replace original file
     fs.renameSync(tempFile, this.logFile);
+    this.dirtyOps = 0;
+    } finally {
+      this.isCompacting = false;
+      // Flush writes that were buffered during compaction
+      if (this.pendingDuringCompact.length > 0) {
+        const pending = this.pendingDuringCompact.splice(0);
+        for (const entry of pending) {
+          const line = JSON.stringify(entry) + '\n';
+          fs.appendFileSync(this.logFile, line, 'utf-8');
+          this.dirtyOps++;
+        }
+      }
+    }
   }
 
   /**

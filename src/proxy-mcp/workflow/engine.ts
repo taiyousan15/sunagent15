@@ -4,7 +4,7 @@
  */
 
 import * as fs from 'fs';
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { loadState, saveState, clearState } from './store';
 import { getWorkflow } from './registry';
 import type {
@@ -201,7 +201,10 @@ export function validatePhase(): ValidationResult {
           }
         } else if (validation.type === 'command' && validation.command) {
           try {
-            execSync(validation.command, { stdio: 'pipe' });
+            const result = spawnSync('sh', ['-c', validation.command], { stdio: 'pipe', timeout: 10000 });
+            if (result.status !== 0) {
+              errors.push(validation.errorMessage);
+            }
           } catch {
             errors.push(validation.errorMessage);
           }
@@ -266,11 +269,12 @@ function evaluateCondition(condition: Condition): string | null {
       case 'command_output': {
         // コマンド出力で判定
         try {
-          const output = execSync(condition.source, {
+          const result = spawnSync('sh', ['-c', condition.source], {
             encoding: 'utf-8',
             stdio: 'pipe',
             timeout: 5000, // 5秒タイムアウト
-          }).trim();
+          });
+          const output = (result.stdout || '').trim();
 
           // パターンマッチング
           if (condition.pattern) {

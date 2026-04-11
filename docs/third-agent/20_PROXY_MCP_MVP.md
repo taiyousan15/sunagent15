@@ -13,12 +13,20 @@ Claude Code
 ┌─────────────────────────────────────┐
 │         Proxy MCP (this)            │
 │  ┌────────────────────────────────┐ │
-│  │   Public Tools (5 tools)       │ │
+│  │   Public Tools (13 tools)      │ │
 │  │   - system_health              │ │
 │  │   - skill_search               │ │
 │  │   - skill_run                  │ │
 │  │   - memory_add                 │ │
 │  │   - memory_search              │ │
+│  │   - output_verify              │ │
+│  │   - rag_ground                 │ │
+│  │   - cove_verify                │ │
+│  │   - validation_pipeline        │ │
+│  │   - prospective_check          │ │
+│  │   - constitutional_check       │ │
+│  │   - reflexion_analyze          │ │
+│  │   - reflexion_round            │ │
 │  └────────────────────────────────┘ │
 │              │                      │
 │              ▼                      │
