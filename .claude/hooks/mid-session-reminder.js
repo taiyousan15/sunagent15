@@ -77,7 +77,7 @@ function buildReminder(count) {
     '- SESSION_HANDOFF.md 更新',
     '',
     '**MISTAKES 参照**',
-    '新しい作業を始める前に .claude/hooks/mistakes.md を確認',
+    '新しい作業を始める前に .claude/rules/mistakes.md を確認',
     '',
     '=== END REMINDER ===',
     '',

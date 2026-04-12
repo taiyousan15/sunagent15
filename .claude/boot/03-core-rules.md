@@ -19,7 +19,7 @@ When user says "same workflow" or "use XX skill", it is a **contract**.
 ### 4. Skill Compliance
 When "use XX skill" is specified: **MUST use Skill tool**. Manual implementation is PROHIBITED.
 
-**VIOLATION = CRITICAL ERROR** -> Stop -> Apologize -> Record in `.claude/hooks/mistakes.md` -> Re-execute correctly
+**VIOLATION = CRITICAL ERROR** -> Stop -> Apologize -> Record in `.claude/rules/mistakes.md` -> Re-execute correctly
 
 ## Pre-Flight Checks
 

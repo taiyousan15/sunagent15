@@ -30,7 +30,7 @@ const SYNC_FILES: SyncFile[] = [
   },
   {
     name: 'mistakes',
-    path: path.join(CLAUDE_DIR, 'mistakes.md'),
+    path: path.join(CLAUDE_DIR, 'rules', 'mistakes.md'),
     namespace: 'long-term',
     tags: ['mistake', 'anti-regression', 'prevention'],
     importance: 1.0,
@@ -207,7 +207,7 @@ export async function getSessionBriefing(): Promise<string> {
   }
 
   // 3. Recent Mistakes (top 3)
-  const mistakesPath = path.join(CLAUDE_DIR, 'mistakes.md');
+  const mistakesPath = path.join(CLAUDE_DIR, 'rules', 'mistakes.md');
   if (fs.existsSync(mistakesPath)) {
     const mistakes = fs.readFileSync(mistakesPath, 'utf-8');
     const mistakeMatches = mistakes.match(/## \d{4}-\d{2}-\d{2} Mistake:.+/g);

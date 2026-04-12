@@ -223,7 +223,7 @@ function checkTaskContract(): void {
  * Check 5: mistakes.md の存在
  */
 function checkMistakesLedger(): void {
-  const mistakesPath = path.join(process.cwd(), '.claude', 'mistakes.md');
+  const mistakesPath = path.join(process.cwd(), '.claude', 'rules', 'mistakes.md');
 
   if (!fs.existsSync(mistakesPath)) {
     results.push({

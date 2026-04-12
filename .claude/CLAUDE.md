@@ -19,7 +19,7 @@ Check `.workflow_state.json` + `SESSION_HANDOFF.md` if present. Never contradict
 ### 5. Skill Compliance
 "use XX skill" → **MUST use Skill tool**. Manual implementation PROHIBITED.
 
-**VIOLATION = CRITICAL ERROR** → Stop → Apologize → Record in `.claude/hooks/mistakes.md` → Re-execute correctly
+**VIOLATION = CRITICAL ERROR** → Stop → Apologize → Record in `.claude/rules/mistakes.md` → Re-execute correctly
 
 ## Sub-Agent Context Protection (MANDATORY)
 

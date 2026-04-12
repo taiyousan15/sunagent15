@@ -2,7 +2,7 @@
 /**
  * Violation Recorder - ルール違反の記録
  *
- * 他のガードフックが検出した違反を.claude/hooks/mistakes.mdに記録します。
+ * 他のガードフックが検出した違反を.claude/rules/mistakes.mdに記録します。
  * これにより、同じミスの再発を防止できます。
  *
  * 使用方法:
@@ -24,7 +24,7 @@ async function main() {
   const location = args[1] || 'Unknown';
   const remedy = args[2] || 'Follow the mandatory pre-flight checks';
 
-  const mistakesPath = path.join(__dirname, 'mistakes.md');
+  const mistakesPath = path.join(__dirname, '..', 'rules', 'mistakes.md');
 
   // 既存の内容を読み込み
   let content = '';

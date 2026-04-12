@@ -14,10 +14,10 @@ mistakes.md参照・最小差分・大出力はmemory_add退避のバグ修正�
 
 ### 1. 再発防止チェックリスト作成（必須）
 
-**最初に `.claude/hooks/mistakes.md` を参照**:
+**最初に `.claude/rules/mistakes.md` を参照**:
 
 ```bash
-cat .claude/hooks/mistakes.md
+cat .claude/rules/mistakes.md
 ```
 
 過去の失敗パターンから「再発防止チェックリスト」を作成。

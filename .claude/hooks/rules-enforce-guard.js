@@ -16,7 +16,7 @@
  *   RULES_ENFORCE_PHASE='2' = ブロック発動
  *
  * 必須Read対象（最小限）:
- *   - .claude/hooks/mistakes.md
+ *   - .claude/rules/mistakes.md
  *
  * 安全設計: フェイルオープン・タイムアウト3秒・環境変数で停止可能
  */
@@ -153,7 +153,7 @@ function check(toolName, toolInput) {
           ...missing.map(f => `  - ${f}`),
           '',
           'Read 例:',
-          '  Read .claude/hooks/mistakes.md',
+          '  Read .claude/rules/mistakes.md',
           '',
           toolName === 'Task'
             ? '※ サブエージェント経由でも迂回不可（親Claudeがルール読み込み必須）'

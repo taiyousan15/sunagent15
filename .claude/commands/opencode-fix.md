@@ -11,11 +11,11 @@ Bug details: $ARGUMENTS
 
 ### 1. 再発防止チェックリスト作成（必須）
 
-**最初に `.claude/mistakes.md` を参照し、過去の失敗から学びます**：
+**最初に `.claude/rules/mistakes.md` を参照し、過去の失敗から学びます**：
 
 ```bash
 # mistakes.md を読み込む
-cat .claude/mistakes.md
+cat .claude/rules/mistakes.md
 ```
 
 mistakes.mdから以下を抽出して「再発防止チェックリスト」を作成：

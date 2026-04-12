@@ -89,11 +89,11 @@ async function main() {
   }
 
   // 5. mistakes.mdの読み込み
-  const mistakesPath = path.join(__dirname, 'mistakes.md');
+  const mistakesPath = path.join(__dirname, '..', 'rules', 'mistakes.md');
   if (fs.existsSync(mistakesPath)) {
     context.push('## 過去のミス記録（再発防止）');
     context.push('');
-    context.push('**WARNING**: .claude/hooks/mistakes.md に過去のミスが記録されています。');
+    context.push('**WARNING**: .claude/rules/mistakes.md に過去のミスが記録されています。');
     context.push('同じミスを繰り返さないために、必ず確認してください。');
     context.push('');
   }

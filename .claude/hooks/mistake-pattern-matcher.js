@@ -22,7 +22,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '../../');
-const MISTAKES_FILE = path.join(PROJECT_ROOT, '.claude', 'hooks', 'mistakes.md');
+const MISTAKES_FILE = path.join(PROJECT_ROOT, '.claude', 'rules', 'mistakes.md');
 const MATCH_LOG = path.join(PROJECT_ROOT, '.claude', 'hooks', 'data', 'mistake-match.log');
 const PHASE = process.env.MISTAKE_MATCHER_PHASE || '1';
 
@@ -203,7 +203,7 @@ function check(toolName, toolInput) {
         '現在のアクションが過去のミスパターンと類似しています:',
         ...matches.map((m, i) => `  ${i + 1}. ${m.pattern.title} (類似度: ${(m.score * 100).toFixed(0)}%)`),
         '',
-        '対応: .claude/hooks/mistakes.md で該当パターンを確認してから進めてください',
+        '対応: .claude/rules/mistakes.md で該当パターンを確認してから進めてください',
         '',
       ].join('\n');
       // stderrに出力してadditionalContextへ
@@ -228,7 +228,7 @@ function check(toolName, toolInput) {
           ...matches.map((m, i) => `  ${i + 1}. ${m.pattern.title} (類似度: ${(m.score * 100).toFixed(0)}%)`),
           '',
           '対応手順:',
-          '1. Read .claude/hooks/mistakes.md で該当パターンを確認',
+          '1. Read .claude/rules/mistakes.md で該当パターンを確認',
           '2. 過去の✅正解の方法で再試行',
           '3. 本当に別のパターンの場合は MISTAKE_MATCHER_PHASE=1 に戻す',
           '',

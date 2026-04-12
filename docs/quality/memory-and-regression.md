@@ -175,7 +175,7 @@ npm test -- --testPathPattern=regression
 | `.claude/pins.md` | ピン留め台帳 |
 | `.claude/traceability.yml` | トレーサビリティ対応表 |
 | `.claude/directives.md` | 指示台帳（Directive Diff含む）|
-| `.claude/mistakes.md` | ミス台帳 |
+| `.claude/rules/mistakes.md` | ミス台帳 |
 | `.claude/task_contract.md` | タスク契約 |
 | `scripts/contract-lint.ts` | 契約Lintスクリプト |
 | `scripts/mistake-to-test.ts` | 回帰テスト生成スクリプト |

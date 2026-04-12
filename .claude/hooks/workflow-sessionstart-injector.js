@@ -78,7 +78,7 @@ async function main() {
   }
 
   // mistakes.md の存在確認
-  const mistakesPath = path.join(__dirname, 'mistakes.md');
+  const mistakesPath = path.join(__dirname, '..', 'rules', 'mistakes.md');
   if (fs.existsSync(mistakesPath)) {
     context.push('');
     context.push('=== MISTAKES LOG EXISTS ===');
@@ -184,7 +184,7 @@ function generateCheckpointQuestions(cwd) {
 
   try {
     // Q1: mistakes.md — 特定行の内容を答えさせる（推測不可能）
-    const mistakesPath = path.join(__dirname, 'mistakes.md');
+    const mistakesPath = path.join(__dirname, '..', 'rules', 'mistakes.md');
     if (fs.existsSync(mistakesPath)) {
       const content = fs.readFileSync(mistakesPath, 'utf8');
       // eslint-disable-next-line no-unused-vars
@@ -195,7 +195,7 @@ function generateCheckpointQuestions(cwd) {
         const idx = Math.floor(Math.random() * patterns.length);
         const patternNum = idx + 1;
         questions.push(
-          `Read .claude/hooks/mistakes.md → Pattern ${patternNum} の「✅ 正解」の内容を1行で答えよ（推測禁止・必ずReadで確認）`
+          `Read .claude/rules/mistakes.md → Pattern ${patternNum} の「✅ 正解」の内容を1行で答えよ（推測禁止・必ずReadで確認）`
         );
       }
     }
@@ -235,7 +235,7 @@ function generateCheckpointQuestions(cwd) {
     );
 
   } catch (e) {
-    questions.push('Read .claude/hooks/mistakes.md を実行して内容を把握せよ');
+    questions.push('Read .claude/rules/mistakes.md を実行して内容を把握せよ');
     questions.push('未読ファイルの編集禁止ルールを確認せよ');
   }
 

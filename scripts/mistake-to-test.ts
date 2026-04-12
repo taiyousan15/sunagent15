@@ -28,7 +28,7 @@ interface ParsedMistake {
  * Parse mistakes.md into structured data
  */
 function parseMistakes(): ParsedMistake[] {
-  const mistakesPath = path.join(process.cwd(), '.claude', 'mistakes.md');
+  const mistakesPath = path.join(process.cwd(), '.claude', 'rules', 'mistakes.md');
 
   if (!fs.existsSync(mistakesPath)) {
     console.error('❌ mistakes.md が見つかりません');

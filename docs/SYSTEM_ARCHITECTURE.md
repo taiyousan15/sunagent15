@@ -83,7 +83,7 @@ Claude Codeがプロンプトを受け取ったとき、システムは以下の
 │  ⑭ .claude/traceability.yml                                    │
 │     → DoD→変更→テスト対応表                                    │
 │                                                                 │
-│  ⑮ .claude/hooks/mistakes.md                                   │
+│  ⑮ .claude/rules/mistakes.md                                   │
 │     → ミス台帳（再発防止）                                     │
 │                                                                 │
 │  ⑯ memory_bank/                                                │

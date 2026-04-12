@@ -30,7 +30,7 @@ const READ_LOG_DIR = path.join(PROJECT_ROOT, '.claude', 'checkpoints');
 const TRACKED_PATTERNS = [
   /\.claude\/rules\/.*\.md$/,
   /\.claude\/CLAUDE\.md$/,
-  /\.claude\/hooks\/mistakes\.md$/,
+  /\.claude\/rules\/mistakes\.md$/,
   /SESSION_HANDOFF\.md$/,
 ];
 
