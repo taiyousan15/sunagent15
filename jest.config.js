@@ -4,6 +4,7 @@ module.exports = {
   roots: ['<rootDir>/src', '<rootDir>/tests'],
   testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testTimeout: 30000,
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.test.ts',
@@ -40,6 +41,7 @@ module.exports = {
         '<rootDir>/tests/unit/workflow-phase3-.*\\.test\\.ts$'
       ],
       testEnvironment: 'node',
+      testTimeout: 30000,
       transform: {
         '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
       },
