@@ -307,7 +307,7 @@ TypeDoc Configuration:
 - JSDoc Comments: 92%
 - Examples: 78%
 
-🌐 Open: file:///Users/shunsuke/Dev/Autonomous-Operations/docs/api/index.html
+🌐 Open: file:///path/to/project/docs/api/index.html
 
 💡 Tip: Add more JSDoc examples for better documentation
 ```

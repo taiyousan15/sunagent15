@@ -5,7 +5,7 @@ AI顧問サービス ファーストビュー画像生成スクリプト
 LP用のヒーロー画像をGeminiで生成します。
 
 Usage:
-    cd /Users/tonodukaren/Programming/AI/02_Workspace/05_Client/03_Sun/ALA28/.claude/skills/gemini-image-generator
+    cd <project_root>/.claude/skills/gemini-image-generator
     python scripts/run.py ../generate_ala48_first_view.py
 """
 
@@ -55,7 +55,7 @@ def main():
 
 テキストは入れないでください。人物メインの画像にしてください。"""
 
-    output_path = "/Users/tonodukaren/Programming/AI/02_Workspace/05_Client/03_Sun/ALA28/test/ai_komon_service/images/first_view_hero.png"
+    output_path = "./output/first_view_hero.png"
 
     print("=" * 60)
     print("AI顧問サービス ファーストビュー画像生成")
