@@ -64,7 +64,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/workflow-sessionstart-injector.js",
+            "command": "[ ! -f .claude/hooks/workflow-sessionstart-injector.js ] && exit 0; node .claude/hooks/workflow-sessionstart-injector.js",
             "timeout": 5
           }
         ]
@@ -74,7 +74,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/codegraph-oss-monitor.js",
+            "command": "[ ! -f .claude/hooks/codegraph-oss-monitor.js ] && exit 0; node .claude/hooks/codegraph-oss-monitor.js",
             "timeout": 10
           }
         ]
@@ -84,7 +84,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/context-snapshot-manager.js",
+            "command": "[ ! -f .claude/hooks/context-snapshot-manager.js ] && exit 0; node .claude/hooks/context-snapshot-manager.js",
             "timeout": 5
           }
         ]
@@ -96,7 +96,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/context-snapshot-manager.js",
+            "command": "[ ! -f .claude/hooks/context-snapshot-manager.js ] && exit 0; node .claude/hooks/context-snapshot-manager.js",
             "timeout": 5
           }
         ]
@@ -108,7 +108,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/model-auto-switch.js",
+            "command": "[ ! -f .claude/hooks/model-auto-switch.js ] && exit 0; node .claude/hooks/model-auto-switch.js",
             "timeout": 3
           }
         ]
@@ -118,7 +118,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/skill-usage-guard.js",
+            "command": "[ ! -f .claude/hooks/skill-usage-guard.js ] && exit 0; node .claude/hooks/skill-usage-guard.js",
             "timeout": 3
           }
         ]
@@ -128,7 +128,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/mid-session-reminder.js",
+            "command": "[ ! -f .claude/hooks/mid-session-reminder.js ] && exit 0; node .claude/hooks/mid-session-reminder.js",
             "timeout": 3
           }
         ]
@@ -138,7 +138,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/agent-enforcement-guard.js",
+            "command": "[ ! -f .claude/hooks/agent-enforcement-guard.js ] && exit 0; node .claude/hooks/agent-enforcement-guard.js",
             "timeout": 3
           }
         ]
@@ -150,7 +150,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/unified-guard.js",
+            "command": "[ ! -f .claude/hooks/unified-guard.js ] && exit 0; node .claude/hooks/unified-guard.js",
             "timeout": 3
           }
         ]
@@ -160,7 +160,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/deviation-approval-guard.js",
+            "command": "[ ! -f .claude/hooks/deviation-approval-guard.js ] && exit 0; node .claude/hooks/deviation-approval-guard.js",
             "timeout": 3
           }
         ]
@@ -170,7 +170,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/agent-enforcement-guard.js",
+            "command": "[ ! -f .claude/hooks/agent-enforcement-guard.js ] && exit 0; node .claude/hooks/agent-enforcement-guard.js",
             "timeout": 3
           }
         ]
@@ -180,7 +180,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/checkpoint-guard.js",
+            "command": "[ ! -f .claude/hooks/checkpoint-guard.js ] && exit 0; node .claude/hooks/checkpoint-guard.js",
             "timeout": 3
           }
         ]
@@ -190,7 +190,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/agent-checkpoint-guard.js",
+            "command": "[ ! -f .claude/hooks/agent-checkpoint-guard.js ] && exit 0; node .claude/hooks/agent-checkpoint-guard.js",
             "timeout": 3
           }
         ]
@@ -200,7 +200,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/rules-enforce-guard.js",
+            "command": "[ ! -f .claude/hooks/rules-enforce-guard.js ] && exit 0; node .claude/hooks/rules-enforce-guard.js",
             "timeout": 3
           }
         ]
@@ -210,7 +210,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/research-quality-guard.js",
+            "command": "[ ! -f .claude/hooks/research-quality-guard.js ] && exit 0; node .claude/hooks/research-quality-guard.js",
             "timeout": 3
           }
         ]
@@ -220,7 +220,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/cost-hard-stop-guard.js",
+            "command": "[ ! -f .claude/hooks/cost-hard-stop-guard.js ] && exit 0; node .claude/hooks/cost-hard-stop-guard.js",
             "timeout": 3
           }
         ]
@@ -230,7 +230,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/mistake-pattern-matcher.js",
+            "command": "[ ! -f .claude/hooks/mistake-pattern-matcher.js ] && exit 0; node .claude/hooks/mistake-pattern-matcher.js",
             "timeout": 5
           }
         ]
@@ -240,7 +240,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/pre-compact-save.js",
+            "command": "[ ! -f .claude/hooks/pre-compact-save.js ] && exit 0; node .claude/hooks/pre-compact-save.js",
             "timeout": 5
           }
         ]
@@ -252,7 +252,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/rules-read-tracker.js",
+            "command": "[ ! -f .claude/hooks/rules-read-tracker.js ] && exit 0; node .claude/hooks/rules-read-tracker.js",
             "timeout": 3
           }
         ]
@@ -262,7 +262,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/auto-adr.js",
+            "command": "[ ! -f .claude/hooks/auto-adr.js ] && exit 0; node .claude/hooks/auto-adr.js",
             "timeout": 3
           }
         ]
@@ -272,7 +272,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/definition-lint-gate.js",
+            "command": "[ ! -f .claude/hooks/definition-lint-gate.js ] && exit 0; node .claude/hooks/definition-lint-gate.js",
             "timeout": 5
           }
         ]
@@ -282,7 +282,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/agent-trace-capture.js",
+            "command": "[ ! -f .claude/hooks/agent-trace-capture.js ] && exit 0; node .claude/hooks/agent-trace-capture.js",
             "timeout": 3
           }
         ]
@@ -292,7 +292,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/compact-optimizer.js",
+            "command": "[ ! -f .claude/hooks/compact-optimizer.js ] && exit 0; node .claude/hooks/compact-optimizer.js",
             "timeout": 2
           }
         ]
@@ -302,7 +302,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/task-overflow-guard.js",
+            "command": "[ ! -f .claude/hooks/task-overflow-guard.js ] && exit 0; node .claude/hooks/task-overflow-guard.js",
             "timeout": 3
           }
         ]
@@ -312,7 +312,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/agent-usage-logger.js",
+            "command": "[ ! -f .claude/hooks/agent-usage-logger.js ] && exit 0; node .claude/hooks/agent-usage-logger.js",
             "timeout": 2
           }
         ]
@@ -322,7 +322,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/output-verifier.js",
+            "command": "[ ! -f .claude/hooks/output-verifier.js ] && exit 0; node .claude/hooks/output-verifier.js",
             "timeout": 3
           }
         ]
@@ -332,7 +332,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/codegraph-roi-meter.js",
+            "command": "[ ! -f .claude/hooks/codegraph-roi-meter.js ] && exit 0; node .claude/hooks/codegraph-roi-meter.js",
             "timeout": 2
           }
         ]
@@ -342,7 +342,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/codegraph-auto-index.js",
+            "command": "[ ! -f .claude/hooks/codegraph-auto-index.js ] && exit 0; node .claude/hooks/codegraph-auto-index.js",
             "timeout": 12
           }
         ]
@@ -354,7 +354,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/context-snapshot-manager.js",
+            "command": "[ ! -f .claude/hooks/context-snapshot-manager.js ] && exit 0; node .claude/hooks/context-snapshot-manager.js",
             "timeout": 5
           }
         ]
@@ -364,7 +364,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/session-handoff-generator.js",
+            "command": "[ ! -f .claude/hooks/session-handoff-generator.js ] && exit 0; node .claude/hooks/session-handoff-generator.js",
             "timeout": 5
           }
         ]
@@ -377,7 +377,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/stop-failure-logger.js",
+            "command": "[ ! -f .claude/hooks/stop-failure-logger.js ] && exit 0; node .claude/hooks/stop-failure-logger.js",
             "timeout": 5
           }
         ]
