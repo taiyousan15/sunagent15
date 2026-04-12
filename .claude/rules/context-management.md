@@ -112,47 +112,5 @@ Read tool with offset/limit:
 
 ---
 
-## Session Continuation
-
-### セッション再開時
-
-1. `SESSION_HANDOFF.md` があれば読む
-2. `.workflow_state.json` の状態を確認
-3. 前セッションのコンテキストを引き継ぐ
-
-### セッション終了前
-
-1. 重要な発見は memory_add で保存
-2. 未完了タスクを SESSION_HANDOFF.md に記録
-3. 次セッションへの引き継ぎを明確化
-
----
-
-## Best Practices
-
-### DO (推奨)
-
-- 必要なファイルだけ読む
-- Grepで事前フィルタリング
-- 大きな出力は memory_add で保存
-- 定期的な /compact 実行
-
-### DON'T (非推奨)
-
-- node_modules を読み込む
-- ログファイル全体を読む
-- 不要なMCPを有効化したまま
-- コンテキスト警告を無視
-
----
-
-## Quality First Principle
-
-**コンテキスト効率より品質が優先。**
-
-必要であれば:
-- 多くのファイルを読んで良い
-- 詳細な分析をして良い
-- 時間をかけて良い
-
-効率化は品質を犠牲にしない範囲で行う。
+> Session継続ルールは CLAUDE.md Section 4 + `/session-start` `/session-end` を参照。
+> 品質は常にコンテキスト効率より優先。

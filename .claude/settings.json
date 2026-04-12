@@ -9,7 +9,10 @@
     "facebook-ads-library",
     "mcp-memory-service",
     "sequential-thinking",
-    "pexels"
+    "pexels",
+    "obsidian",
+    "puppeteer",
+    "gpt-researcher"
   ],
   "permissions": {
     "allow": [
