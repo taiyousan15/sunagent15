@@ -1,3 +1,7 @@
+---
+description: "Task-Miss Prevention Protocol - ミス防止プロトコル（PreFlect+CoVe+品質ゲート）"
+---
+
 # Task-Miss Prevention Protocol
 
 タスク実行時のミス防止プロトコル。900件+のリサーチ（2026-04-12）に基づく。

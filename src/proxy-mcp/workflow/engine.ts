@@ -200,6 +200,8 @@ export function validatePhase(): ValidationResult {
             errors.push(validation.errorMessage);
           }
         } else if (validation.type === 'command' && validation.command) {
+          // TRUST BOUNDARY: validation.command comes from local workflow JSON files only.
+          // If workflow definitions become user-uploadable, this must be sandboxed.
           try {
             const result = spawnSync('sh', ['-c', validation.command], { stdio: 'pipe', timeout: 10000 });
             if (result.status !== 0) {
@@ -268,6 +270,7 @@ function evaluateCondition(condition: Condition): string | null {
 
       case 'command_output': {
         // コマンド出力で判定
+        // TRUST BOUNDARY: condition.source comes from local workflow JSON files only.
         try {
           const result = spawnSync('sh', ['-c', condition.source], {
             encoding: 'utf-8',
