@@ -9,7 +9,7 @@ description: "Session Start - 指示書読了+ログ読了+検証+作業開始"
 ## Phase 1: 指示書読了
 
 ```
-Read /Users/matsumototoshihiko/Desktop/指示書.md
+Read $HOME/Desktop/指示書.md
 ```
 
 指示書を全行読了する。途中で止めない。全行読んだ後に次へ進む。
@@ -20,7 +20,7 @@ Read /Users/matsumototoshihiko/Desktop/指示書.md
 
 ログフォルダも読了する:
 ```
-ls /Users/matsumototoshihiko/taisun_agent/ログ/
+ls ./ログ/
 ```
 全ログファイルを読了する。
 
