@@ -71,6 +71,7 @@ Q3. 完了条件は何か？
 | 動画/YouTube/Instagram/TikTokダウンロード | `/video-download` |
 | Udemy/コースダウンロード | `/udemy-download` |
 | 文字起こし/トランスクリプト | `/video-download` |
+| 慎重に/正直に/推測するな/嘘つくな/誤魔化すな/ちゃんと読んで/ショートカットしないで/憶測/勝手な判断/100%読んで | `/honest-mode` |
 
 ## Language
 - Japanese priority / Technical terms in English OK
