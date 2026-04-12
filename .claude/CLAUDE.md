@@ -72,6 +72,9 @@ Q3. 完了条件は何か？
 | Udemy/コースダウンロード | `/udemy-download` |
 | 文字起こし/トランスクリプト | `/video-download` |
 | 慎重に/正直に/推測するな/嘘つくな/誤魔化すな/ちゃんと読んで/ショートカットしないで/憶測/勝手な判断/100%読んで | `/honest-mode` |
+| 厳密に/ミスなく/確実に/プロトコル/厳格に/ミス防止/タスクミス | `/task-miss` |
+| 前のセッション/続きから/セッションの続き/指示書を読んで/引き継ぎ | `/session-start` |
+| 指示書を作って/ログを作って/次のセッション/セッション終了/クリアしたい/引き継ぎを作って | `/session-end` |
 
 ## Language
 - Japanese priority / Technical terms in English OK
