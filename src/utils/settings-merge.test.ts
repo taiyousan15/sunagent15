@@ -1,4 +1,4 @@
-import { additiveMerge, freshMerge, SettingsLike } from './settings-merge';
+import { additiveMerge, freshMerge, smartMerge, SettingsLike } from './settings-merge';
 
 describe('additiveMerge', () => {
   test('preserves existing user value (template ignored)', () => {
@@ -134,5 +134,72 @@ describe('freshMerge', () => {
     const template: SettingsLike = { mcpServers: { a: {} } };
     const result = freshMerge(existing, template);
     expect((result.merged as SettingsLike).hooks).toBeDefined();
+  });
+});
+
+describe('smartMerge', () => {
+  test('fresh install (no existing mcpServers): uses freshMerge — template values respected', () => {
+    const existing: SettingsLike = {};
+    const template: SettingsLike = {
+      mcpServers: {
+        enabled_one: { command: 'a', disabled: false },
+        disabled_one: { command: 'b', disabled: true },
+      },
+    };
+    const result = smartMerge(existing, template);
+    expect(result.mode).toBe('fresh');
+    expect(result.merged.mcpServers!.enabled_one.disabled).toBe(false);
+    expect(result.merged.mcpServers!.disabled_one.disabled).toBe(true);
+    expect(result.added.sort()).toEqual(['disabled_one', 'enabled_one']);
+  });
+
+  test('fresh install (empty mcpServers object): same as no mcpServers', () => {
+    const existing: SettingsLike = { mcpServers: {} };
+    const template: SettingsLike = {
+      mcpServers: { foo: { command: 'x', disabled: false } },
+    };
+    const result = smartMerge(existing, template);
+    expect(result.mode).toBe('fresh');
+    expect(result.merged.mcpServers!.foo.disabled).toBe(false);
+  });
+
+  test('existing install (has mcpServers): uses additiveMerge — preserves user, new are disabled:true', () => {
+    const existing: SettingsLike = {
+      mcpServers: { user_kept: { command: 'user', disabled: true } },
+    };
+    const template: SettingsLike = {
+      mcpServers: {
+        user_kept: { command: 'template', disabled: false },
+        new_one: { command: 'new', disabled: false },
+      },
+    };
+    const result = smartMerge(existing, template);
+    expect(result.mode).toBe('additive');
+    expect(result.merged.mcpServers!.user_kept.command).toBe('user');
+    expect(result.merged.mcpServers!.user_kept.disabled).toBe(true);
+    expect(result.merged.mcpServers!.new_one.disabled).toBe(true);
+    expect(result.preserved).toEqual(['user_kept']);
+    expect(result.added).toEqual(['new_one']);
+  });
+
+  test('forceFresh:true overrides auto-detection (existing settings get reset)', () => {
+    const existing: SettingsLike = {
+      mcpServers: { user_kept: { disabled: true, command: 'user' } },
+    };
+    const template: SettingsLike = {
+      mcpServers: { user_kept: { disabled: false, command: 'template' } },
+    };
+    const result = smartMerge(existing, template, { forceFresh: true });
+    expect(result.mode).toBe('fresh');
+    expect(result.merged.mcpServers!.user_kept.command).toBe('template');
+    expect(result.merged.mcpServers!.user_kept.disabled).toBe(false);
+  });
+
+  test('null/undefined existing → fresh mode', () => {
+    const template: SettingsLike = {
+      mcpServers: { x: { disabled: false } },
+    };
+    expect(smartMerge(null, template).mode).toBe('fresh');
+    expect(smartMerge(undefined, template).mode).toBe('fresh');
   });
 });

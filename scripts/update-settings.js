@@ -172,8 +172,16 @@ function main() {
   const mcpPath = path.join(repoDir, '.mcp.json');
   const template = readJsonOrEmpty(mcpPath);
 
-  // Step 3: merge
-  const merger = fresh ? freshMerge : additiveMerge;
+  // Step 3: choose merge strategy.
+  // - --fresh flag: always destructive reset
+  // - existing has no mcpServers (or settings.json absent): fresh install,
+  //   use template values as-is so out-of-the-box-enabled MCPs are actually
+  //   enabled for new users
+  // - existing has mcpServers: update, preserve user values (additive)
+  const existingMcpKeys = Object.keys((existing && existing.mcpServers) || {});
+  const isFreshInstall = existingMcpKeys.length === 0;
+  const mode = fresh || isFreshInstall ? 'fresh' : 'additive';
+  const merger = mode === 'fresh' ? freshMerge : additiveMerge;
   const result = merger(existing, template);
 
   // Step 4: rewrite relative paths inside args (dist/... mcp-servers/...)
@@ -188,15 +196,20 @@ function main() {
 
   // Step 6: summary
   const total = Object.keys(result.merged.mcpServers || {}).length;
-  const mode = fresh ? 'fresh (destructive reset)' : 'additive (preserves user values)';
+  const modeLabel =
+    mode === 'fresh'
+      ? fresh
+        ? 'fresh (--fresh, destructive reset)'
+        : 'fresh (auto-detected: empty existing settings)'
+      : 'additive (preserves user values)';
   log(`  ✅ ツールを ${total} 個登録しました`);
-  log(`     モード: ${mode}`);
+  log(`     モード: ${modeLabel}`);
   log(`     新規追加: ${result.added.length} 件`);
   log(`     既存保持: ${result.preserved.length} 件`);
   if (!backupInfo.skipped && backupInfo.backupFile) {
     log(`     バックアップ: ${path.basename(backupInfo.backupFile)}`);
   }
-  if (result.added.length > 0 && !fresh) {
+  if (result.added.length > 0 && mode === 'additive') {
     log('');
     log(`  ℹ️  新しく追加された ${result.added.length} 個の MCP は安全のため disabled:true です。`);
     log('     使用したい場合は ~/.claude/settings.json の該当キーを false に変更してください。');

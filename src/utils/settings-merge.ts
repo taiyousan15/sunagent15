@@ -91,3 +91,31 @@ export function freshMerge(
 
   return { merged, added, preserved };
 }
+
+/**
+ * Smart merge: auto-detects fresh install vs update.
+ *
+ * - If existing has no mcpServers (or empty): fresh install → template wins
+ *   (so out-of-the-box-enabled MCPs are actually enabled for new users).
+ * - If existing has mcpServers: update → user values preserved (additive).
+ * - If opts.forceFresh is true: always fresh, regardless of existing state.
+ *
+ * Rationale: additive-only is correct for protecting existing customization,
+ * but on truly fresh install there's nothing to protect, and forcing every
+ * MCP to disabled:true would silently break the out-of-the-box experience.
+ */
+export function smartMerge(
+  existing: SettingsLike | null | undefined,
+  template: SettingsLike | null | undefined,
+  opts?: { forceFresh?: boolean }
+): MergeResult & { mode: 'fresh' | 'additive' } {
+  if (opts?.forceFresh) {
+    return { ...freshMerge(existing, template), mode: 'fresh' };
+  }
+  const existingMcpKeys = Object.keys(existing?.mcpServers ?? {});
+  const isFreshInstall = existingMcpKeys.length === 0;
+  if (isFreshInstall) {
+    return { ...freshMerge(existing, template), mode: 'fresh' };
+  }
+  return { ...additiveMerge(existing, template), mode: 'additive' };
+}
