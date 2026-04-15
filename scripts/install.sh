@@ -462,11 +462,12 @@ echo ""
 
 [ -f "$REPO_DIR/.claude/CLAUDE.md" ] && ok "設定ファイル (.claude/CLAUDE.md) … OK"
 
-HOOK_OK=0
-for hook in workflow-sessionstart-injector.js skill-usage-guard.js session-handoff-generator.js; do
-    [ -f "$REPO_DIR/.claude/hooks/$hook" ] && ((HOOK_OK++)) || true
-done
-ok "フック: ${HOOK_OK} 個が正常に設定されています"
+HOOK_OK=$(ls "$REPO_DIR/.claude/hooks/"*.js 2>/dev/null | wc -l | tr -d ' ')
+if [ "$HOOK_OK" -gt 0 ]; then
+    ok "フック: ${HOOK_OK} 個が利用可能です"
+else
+    warn "フック: ${HOOK_OK} 個（.claude/hooks/ が空の可能性）"
+fi
 
 SKILL_COUNT=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
 EXPECTED_SKILLS=$(ls -d "$SOURCE_SKILLS"/*/ 2>/dev/null | grep -v '_archived' | grep -v 'data' | wc -l | tr -d ' ')
@@ -482,6 +483,15 @@ fi
 
 AGENT_COUNT=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
 ok "エージェント: ${AGENT_COUNT} 個が利用可能です"
+
+# ─────────────────────────────────────────
+# 深部検証（symlink dangling、hook 参照、version 整合）
+# ─────────────────────────────────────────
+if [ -f "$REPO_DIR/scripts/verify-installation.js" ]; then
+    echo ""
+    node "$REPO_DIR/scripts/verify-installation.js" "$REPO_DIR" 2>&1 || true
+    # 警告は表示するが install.sh 自体は成功扱いで継続
+fi
 
 # ─────────────────────────────────────────
 # 完了メッセージ
