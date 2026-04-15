@@ -178,7 +178,7 @@ if (Test-Path $SOURCE_SKILLS) {
 }
 
 $TARGET_AGENTS = "$env:USERPROFILE\.claude\agents"
-$SOURCE_AGENTS = "$TAISUN_DIR\.claude\agents"
+$SOURCE_AGENTS = "$TAISUN_DIR\.claude\agent-source"
 if (-not (Test-Path $TARGET_AGENTS)) { New-Item -ItemType Directory -Path $TARGET_AGENTS -Force | Out-Null }
 
 $AGENT_NEW = 0

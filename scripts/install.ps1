@@ -14,7 +14,8 @@
 #   - PowerShell 5.1 以上
 
 param(
-    [string]$Profile = "standard",
+    [Alias("Profile")]
+    [string]$SkillProfile = "standard",
     [switch]$WithDocker,
     [switch]$WithFigma,
     [switch]$WithVoice,
@@ -294,7 +295,7 @@ $ALLOWED_SKILLS = @()
 if (Test-Path $PROFILE_FILE) {
     try {
         $profileData = Get-Content $PROFILE_FILE -Raw | ConvertFrom-Json
-        $presetGroups = $profileData.presets.$Profile
+        $presetGroups = $profileData.presets.$SkillProfile
         if (-not $presetGroups) { $presetGroups = $profileData.presets.standard }
 
         $extraProfiles = @()
@@ -317,7 +318,7 @@ if (Test-Path $PROFILE_FILE) {
 }
 
 Write-Host "  スキルを設定しています..."
-Write-Host "  📋 プロファイル: $Profile"
+Write-Host "  📋 プロファイル: $SkillProfile"
 Write-Info "スキルの保存先: $TARGET_SKILLS"
 Write-Host "       （Claude Code が使うスキルが入るフォルダです）"
 Write-Host ""
