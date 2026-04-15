@@ -42,12 +42,17 @@ VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' 
 # ─────────────────────────────────────────
 SKILL_PROFILE="standard"
 EXTRA_PROFILES=()
+FRESH_MODE=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         --profile)
             SKILL_PROFILE="$2"
             shift 2
+            ;;
+        --fresh)
+            FRESH_MODE=true
+            shift
             ;;
         --with-docker)
             EXTRA_PROFILES+=("docker")
@@ -424,38 +429,14 @@ echo "     ※ ~/.claude/settings.json に設定が書き込まれます"
 SETTINGS_FILE="$HOME/.claude/settings.json"
 mkdir -p "$(dirname "$SETTINGS_FILE")"
 
-node -e "
-const fs = require('fs');
-const path = require('path');
-const REPO_DIR = '$REPO_DIR';
-const SETTINGS_FILE = '$SETTINGS_FILE';
-
-let settings = {};
-try { settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8')); } catch(e) {}
-if (!settings.mcpServers) settings.mcpServers = {};
-
-let mcp = {};
-try { mcp = JSON.parse(fs.readFileSync(path.join(REPO_DIR, '.mcp.json'), 'utf8')); } catch(e) {}
-
-for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
-  if (key.startsWith('_comment')) continue;
-  const server = JSON.parse(JSON.stringify(val));
-  if (Array.isArray(server.args)) {
-    server.args = server.args.map(arg => {
-      if (typeof arg === 'string' && !path.isAbsolute(arg) &&
-          (arg.startsWith('dist/') || arg.startsWith('mcp-servers/'))) {
-        return path.join(REPO_DIR, arg);
-      }
-      return arg;
-    });
-  }
-  settings.mcpServers[key] = server;
-}
-
-fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
-const count = Object.keys(settings.mcpServers).filter(k=>!k.startsWith('_')).length;
-console.log('  ✅ ツールを ' + count + ' 個登録しました');
-" 2>/dev/null || warn "ツールの登録に問題がありました（後から手動で設定できます）"
+if [ "$FRESH_MODE" = true ]; then
+    info "--fresh モード: 既存の MCP カスタマイズはテンプレートで上書きされます"
+    node "$REPO_DIR/scripts/update-settings.js" "$REPO_DIR" "$SETTINGS_FILE" --fresh \
+        || warn "ツールの登録に問題がありました（後から手動で設定できます）"
+else
+    node "$REPO_DIR/scripts/update-settings.js" "$REPO_DIR" "$SETTINGS_FILE" \
+        || warn "ツールの登録に問題がありました（後から手動で設定できます）"
+fi
 
 # CodeGraph MCP パスをプロジェクト設定に自動書き換え
 PROJ_SETTINGS="$REPO_DIR/.claude/settings.json"
@@ -536,6 +517,10 @@ echo ""
 echo "  🔄 アップデート方法："
 echo "     npm run update                          # 推奨：既存設定を保持"
 echo "     （git pull + ファイル更新のみ、~/.claude/settings.json は触らない）"
+echo ""
+echo "  🔧 MCP を完全にリセットする場合のみ："
+echo "     npm run setup:fresh                     # ~/.claude/settings.json を上書き"
+echo "     （破壊的操作。事前に自動バックアップされます）"
 echo ""
 echo "  📋 スキル構成の変更："
 echo "     ./scripts/install.sh --list-profiles    # プロファイル一覧"
