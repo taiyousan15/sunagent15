@@ -18,6 +18,7 @@ set +e
 # ─────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 TAISUN_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+export TAISUN_HOME="$TAISUN_DIR"
 
 # プロジェクトディレクトリ（引数があればそれを使う、なければカレント）
 if [ -n "$1" ]; then

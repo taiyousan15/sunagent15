@@ -32,7 +32,7 @@
   "mcpServers": {
     "codebase-memory": {
       "type": "stdio",
-      "command": "/Users/matsumototoshihiko/Desktop/dev04/taisun_agent/tools/codebase-memory-mcp/codebase-memory-mcp",
+      "command": "tools/codebase-memory-mcp/codebase-memory-mcp",
       "args": [],
       "disabled": false,
       "defer_loading": true,
