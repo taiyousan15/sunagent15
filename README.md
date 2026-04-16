@@ -80,7 +80,7 @@ bash scripts/install.sh
 > `Permission denied` が出た場合は `bash scripts/install.sh` で実行してください。
 > `git: command not found` が出た場合は `xcode-select --install` を先に実行してください。
 
-**完了の目安**: `スキル: 63 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
+**完了の目安**: `スキル: 68 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
 
 **アップデート（1行で完了）**
 
@@ -114,7 +114,7 @@ cd taisun_agent
 > `スクリプトの実行が無効` エラーが出た場合は `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` を先に実行してください。
 > `git: 用語 'git' は〜` エラーが出た場合は https://git-scm.com/download/win から git をインストールしてください。
 
-**完了の目安**: `スキル: 63 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
+**完了の目安**: `スキル: 68 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
 
 **アップデート（1行で完了）**
 
@@ -151,7 +151,7 @@ cd ~\Projects\MyProject
   │ .git         │ 初期化済み                                │
   │ .claude/     │ → ~/taisun_agent/.claude/                │
   │ .mcp.json    │ → ~/taisun_agent/.mcp.json               │
-  │ スキル       │ 63個                                      │
+  │ スキル       │ 68個                                      │
   │ エージェント │ 95個                                      │
   └──────────────┴──────────────────────────────────────────┘
 ```
@@ -203,7 +203,7 @@ npm run mcp:status       # 現在の状態を確認
 ```bash
 ./scripts/install.sh --list-profiles          # 一覧表示
 ./scripts/install.sh --profile minimal        # 最小構成（92個）
-./scripts/install.sh --profile full           # 全スキル（63個）
+./scripts/install.sh --profile full           # 全スキル（68個）
 ./scripts/install.sh --with-docker --with-figma  # 個別追加
 ```
 
@@ -211,7 +211,7 @@ npm run mcp:status       # 現在の状態を確認
 ```powershell
 .\scripts\install.ps1 -ListProfiles           # 一覧表示
 .\scripts\install.ps1 -Profile minimal        # 最小構成（92個）
-.\scripts\install.ps1 -Profile full           # 全スキル（63個）
+.\scripts\install.ps1 -Profile full           # 全スキル（68個）
 .\scripts\install.ps1 -WithDocker -WithFigma  # 個別追加
 ```
 
@@ -409,7 +409,7 @@ npm run taisun:diagnose
 |------|------|
 | 13層防御Hookシステム | 30点 |
 | MCPサーバー接続 | 25点 |
-| スキル定義検証（63個） | 20点 |
+| スキル定義検証（68個） | 20点 |
 | エージェント定義（95個） | 15点 |
 | ビルド状態 | 10点 |
 
@@ -433,7 +433,7 @@ YouTubeサムネイルを作って
 
 | カテゴリ | 数 | 例 |
 |---------|----|----|
-| スキル | 63個 | mega-research, taiyo-style-lp, sdd-full, world-research |
+| スキル | 68個 | mega-research, taiyo-style-lp, sdd-full, world-research |
 | エージェント | 95個 | planner, code-reviewer, security-reviewer, tdd-guide |
 | コマンド | 190+個 | /learn, /research, /sdd-full, /summarize, /-*, /-* |
 | Hookシステム | 14層 | 危険コマンド防止・セッション継続・自動バックアップ・タスク結果オーバーフロー防止 |
