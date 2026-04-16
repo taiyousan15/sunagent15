@@ -82,13 +82,21 @@ bash scripts/install.sh
 
 **完了の目安**: `スキル: 68 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
 
-**アップデート（1行で完了）**
+**アップデート（ターミナルで1行コピペ）**
 
 ```
-cd ~/taisun_agent && ./scripts/update.sh
+cd ~/taisun_agent && bash scripts/update.sh
 ```
 
-> git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。手動操作は不要です。
+> **注意**: Claude Code のチャット欄ではなく、**ターミナル**で実行してください。
+> フォルダを移動した場合は `cd ~/taisun_agent` を実際のパスに読み替えてください。
+> git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。
+
+**別プロジェクトでも使いたい場合（1回だけ）**
+
+```
+bash ~/taisun_agent/scripts/setup-project.sh ~/my-project
+```
 
 ---
 
@@ -116,13 +124,20 @@ cd taisun_agent
 
 **完了の目安**: `スキル: 68 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
 
-**アップデート（1行で完了）**
+**アップデート（PowerShellで1行コピペ）**
 
 ```powershell
 cd $HOME\taisun_agent; .\scripts\install.ps1 -Update
 ```
 
-> git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。手動操作は不要です。
+> **注意**: Claude Code のチャット欄ではなく、**PowerShell**で実行してください。
+> git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。
+
+**別プロジェクトでも使いたい場合（1回だけ）**
+
+```powershell
+& $HOME\taisun_agent\scripts\setup-project.ps1 -ProjectPath C:\my-project
+```
 
 ---
 
