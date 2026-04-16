@@ -32,7 +32,7 @@
   "mcpServers": {
     "codebase-memory": {
       "type": "stdio",
-      "command": "./tools/codebase-memory-mcp/codebase-memory-mcp",
+      "command": "/Users/matsumototoshihiko/Desktop/dev04/taisun_agent/tools/codebase-memory-mcp/codebase-memory-mcp",
       "args": [],
       "disabled": false,
       "defer_loading": true,
@@ -64,7 +64,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/workflow-sessionstart-injector.js ] && exit 0; node .claude/hooks/workflow-sessionstart-injector.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/workflow-sessionstart-injector.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]
@@ -74,7 +74,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/codegraph-oss-monitor.js ] && exit 0; node .claude/hooks/codegraph-oss-monitor.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/codegraph-oss-monitor.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 10
           }
         ]
@@ -84,7 +84,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/context-snapshot-manager.js ] && exit 0; node .claude/hooks/context-snapshot-manager.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/context-snapshot-manager.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]
@@ -96,7 +96,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/context-snapshot-manager.js ] && exit 0; node .claude/hooks/context-snapshot-manager.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/context-snapshot-manager.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]
@@ -108,7 +108,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/model-auto-switch.js ] && exit 0; node .claude/hooks/model-auto-switch.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/model-auto-switch.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -118,7 +118,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/skill-usage-guard.js ] && exit 0; node .claude/hooks/skill-usage-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/skill-usage-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -128,7 +128,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/mid-session-reminder.js ] && exit 0; node .claude/hooks/mid-session-reminder.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/mid-session-reminder.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -138,7 +138,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/agent-enforcement-guard.js ] && exit 0; node .claude/hooks/agent-enforcement-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/agent-enforcement-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -150,7 +150,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/unified-guard.js ] && exit 0; node .claude/hooks/unified-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/unified-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -160,7 +160,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/deviation-approval-guard.js ] && exit 0; node .claude/hooks/deviation-approval-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/deviation-approval-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -170,7 +170,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/agent-enforcement-guard.js ] && exit 0; node .claude/hooks/agent-enforcement-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/agent-enforcement-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -180,7 +180,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/checkpoint-guard.js ] && exit 0; node .claude/hooks/checkpoint-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/checkpoint-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -190,7 +190,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/agent-checkpoint-guard.js ] && exit 0; node .claude/hooks/agent-checkpoint-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/agent-checkpoint-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -200,7 +200,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/rules-enforce-guard.js ] && exit 0; node .claude/hooks/rules-enforce-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/rules-enforce-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -210,7 +210,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/research-quality-guard.js ] && exit 0; node .claude/hooks/research-quality-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/research-quality-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -220,7 +220,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/cost-hard-stop-guard.js ] && exit 0; node .claude/hooks/cost-hard-stop-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/cost-hard-stop-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -230,7 +230,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/mistake-pattern-matcher.js ] && exit 0; node .claude/hooks/mistake-pattern-matcher.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/mistake-pattern-matcher.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]
@@ -240,7 +240,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/pre-compact-save.js ] && exit 0; node .claude/hooks/pre-compact-save.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/pre-compact-save.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]
@@ -252,7 +252,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/rules-read-tracker.js ] && exit 0; node .claude/hooks/rules-read-tracker.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/rules-read-tracker.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -262,7 +262,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/auto-adr.js ] && exit 0; node .claude/hooks/auto-adr.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/auto-adr.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -272,7 +272,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/definition-lint-gate.js ] && exit 0; node .claude/hooks/definition-lint-gate.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/definition-lint-gate.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]
@@ -282,7 +282,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/agent-trace-capture.js ] && exit 0; node .claude/hooks/agent-trace-capture.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/agent-trace-capture.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -292,7 +292,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/compact-optimizer.js ] && exit 0; node .claude/hooks/compact-optimizer.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/compact-optimizer.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 2
           }
         ]
@@ -302,7 +302,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/task-overflow-guard.js ] && exit 0; node .claude/hooks/task-overflow-guard.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/task-overflow-guard.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -312,7 +312,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/agent-usage-logger.js ] && exit 0; node .claude/hooks/agent-usage-logger.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/agent-usage-logger.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 2
           }
         ]
@@ -322,7 +322,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/output-verifier.js ] && exit 0; node .claude/hooks/output-verifier.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/output-verifier.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 3
           }
         ]
@@ -332,7 +332,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/codegraph-roi-meter.js ] && exit 0; node .claude/hooks/codegraph-roi-meter.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/codegraph-roi-meter.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 2
           }
         ]
@@ -342,7 +342,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/codegraph-auto-index.js ] && exit 0; node .claude/hooks/codegraph-auto-index.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/codegraph-auto-index.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 12
           }
         ]
@@ -354,7 +354,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/context-snapshot-manager.js ] && exit 0; node .claude/hooks/context-snapshot-manager.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/context-snapshot-manager.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]
@@ -364,7 +364,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/session-handoff-generator.js ] && exit 0; node .claude/hooks/session-handoff-generator.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/session-handoff-generator.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]
@@ -377,7 +377,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ ! -f .claude/hooks/stop-failure-logger.js ] && exit 0; node .claude/hooks/stop-failure-logger.js",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/stop-failure-logger.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
             "timeout": 5
           }
         ]

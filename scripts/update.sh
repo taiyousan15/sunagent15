@@ -7,6 +7,7 @@
 set -e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+export TAISUN_HOME="$REPO_DIR"
 VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' -f4)
 
 # ─────────────────────────────────────────
@@ -224,6 +225,14 @@ ok "エージェントを更新しました（新規: ${AGENT_NEW}件 / 更新: 
 # Step 4: 動作確認
 # ─────────────────────────────────────────
 step "ステップ 4/4：動作を確認しています"
+
+# TAISUN_HOME refresh (auto-heal if repo moved)
+source "$REPO_DIR/scripts/lib/resolve-home.sh" 2>/dev/null || true
+if type refresh_taisun_home &>/dev/null; then
+  if refresh_taisun_home; then
+    ok "TAISUN_HOME 更新: $TAISUN_HOME"
+  fi
+fi
 
 echo ""
 SKILL_COUNT=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')

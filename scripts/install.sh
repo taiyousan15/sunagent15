@@ -14,6 +14,7 @@
 set -e
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+export TAISUN_HOME="$REPO_DIR"
 
 # ─────────────────────────────────────────
 # Mac: Xcode Command Line Tools 確認（gitが動くために必須）
@@ -451,6 +452,20 @@ fi
 
 # ─────────────────────────────────────────
 # Step 5: 動作確認
+# ─────────────────────────────────────────
+# TAISUN_HOME 永続化
+# ─────────────────────────────────────────
+source "$REPO_DIR/scripts/lib/resolve-home.sh" 2>/dev/null || true
+if type persist_taisun_home &>/dev/null; then
+  persist_taisun_home
+  ok "TAISUN_HOME=$TAISUN_HOME (永続化済み)"
+fi
+
+# Hook コマンドを TAISUN_HOME 対応に移行
+if [ -f "$REPO_DIR/scripts/update-hook-commands.js" ]; then
+  node "$REPO_DIR/scripts/update-hook-commands.js" "$REPO_DIR" 2>/dev/null && ok "Hook コマンド移行完了" || true
+fi
+
 # ─────────────────────────────────────────
 step "ステップ 5/5：動作を確認しています"
 
