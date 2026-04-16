@@ -147,7 +147,7 @@ monitoring-logs:
 
 mcp-health:
 	@echo "🔍 Checking MCP server health..."
-	@./scripts/mcp-health-check.sh
+	@node ./scripts/mcp-health-check.js
 
 agents-list:
 	@node scripts/list-agents.js --details

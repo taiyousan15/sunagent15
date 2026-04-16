@@ -333,7 +333,7 @@ pwd
 
 # パス区切りの問題の場合、Node.js スクリプトを使用
 # ✅ 良い例: npm run mcp:health
-# ❌ 悪い例: ./scripts/mcp-health-check.sh
+# ❌ 悪い例: ./scripts/mcp-health-check.sh（廃止済み、.js を使用）
 ```
 
 ### 問題 5: Docker エラー
@@ -394,14 +394,9 @@ WSL2 を使う場合、Linux 環境として扱えるため、`.sh` スクリプ
    npm run mcp:health  # .sh の代わりに .js を使用
    ```
 
-2. **Git Bash で実行**
+2. **Node.js で実行（推奨・クロスプラットフォーム）**
    ```bash
-   ./scripts/mcp-health-check.sh
-   ```
-
-3. **WSL で実行**
-   ```bash
-   bash ./scripts/mcp-health-check.sh
+   node ./scripts/mcp-health-check.js
    ```
 
 ### Q: Claude Code がインストールされていません

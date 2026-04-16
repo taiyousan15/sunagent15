@@ -33,7 +33,7 @@ vim .env
 ### 2. ヘルスチェックの実行
 
 ```bash
-./scripts/mcp-health-check.sh
+node ./scripts/mcp-health-check.js
 ```
 
 ### 3. 動作確認
@@ -197,7 +197,7 @@ BRAVE_API_KEY=BSAxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ```bash
 # 環境変数の確認
-./scripts/mcp-health-check.sh
+node ./scripts/mcp-health-check.js
 
 # 個別サーバーのテスト
 npx -y @modelcontextprotocol/server-github --version
