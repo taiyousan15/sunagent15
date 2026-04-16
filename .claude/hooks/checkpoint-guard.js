@@ -26,8 +26,32 @@
 const fs = require('fs');
 const path = require('path');
 
+// fail-open: guard-base load failure must not break checkpoint enforcement
+let guardBase;
+try {
+  guardBase = require('./utils/guard-base');
+} catch (e) {
+  console.error('checkpoint-guard: guard-base load failed, using inline fallback:', e.message);
+  guardBase = {
+    logSkip: () => {},
+    runGuard: async (_name, checkFn) => {
+      try {
+        const chunks = [];
+        for await (const chunk of process.stdin) chunks.push(chunk);
+        const input = Buffer.concat(chunks).toString('utf8');
+        if (!input) { process.exit(0); return; }
+        const data = JSON.parse(input);
+        const result = checkFn(data.tool_name, data.tool_input || {});
+        if (result) console.log(JSON.stringify(result));
+        process.exit(0);
+      } catch (err) { process.exit(0); }
+    },
+    PROJECT_ROOT: path.resolve(__dirname, '../../'),
+  };
+}
+
 // === 設定 ===
-const PROJECT_ROOT = path.resolve(__dirname, '../../');
+const PROJECT_ROOT = guardBase.PROJECT_ROOT;
 const CHECKPOINT_DIR = path.join(PROJECT_ROOT, '.claude', 'checkpoints');
 const SKIP_LOG = path.join(PROJECT_ROOT, '.claude', 'hooks', 'data', 'checkpoint-skip.log');
 const PHASE = process.env.CHECKPOINT_GUARD_PHASE || '1';
@@ -102,17 +126,12 @@ function cleanupOldFlags() {
 
 // === スキップ記録 ===
 function logSkip(sessionId, toolName, detail) {
-  try {
-    const entry = JSON.stringify({
-      ts: new Date().toISOString(),
-      session: sessionId,
-      tool: toolName,
-      detail: detail.substring(0, 200),
-      phase: PHASE,
-    }) + '\n';
-    fs.mkdirSync(path.dirname(SKIP_LOG), { recursive: true });
-    fs.appendFileSync(SKIP_LOG, entry);
-  } catch (e) { /* fail-open */ }
+  guardBase.logSkip(SKIP_LOG, {
+    session: sessionId,
+    tool: toolName,
+    detail: detail.substring(0, 200),
+    phase: PHASE,
+  });
 }
 
 // === メインチェック関数 ===
@@ -179,37 +198,8 @@ function check(toolName, toolInput) {
   }
 }
 
-// === スタンドアロン実行（テスト用 + hook単体動作） ===
-async function main() {
-  // stdin timeout (3秒)
-  const timer = setTimeout(() => process.exit(0), 3000);
-  timer.unref();
-
-  try {
-    // stdinから読む
-    const chunks = [];
-    for await (const chunk of process.stdin) chunks.push(chunk);
-    const input = Buffer.concat(chunks).toString('utf8');
-    if (!input) {
-      process.exit(0);
-      return;
-    }
-
-    const data = JSON.parse(input);
-    const result = check(data.tool_name, data.tool_input || {});
-    if (result) {
-      console.log(JSON.stringify(result));
-    }
-    process.exit(0);
-  } catch (e) {
-    // フェイルオープン
-    console.error('checkpoint-guard main error:', e.message);
-    process.exit(0);
-  }
-}
-
 if (require.main === module) {
-  main();
+  guardBase.runGuard('checkpoint-guard', check);
 }
 
 module.exports = { check, getSessionId, isCheckpointDone, PHASE };

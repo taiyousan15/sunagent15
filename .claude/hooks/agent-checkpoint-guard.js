@@ -15,10 +15,33 @@
 
 'use strict';
 
-const fs = require('fs');
 const path = require('path');
 
-const PROJECT_ROOT = path.resolve(__dirname, '../../');
+// fail-open: guard-base load failure must not break agent checkpoint enforcement
+let guardBase;
+try {
+  guardBase = require('./utils/guard-base');
+} catch (e) {
+  console.error('agent-checkpoint-guard: guard-base load failed, using inline fallback:', e.message);
+  guardBase = {
+    logSkip: () => {},
+    runGuard: async (_name, checkFn) => {
+      try {
+        const chunks = [];
+        for await (const chunk of process.stdin) chunks.push(chunk);
+        const input = Buffer.concat(chunks).toString('utf8');
+        if (!input) { process.exit(0); return; }
+        const data = JSON.parse(input);
+        const result = checkFn(data.tool_name, data.tool_input || {});
+        if (result) console.log(JSON.stringify(result));
+        process.exit(0);
+      } catch (err) { process.exit(0); }
+    },
+    PROJECT_ROOT: path.resolve(__dirname, '../../'),
+  };
+}
+
+const PROJECT_ROOT = guardBase.PROJECT_ROOT;
 const SKIP_LOG = path.join(PROJECT_ROOT, '.claude', 'hooks', 'data', 'agent-checkpoint-skip.log');
 const PHASE = process.env.AGENT_CHECKPOINT_PHASE || '1';
 
@@ -46,17 +69,12 @@ const CHECKPOINT_MARKERS = [
 ];
 
 function logSkip(agentType, hasMarker, promptPreview) {
-  try {
-    const entry = JSON.stringify({
-      ts: new Date().toISOString(),
-      agentType,
-      hasMarker,
-      promptPreview: promptPreview.substring(0, 200),
-      phase: PHASE,
-    }) + '\n';
-    fs.mkdirSync(path.dirname(SKIP_LOG), { recursive: true });
-    fs.appendFileSync(SKIP_LOG, entry);
-  } catch (e) { /* fail-open */ }
+  guardBase.logSkip(SKIP_LOG, {
+    agentType,
+    hasMarker,
+    promptPreview: promptPreview.substring(0, 200),
+    phase: PHASE,
+  });
 }
 
 function check(toolName, toolInput) {
@@ -124,32 +142,6 @@ function check(toolName, toolInput) {
   }
 }
 
-async function main() {
-  // stdin timeout (3秒)
-  const timer = setTimeout(() => process.exit(0), 3000);
-  timer.unref();
-
-  try {
-    const chunks = [];
-    for await (const chunk of process.stdin) chunks.push(chunk);
-    const input = Buffer.concat(chunks).toString('utf8');
-    if (!input) {
-      process.exit(0);
-      return;
-    }
-
-    const data = JSON.parse(input);
-    const result = check(data.tool_name, data.tool_input || {});
-    if (result) {
-      console.log(JSON.stringify(result));
-    }
-    process.exit(0);
-  } catch (e) {
-    console.error('agent-checkpoint-guard main error:', e.message);
-    process.exit(0);
-  }
-}
-
-if (require.main === module) main();
+if (require.main === module) guardBase.runGuard('agent-checkpoint-guard', check);
 
 module.exports = { check, PHASE };
