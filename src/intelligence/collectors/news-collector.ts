@@ -4,11 +4,7 @@
  */
 
 import { CollectorResult, IntelligenceItem, WATCH_TARGETS, WATCH_KEYWORDS } from '../types'
-import crypto from 'crypto'
-
-function makeId(src: string, id: string): string {
-  return crypto.createHash('md5').update(`${src}:${id}`).digest('hex').slice(0, 16)
-}
+import { makeId } from './utils/collector-id'
 
 // ─────────────────────────────────────────────
 // NewsAPI.org - 無料枠100req/day

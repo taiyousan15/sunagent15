@@ -9,13 +9,9 @@
  */
 
 import { CollectorResult, IntelligenceItem, WATCH_TARGETS, X_WATCH_ACCOUNTS, getXHandles } from '../types'
-import crypto from 'crypto'
+import { makeId } from './utils/collector-id'
 
 const APIFY_BASE_URL = 'https://api.apify.com/v2'
-
-function makeId(src: string, id: string): string {
-  return crypto.createHash('md5').update(`${src}:${id}`).digest('hex').slice(0, 16)
-}
 
 interface ApifyRunInput {
   searchTerms?: string[]

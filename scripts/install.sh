@@ -100,11 +100,7 @@ done
 # ─────────────────────────────────────────
 # 表示ヘルパー
 # ─────────────────────────────────────────
-ok()   { echo "  ✅ $1"; }
-warn() { echo "  ⚠️  $1"; }
-info() { echo "  ℹ️  $1"; }
-fail() { echo ""; echo "  ❌ エラー: $1"; echo "     → $2"; echo ""; exit 1; }
-step() { echo ""; echo "━━━ $1 ━━━"; }
+source "$REPO_DIR/scripts/lib/ui.sh" || { echo "❌ scripts/lib/ui.sh not found"; exit 1; }
 
 # ─────────────────────────────────────────
 # ヘッダー
