@@ -144,42 +144,17 @@ fi
 echo ""
 echo "  🔗 グローバルスキル・エージェントを登録しています..."
 
+source "$TAISUN_DIR/scripts/lib/register.sh" 2>/dev/null || { echo "  ERROR: register.sh not found"; exit 1; }
+
 TARGET_SKILLS="$HOME/.claude/skills"
 SOURCE_SKILLS="$TAISUN_DIR/.claude/skills"
-mkdir -p "$TARGET_SKILLS"
-
-SKILL_INSTALLED=0
-if [ -d "$SOURCE_SKILLS" ]; then
-    for skill_dir in "$SOURCE_SKILLS"/*/; do
-        skill_name=$(basename "$skill_dir")
-        [[ "$skill_name" == "_archived" || "$skill_name" == "_guides" || "$skill_name" == "data" ]] && continue
-        [[ ! -f "$skill_dir/SKILL.md" ]] && [[ ! -f "$skill_dir/CLAUDE.md" ]] && continue
-        target="$TARGET_SKILLS/$skill_name"
-        if [ -d "$target" ] && [ ! -L "$target" ]; then rm -rf "$target"; fi
-        if [ ! -L "$target" ]; then
-            ln -sf "$skill_dir" "$target"
-            ((SKILL_INSTALLED++)) || true
-        fi
-    done
-fi
+register_skills "$SOURCE_SKILLS" "$TARGET_SKILLS" ""
+SKILL_INSTALLED=$REGISTER_SKILL_INSTALLED
 
 TARGET_AGENTS="$HOME/.claude/agents"
 SOURCE_AGENTS="$TAISUN_DIR/.claude/agent-source"
-mkdir -p "$TARGET_AGENTS"
-
-AGENT_INSTALLED=0
-if [ -d "$SOURCE_AGENTS" ]; then
-    for agent_file in "$SOURCE_AGENTS"/*.md; do
-        agent_name=$(basename "$agent_file")
-        [[ "$agent_name" == "CLAUDE.md" ]] && continue
-        target="$TARGET_AGENTS/$agent_name"
-        if [ -L "$target" ]; then rm -f "$target"; fi
-        if [ ! -f "$target" ]; then
-            cp "$agent_file" "$target"
-            ((AGENT_INSTALLED++)) || true
-        fi
-    done
-fi
+register_agents "$SOURCE_AGENTS" "$TARGET_AGENTS"
+AGENT_INSTALLED=$REGISTER_AGENT_INSTALLED
 
 # MCP グローバル登録
 SETTINGS_FILE="$HOME/.claude/settings.json"

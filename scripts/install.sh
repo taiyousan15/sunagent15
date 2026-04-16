@@ -274,50 +274,16 @@ echo "  🔗 ~/.claude/skills/ フォルダを作成・更新しています"
 echo "     ※ ~/.claude/ は Claude Code の設定フォルダです（システムが自動管理します）"
 echo ""
 
+source "$REPO_DIR/scripts/lib/register.sh" || fail "scripts/lib/register.sh not found" "install.sh を再取得してください"
+
 TARGET_SKILLS="$HOME/.claude/skills"
 SOURCE_SKILLS="$REPO_DIR/.claude/skills"
-mkdir -p "$TARGET_SKILLS"
 
-INSTALLED=0; UPDATED=0; SKIPPED=0; PROFILE_SKIPPED=0
-
-if [ -d "$SOURCE_SKILLS" ]; then
-    for skill_dir in "$SOURCE_SKILLS"/*/; do
-        skill_name=$(basename "$skill_dir")
-        [[ "$skill_name" == "_archived" ]] && continue
-        [[ "$skill_name" == "_guides" ]] && continue
-        [[ "$skill_name" == "data" ]] && continue
-        [[ ! -f "$skill_dir/SKILL.md" ]] && [[ ! -f "$skill_dir/CLAUDE.md" ]] && continue
-
-        # プロファイルフィルタ: 許可リストが空でない場合、リストにないスキルはスキップ
-        if [ -n "$ALLOWED_SKILLS" ]; then
-            if ! echo "$ALLOWED_SKILLS" | grep -qx "$skill_name"; then
-                ((PROFILE_SKIPPED++)) || true
-                continue
-            fi
-        fi
-
-        target="$TARGET_SKILLS/$skill_name"
-        if [ -d "$target" ] && [ ! -L "$target" ]; then rm -rf "$target"; fi
-
-        if [ ! -L "$target" ]; then
-            ln -sf "$skill_dir" "$target"
-            ((INSTALLED++)) || true
-        else
-            current_target=$(readlink "$target")
-            if [ "$current_target" != "$skill_dir" ]; then
-                ln -sf "$skill_dir" "$target"
-                ((UPDATED++)) || true
-            else
-                ((SKIPPED++)) || true
-            fi
-        fi
-    done
-fi
-
+register_skills "$SOURCE_SKILLS" "$TARGET_SKILLS" "$ALLOWED_SKILLS"
 TOTAL_SKILLS=$(ls -d "$TARGET_SKILLS"/*/ 2>/dev/null | wc -l | tr -d ' ')
-ok "スキルを登録しました（新規: ${INSTALLED}件 / 更新: ${UPDATED}件 / 合計: ${TOTAL_SKILLS}件）"
-if [ "$PROFILE_SKIPPED" -gt 0 ]; then
-    info "プロファイル外スキル: ${PROFILE_SKIPPED}件（--profile full で全て登録可能）"
+ok "スキルを登録しました（新規: ${REGISTER_SKILL_INSTALLED}件 / 更新: ${REGISTER_SKILL_UPDATED}件 / 合計: ${TOTAL_SKILLS}件）"
+if [ "$REGISTER_SKILL_PROFILE_SKIPPED" -gt 0 ]; then
+    info "プロファイル外スキル: ${REGISTER_SKILL_PROFILE_SKIPPED}件（--profile full で全て登録可能）"
 fi
 
 echo ""
@@ -327,31 +293,10 @@ echo ""
 
 TARGET_AGENTS="$HOME/.claude/agents"
 SOURCE_AGENTS="$REPO_DIR/.claude/agent-source"
-mkdir -p "$TARGET_AGENTS"
 
-AGENT_INSTALLED=0; AGENT_UPDATED=0; AGENT_SKIPPED=0
-
-if [ -d "$SOURCE_AGENTS" ]; then
-    for agent_file in "$SOURCE_AGENTS"/*.md; do
-        agent_name=$(basename "$agent_file")
-        [[ "$agent_name" == "CLAUDE.md" ]] && continue
-        target="$TARGET_AGENTS/$agent_name"
-        # Replace symlinks with real copies to avoid double-loading in project directories
-        if [ -L "$target" ]; then rm -f "$target"; fi
-        if [ ! -f "$target" ]; then
-            cp "$agent_file" "$target"
-            ((AGENT_INSTALLED++)) || true
-        elif ! diff -q "$agent_file" "$target" > /dev/null 2>&1; then
-            cp "$agent_file" "$target"
-            ((AGENT_UPDATED++)) || true
-        else
-            ((AGENT_SKIPPED++)) || true
-        fi
-    done
-fi
-
+register_agents "$SOURCE_AGENTS" "$TARGET_AGENTS"
 TOTAL_AGENTS=$(ls "$TARGET_AGENTS"/*.md 2>/dev/null | wc -l | tr -d ' ')
-ok "エージェントを登録しました（新規: ${AGENT_INSTALLED}件 / 更新: ${AGENT_UPDATED}件 / 合計: ${TOTAL_AGENTS}件）"
+ok "エージェントを登録しました（新規: ${REGISTER_AGENT_INSTALLED}件 / 更新: ${REGISTER_AGENT_UPDATED}件 / 合計: ${TOTAL_AGENTS}件）"
 
 # ─────────────────────────────────────────
 # Step 4: 設定ファイルの作成
