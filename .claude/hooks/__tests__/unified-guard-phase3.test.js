@@ -11,7 +11,6 @@
  */
 
 const fs = require('fs');
-const path = require('path');
 
 // Test framework
 class TestSuite {
@@ -66,7 +65,8 @@ function assertDeepEqual(actual, expected, message) {
 // Mock implementation for deviation-approval-guard
 function createMockDeviationGuard() {
   return {
-    evaluateDeviation: async (toolName, toolInput, state, cwd) => {
+    // eslint-disable-next-line no-unused-vars
+    evaluateDeviation: async (toolName, toolInput, _state, _cwd) => {
       // Phase 3 implementation will be tested here
       const intentResult = await mockPerformIntentCheck(toolName, toolInput);
 

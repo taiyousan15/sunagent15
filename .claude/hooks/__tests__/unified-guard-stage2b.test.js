@@ -35,13 +35,12 @@ function cleanTmpDir() {
 // ============================================================
 
 describe('ExecutionHistory', () => {
-  let ExecutionHistory, resetExecutionHistory, getExecutionHistory;
+  let ExecutionHistory, resetExecutionHistory;
 
   beforeAll(() => {
     const mod = require('../../../src/intent-parser/storage/execution-history');
     ExecutionHistory = mod.ExecutionHistory;
     resetExecutionHistory = mod.resetExecutionHistory;
-    getExecutionHistory = mod.getExecutionHistory;
   });
 
   beforeEach(() => {

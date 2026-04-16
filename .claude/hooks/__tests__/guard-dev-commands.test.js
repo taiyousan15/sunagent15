@@ -21,7 +21,6 @@ const fs = require('fs');
 const {
   classifyBashCommand,
   performQuickChecks,
-  SAFE_BASH_PATTERNS,
 } = require('../unified-guard.js');
 
 // === 1-3: Bash Intent 分類テスト ===
@@ -120,10 +119,10 @@ describe('isSafeDevelopmentCommand (via deviation-approval-guard)', () => {
 describe('APPROVAL_REQUIRED_PATTERNS 改善', () => {
   // deviation-approval-guard.js のパターンを直接検証
   const deviationGuardPath = path.join(__dirname, '..', 'deviation-approval-guard.js');
-  let deviationGuardSource;
 
   beforeAll(() => {
-    deviationGuardSource = fs.readFileSync(deviationGuardPath, 'utf8');
+    // ファイル存在確認のみ（内容は現状のテストでは未使用）
+    fs.readFileSync(deviationGuardPath, 'utf8');
   });
 
   test('6. pip install flask → パターンマッチ（ブロック対象）', () => {
