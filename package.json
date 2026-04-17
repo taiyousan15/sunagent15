@@ -10,6 +10,7 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "test": "jest --runInBand",
+    "test:release": "jest --no-coverage --forceExit --selectProjects unit regression workflow-phase3 integration",
     "test:silent": "jest --silent --noStackTrace",
     "test:summary": "jest --verbose=false --noStackTrace 2>&1 | tail -20",
     "test:unit": "jest --selectProjects unit",
