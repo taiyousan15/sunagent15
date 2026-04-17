@@ -31,11 +31,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '../../');
 const TEMP_CONTEXT_ROOT = path.join(PROJECT_ROOT, '.claude', 'temp-context');
 const PHASE = process.env.CONTEXT_SNAPSHOT_PHASE || '1';
 
-function getSessionId() {
-  if (process.env.CLAUDE_SESSION_ID) return process.env.CLAUDE_SESSION_ID;
-  const today = new Date().toISOString().split('T')[0];
-  return `${today}_${process.pid}`;
-}
+const { getSessionId } = require('./utils/session-path');
 
 function getSessionDir(sessionId) {
   return path.join(TEMP_CONTEXT_ROOT, sessionId || getSessionId());

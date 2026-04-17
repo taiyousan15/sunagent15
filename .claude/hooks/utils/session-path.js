@@ -13,20 +13,25 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 // 許可される sessionId 文字: 英数字、ピリオド、アンダースコア、ハイフン
 const VALID_SESSION_ID = /^[A-Za-z0-9._-]{1,64}$/;
 
+// プロセス起動時に1度だけランダム接尾辞を生成（PID再利用衝突を防ぐ）
+const PROCESS_RANDOM = crypto.randomBytes(4).toString('hex');
+
 /**
  * sessionIdを取得（フォールバック付き）
- * 優先順位: CLAUDE_SESSION_ID → 日付+PID → "default"
+ * 優先順位: CLAUDE_SESSION_ID → 日付+PID+random → "default"
+ * 2026-04-17: PID再利用衝突対策として8文字randomを追加
  */
 function getSessionId() {
   const envId = process.env.CLAUDE_SESSION_ID;
   if (envId && VALID_SESSION_ID.test(envId)) return envId;
 
   const today = new Date().toISOString().split('T')[0];
-  const fallback = `${today}_${process.pid}`;
+  const fallback = `${today}_${process.pid}_${PROCESS_RANDOM}`;
   if (VALID_SESSION_ID.test(fallback)) return fallback;
 
   return 'default';

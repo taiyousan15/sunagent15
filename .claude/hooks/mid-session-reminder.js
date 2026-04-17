@@ -26,11 +26,7 @@ const COUNTER_DIR = path.join(PROJECT_ROOT, '.claude', 'checkpoints');
 const PHASE = process.env.MID_SESSION_REMINDER_PHASE || '1';
 const INTERVAL = parseInt(process.env.MID_SESSION_REMINDER_INTERVAL || '5', 10);
 
-function getSessionId() {
-  if (process.env.CLAUDE_SESSION_ID) return process.env.CLAUDE_SESSION_ID;
-  const today = new Date().toISOString().split('T')[0];
-  return `${today}_${process.pid}`;
-}
+const { getSessionId } = require('./utils/session-path');
 
 function getCounterFile(sessionId) {
   return path.join(COUNTER_DIR, `prompt_count_${sessionId}.json`);

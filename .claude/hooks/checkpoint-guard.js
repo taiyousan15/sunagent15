@@ -57,12 +57,8 @@ const SKIP_LOG = path.join(PROJECT_ROOT, '.claude', 'hooks', 'data', 'checkpoint
 const PHASE = process.env.CHECKPOINT_GUARD_PHASE || '1';
 const TTL_MS = 8 * 60 * 60 * 1000; // 8時間
 
-// === セッションID取得（フォールバック付き） ===
-function getSessionId() {
-  if (process.env.CLAUDE_SESSION_ID) return process.env.CLAUDE_SESSION_ID;
-  const today = new Date().toISOString().split('T')[0];
-  return `${today}_${process.pid}`;
-}
+// === セッションID取得（session-path.js に統一） ===
+const { getSessionId } = require('./utils/session-path');
 
 // === ホワイトリスト: これらのファイルへの書き込みは常に許可 ===
 const ALWAYS_ALLOW_WRITE_PATTERNS = [
