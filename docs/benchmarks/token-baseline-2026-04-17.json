@@ -1,0 +1,105 @@
+{
+  "generatedAt": "2026-04-17T04:51:01.336Z",
+  "repo": "taisun_agent",
+  "method": "char-based estimate (1 token ≈ 2.8 chars, mixed ja/en)",
+  "summary": {
+    "totalSkillTokens": 165649,
+    "totalAgentTokens": 862918,
+    "totalHookBytes": 462715,
+    "contextChainTokens": 2661,
+    "top10LargestSkills": [
+      {
+        "path": ".claude/skills/world-research/SKILL.md",
+        "tokens": 32610
+      },
+      {
+        "path": ".claude/skills/agent-browser/SKILL.md",
+        "tokens": 10987
+      },
+      {
+        "path": ".claude/skills/research-system/SKILL.md",
+        "tokens": 6484
+      },
+      {
+        "path": ".claude/skills/url-all/SKILL.md",
+        "tokens": 6297
+      },
+      {
+        "path": ".claude/skills/shorts-create/SKILL.md",
+        "tokens": 5455
+      },
+      {
+        "path": ".claude/skills/sdd-tasks/SKILL.md",
+        "tokens": 4257
+      },
+      {
+        "path": ".claude/skills/sdd-full/SKILL.md",
+        "tokens": 3951
+      },
+      {
+        "path": ".claude/skills/url-deep-analysis/SKILL.md",
+        "tokens": 3918
+      },
+      {
+        "path": ".claude/skills/sdd-threat/SKILL.md",
+        "tokens": 3904
+      },
+      {
+        "path": ".claude/skills/taiyo-style-lp/SKILL.md",
+        "tokens": 3805
+      }
+    ]
+  },
+  "details": {
+    "skills": {
+      "count": 66,
+      "bytes": 710245,
+      "tokens": 165649
+    },
+    "agents": {
+      "count": 95,
+      "bytes": 2520470,
+      "tokens": 862918
+    },
+    "hooks": {
+      "count": 71,
+      "bytes": 462715
+    },
+    "settings": {
+      "exists": true,
+      "path": ".claude/settings.json",
+      "bytes": 10642,
+      "tokens": 3766
+    },
+    "mcpJson": {
+      "exists": true,
+      "path": ".mcp.json",
+      "bytes": 12683,
+      "tokens": 4059
+    },
+    "claudeL1": {
+      "exists": true,
+      "path": ".claude/CLAUDE.md",
+      "bytes": 4178,
+      "tokens": 1079
+    },
+    "claudeL2": {
+      "exists": true,
+      "path": ".claude/references/CLAUDE-L2.md",
+      "bytes": 2437,
+      "tokens": 871
+    },
+    "claudeL3": {
+      "exists": true,
+      "path": ".claude/references/CLAUDE-L3.md",
+      "bytes": 2185,
+      "tokens": 711
+    },
+    "memoryMd": {
+      "exists": true,
+      "path": ".claude/rules/mistakes.md",
+      "bytes": 5283,
+      "tokens": 903
+    }
+  }
+}
