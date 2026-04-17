@@ -250,6 +250,13 @@ else
     warn "一部の確認に問題がありましたが、通常は動作します"
 fi
 
+# 深部検証（symlink dangling、hook 参照、version 整合）
+if [ -f "$REPO_DIR/scripts/verify-installation.js" ]; then
+    echo ""
+    node "$REPO_DIR/scripts/verify-installation.js" "$REPO_DIR" 2>&1 || true
+    # 警告は表示するが update.sh 自体は成功扱いで継続
+fi
+
 # ─────────────────────────────────────────
 # 完了メッセージ
 # ─────────────────────────────────────────

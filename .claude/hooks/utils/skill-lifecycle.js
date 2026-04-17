@@ -9,8 +9,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const { calculateFileHash } = require('./state-core');
-
 // ===== Intent Contract First (Phase 1) =====
 
 const INTENT_CONTRACT_PATH = 'artifacts/intent_contract.yaml';
@@ -236,7 +234,8 @@ function verifyReferenceProvenance(state, cwd) {
  * 新規ファイル作成前に必要な探索/Read/決定があるか検証
  * PreToolUse の Write/Edit 時に呼び出し、証跡が不足していればブロック
  */
-function validateNewFileCreation(state, filePath) {
+// eslint-disable-next-line no-unused-vars
+function validateNewFileCreation(state, _filePath) {
   // EVIDENCE_TYPES を動的にロード（循環参照を避ける）
   const { EVIDENCE_TYPES } = require('./evidence-capture');
 
@@ -472,8 +471,6 @@ function validateWorkflowStart(cwd, strict = true) {
 function parseYamlSimple(content) {
   const lines = content.split('\n');
   const result = {};
-  let currentKey = null;
-  let currentIndent = 0;
 
   for (const line of lines) {
     const trimmed = line.trim();

@@ -1,58 +1,16 @@
----
-round: 2
-perspective: Codex（Opusへの反論・改善提案）
-topic: 問題#6 server.ts God Object + 問題#7 CAPTCHA二重実装
----
+# Round 2: アーキテクチャ — Codex Challenge
 
-# Round 2 — Codex: Opusへの反論
+## Finding 1
+**Verdict**: AGREE
+**Reason**: 「オプションBは短期対処、オプションCが長期正解」という二段階の判断は妥当。install.ps1とinstall.shの乖離がすでに実害（setup-project.ps1とinstall.ps1のずれ）として顕在化している点は重要な根拠。
+**Supplement**: 短期でオプションBを採用する場合、ps1/sh間の差分をCIで検知する差分テストを同時に追加しないと二重メンテナンスリスクが計測不能になる。
 
-## 問題#6 反論: 分割コストとMCPプロトコルの制約
+## Finding 2
+**Verdict**: PARTIAL
+**Reason**: dry-runがデフォルト非技術ユーザーには難解という指摘は正しい。ただし「デフォルトはオプションC+B」とする提案はbackup生成コストをすべてのユーザーに課す点で過剰な可能性がある。
+**Alternative**: デフォルトはオプションB（additive-only）のみとし、--dry-runと--backupは明示的フラグで選択させる。変更内容は人間可読な箇条書き形式でstdoutに出力する。
 
-### 反論点1: MCPは「1サーバー = 1エントリポイント」が前提
-`server.ts` はMCPプロトコル上のアダプター層であり、すべてのツールコールは必ず1つのswitch文を通る設計が正しい。Opusが提案する `handleMemory(name, args)` 委譲パターンでは、ハンドラ内でのエラーが `ToolResult` の型保証なしにバブルアップするリスクがある。現行のインラインは明示的なエラーハンドリングを各ケースで行えるという利点もある。
-
-### 反論点2: 分割の粒度が細かすぎる
-7つのハンドラファイルは過分割の可能性がある。`system.handler.ts` は実質1関数（`systemHealth()`）のラッパーであり、ファイルを作る意味が薄い。真の問題は「コードが読みにくい」ではなく「ハンドラをテストできない」点に絞られる。
-
-### 合意できる点
-- 分割自体は正当。ただし粒度はドメインではなく「テスト境界」で決めるべき
-- `memory_add` 内のconstitutional check（行310-322）は確かに server.ts に置く理由がなく、`memoryAdd()` 内部またはミドルウェア層に移すべき
-
-### 代替案: 最小変更で効果を出す
-フルリファクタリングの前に以下が有効:
-
-```typescript
-// handlers/index.ts — 全ハンドラを1ファイルに集約（分割は後で）
-export async function dispatch(name: string, args: unknown): Promise<ToolResult> {
-  switch (name) {
-    case 'memory_add': return handleMemoryAdd(args);
-    // ...
-    default: return { success: false, error: `Unknown tool: ${name}` };
-  }
-}
-```
-
-`server.ts` の `setRequestHandler` は `dispatch(name, args)` を1行で呼ぶだけにする。これだけで「server.ts はプロトコル層のみ」という境界が確立し、ハンドラのユニットテストが可能になる。ファイル分割は段階的に行える。
-
----
-
-## 問題#7 反論: types.ts への再エクスポートは過剰
-
-### 反論点: CDPとブラウザ層は独立性を保つべきケースもある
-`cdp/types.ts` が `captcha.ts` の実装に依存するようになると、CDPモジュール単体での利用（Playwright非使用環境など）が難しくなる。現在の二重実装は「独立性確保」という意図がある可能性を考慮すべき。
-
-ただし、同名定数が2ファイルに存在してパターンが乖離している現状は明確なバグリスクであり、このまま放置は不可。
-
-### 代替案: 共有定数を第三の場所に置く
-
-```
-browser/
-  captcha-patterns.ts   ← 定数と純粋関数のみ（副作用なし）
-  captcha.ts            ← WebSkillResult を返すガード関数（captcha-patterns に依存）
-  cdp/types.ts          ← CDPの型定義 + captcha-patterns から定数のみimport
-```
-
-これにより:
-- `captcha-patterns.ts` は playwright-core に依存しない（CDPから安全にインポート可能）
-- `captcha.ts` は `WebSkillResult` などブラウザ固有の型を持ち続けられる
-- `cf-turnstile` と `please.*sign.*in` の不一致は1ファイル修正で解消
+## Finding 3
+**Verdict**: AGREE
+**Reason**: 「hookが自己の非アクティブ状態を通知できない」という矛盾の指摘は正確。ファイル不在時にhook自体が実行されない以上、SessionStart hookでの通知は構造的に不可能。
+**Supplement**: ガード系hookは絶対パス参照への変更が必要だが、その変更自体がインストールパスの仮定を固定化するため、インストール先をenv変数（TAISUN_HOME）で抽象化する設計を合わせて導入すべき。

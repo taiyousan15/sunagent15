@@ -7,7 +7,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const os = require('os');
 
 // テスト対象のモジュールをインポート
 const { performIntentCheck, buildUserInputFromContext } = require('../../hooks.disabled.local/unified-guard.js');

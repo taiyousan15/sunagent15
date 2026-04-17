@@ -197,12 +197,79 @@ jobs:
           retention-days: 7
 
   # ============================================
+  # Windows Script Validation
+  # Syntax-checks PowerShell installers and regression-guards against known
+  # portability bugs. Does not run the actual installer (needs TAISUN ecosystem).
+  # ============================================
+  windows-scripts:
+    name: Windows Script Validation
+    runs-on: windows-latest
+    needs: changes
+    if: needs.changes.outputs.code == 'true' || needs.changes.outputs.docs == 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PowerShell version
+        shell: pwsh
+        run: $PSVersionTable
+
+      - name: Syntax check PowerShell scripts
+        shell: pwsh
+        run: |
+          $scripts = @(
+            'scripts/install.ps1',
+            'scripts/setup-project.ps1',
+            'scripts/quick-install.ps1'
+          )
+          $failed = $false
+          foreach ($s in $scripts) {
+            if (-not (Test-Path $s)) { continue }
+            $tokens = $null
+            $errors = $null
+            $null = [System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $s), [ref]$tokens, [ref]$errors
+            )
+            if ($errors -and $errors.Count -gt 0) {
+              Write-Host "FAIL: $s"
+              $errors | ForEach-Object { Write-Host "  $_" }
+              $failed = $true
+            } else {
+              Write-Host "OK: $s"
+            }
+          }
+          if ($failed) { exit 1 }
+
+      - name: Regression guard — setup-project.ps1 reads agent-source
+        shell: pwsh
+        run: |
+          $content = Get-Content -Raw 'scripts/setup-project.ps1'
+          if ($content -notmatch '\.claude\\agent-source') {
+            Write-Error "setup-project.ps1 must reference .claude\agent-source (was .claude\agents, see P0 fix)"
+            exit 1
+          }
+          Write-Host "OK: setup-project.ps1 references .claude\agent-source"
+
+      - name: Regression guard — install.ps1 uses SkillProfile with Profile alias
+        shell: pwsh
+        run: |
+          $content = Get-Content -Raw 'scripts/install.ps1'
+          if ($content -notmatch '\[Alias\("Profile"\)\]') {
+            Write-Error "install.ps1 must keep -Profile as Alias for backward compatibility"
+            exit 1
+          }
+          if ($content -notmatch '\$SkillProfile') {
+            Write-Error "install.ps1 must use `$SkillProfile (not `$Profile, which is an automatic variable)"
+            exit 1
+          }
+          Write-Host "OK: install.ps1 uses \$SkillProfile with [Alias(\"Profile\")]"
+
+  # ============================================
   # Quality Gate Summary
   # ============================================
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
-    needs: [lint, test, security, build]
+    needs: [lint, test, security, build, windows-scripts]
     if: always()
     steps:
       - name: Check all jobs passed
@@ -215,10 +282,12 @@ jobs:
           echo "| Unit Tests | ${{ needs.test.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Security Scan | ${{ needs.security.result == 'success' && '✅ Pass' || '⚠️ Warning' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Build | ${{ needs.build.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Windows Scripts | ${{ needs.windows-scripts.result == 'success' && '✅ Pass' || needs.windows-scripts.result == 'skipped' && '⏭️ Skipped' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
 
           if [[ "${{ needs.lint.result }}" != "success" ]] || \
              [[ "${{ needs.test.result }}" != "success" ]] || \
-             [[ "${{ needs.build.result }}" != "success" ]]; then
+             [[ "${{ needs.build.result }}" != "success" ]] || \
+             [[ "${{ needs.windows-scripts.result }}" != "success" && "${{ needs.windows-scripts.result }}" != "skipped" ]]; then
             echo ""
             echo "::error::Quality gate failed. Please fix the issues above."
             exit 1

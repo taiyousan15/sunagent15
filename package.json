@@ -1,10 +1,11 @@
 {
   "name": "taisun-v2",
-  "version": "2.53.0",
+  "version": "2.53.3",
   "description": "Unified Development System - World-class system development platform with OpenCode/OMO integration and Workflow Guardian",
   "main": "src/index.js",
   "scripts": {
     "setup": "bash scripts/install.sh",
+    "setup:fresh": "bash scripts/install.sh --fresh",
     "update": "bash scripts/update.sh",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
@@ -88,6 +89,7 @@
     "perf:strict": "node scripts/switch-performance-mode.js strict",
     "perf:status": "node scripts/switch-performance-mode.js status",
     "taisun:version": "node scripts/taisun-version.js",
+    "taisun:verify": "node scripts/verify-installation.js",
     "taisun:support": "node scripts/taisun-support.js",
     "taisun:diagnose": "node scripts/taisun-diagnose.js",
     "taisun:diagnose:full": "node scripts/taisun-diagnose.js --full",
