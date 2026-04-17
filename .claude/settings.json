@@ -146,6 +146,16 @@
     ],
     "PreToolUse": [
       {
+        "matcher": "Task|Write|Edit|MultiEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/reasoning-capture.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
+            "timeout": 3
+          }
+        ]
+      },
+      {
         "matcher": "Write|Edit|Bash",
         "hooks": [
           {
