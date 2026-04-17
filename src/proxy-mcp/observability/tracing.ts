@@ -248,9 +248,9 @@ export function setupOtelJaeger(config: {
   serviceName?: string;
 }): boolean {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
     const { NodeSDK } = require('@opentelemetry/sdk-node');
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
     const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-grpc');
 
     const exporter = new OTLPTraceExporter({

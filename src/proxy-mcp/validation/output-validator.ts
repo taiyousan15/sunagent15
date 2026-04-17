@@ -76,7 +76,7 @@ function detectUncertainty(text: string): { score: number; flags: UncertaintyFla
     const lowerPhrase = phrase.toLowerCase();
     let pos = 0;
 
-    while (true) {
+    for (;;) {
       const idx = lowerText.indexOf(lowerPhrase, pos);
       if (idx === -1) break;
 
