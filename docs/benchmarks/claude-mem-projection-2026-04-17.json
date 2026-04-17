@@ -1,0 +1,112 @@
+{
+  "generatedAt": "2026-04-17T04:54:57.074Z",
+  "method": "design-level projection (no installation)",
+  "source": "https://github.com/thedotmack/claude-mem (verified 2026-04-17)",
+  "taisun": {
+    "system": "TAISUN Praetorian 3-Layer",
+    "components": {
+      "praetorian": {
+        "fileCount": 244,
+        "totalBytes": 1754478,
+        "estimatedTokens": 626600
+      },
+      "hooks": [
+        {
+          "path": ".claude/hooks/pre-compact-save.js",
+          "bytes": 5200,
+          "tokens": 1858
+        },
+        {
+          "path": ".claude/hooks/context-snapshot-manager.js",
+          "bytes": 8836,
+          "tokens": 3156
+        },
+        {
+          "path": ".claude/hooks/compact-optimizer.js",
+          "bytes": 7855,
+          "tokens": 2806
+        }
+      ],
+      "tempContext": {
+        "sessionCount": 1
+      }
+    },
+    "sessionInjection": {
+      "tokens": 2364,
+      "method": "static CLAUDE.md chain"
+    }
+  },
+  "claude_mem_projection": {
+    "system": "claude-mem (projected)",
+    "components": {
+      "hooks": 6,
+      "storage": {
+        "type": "SQLite+FTS5+Chroma",
+        "location": "~/.claude-mem/"
+      }
+    },
+    "sessionInjection": {
+      "tokens": 1250,
+      "method": "dynamic semantic-search injection"
+    },
+    "tokenSavingsClaim": "10x (per call, Layer 1 vs Layer 3)",
+    "uninstallable": false,
+    "configLocation": "~/.claude-mem/settings.json (not ~/.claude/settings.json)"
+  },
+  "analysis": {
+    "overlap": [
+      "Both: Stop + SessionEnd hooks for memory persistence",
+      "Both: PostToolUse hook for context tracking",
+      "Both: Session-level context injection"
+    ],
+    "uniqueToTaisun": [
+      "Workflow Fidelity Contract enforcement (hook-based)",
+      "Praetorian full-text index of 245+ past compactions (currently)",
+      "mistakes.md ledger integration",
+      "agent-checkpoint-guard (Agent-specific contract)",
+      "Deep hook ecosystem (62 hooks)"
+    ],
+    "uniqueToClaudeMem": [
+      "Chroma vector semantic search (TAISUN has full-text only)",
+      "3-layer filter-before-fetch protocol",
+      "Standalone settings file (no conflict with main Claude Code)",
+      "npx one-liner install"
+    ],
+    "risks": {
+      "installation": "no documented uninstall command",
+      "overlap_risk": "double memory capture (TAISUN hooks + claude-mem hooks) could double-log",
+      "storage_duplication": "past 245 compactions already in Praetorian, re-indexing into Chroma adds disk+tokens"
+    },
+    "projectedEffect": {
+      "taisun_session_start_tokens": 2364,
+      "claude_mem_session_start_tokens": 1250,
+      "delta": -1114,
+      "perQuery_layer1_tokens": 50,
+      "perQuery_layer3_tokens": 500,
+      "savings_per_query_vs_fulltext": "~90% for Layer 1 preview, 0% for Layer 3 detail",
+      "verdict": "Real additive value = semantic search + Chroma embeddings. Not the \"10x\" headline."
+    }
+  },
+  "recommendation": {
+    "priority": "P2 (not P1)",
+    "reasoning": [
+      "1. TAISUN already has 3-layer context backup (pre-compact + temp-context + Praetorian)",
+      "2. The \"10x\" claim compares Layer 1 (preview) vs Layer 3 (detail), not total savings",
+      "3. TAISUN has no semantic search — that is the real gap worth filling",
+      "4. claude-mem has no documented uninstall — installing it is a partial one-way commitment",
+      "5. Double-hook risk: both systems hooking Stop/PostToolUse could corrupt state"
+    ],
+    "alternative": [
+      "A. Add semantic search layer to Praetorian (uses TAISUN existing infra, full control)",
+      "B. Implement claude-mem patterns in TAISUN hooks (inspired by, not installed)",
+      "C. Install claude-mem in isolation (separate Claude Code profile) for benchmark only"
+    ],
+    "recommended_path": "Alternative A: add semantic search to Praetorian as opt-in feature. Avoid installing claude-mem until reversibility is documented.",
+    "measurement_plan": [
+      "Phase 1 (this script): design comparison — DONE",
+      "Phase 2: implement semantic search prototype on Praetorian",
+      "Phase 3: re-run token-baseline.js + query-accuracy benchmark",
+      "Phase 4: if 20%+ improvement measured, merge prototype"
+    ]
+  }
+}
