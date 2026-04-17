@@ -42,7 +42,7 @@
       "disabled": true,
       "defer_loading": true,
       "search_keywords": ["LINE", "ライン", "メッセージ送信", "プッシュ通知"],
-      "description": "LINE Bot MCP - メッセージ送信・リッチメニュー管理",
+      "description": "LINE Bot MCP - メッセージ送信・リッチメニュー管理（未実装: mcp-servers/line-bot-mcp-server/dist 欠損、disabled 維持）",
       "category": "messaging"
     },
 

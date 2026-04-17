@@ -10,6 +10,12 @@ model: sonnet
 
 # research-system — TAISUN v2 ディープリサーチパイプライン v2.4
 
+## 🚨 絶対厳守（全工程で適用）
+
+**【NO SHORTCUT】** 省略・圧縮・捏造・自己採点すべて禁止
+**【EVIDENCE FIRST】** 引用は実アクセス確認した URL のみ、数値は生データを raw/ に保存
+**【DECLARE & COMPLY】** 各 STEP 完了時にチェックリスト自己申告（root の research/runs/{date}/ に証跡フォルダ必須: raw/ agents/ visited/ scores/ qa/）
+
 ## 使い方
 
 ```
