@@ -98,6 +98,18 @@ cd ~/taisun_agent && bash scripts/update.sh
 bash ~/taisun_agent/scripts/setup-project.sh ~/my-project
 ```
 
+**💰 APIコスト削減（推奨・Claude Code v2.1.108+）**
+
+長時間セッションのコストを大幅削減する1時間プロンプトキャッシュを有効化:
+
+```bash
+# ~/.zshrc または ~/.bashrc に追加
+export ENABLE_PROMPT_CACHING_1H=1
+```
+
+> 対応: API key / Bedrock / Vertex / Foundry ユーザー（Pro プラン契約者は不要）
+> 効果: 連続セッションでトークンコストを最大 90% 削減（Anthropic 公式機能）
+
 ---
 
 ### 🪟 Windows
