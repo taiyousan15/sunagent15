@@ -370,7 +370,18 @@
         ]
       }
     ],
-    "Stop": [],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "H=\"${TAISUN_HOME:-.}/.claude/hooks/contract-audit.js\"; [ ! -f \"$H\" ] && exit 0; node \"$H\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "StopFailure": [
       {
         "matcher": "",
