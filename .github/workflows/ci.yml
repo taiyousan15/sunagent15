@@ -132,6 +132,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # gitleaks needs parent commit to scan diff (commit_sha^..commit_sha).
+          # Default depth=1 fails with "unknown revision" on PR commits.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -151,7 +155,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.29.0
+        uses: aquasecurity/trivy-action@0.35.0
         with:
           scan-type: 'fs'
           scan-ref: '.'
