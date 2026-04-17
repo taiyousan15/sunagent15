@@ -19,6 +19,25 @@
  *   - embedding は並列インデックスとして共存
  *   - 検索時は semantic + full-text の union or rerank
  *   - 完全にローカル（外部 API 呼び出しなし）
+ *
+ * ## DECISION LOG
+ *   - 2026-04-17: @xenova/transformers 検証 → npm audit で 4 critical
+ *     (protobufjs Arbitrary code execution, 依存経路: onnxruntime-web → onnx-proto)
+ *     → claude-mem 却下 (Critical 4件) と同基準で配布性優先で却下
+ *     → npm uninstall で 0 vulnerabilities 復旧、test 1107/1107 維持を実測
+ *   - 2026-04-17: 15 ラウンド debate-review (Opus 4.7 × Codex Pro) で F'案合意
+ *     合意度 95.6% (45 findings: AGREE 27 / PARTIAL 16 / DISAGREE 2)
+ *     → Phase 1: 本ファイルへの DECISION LOG 追加 + PR #307/#309 マージ
+ *     → Phase 2: PHASE3 #21 拡張 — search 精度ベンチ (Recall@5, p95 latency)
+ *     → Phase 3: B (Ollama nomic-embed-text opt-in) 実装
+ *                 - lexical fallback 必須 (missing-embedding => 既存単語索引)
+ *                 - topK 上限ガード (max 20)
+ *                 - isAvailable() を HTTP /api/tags プローブ化
+ *     → Phase 4: fastembed-js 依存監査再判定 or B 本採用
+ *   - 配布性ゲート: Docker 依存追加禁止 / install.sh CLI 引数変更禁止 /
+ *                   npm audit critical=0 / Ollama は opt-in で必須化しない
+ *   - 詳細: debate-audit/PRIORITY1_FINAL_VERDICT.md
+ *           debate-priority1/{opus_15rounds,codex_15rounds,agreement_summary}.md
  */
 
 'use strict';
@@ -106,12 +125,22 @@ if (require.main === module) {
     praetorianDir: PRAETORIAN_DIR,
     embedDir: EMBED_DIR,
     compactionCount: listCompactions().length,
-    instructions: [
-      '1. npm install @xenova/transformers --save-dev',
-      '2. Implement embed() using pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2")',
-      '3. Implement cosineSimilarity() and search()',
-      '4. Run: node scripts/praetorian/build-embeddings.js (TODO)',
-      '5. Integrate into hooks via semantic-search.js require',
+    decision: '2026-04-17: F\'案合意 (Opus×Codex 95.6%) — Phase 2 (ベンチ) → Phase 3 (Ollama opt-in) 順で進める',
+    plannedNext: [
+      'Phase 2: scripts/benchmark/search-accuracy-baseline.js — Recall@5 / p95 latency',
+      'Phase 2: docs/benchmarks/search-kpi-gate.md — KPI 閾値定義',
+      'Phase 3: Ollama nomic-embed-text 経由で embed() 実装 (HTTP, lexical fallback)',
+      'Phase 3: scripts/praetorian/build-embeddings.js 新規 — 243 .toon を Float32 vec へ',
+      'Phase 4: fastembed-js 依存監査再判定 or B 本採用',
+    ],
+    rejected: {
+      '@xenova/transformers': '2026-04-17: protobufjs critical 4件 (Arbitrary code execution)',
+    },
+    references: [
+      'debate-audit/PRIORITY1_FINAL_VERDICT.md',
+      'debate-priority1/opus_15rounds.md',
+      'debate-priority1/codex_15rounds.md',
+      'debate-priority1/agreement_summary.md',
     ],
   };
   console.log(JSON.stringify(status, null, 2));
