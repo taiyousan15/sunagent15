@@ -253,7 +253,7 @@
       "env": {
         "OBSIDIAN_API_KEY": "${OBSIDIAN_API_KEY}",
         "OBSIDIAN_API_PORT": "27124",
-        "OBSIDIAN_VAULT_PATH": "~/Documents/ObsidianVaults/LP-Knowledge-System"
+        "OBSIDIAN_VAULT_PATH": "<YOUR_OBSIDIAN_VAULT_PATH>"
       },
       "disabled": false,
       "defer_loading": true,

@@ -51,9 +51,9 @@ function main() {
         process.exit(0);
       }
 
-      const projectRoot = process.env.HOME
-        ? `${process.env.HOME}/taisun_agent`
-        : process.cwd();
+      // Portability: resolve project root from this hook's location
+      // (.claude/hooks/auto-adr.js -> 2 levels up = project root)
+      const projectRoot = path.resolve(__dirname, '../..');
       const decisionsDir = path.join(projectRoot, '.claude', 'decisions');
       const nextNum = nextAdrNumber(decisionsDir);
       const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');

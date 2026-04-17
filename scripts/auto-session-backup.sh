@@ -3,7 +3,9 @@
 set -o pipefail
 
 # ============ 設定 ============
-PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Desktop/開発2026/taisun_agent2026}"
+# Portability: env var override with fallback to this script's project root
+# Override: export PROJECTS_DIR=/your/path to use a custom location
+PROJECTS_DIR="${PROJECTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}"
 BACKUP_DIR="${BACKUP_DIR:-$PROJECTS_DIR/.backups}"
 STATE_DIR="${STATE_DIR:-$PROJECTS_DIR/.workflow_state_backups}"
 LOG_DIR="${LOG_DIR:-$PROJECTS_DIR/.backup_logs}"

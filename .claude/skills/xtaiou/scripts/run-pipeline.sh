@@ -7,7 +7,9 @@
 #   ./run-pipeline.sh --account 3  # マルチアカウント
 set -euo pipefail
 
-PROJECT_DIR="$HOME/Desktop/開発2026/X記事投稿システム"
+# Portability: env var override with fallback to script's project root
+# Override: export XTAIOU_PROJECT_DIR=/your/path to use a custom location
+PROJECT_DIR="${XTAIOU_PROJECT_DIR:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
 DRY_RUN=""
 STAGE=""
 ACCOUNT=""

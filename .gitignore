@@ -134,6 +134,7 @@ logs/approvals/
 # 別プロジェクト（taisun_agentに不要）
 marketing-hub/
 mario-game/
+udemy-downloader/
 
 # Runtime-generated (do not track)
 .agent-trace/

@@ -74,9 +74,9 @@ case "$PRESET" in
     "youtube": {
       "type": "stdio",
       "command": "node",
-      "args": ["~/mcp-youtube/dist/index.js"],
-      "disabled": false,
-      "description": "YouTube downloader",
+      "args": ["<YOUR_MCP_YOUTUBE_DIST_PATH>"],
+      "disabled": true,
+      "description": "YouTube downloader (set absolute path and enable to use)",
       "category": "media"
     },
     "context7": {

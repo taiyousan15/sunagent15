@@ -13,9 +13,9 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const PROJECT_ROOT = process.env.HOME
-  ? `${process.env.HOME}/taisun_agent`
-  : process.cwd();
+// Portability: resolve project root from this hook's location
+// (.claude/hooks/auto-changelog.js -> 2 levels up = project root)
+const PROJECT_ROOT = path.resolve(__dirname, '../..');
 const CHANGELOG_PATH = path.join(PROJECT_ROOT, 'CHANGELOG.md');
 
 // eslint-disable-next-line no-unused-vars

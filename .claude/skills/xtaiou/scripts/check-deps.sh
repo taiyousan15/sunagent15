@@ -7,7 +7,9 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-PROJECT_DIR="$HOME/Desktop/開発2026/X記事投稿システム"
+# Portability: env var override with fallback to script's project root
+# Override: export XTAIOU_PROJECT_DIR=/your/path to use a custom location
+PROJECT_DIR="${XTAIOU_PROJECT_DIR:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
 ERRORS=0
 
 check_command() {
