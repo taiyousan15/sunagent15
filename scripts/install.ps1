@@ -72,6 +72,19 @@ function Write-Info { param($msg) Write-Host "  ->  $msg" -ForegroundColor Cyan 
 function Write-Fail { param($msg) Write-Host "  NG  $msg" -ForegroundColor Red }
 function Write-Step { param($msg) Write-Host ""; Write-Host "━━━ $msg ━━━" -ForegroundColor White }
 
+# Opt-in telemetry helper (no-op unless user opted in via manage.js or env var)
+$script:InstallStartEpoch = [int]([DateTimeOffset]::Now.ToUnixTimeSeconds())
+function Emit-Telemetry {
+    param([string]$EventType, [hashtable]$Fields = @{})
+    $emitter = Join-Path $REPO_DIR 'scripts\telemetry\emit.js'
+    if (-not (Test-Path $emitter)) { return }
+    $args = @($emitter, $EventType)
+    foreach ($k in $Fields.Keys) {
+        $args += "--$k=$($Fields[$k])"
+    }
+    try { & node @args *>$null } catch { }
+}
+
 # ─────────────────────────────────────────
 # アップデートモード（-Update フラグ時）
 # ─────────────────────────────────────────
@@ -248,6 +261,9 @@ if (Get-Command ollama -ErrorAction SilentlyContinue) {
     Write-Info "対象スキル: sdd-full / sdd-design / sdd-req100 / lp-full-generation / lp-local-generator"
     Write-Info "インストール: https://ollama.com/download"
 }
+
+# Opt-in telemetry: install_started
+Emit-Telemetry 'install_started' @{ profile = $SkillProfile }
 
 # ─────────────────────────────────────────
 # ステップ 2: ファイルのインストール
@@ -596,6 +612,16 @@ if ($SKILL_COUNT -ge $EXPECTED_SKILLS) {
 
 $AGENT_COUNT = (Get-ChildItem $TARGET_AGENTS -Filter "*.md" -ErrorAction SilentlyContinue).Count
 Write-Ok "エージェント: $AGENT_COUNT 個が利用可能です"
+
+# ─────────────────────────────────────────
+# Opt-in telemetry: install_completed
+# ─────────────────────────────────────────
+$installDurationMs = ([int]([DateTimeOffset]::Now.ToUnixTimeSeconds()) - $script:InstallStartEpoch) * 1000
+Emit-Telemetry 'install_completed' @{
+    profile     = $SkillProfile
+    duration_ms = $installDurationMs
+    skill_count = $SKILL_COUNT
+}
 
 # ─────────────────────────────────────────
 # 完了メッセージ

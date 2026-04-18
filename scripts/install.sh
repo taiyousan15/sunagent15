@@ -128,8 +128,20 @@ done
 ok()   { echo "  ✅ $1"; }
 warn() { echo "  ⚠️  $1"; }
 info() { echo "  ℹ️  $1"; }
-fail() { echo ""; echo "  ❌ エラー: $1"; echo "     → $2"; echo ""; exit 1; }
+fail() {
+    echo ""; echo "  ❌ エラー: $1"; echo "     → $2"; echo "";
+    # Opt-in telemetry: emit failure event before exit (always non-blocking)
+    if [ -f "$REPO_DIR/scripts/telemetry/emit.js" ]; then
+        node "$REPO_DIR/scripts/telemetry/emit.js" install_failed \
+            --error_category="${TAISUN_ERROR_CATEGORY:-unknown}" \
+            --profile="$SKILL_PROFILE" >/dev/null 2>&1 || true
+    fi
+    exit 1
+}
 step() { echo ""; echo "━━━ $1 ━━━"; }
+
+# Opt-in telemetry timing
+INSTALL_START_EPOCH=$(date +%s)
 
 # ─────────────────────────────────────────
 # ヘッダー
@@ -226,6 +238,12 @@ fi
 
 echo ""
 ok "ソフトウェアの確認が完了しました"
+
+# Opt-in telemetry: install_started (no-op unless user opted in)
+if [ -f "$REPO_DIR/scripts/telemetry/emit.js" ]; then
+    node "$REPO_DIR/scripts/telemetry/emit.js" install_started \
+        --profile="$SKILL_PROFILE" >/dev/null 2>&1 || true
+fi
 
 # ─────────────────────────────────────────
 # Step 2: ファイルのダウンロード・準備
@@ -545,6 +563,17 @@ elif [ -f "$REPO_DIR/scripts/verify-installation.js" ]; then
             "インストール検証に失敗しました" \
             "ログを確認して再実行するか、--skip-verify で検証を回避できます（推奨されません）"
     fi
+fi
+
+# ─────────────────────────────────────────
+# Opt-in telemetry: install_completed
+# ─────────────────────────────────────────
+if [ -f "$REPO_DIR/scripts/telemetry/emit.js" ]; then
+    INSTALL_DURATION_MS=$(( ($(date +%s) - INSTALL_START_EPOCH) * 1000 ))
+    node "$REPO_DIR/scripts/telemetry/emit.js" install_completed \
+        --profile="$SKILL_PROFILE" \
+        --duration_ms="$INSTALL_DURATION_MS" \
+        --skill_count="${SKILL_COUNT:-0}" >/dev/null 2>&1 || true
 fi
 
 # ─────────────────────────────────────────
