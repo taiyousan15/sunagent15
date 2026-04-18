@@ -48,6 +48,7 @@ jobs:
                --glob '!.git/**' \
                --glob '!node_modules/**' \
                --glob '!.github/workflows/portability-guard.yml' \
+               --glob '!.claude/temp-context/**' \
                --hidden \
                'matsumototoshihiko|/Desktop/開発2026'; then
             echo ""
