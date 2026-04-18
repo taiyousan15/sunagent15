@@ -6,6 +6,7 @@
   "scripts": {
     "setup": "bash scripts/install.sh",
     "setup:fresh": "bash scripts/install.sh --fresh",
+    "uninstall:taisun": "bash scripts/uninstall.sh",
     "update": "bash scripts/update.sh",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
