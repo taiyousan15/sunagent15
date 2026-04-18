@@ -4,9 +4,18 @@
 #   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; irm https://raw.githubusercontent.com/san15/taisun_agent/main/scripts/quick-install.ps1 | iex
 #
 # 動作:
-#   1. C:\taisun_agent に git clone（既存なら git pull）
+#   1. %USERPROFILE%\taisun_agent に git clone（既存なら git pull）
+#      インストール先を変更したい場合は -InstallDir を指定:
+#        & { iwr https://... | iex } -InstallDir 'D:\Projects\taisun_agent'
 #   2. install.ps1 を自動実行
 #   3. 完了後、Claude Code で開くだけ
+#
+# 最低要件: PowerShell 5.0+ (Windows 7 の PS 2.0/4.0 では
+#           Join-Path デフォルト式が動作保証外)
+
+param(
+    [string]$InstallDir = (Join-Path $env:USERPROFILE 'taisun_agent')
+)
 
 # UTF-8 出力対応
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
@@ -19,7 +28,7 @@ $ErrorActionPreference = "Continue"
 # ─────────────────────────────────────────
 # 定数
 # ─────────────────────────────────────────
-$INSTALL_DIR = "C:\taisun_agent"
+$INSTALL_DIR = $InstallDir
 $REPO_URL = "https://github.com/san15/taisun_agent.git"
 
 # ─────────────────────────────────────────
@@ -204,12 +213,12 @@ Write-Host ""
 Write-Host "  次のステップ:" -ForegroundColor White
 Write-Host ""
 Write-Host "  1. PowerShell で以下を実行:" -ForegroundColor White
-Write-Host "     cd C:\taisun_agent" -ForegroundColor Cyan
+Write-Host "     cd $INSTALL_DIR" -ForegroundColor Cyan
 Write-Host "     claude" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "  2. Claude Code が開いたら「使い方を教えて」と話しかける"
 Write-Host ""
 Write-Host "  アップデートするには:"
-Write-Host "     cd C:\taisun_agent" -ForegroundColor Gray
+Write-Host "     cd $INSTALL_DIR" -ForegroundColor Gray
 Write-Host "     .\scripts\install.ps1 -Update" -ForegroundColor Gray
 Write-Host ""
