@@ -13,6 +13,21 @@
 # set -e: 致命的失敗で即停止（失敗許容操作には || true を付与）
 set -e
 
+# Persist installer output to a timestamped log for bug reports.
+# Disabled in CI (CI=true env var) where GitHub Actions captures logs.
+# Disabled when TAISUN_NO_LOG_FILE is set.
+# Skipped silently if /tmp is not writable.
+if [ "${CI:-false}" != "true" ] && [ -z "${TAISUN_NO_LOG_FILE:-}" ]; then
+    if touch /tmp/.taisun-install-logtest 2>/dev/null; then
+        rm -f /tmp/.taisun-install-logtest
+        INSTALL_LOG="/tmp/taisun-install-$(date +%s).log"
+        # Tee stdout+stderr to log; preserve original tty for live display
+        exec > >(tee -a "$INSTALL_LOG") 2>&1
+        echo ""
+        echo "  ℹ️  インストールログ: $INSTALL_LOG"
+    fi
+fi
+
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 # ─────────────────────────────────────────
@@ -261,10 +276,16 @@ else
 fi
 
 # 追加MCPサーバーのビルド
+# Prefer npm ci for reproducible install when lockfile present, fall back to npm install otherwise.
 for mcp_dir in "mcp-servers/voice-ai-mcp-server" "mcp-servers/ai-sdr-mcp-server" "mcp-servers/line-bot-mcp-server"; do
     if [ -f "$REPO_DIR/$mcp_dir/package.json" ]; then
         mcp_name=$(basename "$mcp_dir")
-        (cd "$REPO_DIR/$mcp_dir" && npm install --silent && npm run build 2>/dev/null) && \
+        if [ -f "$REPO_DIR/$mcp_dir/package-lock.json" ]; then
+            mcp_install="npm ci --silent --prefer-offline --no-audit"
+        else
+            mcp_install="npm install --silent --prefer-offline --no-audit"
+        fi
+        (cd "$REPO_DIR/$mcp_dir" && $mcp_install && npm run build --if-present 2>/dev/null) && \
             ok "${mcp_name} の準備が完了しました" || \
             info "${mcp_name} の準備をスキップしました（APIキー設定後に使えます）"
     fi
@@ -573,4 +594,5 @@ echo ""
 echo "  ❓ 困ったときは："
 echo "     npm run taisun:diagnose  → 問題の診断"
 echo "     チャットで「使い方を教えて」と話しかける"
+[ -n "${INSTALL_LOG:-}" ] && echo "  📝 ログファイル: $INSTALL_LOG"
 echo ""

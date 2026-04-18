@@ -135,12 +135,17 @@ step "ステップ 2/4：システムを更新しています（少し時間が�
 
 echo ""
 echo "  📦 必要なファイルを更新しています..."
-npm install --silent 2>/dev/null || npm install
+# Prefer npm ci for reproducible install when lockfile present.
+if [ -f "$REPO_DIR/package-lock.json" ]; then
+    npm ci --silent --prefer-offline --no-audit 2>/dev/null || npm install
+else
+    npm install --silent 2>/dev/null || npm install
+fi
 ok "ファイルの更新が完了しました"
 
 echo ""
 echo "  🔨 システムを再構築しています..."
-if npm run build 2>/dev/null; then
+if npm run build --if-present 2>/dev/null; then
     ok "システムの再構築が完了しました"
 else
     warn "一部の再構築に問題がありましたが、続行します"
@@ -149,7 +154,12 @@ fi
 for mcp_dir in "mcp-servers/voice-ai-mcp-server" "mcp-servers/ai-sdr-mcp-server" "mcp-servers/line-bot-mcp-server"; do
     if [ -f "$REPO_DIR/$mcp_dir/package.json" ]; then
         mcp_name=$(basename "$mcp_dir")
-        (cd "$REPO_DIR/$mcp_dir" && npm install --silent && npm run build 2>/dev/null) && \
+        if [ -f "$REPO_DIR/$mcp_dir/package-lock.json" ]; then
+            mcp_install="npm ci --silent --prefer-offline --no-audit"
+        else
+            mcp_install="npm install --silent --prefer-offline --no-audit"
+        fi
+        (cd "$REPO_DIR/$mcp_dir" && $mcp_install && npm run build --if-present 2>/dev/null) && \
             ok "${mcp_name} を更新しました" || \
             info "${mcp_name} の更新をスキップしました"
     fi

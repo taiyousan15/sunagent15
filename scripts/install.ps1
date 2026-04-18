@@ -298,13 +298,19 @@ try {
     }
 }
 
+# Prefer npm ci for reproducible install when lockfile present, fall back to npm install otherwise.
 foreach ($server in @("voice-ai-mcp-server", "ai-sdr-mcp-server", "line-bot-mcp-server")) {
     $serverPath = "$REPO_DIR\mcp-servers\$server\package.json"
     if (Test-Path $serverPath) {
         try {
             Push-Location "$REPO_DIR\mcp-servers\$server"
-            npm install --silent 2>$null
-            npm run build 2>$null
+            $lockPath = "$REPO_DIR\mcp-servers\$server\package-lock.json"
+            if (Test-Path $lockPath) {
+                npm ci --silent --prefer-offline --no-audit 2>$null
+            } else {
+                npm install --silent --prefer-offline --no-audit 2>$null
+            }
+            npm run build --if-present 2>$null
             Write-Ok "$server を構築しました"
         } catch {
             Write-Info "$server の構築をスキップしました"

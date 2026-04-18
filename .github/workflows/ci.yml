@@ -45,6 +45,22 @@ jobs:
               - '.claude/**'
 
   # ============================================
+  # README Skill Count Sync
+  # Fails when README count claims drift from actual skills/profiles.
+  # ============================================
+  readme-skill-count-sync:
+    name: README Skill Count Sync
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.code == 'true' || needs.changes.outputs.docs == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: node scripts/sync-readme-counts.js --check
+
+  # ============================================
   # Lint & Type Check
   # ============================================
   lint:
@@ -371,7 +387,7 @@ jobs:
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
-    needs: [lint, test, security, build, windows-scripts, install-smoke, installer-parity]
+    needs: [lint, test, security, build, windows-scripts, install-smoke, installer-parity, readme-skill-count-sync]
     if: always()
     steps:
       - name: Check all jobs passed
@@ -386,12 +402,14 @@ jobs:
           echo "| Build | ${{ needs.build.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Windows Scripts | ${{ needs.windows-scripts.result == 'success' && '✅ Pass' || needs.windows-scripts.result == 'skipped' && '⏭️ Skipped' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Install Smoke (3 OS) | ${{ needs.install-smoke.result == 'success' && '✅ Pass' || needs.install-smoke.result == 'skipped' && '⏭️ Skipped' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| README Skill Count Sync | ${{ needs.readme-skill-count-sync.result == 'success' && '✅ Pass' || needs.readme-skill-count-sync.result == 'skipped' && '⏭️ Skipped' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
 
           if [[ "${{ needs.lint.result }}" != "success" ]] || \
              [[ "${{ needs.test.result }}" != "success" ]] || \
              [[ "${{ needs.build.result }}" != "success" ]] || \
              [[ "${{ needs.windows-scripts.result }}" != "success" && "${{ needs.windows-scripts.result }}" != "skipped" ]] || \
-             [[ "${{ needs.install-smoke.result }}" != "success" && "${{ needs.install-smoke.result }}" != "skipped" ]]; then
+             [[ "${{ needs.install-smoke.result }}" != "success" && "${{ needs.install-smoke.result }}" != "skipped" ]] || \
+             [[ "${{ needs.readme-skill-count-sync.result }}" != "success" && "${{ needs.readme-skill-count-sync.result }}" != "skipped" ]]; then
             echo ""
             echo "::error::Quality gate failed. Please fix the issues above."
             exit 1
