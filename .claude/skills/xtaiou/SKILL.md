@@ -46,7 +46,7 @@ VRAM不足時のフォールバック:
 
 1. **Ollama起動中**: `ollama serve` が実行されていること
 2. **モデルダウンロード済み**: `ollama pull qwen2.5:72b` + `ollama pull qwen3:8b`
-3. **プロジェクトディレクトリ**: `~/Desktop/開発2026/X記事投稿システム/`
+3. **プロジェクトディレクトリ**: `$XTAIOU_PROJECT_DIR` (例: `~/path/to/X記事投稿システム/`)
 4. **環境変数** (`.env`):
    - `PEXELS_API_KEY` - 画像取得用 (Stage 3)
    - `TWITTER_COOKIES` - シングルアカウント投稿用 (Stage 5)
@@ -67,32 +67,32 @@ bash ./scripts/check-deps.sh
 #### 1. ドライラン (テスト用 - APIもX投稿もなし)
 
 ```bash
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:dry
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:dry
 ```
 
 #### 2. 本番実行 (全ステージ)
 
 ```bash
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline
 ```
 
 #### 3. ステージ指定実行
 
 ```bash
 # Stage 1のみ: リサーチ
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:stage -- --stage 1
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:stage -- --stage 1
 
 # Stage 2のみ: 記事生成 (ドライラン)
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:stage -- --stage 2 --dry-run
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:stage -- --stage 2 --dry-run
 
 # Stage 2のみ: 記事生成 (本番)
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:stage -- --stage 2
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:stage -- --stage 2
 ```
 
 #### 4. マルチアカウント投稿
 
 ```bash
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline -- --account 3
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline -- --account 3
 ```
 
 ### 半自動モード (推奨)
@@ -103,11 +103,11 @@ cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline -- --accou
 
 ```bash
 # 記事生成まで
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:stage -- --stage 1
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:stage -- --stage 2
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:stage -- --stage 1
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:stage -- --stage 2
 
 # 確認後に投稿
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:stage -- --stage 5
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:stage -- --stage 5
 ```
 
 ## テンプレート自動選択 (10パターン)

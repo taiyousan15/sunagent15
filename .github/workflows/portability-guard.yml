@@ -1,0 +1,72 @@
+name: Portability Guard
+
+# Detect hardcoded user-specific absolute paths that would break the project
+# for other users (different OS / username / install location).
+#
+# Background: 2026-04-17/18 Opus×Codex Pro 5-round audit found 12 such paths
+# (Critical 4, High 8) including debate/write_*.py and xtaiou scripts that
+# referenced /Users/matsumototoshihiko or $HOME/Desktop/開発2026.
+# This workflow prevents regression.
+#
+# Reference: debate-audit/PORTABILITY_ABSOLUTE_PATH_AUDIT.md
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  detect-hardcoded-paths:
+    name: Detect hardcoded user-specific absolute paths
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run portability guard (rg detection)
+        run: |
+          # Detect user-specific patterns that break portability:
+          # - Hardcoded username (matsumototoshihiko)
+          # - Personal project directories ($HOME/Desktop/開発2026/...)
+          #
+          # Excluded paths (audit history / logs / backups, no runtime impact):
+          # - docs/research-knowledge-scaling/ (research records)
+          # - debate-v*/ debate-priority1/ debate-audit/ debate/ (debate records)
+          # - ログ/ (session logs)
+          # - *.log (auto-generated logs)
+          # - *.bak* (backup files)
+
+          if rg -l \
+               --glob '!docs/research-knowledge-scaling/**' \
+               --glob '!debate-v*/**' \
+               --glob '!debate-priority1/**' \
+               --glob '!debate-audit/**' \
+               --glob '!debate/**' \
+               --glob '!ログ/**' \
+               --glob '!*.log' \
+               --glob '!*.bak*' \
+               --glob '!.git/**' \
+               --glob '!node_modules/**' \
+               --glob '!.github/workflows/portability-guard.yml' \
+               --hidden \
+               'matsumototoshihiko|/Desktop/開発2026'; then
+            echo ""
+            echo "::error::Hardcoded user-specific absolute paths detected (see file list above)"
+            echo ""
+            echo "Why this matters:"
+            echo "  /Users/<your-username>/ and \$HOME/Desktop/<personal-folder>/"
+            echo "  break the project for other users (different username/OS/install path)."
+            echo ""
+            echo "How to fix:"
+            echo "  - Shell scripts:"
+            echo "      PROJECT_DIR=\"\${YOUR_ENV_VAR:-\$(cd \"\$(dirname \"\$0\")/..\" && pwd)}\""
+            echo "  - Node.js / JS:"
+            echo "      const PROJECT_ROOT = path.resolve(__dirname, '../..');"
+            echo "  - JSON examples / docs:"
+            echo "      Use placeholders like <YOUR_PROJECT_PATH> or <YOUR_PROJECT_ID>"
+            echo ""
+            echo "Reference: debate-audit/PORTABILITY_ABSOLUTE_PATH_AUDIT.md"
+            exit 1
+          fi
+
+          echo "✓ No hardcoded user-specific absolute paths detected"

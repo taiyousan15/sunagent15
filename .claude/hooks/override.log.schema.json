@@ -233,7 +233,7 @@
       "reason": "embeddings.ts is required for Skill Fidelity System implementation. Hook falsely detected as 'newfile deviation' but it is part of planned Stage 1 setup.",
       "approverDecision": "approved_temporary",
       "sessionId": "session-2026-02-13-abc123",
-      "userId": "matsumototoshihiko",
+      "userId": "<user-id>",
       "affectedHooks": ["deviation-approval-guard"],
       "status": "active",
       "metadata": {
@@ -251,7 +251,7 @@
       "reason": "Critical hook deadlock: all hooks returning timeout. Session was completely unusable. Emergency override to unblock session and save current work.",
       "approverDecision": "approved_temporary",
       "sessionId": "session-2026-02-13-xyz789",
-      "userId": "matsumototoshihiko",
+      "userId": "<user-id>",
       "affectedHooks": ["deviation-approval-guard", "skill-usage-guard", "unified-guard", "definition-lint-gate"],
       "status": "active",
       "metadata": {

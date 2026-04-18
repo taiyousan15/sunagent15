@@ -60,7 +60,7 @@ LLMプロバイダー優先順位は自動フォールバック（環境変数�
 
 ## 前提条件
 
-1. **プロジェクトディレクトリ**: `~/Desktop/開発2026/X記事投稿システム/`
+1. **プロジェクトディレクトリ**: `$XTAIOU_PROJECT_DIR` (例: `~/path/to/X記事投稿システム/`)
 2. **Node.js**: v18+
 3. **Chromium**: Playwright用（初回は `npx playwright install chromium` が必要）
 4. **環境変数** (`.env`):
@@ -76,7 +76,7 @@ LLMプロバイダー優先順位は自動フォールバック（環境変数�
 ### 依存チェック
 
 ```bash
-cd ~/Desktop/開発2026/X記事投稿システム
+cd "$XTAIOU_PROJECT_DIR"
 cat .env | grep -E "(XAI|PEXELS|TWITTER)_"
 node --version
 ```
@@ -86,13 +86,13 @@ node --version
 #### 1. ドライラン（記事生成のみ、投稿なし）
 
 ```bash
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:dry
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:dry
 ```
 
 #### 2. 本番実行（全ステージ: リサーチ→記事→画像→投稿）
 
 ```bash
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline
 ```
 
 #### 3. ステージ個別実行
@@ -118,7 +118,7 @@ npx ts-node src/pipeline/run-pipeline.ts --stage 5
 
 ```bash
 # STEP 1: 記事生成まで（Stage 1-4）
-cd ~/Desktop/開発2026/X記事投稿システム && npm run pipeline:dry
+cd "$XTAIOU_PROJECT_DIR" && npm run pipeline:dry
 
 # STEP 2: 生成記事を確認
 ls data/articles/
@@ -143,7 +143,7 @@ cat data/runs/$(ls -t data/runs/ | head -1)/stage5_result.json
 ### デフォルト: リサーチネタ元.md
 
 ```
-~/Desktop/開発2026/X記事投稿システム/research/リサーチネタ元.md
+$XTAIOU_PROJECT_DIR/research/リサーチネタ元.md
 ```
 
 5カテゴリ（ビジネス・マーケティング・副業・AI・投資）、約50サイト。

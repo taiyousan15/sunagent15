@@ -2075,7 +2075,7 @@ Step 10: 統合レポート出力
 ```bash
 # .envファイルの場所を自動検出（プロジェクトルートから探索）
 ENV_FILE=""
-for dir in "." ".." "../.." "$HOME/Desktop/dev/gem自動生成システム" "$HOME/Desktop/開発2026/リサーチ専門" "$HOME/taisun_agent"; do
+for dir in "." ".." "../.." "$HOME"; do
   if [ -f "$dir/.env" ]; then
     ENV_FILE="$dir/.env"
     break

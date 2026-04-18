@@ -26,35 +26,35 @@ codebase-memory-mcp を使ったコード構造の即時検索・影響分析ス
 
 ```bash
 cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli search_code \
-  '{"project": "Users-matsumototoshihiko-taisun_agent", "pattern": "検索キーワード"}'
+  '{"project": "<YOUR_PROJECT_ID>", "pattern": "検索キーワード"}'
 ```
 
 ### 2. 呼び出しパス追跡
 
 ```bash
 cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli trace_call_path \
-  '{"project": "Users-matsumototoshihiko-taisun_agent", "symbol": "関数名"}'
+  '{"project": "<YOUR_PROJECT_ID>", "symbol": "関数名"}'
 ```
 
 ### 3. 変更影響分析（git diff連携）
 
 ```bash
 cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli detect_changes \
-  '{"project": "Users-matsumototoshihiko-taisun_agent"}'
+  '{"project": "<YOUR_PROJECT_ID>"}'
 ```
 
 ### 4. アーキテクチャ全体像
 
 ```bash
 cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli get_architecture \
-  '{"project": "Users-matsumototoshihiko-taisun_agent", "aspects": ["summary"]}'
+  '{"project": "<YOUR_PROJECT_ID>", "aspects": ["summary"]}'
 ```
 
 ### 5. グラフクエリ（Cypher風）
 
 ```bash
 cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli query_graph \
-  '{"project": "Users-matsumototoshihiko-taisun_agent", "query": "MATCH (f)-[e]->(t) WHERE f.name CONTAINS \"auth\" RETURN f.name, e.kind, t.name LIMIT 10"}'
+  '{"project": "<YOUR_PROJECT_ID>", "query": "MATCH (f)-[e]->(t) WHERE f.name CONTAINS \"auth\" RETURN f.name, e.kind, t.name LIMIT 10"}'
 ```
 
 ## 自動更新
@@ -70,5 +70,5 @@ cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli list_pr
 ## 注意事項
 
 - MCP経由（次セッション以降）ではClaude Codeが自動的にツールを選択します
-- CLIモードでは `project` パラメータに `Users-matsumototoshihiko-taisun_agent` を指定
+- CLIモードでは `project` パラメータに `<YOUR_PROJECT_ID>` を指定
 - インデックスはSQLiteファイルとしてローカルに保存（数十MB）
