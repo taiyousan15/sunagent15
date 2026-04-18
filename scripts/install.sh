@@ -43,6 +43,8 @@ VERSION=$(cat "$REPO_DIR/package.json" | grep '"version"' | head -1 | cut -d'"' 
 SKILL_PROFILE="standard"
 EXTRA_PROFILES=()
 FRESH_MODE=false
+SKIP_VERIFY=false
+ALLOW_PARTIAL=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -52,6 +54,14 @@ while [[ $# -gt 0 ]]; do
             ;;
         --fresh)
             FRESH_MODE=true
+            shift
+            ;;
+        --skip-verify)
+            SKIP_VERIFY=true
+            shift
+            ;;
+        --allow-partial)
+            ALLOW_PARTIAL=true
             shift
             ;;
         --with-docker)
@@ -150,11 +160,15 @@ if ! command -v node &> /dev/null; then
 fi
 NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
 if [ "$NODE_VERSION" -lt 18 ]; then
-    warn "Node.js のバージョンが古いです（現在: $(node -v)、推奨: v18以上）"
-    warn "https://nodejs.org/ から新しいバージョンをインストールすることをお勧めします"
-else
-    ok "Node.js $(node -v) … OK"
+    fail \
+        "Node.js v18 以上が必須です（現在: $(node -v)）" \
+        "更新してから再実行してください:
+       macOS:  brew upgrade node  または  https://nodejs.org/ から LTS版
+       nvm:    nvm install --lts && nvm use --lts
+       nodebrew: nodebrew install-binary stable && nodebrew use stable
+       Linux:  https://nodejs.org/en/download/package-manager"
 fi
+ok "Node.js $(node -v) … OK"
 
 # npm
 if ! command -v npm &> /dev/null; then
@@ -211,19 +225,39 @@ echo ""
 cd "$REPO_DIR"
 
 echo "  📦 ファイルをダウンロード中..."
-if npm install --silent 2>/dev/null || npm install 2>&1; then
-    ok "ファイルのダウンロードが完了しました"
+NPM_LOG="/tmp/taisun-npm-install-$(date +%s).log"
+
+# Prefer `npm ci` for deterministic lockfile-based install when lock present
+if [ -f "package-lock.json" ]; then
+    NPM_INSTALL_CMD=(npm ci)
 else
-    warn "一部のダウンロードに問題がありましたが、続行します"
+    NPM_INSTALL_CMD=(npm install)
+fi
+
+if "${NPM_INSTALL_CMD[@]}" 2>&1 | tee "$NPM_LOG"; then
+    ok "ファイルのダウンロードが完了しました"
+elif [ "$ALLOW_PARTIAL" = true ]; then
+    warn "npm install に失敗しましたが --allow-partial 指定のため続行します"
+    info "ログ: $NPM_LOG"
+else
+    fail \
+        "依存パッケージのインストールに失敗しました（ログ: $NPM_LOG）" \
+        "ネットワーク接続を確認するか、--allow-partial で部分インストールを許可してください"
 fi
 
 echo ""
 echo "  🔨 システムを構築中..."
+# postinstall hook already runs build:all; --if-present makes this resilient
+# when no top-level "build" script is declared.
 
-if npm run build 2>/dev/null; then
+if npm run build --if-present 2>&1; then
     ok "メインシステムの構築が完了しました"
+elif [ "$ALLOW_PARTIAL" = true ]; then
+    warn "ビルドに失敗しましたが --allow-partial 指定のため続行します"
 else
-    warn "一部の構築に問題がありましたが、続行します"
+    fail \
+        "システムビルドに失敗しました" \
+        "上記のエラーを確認するか、--allow-partial で続行可能です"
 fi
 
 # 追加MCPサーバーのビルド
@@ -246,25 +280,18 @@ echo "  スキルとは「Claude への命令テンプレート」です。"
 echo "  登録すると /リサーチ や /設計 などのコマンドが使えるようになります。"
 echo ""
 
-# プロファイルに基づく許可リスト生成
+# プロファイルに基づく許可リスト生成（インジェクション安全な外部スクリプト経由）
 PROFILE_FILE="$REPO_DIR/scripts/skill-profiles.json"
+RESOLVER="$REPO_DIR/scripts/internal/profile-resolver.js"
 ALLOWED_SKILLS=""
 
-if [ -f "$PROFILE_FILE" ] && command -v node &> /dev/null; then
-    ALLOWED_SKILLS=$(node -e "
-const fs = require('fs');
-const profiles = JSON.parse(fs.readFileSync('$PROFILE_FILE', 'utf8'));
-const preset = profiles.presets['$SKILL_PROFILE'] || profiles.presets['standard'];
-const extras = '${EXTRA_PROFILES[*]}'.split(' ').filter(Boolean);
-const activeGroups = [...new Set([...preset, ...extras])];
-const skills = new Set();
-for (const group of activeGroups) {
-    if (profiles.profiles[group]) {
-        profiles.profiles[group].skills.forEach(s => skills.add(s));
-    }
-}
-console.log([...skills].join('\n'));
-" 2>/dev/null)
+if [ -f "$PROFILE_FILE" ] && [ -f "$RESOLVER" ] && command -v node &> /dev/null; then
+    ALLOWED_SKILLS=$(
+        PROFILE_FILE="$PROFILE_FILE" \
+        PROFILE="$SKILL_PROFILE" \
+        EXTRAS="${EXTRA_PROFILES[*]}" \
+        node "$RESOLVER" 2>/dev/null
+    )
 fi
 
 # プロファイル情報を表示
@@ -487,10 +514,16 @@ ok "エージェント: ${AGENT_COUNT} 個が利用可能です"
 # ─────────────────────────────────────────
 # 深部検証（symlink dangling、hook 参照、version 整合）
 # ─────────────────────────────────────────
-if [ -f "$REPO_DIR/scripts/verify-installation.js" ]; then
+if [ "$SKIP_VERIFY" = true ]; then
+    warn "--skip-verify 指定: 深部検証をスキップしました（自己責任）"
+elif [ -f "$REPO_DIR/scripts/verify-installation.js" ]; then
     echo ""
-    node "$REPO_DIR/scripts/verify-installation.js" "$REPO_DIR" 2>&1 || true
-    # 警告は表示するが install.sh 自体は成功扱いで継続
+    if ! node "$REPO_DIR/scripts/verify-installation.js" "$REPO_DIR" 2>&1; then
+        echo ""
+        fail \
+            "インストール検証に失敗しました" \
+            "ログを確認して再実行するか、--skip-verify で検証を回避できます（推奨されません）"
+    fi
 fi
 
 # ─────────────────────────────────────────

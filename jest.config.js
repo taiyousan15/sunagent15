@@ -22,11 +22,21 @@ module.exports = {
     '!src/proxy-mcp/observability/service.ts', // metrics collector integration
   ],
   testPathIgnorePatterns: ['/node_modules/', '/.ait42/', '/.claude/worktrees/'],
+  // Prevent Jest Haste map from scanning Python venv directories that contain
+  // duplicate playwright-core copies (causes `TypeError: dupMap.get is not a function`).
+  // Refs: debate/plan-review-20260418/agreement_summary.md F1.1 / F4.3 / F7.2 / F10.3
+  modulePathIgnorePatterns: [
+    '<rootDir>/\\.claude/skills/.*/\\.venv/',
+    '<rootDir>/udemy-downloader/\\.venv/',
+  ],
   // Transform TypeScript files
   transform: {
     '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
   },
   // Custom projects for different test types
+  // NOTE: Jest does NOT inherit modulePathIgnorePatterns from the top-level
+  // config into projects, so we repeat it per-project to prevent the
+  // haste map from scanning .venv directories (see top-level Refs comment).
   projects: [
     {
       displayName: 'unit',
@@ -40,6 +50,10 @@ module.exports = {
         '/node_modules/',
         '<rootDir>/tests/unit/workflow-phase3-.*\\.test\\.ts$'
       ],
+      modulePathIgnorePatterns: [
+        '<rootDir>/\\.claude/skills/.*/\\.venv/',
+        '<rootDir>/udemy-downloader/\\.venv/',
+      ],
       testEnvironment: 'node',
       testTimeout: 30000,
       transform: {
@@ -50,6 +64,10 @@ module.exports = {
       displayName: 'workflow-phase3',
       preset: 'ts-jest',
       testMatch: ['<rootDir>/tests/unit/workflow-phase3-*.test.ts'],
+      modulePathIgnorePatterns: [
+        '<rootDir>/\\.claude/skills/.*/\\.venv/',
+        '<rootDir>/udemy-downloader/\\.venv/',
+      ],
       testEnvironment: 'node',
       transform: {
         '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
@@ -64,6 +82,10 @@ module.exports = {
       displayName: 'integration',
       preset: 'ts-jest',
       testMatch: ['<rootDir>/tests/integration/**/*.test.ts'],
+      modulePathIgnorePatterns: [
+        '<rootDir>/\\.claude/skills/.*/\\.venv/',
+        '<rootDir>/udemy-downloader/\\.venv/',
+      ],
       testEnvironment: 'node',
       transform: {
         '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
@@ -74,6 +96,10 @@ module.exports = {
       displayName: 'regression',
       preset: 'ts-jest',
       testMatch: ['<rootDir>/tests/regression/**/*.test.ts'],
+      modulePathIgnorePatterns: [
+        '<rootDir>/\\.claude/skills/.*/\\.venv/',
+        '<rootDir>/udemy-downloader/\\.venv/',
+      ],
       testEnvironment: 'node',
       transform: {
         '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
@@ -84,6 +110,10 @@ module.exports = {
     {
       displayName: 'hooks',
       testMatch: ['<rootDir>/.claude/hooks/__tests__/**/*.test.js'],
+      modulePathIgnorePatterns: [
+        '<rootDir>/\\.claude/skills/.*/\\.venv/',
+        '<rootDir>/udemy-downloader/\\.venv/',
+      ],
       testEnvironment: 'node',
     },
   ],

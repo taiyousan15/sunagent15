@@ -157,7 +157,21 @@ jobs:
 
             ${{ needs.build.outputs.changelog }}
 
-            ## Installation
+            ## 🔒 Recommended: Verified Install (SHA256-checked release archive)
+
+            ### macOS / Linux
+
+            ```bash
+            curl -fsSL https://raw.githubusercontent.com/${{ github.repository }}/main/install-release.sh | bash
+            ```
+
+            ### Windows (PowerShell)
+
+            ```powershell
+            irm https://raw.githubusercontent.com/${{ github.repository }}/main/install-release.ps1 | iex
+            ```
+
+            ## ⚙️ Alternative: HEAD install (git clone of main branch — no SHA256)
 
             ### macOS / Linux
 
@@ -171,11 +185,11 @@ jobs:
             irm https://raw.githubusercontent.com/${{ github.repository }}/main/install.ps1 | iex
             ```
 
-            ### Manual Download
+            ## Manual Download
 
             Download the archive below and extract it.
 
-            ## Verification
+            ## Verify Manually
 
             ```bash
             sha256sum -c taisun_agent-${{ needs.build.outputs.version }}.sha256

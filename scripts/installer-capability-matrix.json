@@ -1,0 +1,75 @@
+{
+  "$comment": "Cross-OS installer capability parity matrix. CI compares this against actual installer flag detection (scripts/check-installer-parity.js). Add new flags here when supported by both Mac and Windows installers.",
+  "version": 1,
+  "updated": "2026-04-19",
+  "capabilities": [
+    {
+      "name": "profile",
+      "bash": "--profile",
+      "powershell": "-Profile",
+      "powershell_alias": "-SkillProfile",
+      "values": ["minimal", "standard", "full"],
+      "description": "Skill installation profile selector"
+    },
+    {
+      "name": "fresh",
+      "bash": "--fresh",
+      "powershell": "-Fresh",
+      "description": "Reset MCP customizations to template (destructive merge)"
+    },
+    {
+      "name": "with-docker",
+      "bash": "--with-docker",
+      "powershell": "-WithDocker",
+      "description": "Add Docker/container skills"
+    },
+    {
+      "name": "with-figma",
+      "bash": "--with-figma",
+      "powershell": "-WithFigma",
+      "description": "Add Figma design integration"
+    },
+    {
+      "name": "with-voice",
+      "bash": "--with-voice",
+      "powershell": "-WithVoice",
+      "description": "Add voice AI/TTS skills"
+    },
+    {
+      "name": "with-deep-research",
+      "bash": "--with-deep-research",
+      "powershell": "-WithDeepResearch",
+      "description": "Add deep research extensions"
+    },
+    {
+      "name": "list-profiles",
+      "bash": "--list-profiles",
+      "powershell": "-ListProfiles",
+      "description": "List available profiles and exit"
+    },
+    {
+      "name": "skip-verify",
+      "bash": "--skip-verify",
+      "powershell": "-SkipVerify",
+      "description": "Skip post-install verification (NOT recommended)"
+    },
+    {
+      "name": "allow-partial",
+      "bash": "--allow-partial",
+      "powershell": "-AllowPartial",
+      "description": "Continue on npm install / build failures"
+    },
+    {
+      "name": "force",
+      "bash": null,
+      "powershell": "-Force",
+      "description": "Allow destructive update operations (Windows only — Mac uses FORCE_UPDATE env var)"
+    },
+    {
+      "name": "update",
+      "bash": null,
+      "powershell": "-Update",
+      "description": "Run update flow (Windows only — Mac uses scripts/update.sh)"
+    }
+  ]
+}

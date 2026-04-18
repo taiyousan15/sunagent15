@@ -4,9 +4,19 @@
 #   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; irm https://raw.githubusercontent.com/san15/taisun_agent/main/scripts/quick-install.ps1 | iex
 #
 # 動作:
-#   1. C:\taisun_agent に git clone（既存なら git pull）
+#   1. %USERPROFILE%\taisun_agent に git clone（既存なら git pull）
+#      インストール先を変更したい場合は -InstallDir を指定:
+#        & { iwr https://... | iex } -InstallDir 'D:\Projects\taisun_agent'
 #   2. install.ps1 を自動実行
 #   3. 完了後、Claude Code で開くだけ
+#
+# 最低要件: PowerShell 5.0+ (Windows 7 の PS 2.0/4.0 では
+#           Join-Path デフォルト式が動作保証外)
+
+param(
+    [string]$InstallDir = (Join-Path $env:USERPROFILE 'taisun_agent'),
+    [switch]$Force
+)
 
 # UTF-8 出力対応
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
@@ -19,7 +29,7 @@ $ErrorActionPreference = "Continue"
 # ─────────────────────────────────────────
 # 定数
 # ─────────────────────────────────────────
-$INSTALL_DIR = "C:\taisun_agent"
+$INSTALL_DIR = $InstallDir
 $REPO_URL = "https://github.com/san15/taisun_agent.git"
 
 # ─────────────────────────────────────────
@@ -137,14 +147,34 @@ if (Test-Path "$INSTALL_DIR\.git") {
         git fetch origin 2>&1 | Out-Null
         $pullResult = git pull origin main --ff-only 2>&1
         if ($LASTEXITCODE -ne 0) {
-            Write-Info "通常の更新ができませんでした。最新版に強制同期します..."
+            Write-Info "通常の更新ができませんでした。"
+            # Safety: detect uncommitted changes before destructive reset
+            $localChanges = git status --porcelain 2>$null
+            if ($localChanges -and -not $Force) {
+                Write-Warn "ローカルに未コミットの変更があります:"
+                $localChanges | Select-Object -First 10 | ForEach-Object { Write-Host "    $_" }
+                Write-Fail "強制同期は中断されました。次のいずれかを実行してください:"
+                Write-Host "    1) 変更をコミット/退避してから再実行"
+                Write-Host "    2) git stash で退避"
+                Write-Host "    3) -Force を付けて再実行（ローカル変更は失われます）"
+                exit 1
+            }
+            Write-Info "最新版に強制同期します..."
             git reset --hard origin/main 2>&1 | Out-Null
             if ($LASTEXITCODE -ne 0) { throw "git sync failed" }
         }
         Write-Ok "最新版に更新しました"
     } catch {
-        Write-Warn "git 更新に失敗しました。再インストールします..."
+        Write-Warn "git 更新に失敗しました。"
         Pop-Location
+        # Safety: protect user data — require -Force for full directory replacement
+        if (-not $Force) {
+            Write-Fail "再インストール（ディレクトリ削除）には -Force が必要です。"
+            Write-Host "    現在のフォルダ: $INSTALL_DIR"
+            Write-Host "    再実行: irm ... | iex; <-Force> または手動で内容確認後に削除してください"
+            exit 1
+        }
+        Write-Warn "再インストールします（既存ディレクトリは削除されます）..."
         Remove-Item $INSTALL_DIR -Recurse -Force -ErrorAction SilentlyContinue
         git clone $REPO_URL $INSTALL_DIR 2>&1 | Out-Null
         if ($LASTEXITCODE -ne 0) {
@@ -204,12 +234,12 @@ Write-Host ""
 Write-Host "  次のステップ:" -ForegroundColor White
 Write-Host ""
 Write-Host "  1. PowerShell で以下を実行:" -ForegroundColor White
-Write-Host "     cd C:\taisun_agent" -ForegroundColor Cyan
+Write-Host "     cd $INSTALL_DIR" -ForegroundColor Cyan
 Write-Host "     claude" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "  2. Claude Code が開いたら「使い方を教えて」と話しかける"
 Write-Host ""
 Write-Host "  アップデートするには:"
-Write-Host "     cd C:\taisun_agent" -ForegroundColor Gray
+Write-Host "     cd $INSTALL_DIR" -ForegroundColor Gray
 Write-Host "     .\scripts\install.ps1 -Update" -ForegroundColor Gray
 Write-Host ""

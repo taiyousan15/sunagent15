@@ -21,7 +21,11 @@ param(
     [switch]$WithVoice,
     [switch]$WithDeepResearch,
     [switch]$ListProfiles,
-    [switch]$Update
+    [switch]$Update,
+    [switch]$Fresh,
+    [switch]$Force,
+    [switch]$AllowPartial,
+    [switch]$SkipVerify
 )
 
 # PowerShell 5.1 UTF-8 出力対応
@@ -84,7 +88,19 @@ if ($Update) {
         if ($LASTEXITCODE -ne 0) { throw "git pull failed" }
         Write-Ok "git pull 成功"
     } catch {
-        Write-Info "通常の更新ができませんでした。最新版に強制同期します..."
+        Write-Info "通常の更新ができませんでした。"
+        # Safety: check for uncommitted local changes before destructive reset
+        $localChanges = git status --porcelain 2>$null
+        if ($localChanges -and -not $Force) {
+            Write-Warn "ローカルに未コミットの変更があります:"
+            $localChanges | Select-Object -First 10 | ForEach-Object { Write-Host "    $_" }
+            Write-Fail "強制同期は中断されました。次のいずれかを実行してください:"
+            Write-Host "    1) 変更をコミット/退避してから再実行"
+            Write-Host "    2) git stash で退避"
+            Write-Host "    3) -Force を付けて再実行（ローカル変更は失われます）"
+            exit 1
+        }
+        Write-Info "最新版に強制同期します..."
         try {
             git reset --hard origin/main 2>&1 | Out-Null
             if ($LASTEXITCODE -ne 0) { throw "reset failed" }
@@ -159,11 +175,15 @@ Write-Host ""
 try {
     $nodeVersion = (node -v 2>$null).TrimStart('v').Split('.')[0]
     if ([int]$nodeVersion -lt 18) {
-        Write-Warn "Node.js のバージョンが古いです（現在: $(node -v)、推奨: v18以上）"
-        Write-Info "https://nodejs.org/ から最新版をダウンロードしてください"
-    } else {
-        Write-Ok "Node.js $(node -v) がインストールされています"
+        Write-Fail "Node.js v18 以上が必須です（現在: $(node -v)）"
+        Write-Host ""
+        Write-Host "  更新方法:"
+        Write-Host "    winget upgrade OpenJS.NodeJS.LTS"
+        Write-Host "    または https://nodejs.org/ から LTS版をダウンロード"
+        Write-Host ""
+        exit 1
     }
+    Write-Ok "Node.js $(node -v) がインストールされています"
 } catch {
     Write-Fail "Node.js がインストールされていません"
     Write-Host ""
@@ -238,27 +258,44 @@ Write-Host ""
 Write-Host "  📦 必要なファイルをダウンロードしています..."
 Set-Location $REPO_DIR
 $npmLog = "$REPO_DIR\npm-install.log"
+# Prefer `npm ci` for deterministic lockfile-based install when lock present
+$npmCmd = if (Test-Path "$REPO_DIR\package-lock.json") { 'ci' } else { 'install' }
 try {
-    $npmOutput = npm install 2>&1
+    $npmOutput = & npm $npmCmd 2>&1
     $npmOutput | Out-File $npmLog -Encoding UTF8
-    if ($LASTEXITCODE -ne 0) { throw "npm install failed" }
+    if ($LASTEXITCODE -ne 0) { throw "npm $npmCmd failed (exit $LASTEXITCODE)" }
     Write-Ok "ファイルのインストールが完了しました"
 } catch {
-    Write-Warn "npm install で問題が発生しました"
+    Write-Warn ("npm " + $npmCmd + " で問題が発生しました: " + $_)
     Write-Info "詳細ログ: $npmLog"
     if (Test-Path $npmLog) {
-        Get-Content $npmLog -Tail 5 | ForEach-Object { Write-Host "       $_" -ForegroundColor Gray }
+        Get-Content $npmLog -Tail 10 | ForEach-Object { Write-Host "       $_" -ForegroundColor Gray }
     }
-    Write-Info "続行します..."
+    if ($AllowPartial) {
+        Write-Warn "-AllowPartial 指定のため続行します"
+    } else {
+        Write-Fail "依存パッケージのインストールに失敗しました。"
+        Write-Host "    ネットワークを確認するか、-AllowPartial で部分インストールを許可してください。"
+        exit 1
+    }
 }
 
 Write-Host ""
 Write-Host "  🔨 システムを構築しています..."
+# postinstall hook already runs build:all; --if-present makes this resilient
+# when no top-level "build" script is declared.
 try {
-    npm run build 2>$null
+    npm run build --if-present 2>&1 | Tee-Object -Variable buildOutput | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "npm run build failed (exit $LASTEXITCODE)" }
     Write-Ok "システムの構築が完了しました"
 } catch {
-    Write-Warn "一部の構築に問題がありましたが、続行します"
+    if ($AllowPartial) {
+        Write-Warn "ビルドに失敗しましたが -AllowPartial 指定のため続行します: $_"
+    } else {
+        Write-Fail "システムビルドに失敗しました: $_"
+        Write-Host "    上記のエラーを確認するか、-AllowPartial で続行できます"
+        exit 1
+    }
 }
 
 foreach ($server in @("voice-ai-mcp-server", "ai-sdr-mcp-server", "line-bot-mcp-server")) {
@@ -494,43 +531,22 @@ if (-not (Test-Path $settingsDir)) {
     Write-Ok "$settingsDir フォルダを作成しました"
 }
 
-$nodeScript = @"
-const fs = require('fs');
-const path = require('path');
-const REPO_DIR = '$($REPO_DIR -replace '\\', '/')';
-const SETTINGS_FILE = '$($SETTINGS_FILE -replace '\\', '/')';
-
-let settings = {};
-try { settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8')); } catch(e) {}
-if (!settings.mcpServers) settings.mcpServers = {};
-
-let mcp = {};
-try { mcp = JSON.parse(fs.readFileSync(path.join(REPO_DIR, '.mcp.json'), 'utf8')); } catch(e) {}
-
-for (const [key, val] of Object.entries(mcp.mcpServers || {})) {
-  if (key.startsWith('_comment')) continue;
-  const server = JSON.parse(JSON.stringify(val));
-  if (Array.isArray(server.args)) {
-    server.args = server.args.map(arg => {
-      if (typeof arg === 'string' && !path.isAbsolute(arg) &&
-          (arg.startsWith('dist/') || arg.startsWith('mcp-servers/'))) {
-        return path.join(REPO_DIR, arg).replace(/\//g, '\\\\');
-      }
-      return arg;
-    });
-  }
-  settings.mcpServers[key] = server;
-}
-
-fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
-const count = Object.keys(settings.mcpServers).filter(k => !k.startsWith('_')).length;
-console.log('  [OK] MCPサーバーを登録しました（' + count + ' 件）');
-"@
-
-try {
-    node -e $nodeScript
-} catch {
-    Write-Warn "MCPのグローバル登録に失敗しました（後で手動設定もできます）"
+# Use shared update-settings.js for non-destructive merge with backup
+# (replaces previous inline overwrite that destroyed user MCP customizations).
+# Behavior parity with macOS install.sh:434-438.
+$updateScript = Join-Path $REPO_DIR 'scripts\update-settings.js'
+if (-not (Test-Path $updateScript)) {
+    Write-Warn "update-settings.js が見つかりません。MCP登録をスキップします。"
+} else {
+    if ($Fresh) {
+        Write-Info "--Fresh モード: 既存の MCP カスタマイズはテンプレートで上書きされます"
+        & node $updateScript $REPO_DIR $SETTINGS_FILE --fresh
+    } else {
+        & node $updateScript $REPO_DIR $SETTINGS_FILE
+    }
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warn "MCPのグローバル登録に問題がありました（後から手動設定もできます）"
+    }
 }
 
 # CodeGraph MCP パスをプロジェクト設定に自動書き換え
