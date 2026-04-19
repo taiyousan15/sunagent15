@@ -39,6 +39,12 @@ jobs:
               - 'package-lock.json'
               - 'tsconfig*.json'
               - 'jest.config.*'
+              - 'install.sh'
+              - 'install.ps1'
+              - 'install-release.sh'
+              - 'install-release.ps1'
+              - 'scripts/**'
+              - '.github/workflows/**'
             docs:
               - 'docs/**'
               - '*.md'
