@@ -170,6 +170,43 @@ fail() {
 }
 step() { echo ""; echo "━━━ $1 ━━━"; }
 
+# F11.3: Error log analyzer - prints actionable hints based on npm log content
+# Usage: diagnose_npm_log "$NPM_LOG"
+diagnose_npm_log() {
+    local log="$1"
+    [ -f "$log" ] || return 0
+    echo ""
+    echo "  🔍 ログ解析による原因推定:"
+    local matched=0
+    if grep -qi "EACCES\|permission denied" "$log" 2>/dev/null; then
+        echo "     Hint: パーミッションエラー"
+        echo "           → sudo chown -R \$(whoami) ~/.npm"
+        matched=1
+    fi
+    if grep -qi "ENOSPC\|no space" "$log" 2>/dev/null; then
+        echo "     Hint: ディスク容量不足"
+        echo "           → df -h で空き容量を確認"
+        matched=1
+    fi
+    if grep -qi "ETIMEDOUT\|ECONNRESET\|getaddrinfo\|ENOTFOUND\|ECONNREFUSED" "$log" 2>/dev/null; then
+        echo "     Hint: ネットワーク接続エラー"
+        echo "           → インターネット接続を確認"
+        echo "           → プロキシ環境: npm config set proxy http://your-proxy:port"
+        matched=1
+    fi
+    if grep -qi "ERESOLVE\|peer dep\|unable to resolve" "$log" 2>/dev/null; then
+        echo "     Hint: 依存関係の解決失敗"
+        echo "           → npm install --legacy-peer-deps を試す"
+        matched=1
+    fi
+    if grep -qi "EINTEGRITY\|sha512 integrity" "$log" 2>/dev/null; then
+        echo "     Hint: lockfile 整合性エラー"
+        echo "           → rm package-lock.json && npm install"
+        matched=1
+    fi
+    [ "$matched" -eq 0 ] && echo "     (ログから既知パターンは検出されませんでした)"
+}
+
 # Opt-in telemetry timing
 INSTALL_START_EPOCH=$(date +%s)
 
@@ -303,6 +340,7 @@ elif [ "$ALLOW_PARTIAL" = true ]; then
     warn "npm install に失敗しましたが --allow-partial 指定のため続行します"
     info "ログ: $NPM_LOG"
 else
+    diagnose_npm_log "$NPM_LOG"
     fail \
         "依存パッケージのインストールに失敗しました（ログ: $NPM_LOG）" \
         "ネットワーク接続を確認するか、--allow-partial で部分インストールを許可してください"
@@ -318,6 +356,11 @@ if npm run build --if-present 2>&1; then
 elif [ "$ALLOW_PARTIAL" = true ]; then
     warn "ビルドに失敗しましたが --allow-partial 指定のため続行します"
 else
+    echo ""
+    echo "  🔍 ビルド失敗時のヒント:"
+    echo "     - 上記 TypeScript/tsc エラーを確認"
+    echo "     - Node.js を最新 LTS に更新: brew upgrade node / nvm install --lts"
+    echo "     - 破損した node_modules: rm -rf node_modules && npm install"
     fail \
         "システムビルドに失敗しました" \
         "上記のエラーを確認するか、--allow-partial で続行可能です"
@@ -589,6 +632,10 @@ elif [ -f "$REPO_DIR/scripts/verify-installation.js" ]; then
     echo ""
     if ! node "$REPO_DIR/scripts/verify-installation.js" "$REPO_DIR" 2>&1; then
         echo ""
+        echo "  🔍 検証失敗時のヒント:"
+        echo "     - 上記 verify-installation.js の出力で失敗項目を確認"
+        echo "     - 多くは部分インストール破損: ./scripts/install.sh --fresh で再構築"
+        echo "     - 一時的に先に進める: --skip-verify"
         fail \
             "インストール検証に失敗しました" \
             "ログを確認して再実行するか、--skip-verify で検証を回避できます（推奨されません）"
