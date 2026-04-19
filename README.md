@@ -67,7 +67,24 @@
 
 ### 🍎 Mac
 
-**インストール（初回のみ）**
+**インストール（推奨: 1行で完了）**
+
+```
+以下をコピペして実行：
+curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install.sh | bash
+```
+
+> デフォルトで `~/.taisun-agent/` にクローンされます。別のパスに入れたい場合: `curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install.sh | TAISUN_INSTALL_DIR=~/my-path bash`
+
+**インストール（検証付き: SHA256チェックあり・セキュリティ重視）**
+
+```
+以下をコピペして実行：
+curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install-release.sh | bash
+```
+
+<details>
+<summary>Legacy: git clone から手動インストール</summary>
 
 ```
 以下のコマンドを順番に実行して：
@@ -80,11 +97,16 @@ bash scripts/install.sh
 > `Permission denied` が出た場合は `bash scripts/install.sh` で実行してください。
 > `git: command not found` が出た場合は `xcode-select --install` を先に実行してください。
 
+</details>
+
 **完了の目安**: `スキル: 67 個が利用可能です` と `エージェント: 95 個が利用可能です` が表示されれば成功
 
 **アップデート（1行で完了）**
 
 ```
+# one-liner で入れた場合
+cd ~/.taisun-agent && ./scripts/update.sh
+# git clone で入れた場合
 cd ~/taisun_agent && ./scripts/update.sh
 ```
 
