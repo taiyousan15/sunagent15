@@ -4,6 +4,8 @@ description: Full URL analysis and extraction
 argument-hint: "<URL> [--mode=quick|standard|deep|competitive|seo|audit|links] [--depth=1|2|3]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, node:*, chmod:*, cat:*), mcp__playwright__*
 model: sonnet
+requires:
+  tools: ["curl", "playwright", "ollama", "jq"]
 ---
 
 # url-all v3: URL完全把握システム（ローカルLLM版）

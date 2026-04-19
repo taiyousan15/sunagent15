@@ -1,3 +1,12 @@
+---
+name: stagehand
+description: Stagehand MCP スキル - AI+確定的ハイブリッドブラウザ自動操作（Browserbase 経由）
+allowed-tools: Read, Write, Edit, Grep, Glob
+requires:
+  tools: ["playwright"]
+  env: ["BROWSERBASE_API_KEY", "BROWSERBASE_PROJECT_ID"]
+---
+
 # Stagehand MCP スキル
 
 ## 概要

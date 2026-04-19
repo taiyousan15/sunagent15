@@ -1,7 +1,6 @@
 ---
 name: world-research
-description: Global SNS/academic cross-search
-disable-model-invocation: true
+description: |
   全世界SNS・学術論文・コミュニティ横断キーワード検索リサーチスキル。
   【SNS層】X/Reddit/YouTube/Instagram/TikTok/note.com/Bilibili/Zhihu/小红書/WeChat/Weibo/Medium/Naver等
   【学術層】Arxiv/Papers with Code/OpenReview/Google Scholar/Semantic Scholar/Connected Papers/DBLP/ACL Anthology
@@ -13,11 +12,15 @@ disable-model-invocation: true
   【暗号通貨コミュニティ層】r/CryptoCurrency/r/Bitcoin/r/Ethereum/CoinDesk/Cointelegraph/KudasaiJP/Bankless
   【暗号通貨トレーディング層】Freqtrade/CCXT/Hummingbot/1inch/Jupiter/Whale Alert
   AIキーワードマスターリストで一括検索。gpt-researcher統合で深層調査も可能。
-  トリガー: 「世界リサーチ」「SNSリサーチ」「キーワード検索」「グローバル検索」「世界中で調べて」
-         「論文検索」「学術リサーチ」「ペーパーサーチ」「最新研究」「アカデミックリサーチ」
-         「暗号通貨リサーチ」「クリプトリサーチ」「仮想通貨調査」「DeFi調査」「オンチェーン分析」
+  トリガー「世界リサーチ」「SNSリサーチ」「キーワード検索」「グローバル検索」「世界中で調べて」
+  「論文検索」「学術リサーチ」「ペーパーサーチ」「最新研究」「アカデミックリサーチ」
+  「暗号通貨リサーチ」「クリプトリサーチ」「仮想通貨調査」「DeFi調査」「オンチェーン分析」
+disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 effort: high
+requires:
+  tools: ["python3", "curl", "ollama"]
+  env: ["TAVILY_API_KEY", "BRAVE_SEARCH_API_KEY", "PERPLEXITY_API_KEY", "OPENAI_API_KEY", "BRAVE_API_KEY"]
 ---
 
 # World Research - 全世界総合リサーチシステム v2.0

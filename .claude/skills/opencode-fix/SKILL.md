@@ -4,6 +4,7 @@ description: OpenCode bug fix workflow
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 disable-model-invocation: true
+requires: {}
 ---
 
 # OpenCode バグ修正支援

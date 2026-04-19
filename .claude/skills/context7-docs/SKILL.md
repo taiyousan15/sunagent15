@@ -2,6 +2,7 @@
 name: context7-docs
 description: Fetch latest framework/library docs
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
+requires: {}
 ---
 
 # Context7 Documentation Fetching

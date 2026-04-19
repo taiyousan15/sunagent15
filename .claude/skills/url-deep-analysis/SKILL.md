@@ -4,6 +4,9 @@ description: Deep URL structure analysis
 argument-hint: "<URL> [--depth=1|2|3] [--mode=full|structure|design|content|links]"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python3:*, node:*), mcp__playwright__*
 model: sonnet
+requires:
+  tools: ["python3", "docker", "curl", "playwright"]
+  env: ["FIRECRAWL_API_KEY", "APIFY_API_TOKEN"]
 ---
 
 # url-deep-analysis - URL完全解析スキル

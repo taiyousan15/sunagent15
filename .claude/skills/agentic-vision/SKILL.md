@@ -2,6 +2,9 @@
 name: agentic-vision
 description: Image/video analysis with Gemini
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+requires:
+  tools: ["python3"]
+  env: ["APIFY_API_TOKEN", "GEMINI_API_KEY", "OPENROUTER_API_KEY"]
 ---
 
 # Agentic Vision - 最強の視覚AI分析スキル

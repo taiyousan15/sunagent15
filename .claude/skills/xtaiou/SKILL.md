@@ -2,6 +2,9 @@
 name: xtaiou
 description: X記事自動投稿パイプライン (Ollama版) - X投稿・ツイート文・ポスト案・バズる文案の生成からX投稿まで全自動実行
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+requires:
+  tools: ["curl", "ollama"]
+  env: ["PEXELS_API_KEY", "ANTHROPIC_API_KEY"]
 ---
 
 # xtaiou - X記事投稿パイプライン (Ollama Local LLM)

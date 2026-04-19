@@ -1,12 +1,14 @@
 ---
 name: research-system-free
-description: 完全無料ディープリサーチパイプライン。有料API一切不要。WebSearch+WebFetch+opencli-rs(認証不要)+Ollama で全自動リサーチ。トリガー: 「無料リサーチ」「フリーリサーチ」「コストゼロで調査」「APIキーなしでリサーチ」
+description: "完全無料ディープリサーチパイプライン。有料API一切不要。WebSearch+WebFetch+opencli-rs(認証不要)+Ollama で全自動リサーチ。トリガー: 「無料リサーチ」「フリーリサーチ」「コストゼロで調査」「APIキーなしでリサーチ」"
 version: "1.0"
 argument-hint: "[BUILD_TARGET] -- 調査したいテーマを日本語で記述"
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, WebSearch
 disable-model-invocation: false
 model: sonnet
 effort: high
+requires:
+  tools: ["python3", "curl", "ollama"]
 ---
 
 # research-system-free — 完全無料ディープリサーチパイプライン v1.0

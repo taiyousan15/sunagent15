@@ -5,6 +5,9 @@ argument-hint: "[--category ai_news|crypto|economics|finance|dev_tools|celebrity
 allowed-tools: Read, Write, Bash, Glob, Grep
 disable-model-invocation: true
 effort: high
+requires:
+  tools: ["python3", "ollama"]
+  env: ["FRED_API_KEY", "NEWSAPI_KEY", "APIFY_API_TOKEN"]
 ---
 
 # intelligence-research - ワンコマンドグローバル情報収集

@@ -6,6 +6,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 model: opus
 disable-model-invocation: true
 effort: low
+requires: {}
 ---
 
 # keyword-free - APIキー不要キーワード抽出システム

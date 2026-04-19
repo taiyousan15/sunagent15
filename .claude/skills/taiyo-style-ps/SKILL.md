@@ -7,6 +7,7 @@ category: marketing
 tags: [ps, postscript, taiyo-style, closing]
 dependencies: [taiyo-analyzer]
 allowed-tools: Read, Write, Edit, Grep, Glob
+requires: {}
 ---
 
 # Taiyo Style P.S. Skill

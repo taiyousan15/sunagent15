@@ -5,6 +5,7 @@ argument-hint: "[spec-slug] [target-dir(optional)]"
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Glob, Grep
 model: ollama-deepseek-r1
+requires: {}
 ---
 
 # sdd-design — アーキテクチャ設計書生成（C4 Model + Arc42）

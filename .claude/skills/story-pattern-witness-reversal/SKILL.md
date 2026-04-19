@@ -9,6 +9,7 @@ triggers:
   - "第三者視点パターン"
   - "証人ストーリー"
 allowed-tools: Read, Write, Edit, Bash
+requires: {}
 ---
 
 # story-pattern-witness-reversal

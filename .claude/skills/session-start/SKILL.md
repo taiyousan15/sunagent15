@@ -1,5 +1,6 @@
 ---
 description: "Session Start - 指示書読了+ログ読了+検証+作業開始（プロジェクト別指示書を自動探索／明示指定可）"
+requires: {}
 ---
 
 # Session Start

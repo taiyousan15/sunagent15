@@ -7,6 +7,7 @@ metadata:
   based-on: Anthropic Complete Guide to Building Skills for Claude (Jan 2026)
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 disable-model-invocation: true
+requires: {}
 ---
 
 # Skill Validator

@@ -25,6 +25,7 @@ jobs:
     outputs:
       code: ${{ steps.filter.outputs.code }}
       docs: ${{ steps.filter.outputs.docs }}
+      skills: ${{ steps.filter.outputs.skills }}
     steps:
       - uses: actions/checkout@v4
 
@@ -49,6 +50,10 @@ jobs:
               - 'docs/**'
               - '*.md'
               - '.claude/**'
+            skills:
+              - '.claude/skills/*/SKILL.md'
+              - 'scripts/check-skill-requirements.js'
+              - 'docs/SKILL_REQUIRES_SCHEMA.md'
 
   # ============================================
   # README Skill Count Sync
@@ -308,6 +313,29 @@ jobs:
         run: node scripts/check-installer-parity.js
 
   # ============================================
+  # Skill Requirements Schema Check (F8.2)
+  # Verifies each .claude/skills/<name>/SKILL.md conforms to the
+  # `requires:` schema (see docs/SKILL_REQUIRES_SCHEMA.md).
+  # Non-strict by default: requires: field is optional; Phase 2 will
+  # switch this to --strict.
+  # ============================================
+  skill-requirements-check:
+    name: Skill Requirements Check
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.skills == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate skill requirements schema
+        run: node scripts/check-skill-requirements.js --github-summary
+
+  # ============================================
   # Install Smoke Test (cross-OS)
   # Runs the actual installer on a clean checkout for macOS/Linux/Windows.
   # Catches release-time regressions that syntax-only checks miss.
@@ -393,7 +421,7 @@ jobs:
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
-    needs: [lint, test, security, build, windows-scripts, install-smoke, installer-parity, readme-skill-count-sync]
+    needs: [lint, test, security, build, windows-scripts, install-smoke, installer-parity, readme-skill-count-sync, skill-requirements-check]
     if: always()
     steps:
       - name: Check all jobs passed
@@ -409,13 +437,15 @@ jobs:
           echo "| Windows Scripts | ${{ needs.windows-scripts.result == 'success' && '✅ Pass' || needs.windows-scripts.result == 'skipped' && '⏭️ Skipped' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Install Smoke (3 OS) | ${{ needs.install-smoke.result == 'success' && '✅ Pass' || needs.install-smoke.result == 'skipped' && '⏭️ Skipped' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| README Skill Count Sync | ${{ needs.readme-skill-count-sync.result == 'success' && '✅ Pass' || needs.readme-skill-count-sync.result == 'skipped' && '⏭️ Skipped' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Skill Requirements Schema | ${{ needs.skill-requirements-check.result == 'success' && '✅ Pass' || needs.skill-requirements-check.result == 'skipped' && '⏭️ Skipped' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
 
           if [[ "${{ needs.lint.result }}" != "success" ]] || \
              [[ "${{ needs.test.result }}" != "success" ]] || \
              [[ "${{ needs.build.result }}" != "success" ]] || \
              [[ "${{ needs.windows-scripts.result }}" != "success" && "${{ needs.windows-scripts.result }}" != "skipped" ]] || \
              [[ "${{ needs.install-smoke.result }}" != "success" && "${{ needs.install-smoke.result }}" != "skipped" ]] || \
-             [[ "${{ needs.readme-skill-count-sync.result }}" != "success" && "${{ needs.readme-skill-count-sync.result }}" != "skipped" ]]; then
+             [[ "${{ needs.readme-skill-count-sync.result }}" != "success" && "${{ needs.readme-skill-count-sync.result }}" != "skipped" ]] || \
+             [[ "${{ needs.skill-requirements-check.result }}" != "success" && "${{ needs.skill-requirements-check.result }}" != "skipped" ]]; then
             echo ""
             echo "::error::Quality gate failed. Please fix the issues above."
             exit 1

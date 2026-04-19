@@ -13,6 +13,9 @@ triggers:
   - "マーケ博士風"
   - "図解動画"
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+requires:
+  tools: ["ffmpeg", "ffprobe", "yt-dlp", "curl", "remotion"]
+  env: ["FISH_AUDIO_API_KEY"]
 ---
 
 # /shorts-create - Instagram Shorts 完全自動生成パイプライン

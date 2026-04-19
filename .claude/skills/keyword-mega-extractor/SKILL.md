@@ -5,6 +5,9 @@ argument-hint: "[シードキーワード] [--type=all|longtail|niche|trending|b
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, python:*, node:*)
 model: opus
 disable-model-invocation: true
+requires:
+  tools: ["python3", "curl"]
+  env: ["SERPAPI_KEY", "BRAVE_API_KEY", "NEWSAPI_KEY"]
 ---
 
 # keyword-mega-extractor - キーワード最強抽出システム

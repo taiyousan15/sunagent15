@@ -6,6 +6,9 @@ allowed-tools: Read, Write, Bash(python3:*, pip:*)
 model: sonnet
 disable-model-invocation: true
 effort: high
+requires:
+  tools: ["python3"]
+  env: ["XAI_API_KEY"]
 ---
 
 # Deep Research with Grok-4 Live Search

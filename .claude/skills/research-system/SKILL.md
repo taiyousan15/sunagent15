@@ -6,6 +6,9 @@ argument-hint: "[BUILD_TARGET] -- 作りたいシステムを日本語で記述"
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, WebSearch
 disable-model-invocation: false
 model: sonnet
+requires:
+  tools: ["python3", "docker"]
+  env: ["ANTHROPIC_API_KEY", "OPENROUTER_API_KEY", "XAI_API_KEY", "TAVILY_API_KEY", "SERPAPI_KEY", "BRAVE_SEARCH_API_KEY", "NEWSAPI_KEY", "PERPLEXITY_API_KEY", "EXA_API_KEY", "ALPHA_VANTAGE_API_KEY", "FRED_API_KEY", "APIFY_API_TOKEN", "GROQ_API_KEY", "FIRECRAWL_API_KEY"]
 ---
 
 # research-system — TAISUN v2 ディープリサーチパイプライン v2.4

@@ -2,6 +2,7 @@
 name: taiyo-style
 description: Taiyo copywriting style application
 allowed-tools: Read, Write, Edit, Grep, Glob
+requires: {}
 ---
 
 # 太陽スタイル・コピーライティングスキル

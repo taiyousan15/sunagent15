@@ -7,6 +7,7 @@ category: marketing
 tags: [rewrite, optimization, taiyo-style, copywriting]
 dependencies: [taiyo-analyzer]
 allowed-tools: Read, Write, Edit, Grep, Glob
+requires: {}
 ---
 
 # 太陽 Rewriter Skill

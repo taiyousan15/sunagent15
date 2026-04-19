@@ -3,6 +3,7 @@ name: batch
 description: "Use when running large-scale parallel code changes across many files - migrating frameworks, adding types, fixing lint errors, adding tests - by launching dozens of git-worktree-isolated agents that test and create PRs autonomously."
 risk: medium
 source: taisun
+requires: {}
 ---
 
 # /batch — 並列エージェントチームによる大規模コード変更

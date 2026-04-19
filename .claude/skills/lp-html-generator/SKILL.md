@@ -6,6 +6,8 @@ author: TAISUN
 category: marketing
 tags: [lp, html, css, playwright, screenshot, image-generation]
 dependencies: [playwright-skill]
+requires:
+  tools: ["playwright"]
 ---
 
 # LP HTML Generator

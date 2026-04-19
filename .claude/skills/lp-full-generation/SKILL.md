@@ -7,6 +7,8 @@ category: marketing-generation
 tags: [lp, full-generation, local-llm, ollama, rag, chromadb, taiyo-style, pipeline]
 dependencies: [taiyo-analyzer, lp-local-generator]
 disable-model-invocation: true
+requires:
+  tools: ["python3", "ollama"]
 ---
 
 # LP Full Generation Skill

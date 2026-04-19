@@ -5,6 +5,8 @@ argument-hint: "<COURSE_URL> [--quality=720|1080] [--captions] [--assets] [--cha
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 model: sonnet
 disable-model-invocation: true
+requires:
+  tools: ["ffmpeg", "yt-dlp", "python3"]
 ---
 
 # udemy-download - Udemyコースダウンローダー

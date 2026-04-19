@@ -7,6 +7,7 @@ category: marketing
 tags: [lp, landing-page, taiyo-style, conversion-optimization]
 dependencies: [taiyo-analyzer]
 allowed-tools: Read, Write, Edit, Grep, Glob
+requires: {}
 ---
 
 # Taiyo Style LP Skill

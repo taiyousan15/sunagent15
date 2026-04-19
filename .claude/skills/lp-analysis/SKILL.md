@@ -3,6 +3,7 @@ name: lp-analysis
 description: LP conversion optimization analysis
 allowed-tools: Read, Write, Edit, Grep, Glob
 disable-model-invocation: true
+requires: {}
 ---
 
 # LP分析・最適化スキル

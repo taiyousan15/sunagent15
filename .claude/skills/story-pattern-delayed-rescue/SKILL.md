@@ -9,6 +9,7 @@ triggers:
   - "一度負けるパターン"
   - "自力で立つストーリー"
 allowed-tools: Read, Write, Edit, Bash
+requires: {}
 ---
 
 # story-pattern-delayed-rescue

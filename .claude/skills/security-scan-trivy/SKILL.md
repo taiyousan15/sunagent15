@@ -3,6 +3,7 @@ name: security-scan-trivy
 description: Vulnerability scan with Trivy
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 disable-model-invocation: true
+requires: {}
 ---
 
 # Trivy Security Scan

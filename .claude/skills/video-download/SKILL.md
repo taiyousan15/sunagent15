@@ -1,6 +1,8 @@
 ---
 name: video-download
 description: YouTube等から動画をダウンロード。オフライン視聴、教育コンテンツ保存、クリエイティブ素材収集に使用。
+requires:
+  tools: ["yt-dlp"]
 ---
 
 # Video Download Skill

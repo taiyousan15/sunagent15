@@ -8,6 +8,8 @@ tools:
   - WebFetch
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 disable-model-invocation: true
+requires:
+  tools: ["python3", "curl"]
 ---
 
 # PDF Processing Guide

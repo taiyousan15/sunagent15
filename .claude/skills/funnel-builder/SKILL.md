@@ -3,6 +3,7 @@ name: funnel-builder
 description: Marketing funnel builder
 allowed-tools: Read, Write, Edit, Grep, Glob
 disable-model-invocation: true
+requires: {}
 ---
 
 # Funnel Builder (統合ファネル構築)

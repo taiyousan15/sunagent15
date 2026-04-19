@@ -7,6 +7,7 @@ category: marketing
 tags: [sales-letter, copywriting, taiyo-style, high-conversion]
 dependencies: [taiyo-analyzer]
 allowed-tools: Read, Write, Edit, Grep, Glob
+requires: {}
 ---
 
 # Taiyo Style Sales Letter Skill

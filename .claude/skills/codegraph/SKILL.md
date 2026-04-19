@@ -5,6 +5,7 @@ allowed-tools: Read, Bash
 risk: safe
 source: self
 effort: low
+requires: {}
 ---
 
 # CodeGraph — コードベース知識グラフ

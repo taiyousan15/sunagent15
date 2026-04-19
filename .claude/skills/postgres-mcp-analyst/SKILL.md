@@ -3,6 +3,7 @@ name: postgres-mcp-analyst
 description: PostgreSQL analysis via MCP
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 disable-model-invocation: true
+requires: {}
 ---
 
 # PostgreSQL MCP Analyst

@@ -2,6 +2,9 @@
 name: x-bijinesu
 description: X記事自動投稿パイプライン (クラウドLLM版) - 海外ビジネス事例ベースの高品質X記事を自動生成・投稿。Pexels画像5枚+カバー画像付き。複数ジャンル対応。
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+requires:
+  tools: ["python3", "playwright", "ollama"]
+  env: ["XAI_API_KEY", "PEXELS_API_KEY", "ANTHROPIC_API_KEY", "OPENROUTER_API_KEY"]
 ---
 
 # x-bijinesu - X記事自動投稿パイプライン (クラウドLLM版)

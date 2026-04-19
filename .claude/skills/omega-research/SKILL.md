@@ -6,6 +6,9 @@ allowed-tools: Read, Write, Bash(python3:*, pip:*, npx:*, cd:*)
 model: opus
 disable-model-invocation: true
 effort: high
+requires:
+  tools: ["python3"]
+  env: ["EXA_API_KEY", "XAI_API_KEY"]
 ---
 
 # Omega Research - 最高精度統合リサーチシステム v2

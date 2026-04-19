@@ -4,6 +4,7 @@ description: OpenCode iterative dev support
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 disable-model-invocation: true
+requires: {}
 ---
 
 # OpenCode Ralph Loop - 反復開発支援

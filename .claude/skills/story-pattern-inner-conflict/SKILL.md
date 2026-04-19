@@ -9,6 +9,7 @@ triggers:
   - "story-inner-conflict"
   - "迷いながら助けるパターン"
 allowed-tools: Read, Write, Edit, Bash
+requires: {}
 ---
 
 # story-pattern-inner-conflict

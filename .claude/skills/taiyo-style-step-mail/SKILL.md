@@ -7,6 +7,7 @@ category: marketing
 tags: [step-mail, email-marketing, taiyo-style, automation]
 dependencies: [taiyo-analyzer]
 allowed-tools: Read, Write, Edit, Grep, Glob
+requires: {}
 ---
 
 # Taiyo Style Step Mail Skill

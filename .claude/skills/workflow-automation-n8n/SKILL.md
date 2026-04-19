@@ -3,6 +3,7 @@ name: workflow-automation-n8n
 description: n8n workflow automation design
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 disable-model-invocation: true
+requires: {}
 ---
 
 # n8n Workflow Automation

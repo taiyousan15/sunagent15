@@ -2,6 +2,9 @@
 name: firecrawl
 description: Web scraping, crawling, and structural analysis
 disable-model-invocation: true
+requires:
+  tools: ["playwright"]
+  env: ["FIRECRAWL_API_KEY"]
 ---
 
 # firecrawl - Webスクレイピング・クロール・構造分析

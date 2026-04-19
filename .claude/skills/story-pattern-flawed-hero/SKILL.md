@@ -9,6 +9,7 @@ triggers:
   - "欠点のある主人公パターン"
   - "聖人じゃないストーリー"
 allowed-tools: Read, Write, Edit, Bash
+requires: {}
 ---
 
 # story-pattern-flawed-hero

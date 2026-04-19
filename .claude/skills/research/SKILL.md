@@ -5,6 +5,7 @@ argument-hint: "[トピック]"
 allowed-tools: Read, Write, Grep, Glob, WebSearch, WebFetch, Bash(python:*)
 disable-model-invocation: true
 effort: high
+requires: {}
 ---
 
 # research - ワンコマンド深層調査

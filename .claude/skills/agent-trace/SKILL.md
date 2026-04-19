@@ -3,6 +3,7 @@ name: agent-trace
 description: AI code attribution tracking
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 disable-model-invocation: true
+requires: {}
 ---
 
 # Agent Trace - AI生成コード帰属追跡スキル

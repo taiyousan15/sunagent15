@@ -3,6 +3,7 @@ name: honest-mode
 description: "Honest Mode - 慎重・正直・推測禁止・嘘禁止・誤魔化し禁止・ショートカット禁止・100%読んでから作業"
 allowed-tools: Read, Grep, Glob, Bash
 disable-model-invocation: false
+requires: {}
 ---
 
 # Honest Mode

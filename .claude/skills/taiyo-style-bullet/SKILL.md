@@ -7,6 +7,7 @@ category: marketing
 tags: [bullet, benefit, taiyo-style, copywriting]
 dependencies: [taiyo-analyzer]
 allowed-tools: Read, Write, Edit, Grep, Glob
+requires: {}
 ---
 
 # Taiyo Style Bullet Skill

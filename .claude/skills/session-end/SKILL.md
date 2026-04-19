@@ -1,5 +1,6 @@
 ---
 description: "Session End - 指示書+ログ作成+数値検証+最終チェック"
+requires: {}
 ---
 
 # Session End

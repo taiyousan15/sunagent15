@@ -9,6 +9,7 @@ triggers:
   - "制度の冷たさパターン"
   - "官僚的悪役ストーリー"
 allowed-tools: Read, Write, Edit, Bash
+requires: {}
 ---
 
 # story-pattern-systemic-wall

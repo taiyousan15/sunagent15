@@ -4,6 +4,9 @@ description: Video production pipeline
 version: "2.0.0"
 author: TAISUN
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+requires:
+  tools: ["ffmpeg", "yt-dlp", "whisper", "curl", "remotion"]
+  env: ["OPENAI_API_KEY"]
 ---
 
 # Video Agent - 統合動画自動化スキル

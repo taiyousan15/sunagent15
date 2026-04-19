@@ -1,5 +1,6 @@
 ---
 description: "Task-Miss Prevention Protocol - ミス防止プロトコル（PreFlect+CoVe+品質ゲート）"
+requires: {}
 ---
 
 # Task-Miss Prevention Protocol

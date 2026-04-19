@@ -10,6 +10,7 @@ allowed-tools:
   - WebFetch
   - Grep
   - Glob
+requires: {}
 ---
 
 # note-research - ゼロコストnoteリサーチシステム

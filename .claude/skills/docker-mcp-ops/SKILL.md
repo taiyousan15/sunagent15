@@ -3,6 +3,7 @@ name: docker-mcp-ops
 description: Docker container ops via MCP
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 disable-model-invocation: true
+requires: {}
 ---
 
 # Docker MCP Ops

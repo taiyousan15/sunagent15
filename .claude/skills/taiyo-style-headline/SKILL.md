@@ -7,6 +7,7 @@ category: marketing
 tags: [headline, catchcopy, taiyo-style, copywriting]
 dependencies: [taiyo-analyzer]
 allowed-tools: Read, Write, Edit, Grep, Glob
+requires: {}
 ---
 
 # Taiyo Style Headline Skill

@@ -6,6 +6,9 @@ allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, Bash(curl:*, 
 model: opus
 disable-model-invocation: true
 effort: high
+requires:
+  tools: ["python3", "curl"]
+  env: ["TAVILY_API_KEY", "SERPAPI_KEY", "BRAVE_API_KEY", "NEWSAPI_KEY", "PERPLEXITY_API_KEY", "BRAVE_SEARCH_API_KEY", "TWITTER_AUTH_TOKEN"]
 ---
 
 # mega-research-plus - 最強統合リサーチシステム v2

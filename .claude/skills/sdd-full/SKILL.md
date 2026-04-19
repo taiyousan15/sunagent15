@@ -5,6 +5,8 @@ argument-hint: "[spec-slug] [target-dir(optional)]"
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash(python3 *)
 model: ollama-deepseek-r1
+requires:
+  tools: ["python3", "ollama"]
 ---
 
 # sdd-full — Complete Spec-Driven Development Pipeline
