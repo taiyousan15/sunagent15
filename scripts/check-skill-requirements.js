@@ -13,13 +13,15 @@
  * Schema reference: docs/SKILL_REQUIRES_SCHEMA.md
  *
  * Exit codes:
- *   0 — all skills pass (non-strict: requires: may be absent)
- *   1 — any schema violation, or requires: absent under --strict
+ *   0 — all skills pass
+ *   1 — any schema violation, or requires: absent (strict default; bypass
+ *       with --non-strict only for transitional workflows)
  *
  * Usage:
- *   node scripts/check-skill-requirements.js
- *   node scripts/check-skill-requirements.js --strict
+ *   node scripts/check-skill-requirements.js                # strict (default)
+ *   node scripts/check-skill-requirements.js --non-strict   # allow missing requires:
  *   node scripts/check-skill-requirements.js --verbose
+ *   node scripts/check-skill-requirements.js --github-summary
  */
 
 'use strict';
@@ -55,9 +57,13 @@ const TOOL_EXAMPLES = 'ffmpeg, yt-dlp, python3, whisper, ollama, docker (kebab-c
 const ENV_EXAMPLES  = 'OPENAI_API_KEY, ANTHROPIC_API_KEY (UPPER_SNAKE_CASE)';
 
 function parseArgs(argv) {
-  const args = { strict: false, verbose: false, githubSummary: false };
+  // strict is the default as of F8.2 Phase 2; --non-strict is an opt-out escape hatch
+  // retained for transitional workflows. --strict remains accepted as an explicit no-op
+  // so existing callers (CI, docs, scripts) continue to work.
+  const args = { strict: true, verbose: false, githubSummary: false };
   for (const a of argv.slice(2)) {
     if (a === '--strict') args.strict = true;
+    else if (a === '--non-strict' || a === '--no-strict') args.strict = false;
     else if (a === '--verbose') args.verbose = true;
     else if (a === '--github-summary') args.githubSummary = true;
     else if (a === '-h' || a === '--help') args.help = true;
@@ -74,21 +80,16 @@ function listSkillFiles(warnings = []) {
     if (entry.name.startsWith('_')) {
       warnings.push(`[discovery] directory '${entry.name}' has _-prefix but is not in EXCLUDED_DIRS — including (update EXCLUDED_DIRS if this is wrong)`);
     }
-    // Accept both SKILL.md (standard) and skill.md (legacy lowercase, case-insensitive fs).
-    let skillMd = null;
-    for (const candidate of ['SKILL.md', 'skill.md']) {
-      const p = path.join(SKILLS_DIR, entry.name, candidate);
-      if (fs.existsSync(p)) {
-        // On case-insensitive fs, fs.existsSync returns true for both, so verify by reading dir
-        const dirEntries = fs.readdirSync(path.join(SKILLS_DIR, entry.name));
-        if (dirEntries.includes(candidate)) { skillMd = p; break; }
-      }
-    }
-    if (skillMd) {
-      if (path.basename(skillMd) === 'skill.md') {
-        warnings.push(`[discovery] ${path.relative(REPO, skillMd)} uses lowercase 'skill.md' — convention is SKILL.md (rename recommended, handled as legacy)`);
-      }
-      files.push({ name: entry.name, path: skillMd });
+    // Standard filename is SKILL.md. Lowercase 'skill.md' still validates but surfaces
+    // a warning so any regression is visible (F8.2 Phase 2: last lowercase holdout was
+    // renamed in PR #326; keeping the warning lane rather than hard-failing avoids
+    // blocking CI if a future skill is added with the wrong case by mistake).
+    const dirEntries = fs.readdirSync(path.join(SKILLS_DIR, entry.name));
+    if (dirEntries.includes('SKILL.md')) {
+      files.push({ name: entry.name, path: path.join(SKILLS_DIR, entry.name, 'SKILL.md') });
+    } else if (dirEntries.includes('skill.md')) {
+      warnings.push(`[discovery] .claude/skills/${entry.name}/skill.md uses lowercase — rename to SKILL.md (convention since F8.2 Phase 2)`);
+      files.push({ name: entry.name, path: path.join(SKILLS_DIR, entry.name, 'skill.md') });
     }
   }
   return files.sort((a, b) => a.name.localeCompare(b.name));
@@ -203,7 +204,8 @@ function appendGitHubSummary(lines) {
 function main() {
   const args = parseArgs(process.argv);
   if (args.help) {
-    console.log('Usage: node scripts/check-skill-requirements.js [--strict] [--verbose] [--github-summary]');
+    console.log('Usage: node scripts/check-skill-requirements.js [--non-strict] [--verbose] [--github-summary]');
+    console.log('  (strict is the default as of F8.2 Phase 2; --strict is accepted as a no-op for back-compat)');
     console.log('See docs/SKILL_REQUIRES_SCHEMA.md for schema details.');
     process.exit(0);
   }
@@ -242,7 +244,7 @@ function main() {
     if (!('requires' in fm)) {
       withoutRequires++;
       if (args.strict) {
-        errors.push(`[${rel}] requires: missing (--strict mode). Add "requires: {}" for no external deps, or requires: {tools: [...], env: [...]} as applicable.`);
+        errors.push(`[${rel}] requires: missing. Add "requires: {}" for no external deps, or requires: {tools: [...], env: [...]} as applicable. (strict is the default since F8.2 Phase 2; pass --non-strict only during transitional work.)`);
       } else if (args.verbose) {
         console.log(`[skip] ${rel} — no requires:`);
       }
@@ -258,7 +260,7 @@ function main() {
     }
   }
 
-  const mode = args.strict ? 'strict' : 'non-strict (requires: optional)';
+  const mode = args.strict ? 'strict (default)' : 'non-strict (--non-strict: requires: optional)';
   console.log('');
   console.log(`Scanned ${files.length} skills (with requires: ${withRequires}, without: ${withoutRequires})`);
   console.log(`Mode: ${mode}`);

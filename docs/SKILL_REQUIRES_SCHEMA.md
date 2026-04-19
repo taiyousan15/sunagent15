@@ -83,10 +83,12 @@ requires:
 ## 検証方法
 
 ```bash
-node scripts/check-skill-requirements.js              # default: requires: 不在は skip
-node scripts/check-skill-requirements.js --strict     # 全スキルに requires: 必須
-node scripts/check-skill-requirements.js --verbose    # 詳細出力
+node scripts/check-skill-requirements.js               # strict (default, F8.2 Phase 2 以降)
+node scripts/check-skill-requirements.js --non-strict  # 移行期用: requires: 欠落を許容
+node scripts/check-skill-requirements.js --verbose     # 詳細出力
 ```
+
+`--strict` は後方互換のため引き続き受け付けるが、現在は no-op（既定が strict）。
 
 ### 判定ルール
 
@@ -94,29 +96,32 @@ node scripts/check-skill-requirements.js --verbose    # 詳細出力
 |--------|-----------|
 | 全スキル validator pass | `0` |
 | `requires:` の型/書式違反 | `1` |
-| `--strict` モードで `requires:` 欠損 | `1` |
+| `requires:` 欠落（strict 既定） | `1` |
+| `--non-strict` 指定時に `requires:` 欠落 | `0`（skip、ただし CI では原則使用しない） |
 | frontmatter パースエラー | `1` |
 
 ---
 
 ## CI Enforcement
 
-`.github/workflows/ci.yml` に `skill-requirements-check` ジョブを追加。
+`.github/workflows/ci.yml` に `skill-requirements-check` ジョブを配置。
 
-- トリガー: `.claude/**` または `scripts/**` または `.github/workflows/**` 変更時
+- トリガー: `.claude/skills/*/SKILL.md` / `scripts/check-skill-requirements.js` / `docs/SKILL_REQUIRES_SCHEMA.md` の変更時
+- 実行コマンド: `node scripts/check-skill-requirements.js --strict --github-summary`
 - 失敗すると Quality Gate が fail
-- デフォルトは non-strict（段階的導入を許容）
+- 既定は strict（`requires:` フィールドの存在自体を必須、Phase 2 完了済）
 
 ---
 
 ## 段階的ロールアウト
 
-1. **Phase 1 (本 PR)**: schema + validator + CI + 全 67 スキル棚卸し（L-full）
+1. **Phase 1** (PR #325, main `481438a`): schema + validator + CI + 全 67 スキル棚卸し
    - Group A (外部依存あり): 明示的に `requires: {tools: [...], env: [...], node: ...}` 記入
-   - Group B (依存なし): `requires: {}` で "依存なし" を明示宣言（書き忘れと区別）
-2. **Phase 2 (次 PR)**: `scripts/check-skill-requirements.js --strict` を CI default 化
-   - 全スキルに `requires:` フィールドが必須
-   - 新規スキル追加時の記入漏れを CI で検出
-   - Phase 1 完了後に切り替え（empty mapping も OK、フィールド自体の存在は必須）
+   - Group B (依存なし): `requires: {}` で「依存なし」を明示宣言（書き忘れと区別）
+2. **Phase 2** (本 PR): validator と CI を strict 既定化
+   - 全スキルに `requires:` フィールドが必須（empty mapping `{}` も OK）
+   - 新規スキル追加時の記入漏れを CI で即検出
+   - `--non-strict` は移行期用のエスケープハッチとして残置、CI では使用しない
+   - lowercase `skill.md` は `SKILL.md` へリネーム済（PR #326、main `92227006`）。validator は警告を維持
 
-新スキル追加時は `requires: {...}` または `requires: {}` を最初から記入することを推奨。
+新スキル追加時は `requires: {...}` または `requires: {}` を最初から記入すること（Phase 2 以降は CI が即座に検出する）。
