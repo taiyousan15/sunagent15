@@ -312,4 +312,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { listSkillFiles, extractFrontmatter, validateRequires };
+module.exports = { listSkillFiles, extractFrontmatter, validateRequires, parseArgs };
