@@ -13,6 +13,36 @@
 # set -e: 致命的失敗で即停止（失敗許容操作には || true を付与）
 set -e
 
+# ─────────────────────────────────────────
+# UTF-8 ロケール強制（F6.1: 日本語パス・ファイル名対応）
+# 既存の UTF-8 ロケールを尊重し、未設定の場合のみフォールバック
+# ─────────────────────────────────────────
+if ! locale 2>/dev/null | grep -qi 'UTF-8'; then
+    for candidate in "en_US.UTF-8" "ja_JP.UTF-8" "C.UTF-8"; do
+        if locale -a 2>/dev/null | grep -qi "^${candidate}$"; then
+            export LANG="$candidate"
+            export LC_ALL="$candidate"
+            break
+        fi
+    done
+
+    if ! locale 2>/dev/null | grep -qi 'UTF-8'; then
+        echo ""
+        echo "  ⚠️  UTF-8 ロケールが利用できません"
+        echo "     日本語ファイル名使用時に文字化けする可能性があります"
+        echo ""
+    fi
+fi
+
+# 日本語等の非ASCII文字をパスに含む場合の注意喚起（LC_ALL=C で locale 非依存検出）
+if LC_ALL=C printf '%s' "$PWD" | LC_ALL=C grep -q '[^ -~]'; then
+    echo ""
+    echo "  ℹ️  現在のパスに非ASCII文字（日本語等）が含まれています:"
+    echo "     $PWD"
+    echo "     互換性のため英字パス（例: ~/taisun_agent）を推奨します"
+    echo ""
+fi
+
 # Persist installer output to a timestamped log for bug reports.
 # Disabled in CI (CI=true env var) where GitHub Actions captures logs.
 # Disabled when TAISUN_NO_LOG_FILE is set.
