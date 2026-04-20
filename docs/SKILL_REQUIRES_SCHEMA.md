@@ -88,7 +88,13 @@ node scripts/check-skill-requirements.js --non-strict  # 移行期用: requires:
 node scripts/check-skill-requirements.js --verbose     # 詳細出力
 ```
 
-`--strict` は後方互換のため引き続き受け付けるが、現在は no-op（既定が strict）。
+`--strict` は後方互換のため引き続き解釈されるが、**deprecated**（既定が strict のため実質 no-op）。渡すと警告が出る。将来のリリースで削除予定。
+
+### ファイル名規約（F8.2 Phase 2 Cleanup 以降）
+
+- スキルの定義ファイルは **`SKILL.md` 固定**（大文字）。
+- lowercase `skill.md` は **hard error**。macOS の case-insensitive FS でも検出される。
+- `SKILL.md` と `skill.md` が同一ディレクトリに両方存在する場合も error。
 
 ### 判定ルール
 
@@ -99,6 +105,7 @@ node scripts/check-skill-requirements.js --verbose     # 詳細出力
 | `requires:` 欠落（strict 既定） | `1` |
 | `--non-strict` 指定時に `requires:` 欠落 | `0`（skip、ただし CI では原則使用しない） |
 | frontmatter パースエラー | `1` |
+| lowercase `skill.md` または SKILL.md/skill.md 併存 | `1` |
 
 ---
 
@@ -107,9 +114,10 @@ node scripts/check-skill-requirements.js --verbose     # 詳細出力
 `.github/workflows/ci.yml` に `skill-requirements-check` ジョブを配置。
 
 - トリガー: `.claude/skills/*/SKILL.md` / `scripts/check-skill-requirements.js` / `docs/SKILL_REQUIRES_SCHEMA.md` の変更時
-- 実行コマンド: `node scripts/check-skill-requirements.js --strict --github-summary`
+- 実行コマンド: `node scripts/check-skill-requirements.js --github-summary`
 - 失敗すると Quality Gate が fail
 - 既定は strict（`requires:` フィールドの存在自体を必須、Phase 2 完了済）
+- `--strict` フラグは渡さない（deprecated、既定と同じ挙動）
 
 ---
 
@@ -118,10 +126,16 @@ node scripts/check-skill-requirements.js --verbose     # 詳細出力
 1. **Phase 1** (PR #325, main `481438a`): schema + validator + CI + 全 67 スキル棚卸し
    - Group A (外部依存あり): 明示的に `requires: {tools: [...], env: [...], node: ...}` 記入
    - Group B (依存なし): `requires: {}` で「依存なし」を明示宣言（書き忘れと区別）
-2. **Phase 2** (本 PR): validator と CI を strict 既定化
+2. **Phase 2** (PR #327, main `fe771bc`): validator と CI を strict 既定化
    - 全スキルに `requires:` フィールドが必須（empty mapping `{}` も OK）
    - 新規スキル追加時の記入漏れを CI で即検出
    - `--non-strict` は移行期用のエスケープハッチとして残置、CI では使用しない
-   - lowercase `skill.md` は `SKILL.md` へリネーム済（PR #326、main `92227006`）。validator は警告を維持
+   - lowercase `skill.md` は `SKILL.md` へリネーム済（PR #326、main `92227006`）。その時点では validator は警告を維持
+   - validator の jest 単体テスト 36 ケースを追加（PR #328、main `14306c9`）
+3. **Phase 2 Cleanup** (本 PR): 仕上げ
+   - lowercase `skill.md` 検出を **hard error** に昇格（PR #326 リネーム後で安全）
+   - `SKILL.md`/`skill.md` が同一ディレクトリに併存した場合も hard error
+   - `--strict` フラグを **deprecated** 化（渡すと警告、将来のリリースで削除）
+   - CI ジョブから `--strict` を除去（deprecation 警告 noise 回避）
 
-新スキル追加時は `requires: {...}` または `requires: {}` を最初から記入すること（Phase 2 以降は CI が即座に検出する）。
+新スキル追加時は `requires: {...}` または `requires: {}` を最初から記入すること（Phase 2 以降は CI が即座に検出する）。**ファイル名は `SKILL.md`（大文字）固定**。

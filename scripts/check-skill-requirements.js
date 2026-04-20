@@ -58,11 +58,12 @@ const ENV_EXAMPLES  = 'OPENAI_API_KEY, ANTHROPIC_API_KEY (UPPER_SNAKE_CASE)';
 
 function parseArgs(argv) {
   // strict is the default as of F8.2 Phase 2; --non-strict is an opt-out escape hatch
-  // retained for transitional workflows. --strict remains accepted as an explicit no-op
-  // so existing callers (CI, docs, scripts) continue to work.
-  const args = { strict: true, verbose: false, githubSummary: false };
+  // retained for transitional workflows. --strict remains accepted as a no-op so
+  // existing callers keep working, but we record `strictDeprecated: true` so main()
+  // can emit a one-time deprecation warning (will be removed in a future release).
+  const args = { strict: true, verbose: false, githubSummary: false, strictDeprecated: false };
   for (const a of argv.slice(2)) {
-    if (a === '--strict') args.strict = true;
+    if (a === '--strict') { args.strict = true; args.strictDeprecated = true; }
     else if (a === '--non-strict' || a === '--no-strict') args.strict = false;
     else if (a === '--verbose') args.verbose = true;
     else if (a === '--github-summary') args.githubSummary = true;
@@ -71,7 +72,7 @@ function parseArgs(argv) {
   return args;
 }
 
-function listSkillFiles(warnings = []) {
+function listSkillFiles(warnings = [], errors = []) {
   if (!fs.existsSync(SKILLS_DIR)) return [];
   const files = [];
   for (const entry of fs.readdirSync(SKILLS_DIR, { withFileTypes: true })) {
@@ -80,15 +81,20 @@ function listSkillFiles(warnings = []) {
     if (entry.name.startsWith('_')) {
       warnings.push(`[discovery] directory '${entry.name}' has _-prefix but is not in EXCLUDED_DIRS — including (update EXCLUDED_DIRS if this is wrong)`);
     }
-    // Standard filename is SKILL.md. Lowercase 'skill.md' still validates but surfaces
-    // a warning so any regression is visible (F8.2 Phase 2: last lowercase holdout was
-    // renamed in PR #326; keeping the warning lane rather than hard-failing avoids
-    // blocking CI if a future skill is added with the wrong case by mistake).
+    // Standard filename is SKILL.md. Lowercase 'skill.md' is now a hard error
+    // (F8.2 Phase 2 cleanup; the last lowercase holdout was renamed in PR #326).
+    // We still include the file in the scan so any schema issues are surfaced
+    // alongside the rename error — maximum diagnostic value in one CI run.
     const dirEntries = fs.readdirSync(path.join(SKILLS_DIR, entry.name));
-    if (dirEntries.includes('SKILL.md')) {
+    const hasUpper = dirEntries.includes('SKILL.md');
+    const hasLower = dirEntries.includes('skill.md');
+    if (hasUpper && hasLower) {
+      errors.push(`[discovery] .claude/skills/${entry.name}/ contains both SKILL.md and skill.md — delete the lowercase duplicate`);
+    }
+    if (hasUpper) {
       files.push({ name: entry.name, path: path.join(SKILLS_DIR, entry.name, 'SKILL.md') });
-    } else if (dirEntries.includes('skill.md')) {
-      warnings.push(`[discovery] .claude/skills/${entry.name}/skill.md uses lowercase — rename to SKILL.md (convention since F8.2 Phase 2)`);
+    } else if (hasLower) {
+      errors.push(`[discovery] .claude/skills/${entry.name}/skill.md uses lowercase — rename to SKILL.md (required since F8.2 Phase 2)`);
       files.push({ name: entry.name, path: path.join(SKILLS_DIR, entry.name, 'skill.md') });
     }
   }
@@ -205,19 +211,27 @@ function main() {
   const args = parseArgs(process.argv);
   if (args.help) {
     console.log('Usage: node scripts/check-skill-requirements.js [--non-strict] [--verbose] [--github-summary]');
-    console.log('  (strict is the default as of F8.2 Phase 2; --strict is accepted as a no-op for back-compat)');
+    console.log('  (strict is the default as of F8.2 Phase 2; --strict is DEPRECATED — prints a warning and will be removed)');
     console.log('See docs/SKILL_REQUIRES_SCHEMA.md for schema details.');
     process.exit(0);
   }
 
   const warnings = [];
-  const files = listSkillFiles(warnings);
+  const errors = [];
+
+  if (args.strictDeprecated) {
+    warnings.push(
+      '[deprecated] --strict is a no-op (strict is the default since F8.2 Phase 2). ' +
+      'Remove it from your callers; the flag will be deleted in a future release.'
+    );
+  }
+
+  const files = listSkillFiles(warnings, errors);
   if (files.length === 0) {
     console.error(`No SKILL.md found under ${SKILLS_DIR}`);
     process.exit(1);
   }
 
-  const errors = [];
   let withRequires = 0;
   let withoutRequires = 0;
 

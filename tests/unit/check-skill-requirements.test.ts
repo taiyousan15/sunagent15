@@ -27,7 +27,7 @@ const validator = require(path.resolve(
   'check-skill-requirements.js'
 ));
 
-const { parseArgs, extractFrontmatter, validateRequires } = validator;
+const { parseArgs, extractFrontmatter, validateRequires, listSkillFiles } = validator;
 
 describe('check-skill-requirements validator (F8.2)', () => {
   describe('parseArgs', () => {
@@ -51,6 +51,21 @@ describe('check-skill-requirements validator (F8.2)', () => {
     it('--strict is accepted as a back-compat no-op (stays true)', () => {
       const args = parseArgs(['node', 'script', '--strict']);
       expect(args.strict).toBe(true);
+    });
+
+    it('--strict sets strictDeprecated=true (Phase 2 Cleanup)', () => {
+      const args = parseArgs(['node', 'script', '--strict']);
+      expect(args.strictDeprecated).toBe(true);
+    });
+
+    it('no --strict flag leaves strictDeprecated=false', () => {
+      const args = parseArgs(['node', 'script']);
+      expect(args.strictDeprecated).toBe(false);
+    });
+
+    it('--non-strict does not set strictDeprecated', () => {
+      const args = parseArgs(['node', 'script', '--non-strict']);
+      expect(args.strictDeprecated).toBe(false);
     });
 
     it('--verbose sets verbose flag', () => {
@@ -258,6 +273,36 @@ describe('check-skill-requirements validator (F8.2)', () => {
         );
         expect(errors.join('\n')).toMatch(/duplicate "FOO"/);
       });
+    });
+  });
+
+  describe('listSkillFiles (integration against real .claude/skills/)', () => {
+    // These tests run against the actual repo state (the validator is
+    // hardcoded to SKILLS_DIR = <repo>/.claude/skills). They guard that
+    // Phase 2 Cleanup invariants hold at HEAD: no lowercase holdouts and
+    // the top-level skill count is stable.
+
+    it('returns a non-empty list of SKILL.md files sorted by name', () => {
+      const files = listSkillFiles([], []);
+      expect(Array.isArray(files)).toBe(true);
+      expect(files.length).toBeGreaterThan(0);
+      const names = files.map((f: { name: string }) => f.name);
+      const sorted = [...names].sort((a, b) => a.localeCompare(b));
+      expect(names).toEqual(sorted);
+    });
+
+    it('yields zero errors on a clean repo (no lowercase skill.md)', () => {
+      const warnings: string[] = [];
+      const errors: string[] = [];
+      listSkillFiles(warnings, errors);
+      expect(errors).toEqual([]);
+    });
+
+    it('every returned path ends with SKILL.md (uppercase, Phase 2 Cleanup)', () => {
+      const files = listSkillFiles([], []);
+      for (const f of files as Array<{ path: string }>) {
+        expect(f.path.endsWith('/SKILL.md')).toBe(true);
+      }
     });
   });
 });

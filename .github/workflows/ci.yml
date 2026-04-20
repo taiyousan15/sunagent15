@@ -315,9 +315,11 @@ jobs:
   # ============================================
   # Skill Requirements Schema Check (F8.2 Phase 2)
   # Verifies each .claude/skills/<name>/SKILL.md conforms to the
-  # `requires:` schema (see docs/SKILL_REQUIRES_SCHEMA.md). Strict by
-  # default: a missing `requires:` field fails the job. Use
-  # `--non-strict` locally only for transitional work.
+  # `requires:` schema (see docs/SKILL_REQUIRES_SCHEMA.md). Strict is
+  # the default: a missing `requires:` field or a lowercase `skill.md`
+  # filename fails the job. Use `--non-strict` locally only for
+  # transitional work. Do NOT pass `--strict` (it is deprecated and
+  # will emit a warning — strict is already the default).
   # ============================================
   skill-requirements-check:
     name: Skill Requirements Check
@@ -333,7 +335,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Validate skill requirements schema
-        run: node scripts/check-skill-requirements.js --strict --github-summary
+        run: node scripts/check-skill-requirements.js --github-summary
 
   # ============================================
   # Install Smoke Test (cross-OS)
