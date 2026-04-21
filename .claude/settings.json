@@ -24,7 +24,8 @@
       "Grep",
       "Task",
       "WebFetch",
-      "WebSearch"
+      "WebSearch",
+      "AskUserQuestion"
     ],
     "deny": []
   },
