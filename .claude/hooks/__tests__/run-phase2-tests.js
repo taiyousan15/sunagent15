@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 // テスト対象のモジュールをインポート
-const { performIntentCheck, buildUserInputFromContext } = require('../../hooks.disabled.local/unified-guard.js');
+const { performIntentCheck, buildUserInputFromContext } = require('../unified-guard.js');
 
 // テスト用の一時ファイルパス
 const TEST_DIR = path.join(__dirname, '.test-tmp');

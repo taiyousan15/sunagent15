@@ -34,8 +34,8 @@ const DEVIATION_PATTERNS = [
 
 // 承認済みパターン（ユーザーが明示的に許可した表現）
 const APPROVED_PATTERNS = [
-  /(?:承認|approved|OK|許可)/gi,
-  /(?:実行|proceed|go ahead)(?:して)?(?:よい|OK)/gi,
+  /(?:承認|approved|OK|許可)/i,
+  /(?:実行|proceed|go ahead)(?:して)?(?:よい|OK)/i,
 ];
 
 async function main() {

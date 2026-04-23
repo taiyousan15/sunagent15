@@ -5,7 +5,8 @@ argument-hint: "[spec-slug] [target-dir(optional)]"
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Glob, Grep
 model: ollama-deepseek-r1
-requires: {}
+requires:
+  tools: ["python3", "ollama"]
 ---
 
 # sdd-threat — STRIDE脅威モデリング生成（設計段階セキュリティ分析）

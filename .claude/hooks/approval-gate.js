@@ -95,7 +95,7 @@ process.stdin.on('end', () => {
         `   自動実行をブロックしました。\n`;
       process.stderr.write(msg);
       logApproval(toolName, 'billing', false);
-      process.exit(1);
+      process.exit(2);
     }
   } catch (_) {
     process.exit(0);

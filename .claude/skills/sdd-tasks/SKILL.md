@@ -5,7 +5,8 @@ argument-hint: "[spec-slug] [target-dir(optional)]"
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Glob, Grep
 model: ollama-qwen25-72b
-requires: {}
+requires:
+  tools: ["python3", "ollama"]
 ---
 
 # sdd-tasks — Kiro形式タスク分解生成（フェーズ構造・依存グラフ・Ganttチャート）

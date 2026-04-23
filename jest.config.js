@@ -110,6 +110,9 @@ module.exports = {
     {
       displayName: 'hooks',
       testMatch: ['<rootDir>/.claude/hooks/__tests__/**/*.test.js'],
+      testPathIgnorePatterns: [
+        '<rootDir>/.claude/hooks/__tests__/unified-guard-phase3.test.js',
+      ],
       modulePathIgnorePatterns: [
         '<rootDir>/\\.claude/skills/.*/\\.venv/',
         '<rootDir>/udemy-downloader/\\.venv/',

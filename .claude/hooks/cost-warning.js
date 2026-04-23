@@ -46,7 +46,7 @@ const COST_INFO = {
   }
 };
 
-export default {
+module.exports = {
   name: 'cost-warning',
   description: 'APIコスト発生前に警告を表示',
   event: 'PreToolUse',
