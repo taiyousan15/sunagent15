@@ -5,7 +5,7 @@ version: "1.0.0"
 author: TAISUN
 category: marketing-generation
 tags: [lp, full-generation, local-llm, ollama, rag, chromadb, taiyo-style, pipeline]
-dependencies: [taiyo-analyzer, lp-local-generator]
+dependencies: [taiyo-analyzer]
 disable-model-invocation: true
 requires:
   tools: ["python3", "ollama"]

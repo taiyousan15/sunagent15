@@ -65,7 +65,7 @@ ARGUMENTS が空の場合は「何を構築したいですか？」と確認し�
 | BRAVE_SEARCH_API_KEY | 推奨 | Brave検索（広範囲Web検索）※BRAVE_API_KEYも同値で設定 |
 | NEWSAPI_KEY | 推奨 | NewsAPI（ニュース集約） |
 | PERPLEXITY_API_KEY | 推奨 | Perplexity AI検索+要約（omega-researchのLayer 2で使用） |
-| EXA_API_KEY | 推奨 | Exa セマンティック検索（/exa-search, omega-research Layer 1） |
+| EXA_API_KEY | 推奨 | Exa セマンティック検索（omega-research Layer 1） |
 | ALPHA_VANTAGE_API_KEY | 推奨 | 株式・金融データ・経済指標 |
 | FRED_API_KEY | 推奨 | FRED 経済指標（FF金利/CPI/失業率/GDP等） |
 | APIFY_TOKEN | 推奨 | Webスクレイピング（Twitter/X/Instagram データ収集） |
@@ -351,17 +351,15 @@ Agent A/B/C の結果を受けて、以下のスキルを3バッチで追加実�
 --- バッチA: 大規模統合リサーチ ---
   A1. /mega-research — 6つの検索API統合調査
   A2. /mega-research-plus — 8ソース統合（最高精度）
-  A3. /deep-research — 自律マルチステップ調査
 → /compact 実行
 
 --- バッチB: 特化型リサーチ ---
   B1. /note-research — 日本のnote.com記事（日本語コミュニティ）
-  B2. /exa-search — セマンティック検索（類似技術記事発見）
-  B3. /deep-research-grok — Grok-4 Live Search（リアルタイム最新情報）
+  B2. /deep-research-grok — Grok-4 Live Search（リアルタイム最新情報）
 → /compact 実行
 
---- バッチC: 55サイト333コマンド ---
-  C1. /opencli-research — opencli-rs で以下を実行:
+--- バッチC: 55サイト333コマンド（opencli-rs 直接呼び出し）---
+  C1. opencli-rs で以下を実行:
       - opencli-rs hackernews top/search "[KEYWORD]" --format json
       - opencli-rs arxiv search "[KEYWORD]" --format json
       - opencli-rs devto search "[KEYWORD]" --format json
@@ -401,17 +399,14 @@ Pass 2 で補完すること:
 
 追加実行（ギャップがある場合）:
   D1. /world-research — 全世界総合リサーチ
-  D2. /gem-research — Gemini活用9層調査
 → /compact 実行
 
 --- URL・ドキュメント・動画分析 ---
   E1. /url-all — 発見した重要URLの完全分析
   E2. /url-deep-analysis — 競合サービスの構造分析
   E3. /context7-docs — 使用予定フレームワークの最新ドキュメント取得
-  E4. /youtube-summarizer — 関連カンファレンス動画の要約
-  E5. /firecrawl — 重要サイトの深層スクレイピング
-  E6. /tavily-web — Web検索・コンテンツ抽出
-  E7. /research-free — APIキー不要の軽量補完
+  E4. /firecrawl — 重要サイトの深層スクレイピング
+  E5. /research-free — APIキー不要の軽量補完
 → /compact 実行
 
 **STEP 2 完了後、全エージェント結果を統合してから STEP 3 へ。**

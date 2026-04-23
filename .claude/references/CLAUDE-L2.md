@@ -24,18 +24,11 @@ Violations are blocked with exit code 2.
 
 | Trigger | Required Skill | Strict |
 |---------|---------------|--------|
-| YOUTUBE + tutorial + video | video-course | No |
 | Sales letter | taiyo-style-sales-letter | No |
 | Step mail | taiyo-style-step-mail | No |
 | VSL script | taiyo-style-vsl | No |
 | Instagram + Shorts | shorts-create | Yes |
-| Interactive/branching video | interactive-video-platform | Yes |
-| TTS/voice/narration | interactive-video-platform | Yes |
 | Image QA/visual check | agentic-vision | No |
-| Phone/call/Voice AI | voice-ai | No |
-| SDR/sales pipeline | ai-sdr | No |
-| Lead scoring | lead-scoring | No |
-| Outreach/messaging | outreach-composer | No |
 | URL analysis/site analysis | url-deep-analysis | No |
 
 ## Guidelines
