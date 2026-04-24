@@ -1,6 +1,6 @@
 ---
 name: agent-browser
-description: Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking buttons, taking screenshots, extracting data, testing web apps, or automating any browser task. Triggers include requests to "open a website", "fill out a form", "click a button", "take a screenshot", "scrape data from a page", "test this web app", "login to a site", "automate browser actions", or any task requiring programmatic web interaction.
+description: 'Browser automation CLI for AI agents (Chrome/CDP). Navigate, fill forms, click, screenshot, scrape data, test web apps, auth. Triggers: "open website", "fill form", "click button", "screenshot", "scrape", "login", "automate browser".'
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 requires:
   tools: ["playwright"]

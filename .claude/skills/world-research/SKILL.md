@@ -1,20 +1,6 @@
 ---
 name: world-research
-description: |
-  全世界SNS・学術論文・コミュニティ横断キーワード検索リサーチスキル。
-  【SNS層】X/Reddit/YouTube/Instagram/TikTok/note.com/Bilibili/Zhihu/小红書/WeChat/Weibo/Medium/Naver等
-  【学術層】Arxiv/Papers with Code/OpenReview/Google Scholar/Semantic Scholar/Connected Papers/DBLP/ACL Anthology
-  【キュレーション層】HF Daily Papers/Daily AI Papers/@_akhaliq/ML News/Alpha Signal
-  【ブログ・解説層】Lil'Log/Distill/The Gradient/Jay Alammar/Karpathy/Raschka/Chip Huyen
-  【実装エコシステム層】HF Smolagents/awesome-*repos/LangChain/CrewAI/AutoGPT/OpenDevin
-  【コミュニティ層】r/MachineLearning/HN/Discord(Eleuther/LAION/HF)/Slack(MLOps)
-  【暗号通貨・ブロックチェーン層】Glassnode/Nansen/Dune/DeFiLlama/CryptoQuant/CoinGecko/Arkham/TradingView
-  【暗号通貨コミュニティ層】r/CryptoCurrency/r/Bitcoin/r/Ethereum/CoinDesk/Cointelegraph/KudasaiJP/Bankless
-  【暗号通貨トレーディング層】Freqtrade/CCXT/Hummingbot/1inch/Jupiter/Whale Alert
-  AIキーワードマスターリストで一括検索。gpt-researcher統合で深層調査も可能。
-  トリガー「世界リサーチ」「SNSリサーチ」「キーワード検索」「グローバル検索」「世界中で調べて」
-  「論文検索」「学術リサーチ」「ペーパーサーチ」「最新研究」「アカデミックリサーチ」
-  「暗号通貨リサーチ」「クリプトリサーチ」「仮想通貨調査」「DeFi調査」「オンチェーン分析」
+description: "全世界SNS・学術論文・コミュニティ横断リサーチ（Arxiv/HuggingFace/X/Reddit/HN/Crypto/DeFi等を6層統合）。AIキーワードマスターリスト一括検索、gpt-researcher深層統合。トリガー:「世界リサーチ」「SNSリサーチ」「論文検索」「学術リサーチ」「暗号通貨リサーチ」「DeFi調査」「キーワード検索」"
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch
 effort: high
