@@ -11,7 +11,7 @@
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
-> インストールするだけで 67スキル・110+コマンド・26 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 95 個の agent-source テンプレートを活用）。
+> インストールするだけで 67スキル・110+コマンド・25 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 95 個の agent-source テンプレートを活用）。
 
 ---
 
