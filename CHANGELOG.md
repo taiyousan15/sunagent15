@@ -7,6 +7,105 @@
 
 ---
 
+## [2.53.3] - 2026-04-15
+
+### 🔧 修正 (Fixed)
+
+#### 他人配布向けポータビリティ修正5フェーズ（PR #307）
+
+**(P0) 配布パス修正**
+- `scripts/setup-project.ps1:181` で `.claude\agents` → `.claude\agent-source` に修正（Windows setup-project単体実行時にエージェント0件の可能性を解消）
+- `scripts/install.ps1` のパラメータ `$Profile` → `$SkillProfile` 改名（PowerShell自動変数衝突解消、`-Profile` エイリアスで後方互換）。ルート直下の `install.ps1`（`irm | iex` 用リモートインストーラ）は別ファイルで今回は変更なし
+- `install.sh` 完了メッセージの更新案内を `npm run setup`（破壊的）→ `npm run update`（非破壊）に変更
+
+**(P1) 非破壊アップデート実装**
+- `src/utils/settings-merge.ts` で additive-only deep merge を実装（ユーザー値優先・新規MCPは `disabled:true` で追加）
+- `scripts/update-settings.js` で自動backup（chmod 600・FIFO 3世代）+ merge + サマリー表示
+- 新コマンド `npm run setup:fresh` で破壊的リセットを明示分離
+
+**(P2) サイレント失敗検知**
+- `scripts/verify-installation.js` でローカル検証7項目（CLAUDE.md存在・hook動的カウント・hook参照先存在・skill symlink dangling検出・agent数・version整合・JSON構文）
+- 新コマンド `npm run taisun:verify`
+- `install.sh` Step 5 を動的hookカウントへ変更（ハードコード3件→全件）
+
+**(P3) Windows CI + update.sh verify統合**
+- `.github/workflows/ci.yml` に windows-latest ジョブ新設
+- setup-project.ps1 の agent-source 参照 + install.ps1 の SkillProfile/Alias を回帰ガード
+- `update.sh` 最後に `verify-installation` を自動実行
+
+**(P4) セキュリティ + housekeeping**
+- `npm audit fix` で 8 脆弱性（critical 1 + high 3 + moderate 4）→ 0 解消
+- `.gitignore` に `ログ/` 追加
+- hook 14件の `chmod +x` 整合
+
+**(P5) フレッシュインストール regression 修正**
+- `update-settings.js` に fresh install 自動検知を追加（settings.json 不在 or mcpServers 空 → template 値を尊重して `disabled:false` MCPがデフォルトで有効化される）
+- `smartMerge` 関数を新設（auto-detection + forceFresh オプション）
+
+### 📖 ドキュメント (Documentation)
+- 15 ラウンド Opus × Codex 議論ドキュメントを `debate/` ディレクトリに保存（具体的なファイル数は commit 時点に依存、詳細は該当 PR の diff を参照）
+
+### 🧪 テスト
+- 当時の記録: 57 suites / 1107 tests（+15 settings-merge ユニット）/ ESLint: 0 / tsc: 0 / npm audit: 0 vulnerabilities
+
+> 注: テスト数は v2.53.3 時点の記録。最新値は CI 実測に委譲。
+
+---
+
+## [2.53.2] - 2026-04-13
+
+### 🔧 修正 (Fixed)
+
+#### hookコマンド全31件のポータビリティ修正
+- 相対パス `node .claude/hooks/xxx.js`（ファイル存在チェックなし・bare node 呼び出し）が CWD ≠ プロジェクトルート時に MODULE_NOT_FOUND で失敗する問題を解消
+- ファイル不在時のみサイレント exit 0、存在時は node の exit code をそのまま保持する `[ ! -f X ] && exit 0; node X` パターンに統一。これにより `unified-guard` 等のブロック用非ゼロ exit code が上位で扱えるようになった
+
+### 🧪 テスト
+- 当時の記録: 56 suites / 1092 tests / ESLint: 0
+
+> 注: テスト数は v2.53.2 時点の記録。最新値は CI 実測に委譲。
+
+---
+
+## [2.53.1] - 2026-04-13
+
+### ⚡ パフォーマンス (Performance)
+
+#### コンテキスト最適化（~6,700 トークン/セッション削減）
+- `boot/03-core-rules.md` 削除（CLAUDE.md と 85% 重複）
+- `boot/04-agent-rules.md` トリガー表圧縮
+- `mistakes.md` 修正済みテーブル分離
+- `context-management.md` 重複削除
+- MCP 3 件無効化（obsidian / puppeteer / gpt-researcher）
+
+#### Opus + Codex 20 ラウンドレビュー全課題解消
+- High 3 件 + Medium 2 件 + Low 4 件
+
+### ✨ 追加 (Added)
+
+#### 新スキル
+- `/task-miss`（ミス防止プロトコル）
+- `/honest-mode`（推測禁止）
+- `/session-start`
+- `/session-end`
+
+#### MEMORY.md 作成
+- 6 トピックファイルで永続記憶初期化
+
+### 🔧 修正 (Fixed)
+
+#### ポータビリティ改善
+- ハードコードパス 5 箇所修正
+- `mistakes.md` 移動（16 ファイル / 27 箇所）
+- `dist` 再ビルド
+
+### 🧪 テスト
+- 当時の記録: 56 suites / 1092 tests / ESLint: 0
+
+> 注: テスト数は v2.53.1 時点の記録。最新値は CI 実測に委譲。
+
+---
+
 ## [2.53.0] - 2026-04-09
 
 ### 🔧 修正 (Fixed)

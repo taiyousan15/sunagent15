@@ -15,7 +15,7 @@
 │  └─────────┼────────────────┼─────────────────────┼────────────────┘   │
 │            │                │                     │                     │
 │  ┌─────────▼────────────────▼─────────────────────▼────────────────┐   │
-│  │                        Agent Pool (69 Agents)                    │   │
+│  │                Agent Pool (95 agent-source templates)            │   │
 │  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────────┐ │   │
 │  │  │Architect │  │Developer │  │   QA     │  │    Operations    │ │   │
 │  │  │  (6種)   │  │  (6種)   │  │  (8種)   │  │      (8種)       │ │   │
@@ -23,7 +23,7 @@
 │  └──────────────────────────────────────────────────────────────────┘   │
 │                                                                          │
 │  ┌──────────────────────────────────────────────────────────────────┐  │
-│  │                        Skill Library (24 Skills)                  │  │
+│  │                        Skill Library (67 Skills)                  │  │
 │  │  ┌───────────────┐  ┌────────────┐  ┌─────────────────────────┐  │  │
 │  │  │Marketing (11) │  │Creative(3) │  │   Infrastructure (9)    │  │  │
 │  │  └───────────────┘  └────────────┘  └─────────────────────────┘  │  │
@@ -61,7 +61,7 @@
 
 ### 2. Agent Pool（エージェント層）
 
-69種類の専門エージェントが格納されている。
+Claude Code 組み込みの subagent を活用し、`.claude/agent-source/` に 95 個のテンプレート定義を同梱している（手動 install 用、`.claude/agents/` の installed agents = 0）。以下は pre-2026 設計時点のカテゴリ分布の参考。
 
 ```
 Agent Pool
@@ -87,9 +87,11 @@ Agent Pool
     └── ワークフロー、要件管理
 ```
 
+> 注: 上記カテゴリ内訳は pre-2026 設計時点の参考合計 53。現在の `.claude/agent-source/` 総数は 95 で、上記カテゴリを超えて拡張されている。最新の一覧は `ls .claude/agent-source/` を参照。
+
 ### 3. Skill Library（スキル層）
 
-24種類のスキルが格納されている。
+67 種類のスキルが格納されている（active SKILL.md 数。`.claude/skills/_archived/` を除く）。以下は pre-2026 設計時点のカテゴリ分布の参考。
 
 ```
 Skill Library
@@ -122,6 +124,8 @@ Skill Library
 └── Research (1)
     └── research-cited-report
 ```
+
+> 注: 上記カテゴリ内訳は pre-2026 設計時点の参考合計 24。現在の active skill 総数は 67 で、上記カテゴリを超えて多数のドメイン（SDD・リサーチ Tier 群・LP 系・Taiyo-style 系・動画系・Kindle 系など）に拡張されている。最新の一覧は `ls .claude/skills/` を参照。
 
 ### 4. MCP Integration（MCP統合層）
 
@@ -219,33 +223,25 @@ User Request
 
 ## ディレクトリ構造
 
+> 注: 以下は pre-2026 設計時点の目安。実際の `.claude/agents/` は空（install 時に `agent-source` からコピー）。最新の構成は `docs/PROJECT_MAP.md` を参照。
+
 ```
 taisun_v2/
 ├── .claude/
 │   ├── CLAUDE.md              # プロジェクト指示書
 │   ├── settings.json          # パーミッション設定
-│   ├── agents/                # エージェント定義
-│   │   ├── coordinators/
-│   │   ├── architecture/
-│   │   ├── development/
-│   │   ├── quality/
-│   │   ├── operations/
-│   │   └── ...
+│   ├── agents/                # リポ内は空。install 時に agent-source からコピー
+│   ├── agent-source/          # 95 テンプレート定義（手動 install 用の正本）
 │   ├── commands/              # コマンド定義
-│   ├── skills/                # スキル定義
-│   │   ├── marketing/
-│   │   ├── creative/
-│   │   ├── infrastructure/
-│   │   └── research/
-│   └── memory/                # メモリシステム
-│       ├── config.yaml        # 設定
-│       ├── agents/            # エージェント統計
-│       └── tasks/             # タスク履歴
+│   ├── skills/                # スキル定義（active 67 / _archived 19）
+│   ├── hooks/                 # 62 個の hook JS（SessionStart/PreToolUse 等）
+│   ├── rules/                 # ルール集（mistakes.md 失敗台帳）
+│   └── memory/                # 永続メモリ（MEMORY.md + 種別別ファイル）
 ├── .github/
-│   ├── workflows/             # CI/CDワークフロー
+│   ├── workflows/             # CI/CDワークフロー（22 ジョブ）
 │   ├── ISSUE_TEMPLATE/        # Issueテンプレート
 │   └── dependabot.yml         # 依存関係更新
-├── .mcp.json                  # MCP設定
+├── .mcp.json                  # MCP設定（26 サーバー + 8 コメント疑似キー）
 ├── src/                       # ソースコード
 ├── docs/                      # ドキュメント
 ├── scripts/                   # ユーティリティ
@@ -335,7 +331,7 @@ Code Change
 
 ### 新規エージェント追加
 
-1. `.claude/agents/` にYAMLファイル作成
+1. `.claude/agent-source/` に Markdown ファイルを作成（`install.sh` / `install.ps1` 実行時に `~/.claude/agents/` へ自動コピーされる。リポ内の `.claude/agents/` は空のままでよい）
 2. `CLAUDE.md` にエージェント登録
 3. テスト実行
 

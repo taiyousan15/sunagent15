@@ -2,6 +2,7 @@
 
 > **目的**: この地図は、「どこに何があるか」を初めて触る人が**5 分で掴める**ためのドキュメント。
 > **作成日**: 2026-04-21（セッション19、アーキテクチャ作業 A1）
+> **数値最終更新**: 2026-04-25（PR `fix/metadata-truth-and-changelog`、tracked / 数値ベースのみ更新）
 > **更新方針**: 破壊的変更なし・追記型（既存ファイルの役割が変わったら該当行のみ修正）
 > **関連文書**: `docs/ARCHITECTURE.md`（詳細設計）、`../taisun_agentの目的と目標とビジョン/` （方針）
 
@@ -10,8 +11,8 @@
 ## ⚡ 30 秒で分かる全体像
 
 - **本質**: Claude Code にインストールする拡張パック。素人〜中級者が「やりたいこと」を伝えるだけで大企業レベルの要件定義・開発準備を AI が代行。
-- **規模**: tracked **1,240 ファイル / 299,539 行**（内 Markdown 163,962 行）
-- **主要コンポーネント**: 67 スキル / 62 hook / 58 テストスイート / 22 CI ジョブ
+- **規模**: tracked **1,260 ファイル**（行数は CI 実測へ委譲）
+- **主要コンポーネント**: 67 スキル / 62 hook / 26 MCP サーバー / 22 CI ジョブ
 - **ブランチ運用**: `main` 一本主義、機能追加は `feat/*` `fix/*` で PR → squash merge
 
 ---
@@ -81,23 +82,26 @@ taisun_agent/
 
 ---
 
-## 📊 規模の実測値（2026-04-21 session19）
+## 📊 規模の実測値（2026-04-25 更新 / 行数・テスト数は CI 実測へ委譲）
 
 | 区分 | 実測 | 備考 |
 |---|---:|---|
-| Git tracked files | 1,240 | `git ls-files \| wc -l` |
-| Untracked files | ~127 | 個別指定管理 |
-| 総コード行数（tracked） | 299,539 | |
-| Markdown 行数 | 163,962 | 全体の 55% がドキュメント |
-| スキル（SKILL.md） | **67** | `.claude/skills/*/SKILL.md` |
+| Git tracked files | **1,260** | `git ls-files \| wc -l`（2026-04-25 測定） |
+| Untracked files | ~130 | 個別指定管理（kindle-*.md / skill symlinks 等） |
+| 総コード行数（tracked） | (CI 実測へ委譲) | 過去値: 299,539（2026-04-21 snapshot） |
+| Markdown 行数 | (CI 実測へ委譲) | 過去値: 163,962（2026-04-21 snapshot） |
+| スキル（SKILL.md） | **67** | `.claude/skills/*/SKILL.md`（_archived を除く active 数） |
 | スキルディレクトリ数 | 69 | SKILL.md なしのディレクトリ 2 件存在 |
-| Hooks (`.js`) | **62** | `.claude/hooks/*.js` |
-| Agents (`*.md`) | **0** | `.claude/agents/*.md` 未使用、subagent_type 経由で供給 |
-| Tests ファイル | 56 | `tests/**/*.test.{ts,js}` |
-| Test suites | **58** | Jest 実行時 |
-| Tests (total) | **1,149** | Jest 実行時、全 pass |
-| docs ファイル | 52 | `docs/*.md` |
-| Open PRs | 25 | 主に Dependabot |
+| Hooks (`.js`) | **62** | `.claude/hooks/*.js`（top-level のみ） |
+| Installed agents (`.claude/agents/**`) | **0** | 未配置。Claude Code 組み込み subagent を活用 |
+| Agent-source templates (`.claude/agent-source/**`) | **95** | 手動 install 用テンプレート定義 |
+| MCP servers (`.mcp.json`) | **26** | `Object.keys(j.mcpServers).filter(k=>!k.startsWith('_')).length`（`_comment_*` 疑似キー 8 件を除いた実サーバー数） |
+| Tracked commands (`.claude/commands/`) | **111** | `git ls-files .claude/commands \| wc -l`（find では 114 = +3 untracked kindle-*.md） |
+| Tests ファイル | (CI 実測へ委譲) | 過去値: 56（2026-04-21 snapshot） |
+| Test suites | (CI 実測へ委譲) | `jest --listTests` で実測 |
+| Tests (total) | (CI 実測へ委譲) | `npm test` で実測 |
+| docs ファイル | 52 | `docs/*.md`（当時の snapshot） |
+| Open PRs | (確認要) | GitHub API 実測 |
 | CI ジョブ | 22 | Portability Guard / Install Smoke / jest / eslint 等 |
 
 ---
