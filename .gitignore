@@ -18,6 +18,12 @@ config/proxy-mcp/observability-report.json
 # Template: .mcp.json.example
 .mcp.json
 
+# Local Claude Code settings (per-user permission overrides)
+# Each user creates their own; never commit personal allow-rules.
+# Distribution safety: do not rely on global gitignore alone — repo-level
+# ignore guarantees other contributors' environments are also protected.
+.claude/settings.local.json
+
 # Build outputs
 dist/
 build/
