@@ -179,7 +179,7 @@ Phase 4 で Opus が目視再検証した結果のみ「実 Critical / High」�
 
 ### 4.3 次セッション冒頭手順
 
-1. `/session-start path=/Users/matsumototoshihiko/Desktop/指示書.md`
+1. `/session-start path=/path/to/<user>/Desktop/指示書.md`
 2. 本 session の引き継ぎ (新・指示書 + log) を読む
 3. **優先1: image_generator.py 判断**を先に決定（ユーザー目視確認待ち継続中）
 4. PR1（Codex 6 patch）を **`fix/session20-six-bugs`** で作業開始

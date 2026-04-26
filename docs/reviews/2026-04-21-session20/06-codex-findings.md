@@ -1,4 +1,4 @@
-Unable to write `/Users/matsumototoshihiko/Desktop/dev04/taisun_agent/.claude/temp-context/session20-review/06-codex-findings.md` due read-only sandbox (`operation not permitted`).  
+Unable to write `/path/to/<user>/Desktop/dev04/taisun_agent/.claude/temp-context/session20-review/06-codex-findings.md` due read-only sandbox (`operation not permitted`).  
 Here is the exact markdown content:
 
 ```markdown

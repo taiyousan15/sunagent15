@@ -1,5 +1,5 @@
 # Sub-Agent D: Architecture & Dependencies Review
-**対象プロジェクト**: `/Users/matsumototoshihiko/Desktop/dev04/taisun_agent`
+**対象プロジェクト**: `/path/to/<user>/Desktop/dev04/taisun_agent`
 **作成日**: 2026-04-21
 **担当**: system-architect (Sub-Agent D)
 **方針**: additive-preferred・壊さない・cost-vs-benefit 付き提案
