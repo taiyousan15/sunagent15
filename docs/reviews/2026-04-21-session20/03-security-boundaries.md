@@ -34,7 +34,7 @@ All numeric claims in this report are based on direct file reads and grep output
 
 **File**: `.claude/praetorian/compactions/cpt_1770642420495_3yfdl.toon`  
 **Line**: 6 (key_insights array, first element)  
-**Content (exact)**: `"Fish Audio API Key: b6c5232bb99249a292e6c653e403be98"`
+**Content (exact)**: `"Fish Audio API Key: <REDACTED — see commit history for incident; rotated post-disclosure>"`
 
 **What it is**: A Praetorian session-memory compaction file. These are auto-generated cache files that store AI session context summaries. The Fish Audio API key was captured verbatim when the session context included the credential.
 
@@ -303,7 +303,7 @@ All confirmed NOT in git HEAD. The `.env` gitignore pattern is effective.
 
 ### Credential outside .env
 
-**CRITICAL-01**: Fish Audio API key `b6c5232bb99249a292e6c653e403be98` found in `.claude/praetorian/compactions/cpt_1770642420495_3yfdl.toon` line 6. This file is gitignored but the credential is not protected by standard `.env` hygiene.
+**CRITICAL-01**: Fish Audio API key `<REDACTED>` found in `.claude/praetorian/compactions/cpt_1770642420495_3yfdl.toon` line 6. This file is gitignored but the credential is not protected by standard `.env` hygiene. **Note (2026-04-26)**: This review document was committed to the public repo on 2026-04-21 (PR #334) with the literal key value, exposing it for ~5 days before being redacted in PR #344. The key MUST be rotated by the project owner; a redacted-after-the-fact document does not undo the prior public disclosure.
 
 ### Git history check
 
