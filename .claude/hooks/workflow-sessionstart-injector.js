@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const stateManager = require('./workflow-state-manager.js');
 const { readStdin } = require('./utils/read-stdin');
+const { resolveProjectsRoot } = require('./lib/project-dir-resolver');
 
 async function main() {
   let input = {};
@@ -118,8 +119,9 @@ async function main() {
 function findDesktopWorkflowStates() {
   const states = [];
   try {
-    const desktop = path.join(process.env.HOME, 'Desktop');
-    if (fs.existsSync(desktop)) {
+    // 複数プロジェクト探索ルート（CLAUDE_PROJECTS_DIR > HOME/Desktop fallback）
+    const desktop = resolveProjectsRoot();
+    if (desktop && fs.existsSync(desktop)) {
       const entries = fs.readdirSync(desktop, { withFileTypes: true });
 
       entries.forEach(entry => {
@@ -153,9 +155,9 @@ function findSessionHandoffs(cwd) {
       handoffs.push(cwdHandoff);
     }
 
-    // Desktop以下を検索
-    const desktop = path.join(process.env.HOME, 'Desktop');
-    if (fs.existsSync(desktop)) {
+    // 複数プロジェクト探索ルート（CLAUDE_PROJECTS_DIR > HOME/Desktop fallback）
+    const desktop = resolveProjectsRoot();
+    if (desktop && fs.existsSync(desktop)) {
       const entries = fs.readdirSync(desktop, { withFileTypes: true });
 
       entries.forEach(entry => {

@@ -12,6 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { resolveProjectsRoot } = require('./lib/project-dir-resolver');
 
 async function main() {
   let input = {};
@@ -162,10 +163,13 @@ function findSimilarFiles(dir, filename) {
 
 function findDesktopSimilarFiles(filename) {
   const similar = [];
-  const desktop = path.join(process.env.HOME, 'Desktop');
+  // 複数プロジェクト探索ルート（CLAUDE_PROJECTS_DIR > HOME/Desktop fallback）
+  const desktop = resolveProjectsRoot();
 
   try {
-    searchDesktop(desktop, filename, similar, 3);
+    if (desktop) {
+      searchDesktop(desktop, filename, similar, 3);
+    }
   } catch (e) { /* fail-open */ }
 
   return [...new Set(similar)].slice(0, 5);

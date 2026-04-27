@@ -28,6 +28,10 @@ jobs:
           # Detect user-specific patterns that break portability:
           # - Hardcoded username (matsumototoshihiko)
           # - Personal project directories ($HOME/Desktop/開発2026/...)
+          # - Hooks/scripts that hardcode path.join(HOME, 'Desktop') as the
+          #   multi-project search root (PR β regression guard, 2026-04-27).
+          #   The canonical helper at .claude/hooks/lib/project-dir-resolver.js
+          #   accepts CLAUDE_PROJECTS_DIR override; new hooks must use it.
           #
           # Excluded paths (audit history / logs / backups, no runtime impact):
           # - docs/research-knowledge-scaling/ (research records)
@@ -35,6 +39,10 @@ jobs:
           # - ログ/ (session logs)
           # - *.log (auto-generated logs)
           # - *.bak* (backup files)
+          # - .claude/hooks/lib/project-dir-resolver.js
+          #     (the canonical resolver itself defines the legacy fallback)
+          # - docs/reviews/** (sanitized historical review docs may quote the
+          #     literal pattern as evidence)
 
           if rg -l \
                --glob '!docs/research-knowledge-scaling/**' \
@@ -49,8 +57,10 @@ jobs:
                --glob '!node_modules/**' \
                --glob '!.github/workflows/portability-guard.yml' \
                --glob '!.claude/temp-context/**' \
+               --glob '!.claude/hooks/lib/project-dir-resolver.js' \
+               --glob '!docs/reviews/**' \
                --hidden \
-               'matsumototoshihiko|/Desktop/開発2026'; then
+               'matsumototoshihiko|/Desktop/開発2026|path\.join\([^)]*HOME[^)]*Desktop'; then
             echo ""
             echo "::error::Hardcoded user-specific absolute paths detected (see file list above)"
             echo ""

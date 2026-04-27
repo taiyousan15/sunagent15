@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const { readStdin } = require('./utils/read-stdin');
+const { resolveProjectsRoot } = require('./lib/project-dir-resolver');
 
 async function main() {
   let input = {};
@@ -167,8 +168,9 @@ function buildHandoffContent(dir, scripts, workflows, outputs) {
 function findRecentWorkDirs() {
   const dirs = [];
   try {
-    const desktop = path.join(process.env.HOME, 'Desktop');
-    if (fs.existsSync(desktop)) {
+    // 複数プロジェクト探索ルート（CLAUDE_PROJECTS_DIR > HOME/Desktop fallback）
+    const desktop = resolveProjectsRoot();
+    if (desktop && fs.existsSync(desktop)) {
       const entries = fs.readdirSync(desktop, { withFileTypes: true });
       const now = Date.now();
       const oneHourAgo = now - (60 * 60 * 1000);
