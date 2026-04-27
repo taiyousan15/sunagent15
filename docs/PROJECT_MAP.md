@@ -2,7 +2,7 @@
 
 > **目的**: この地図は、「どこに何があるか」を初めて触る人が**5 分で掴める**ためのドキュメント。
 > **作成日**: 2026-04-21（セッション19、アーキテクチャ作業 A1）
-> **数値最終更新**: 2026-04-25（PR `fix/metadata-truth-and-changelog`、tracked / 数値ベースのみ更新）
+> **数値最終更新**: 2026-04-27（PR β merge 後、tracked 1,264 / MCP 25 truth-sync）
 > **更新方針**: 破壊的変更なし・追記型（既存ファイルの役割が変わったら該当行のみ修正）
 > **関連文書**: `docs/ARCHITECTURE.md`（詳細設計）、`../taisun_agentの目的と目標とビジョン/` （方針）
 
@@ -11,7 +11,7 @@
 ## ⚡ 30 秒で分かる全体像
 
 - **本質**: Claude Code にインストールする拡張パック。素人〜中級者が「やりたいこと」を伝えるだけで大企業レベルの要件定義・開発準備を AI が代行。
-- **規模**: tracked **1,260 ファイル**（行数は CI 実測へ委譲）
+- **規模**: tracked **1,264 ファイル**（行数は CI 実測へ委譲）
 - **主要コンポーネント**: 67 スキル / 62 hook / 25 MCP サーバー / 22 CI ジョブ
 - **ブランチ運用**: `main` 一本主義、機能追加は `feat/*` `fix/*` で PR → squash merge
 
@@ -82,11 +82,11 @@ taisun_agent/
 
 ---
 
-## 📊 規模の実測値（2026-04-25 更新 / 行数・テスト数は CI 実測へ委譲）
+## 📊 規模の実測値（2026-04-27 更新 / 行数・テスト数は CI 実測へ委譲）
 
 | 区分 | 実測 | 備考 |
 |---|---:|---|
-| Git tracked files | **1,260** | `git ls-files \| wc -l`（2026-04-25 測定） |
+| Git tracked files | **1,264** | `git ls-files \| wc -l`（2026-04-27 測定、PR β merge 後） |
 | Untracked files | ~130 | 個別指定管理（kindle-*.md / skill symlinks 等） |
 | 総コード行数（tracked） | (CI 実測へ委譲) | 過去値: 299,539（2026-04-21 snapshot） |
 | Markdown 行数 | (CI 実測へ委譲) | 過去値: 163,962（2026-04-21 snapshot） |
@@ -95,7 +95,7 @@ taisun_agent/
 | Hooks (`.js`) | **62** | `.claude/hooks/*.js`（top-level のみ） |
 | Installed agents (`.claude/agents/**`) | **0** | 未配置。Claude Code 組み込み subagent を活用 |
 | Agent-source templates (`.claude/agent-source/**`) | **95** | 手動 install 用テンプレート定義 |
-| MCP servers (`.mcp.json`) | **26** | `Object.keys(j.mcpServers).filter(k=>!k.startsWith('_')).length`（`_comment_*` 疑似キー 8 件を除いた実サーバー数） |
+| MCP servers (`.mcp.json.example`) | **25** | 配布正本は `.mcp.json.example`（`.mcp.json` はローカル個人設定のため gitignored）。`audit-project-metadata.js` で実測 |
 | Tracked commands (`.claude/commands/`) | **111** | `git ls-files .claude/commands \| wc -l`（find では 114 = +3 untracked kindle-*.md） |
 | Tests ファイル | (CI 実測へ委譲) | 過去値: 56（2026-04-21 snapshot） |
 | Test suites | (CI 実測へ委譲) | `jest --listTests` で実測 |
@@ -126,7 +126,7 @@ taisun_agent/
 
 ### Rules（`.claude/rules/`）
 **プロジェクト運用のルール**。  
-- `mistakes.md`: 過去の失敗と再発防止策（Pattern 1〜11）
+- `mistakes.md`: 過去の失敗と再発防止策（Pattern 1〜14）
 - `context-management.md`: コンテキスト運用ガイド
 - `auto-model-switch.md`: モデル自動切替ルール
 
