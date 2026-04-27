@@ -173,7 +173,7 @@ cd ~\Projects\MyProject
   │ .git         │ 初期化済み                                │
   │ .claude/     │ → ~/taisun_agent/.claude/                │
   │ .mcp.json    │ → ~/taisun_agent/.mcp.json               │
-  │ スキル       │ 67個                                      │
+  │ スキル       │ 68個                                      │
   │ エージェント │ 95個                                      │
   └──────────────┴──────────────────────────────────────────┘
 ```
@@ -431,7 +431,7 @@ npm run taisun:diagnose
 |------|------|
 | 14層防御Hookシステム（実 hook ファイル 62 個） | 30点 |
 | MCPサーバー接続 | 25点 |
-| スキル定義検証（67個） | 20点 |
+| スキル定義検証（68個） | 20点 |
 | agent-source 定義（95個） | 15点 |
 | ビルド状態 | 10点 |
 
@@ -455,7 +455,7 @@ YouTubeサムネイルを作って
 
 | カテゴリ | 数 | 例 |
 |---------|----|----|
-| スキル | 67個 | mega-research, taiyo-style-lp, sdd-full, world-research |
+| スキル | 68個 | mega-research, taiyo-style-lp, sdd-full, world-research |
 | エージェント | Claude Code subagents + agent-source 95個 | planner, code-reviewer, security-reviewer, tdd-guide 等は Claude Code 組み込み |
 | コマンド | 110+個 | /learn, /research, /sdd-full, /summarize, /-*, /-* |
 | Hookシステム | 14 層（hook ファイル 62 個） | 危険コマンド防止・セッション継続・自動バックアップ・タスク結果オーバーフロー防止 |

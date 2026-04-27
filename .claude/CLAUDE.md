@@ -75,6 +75,7 @@ Q3. 完了条件は何か？
 | 厳密に/ミスなく/確実に/プロトコル/厳格に/ミス防止/タスクミス | `/task-miss` |
 | 前のセッション/続きから/セッションの続き/指示書を読んで/引き継ぎ | `/session-start` |
 | 指示書を作って/ログを作って/次のセッション/セッション終了/クリアしたい/引き継ぎを作って | `/session-end` |
+| コンパクト前に保存/引継ぎ軽量化/高速引継ぎ/handoff-lite/最小引継ぎ | `/handoff-lite` |
 
 ## Language
 - Japanese priority / Technical terms in English OK

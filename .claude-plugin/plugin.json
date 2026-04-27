@@ -1,7 +1,7 @@
 {
   "name": "taisun-agent",
   "version": "2.53.3",
-  "description": "67スキル・110+コマンド・25 MCPサーバーを統合した開発・マーケティングプラットフォーム。太陽スタイルのコピーライティング、動画制作、Deep Research、要件定義など。エージェントは Claude Code 組み込みの subagent を活用し、95 個のテンプレート定義を `.claude/agent-source/` に同梱（手動 install 用）",
+  "description": "68スキル・110+コマンド・25 MCPサーバーを統合した開発・マーケティングプラットフォーム。太陽スタイルのコピーライティング、動画制作、Deep Research、要件定義など。エージェントは Claude Code 組み込みの subagent を活用し、95 個のテンプレート定義を `.claude/agent-source/` に同梱（手動 install 用）",
   "author": {
     "name": "san15",
     "url": "https://github.com/san15"
@@ -22,8 +22,15 @@
     "mcp",
     "japanese"
   ],
-  "skills": ["./.claude/skills/", "./.claude/commands/"],
+  "skills": [
+    "./.claude/skills/",
+    "./.claude/commands/"
+  ],
   "agents": [],
-  "hooks": ["./.claude/hooks/"],
-  "rules": ["./.claude/rules/"]
+  "hooks": [
+    "./.claude/hooks/"
+  ],
+  "rules": [
+    "./.claude/rules/"
+  ]
 }
