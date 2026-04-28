@@ -23,6 +23,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install ripgrep
+        # Ubuntu runners do not include ripgrep by default. Without this step,
+        # the `rg` invocation below fails with "command not found", and because
+        # bash treats failed commands inside `if` as condition=false, the guard
+        # silently falls through to the success branch — masking real violations.
+        # (Pre-existing infra bug uncovered while shipping Phase 1A on 2026-04-28.)
+        run: |
+          if ! command -v rg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends ripgrep
+          fi
+          rg --version | head -1
+
       - name: Run portability guard (rg detection)
         run: |
           # Detect user-specific patterns that break portability:
