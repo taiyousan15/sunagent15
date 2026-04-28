@@ -36,15 +36,17 @@ for f in "${fixed_candidates[@]}"; do
   [ -f "$f" ] && found+=("$f")
 done
 
-# Step 2: PROJECT_DIR で見つかった場合は Desktop スキャンをスキップ
+# Step 2: PROJECT_DIR で見つかった場合は外部フォールバックをスキップ
+#         CLAUDE_PROJECTS_DIR 未設定時は $HOME（任意のサブディレクトリ）をスキャン
 if [ ${#found[@]} -gt 0 ]; then
   echo "SCOPE: project-local"
 else
-  echo "SCOPE: desktop-fallback"
-  if [ -d "$HOME/Desktop" ]; then
+  echo "SCOPE: external-fallback"
+  PROJECTS_DIR="${CLAUDE_PROJECTS_DIR:-$HOME}"
+  if [ -d "$PROJECTS_DIR" ]; then
     while IFS= read -r f; do
       found+=("$f")
-    done < <(find "$HOME/Desktop" -maxdepth 2 -type f \
+    done < <(find "$PROJECTS_DIR" -maxdepth 2 -type f \
               \( -name "SESSION_HANDOFF.md" -o -name "指示書.md" \) 2>/dev/null)
   fi
 fi

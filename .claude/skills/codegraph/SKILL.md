@@ -26,35 +26,35 @@ codebase-memory-mcp を使ったコード構造の即時検索・影響分析ス
 ### 1. コード検索（Grep/Readの前に優先使用）
 
 ```bash
-cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli search_code \
+cd "${CLAUDE_PROJECT_DIR:-$(pwd)}" && ./tools/codebase-memory-mcp/codebase-memory-mcp cli search_code \
   '{"project": "<YOUR_PROJECT_ID>", "pattern": "検索キーワード"}'
 ```
 
 ### 2. 呼び出しパス追跡
 
 ```bash
-cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli trace_call_path \
+cd "${CLAUDE_PROJECT_DIR:-$(pwd)}" && ./tools/codebase-memory-mcp/codebase-memory-mcp cli trace_call_path \
   '{"project": "<YOUR_PROJECT_ID>", "symbol": "関数名"}'
 ```
 
 ### 3. 変更影響分析（git diff連携）
 
 ```bash
-cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli detect_changes \
+cd "${CLAUDE_PROJECT_DIR:-$(pwd)}" && ./tools/codebase-memory-mcp/codebase-memory-mcp cli detect_changes \
   '{"project": "<YOUR_PROJECT_ID>"}'
 ```
 
 ### 4. アーキテクチャ全体像
 
 ```bash
-cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli get_architecture \
+cd "${CLAUDE_PROJECT_DIR:-$(pwd)}" && ./tools/codebase-memory-mcp/codebase-memory-mcp cli get_architecture \
   '{"project": "<YOUR_PROJECT_ID>", "aspects": ["summary"]}'
 ```
 
 ### 5. グラフクエリ（Cypher風）
 
 ```bash
-cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli query_graph \
+cd "${CLAUDE_PROJECT_DIR:-$(pwd)}" && ./tools/codebase-memory-mcp/codebase-memory-mcp cli query_graph \
   '{"project": "<YOUR_PROJECT_ID>", "query": "MATCH (f)-[e]->(t) WHERE f.name CONTAINS \"auth\" RETURN f.name, e.kind, t.name LIMIT 10"}'
 ```
 
@@ -65,7 +65,7 @@ PostToolUseフック（codegraph-auto-index.js）により、Write/Edit後に自
 ## インデックス状態確認
 
 ```bash
-cd ~/taisun_agent && ./tools/codebase-memory-mcp/codebase-memory-mcp cli list_projects '{}'
+cd "${CLAUDE_PROJECT_DIR:-$(pwd)}" && ./tools/codebase-memory-mcp/codebase-memory-mcp cli list_projects '{}'
 ```
 
 ## 注意事項

@@ -46,7 +46,7 @@ AIによる画像生成と異なり、テキストが絶対に崩れない。日
    - `{{ctaColor}}` → CTAボタンカラー（指定あれば）
 3. 完成したHTMLを `/tmp/lp_output_[timestamp].html` に保存（Write tool）
 4. 下記「画像化手順」に従いPlaywrightでスクリーンショット
-5. デスクトップに `~/Desktop/lp_[timestamp].png` として保存
+5. 出力先（既定 `${LP_OUTPUT_DIR:-$HOME/Downloads}/lp_[timestamp].png`）として保存
 6. 生成完了を報告（ファイルパス付き）
 
 ### 参考画像からテンプレート作成
@@ -85,7 +85,7 @@ AIによる画像生成と異なり、テキストが絶対に崩れない。日
 4. mcp__playwright__browser_take_screenshot でPNG保存
    raw: false（base64エンコード）
 
-5. 保存先: ~/Desktop/lp_[timestamp].png
+5. 保存先: ${LP_OUTPUT_DIR:-$HOME/Downloads}/lp_[timestamp].png
 
 6. mcp__playwright__browser_close でブラウザ終了
 ```

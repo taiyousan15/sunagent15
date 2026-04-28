@@ -39,7 +39,7 @@ npx eslint .claude/hooks/*.js --no-ignore --format compact 2>&1 | tail -1
 
 ## Phase 3: 指示書作成
 
-保存先: $HOME/Desktop/指示書.md
+保存先: ${TAISUN_HANDOFF_FILE:-$HOME/指示書.md}
 
 指示書に含めるセクション:
 1. 最初に読むべきファイル一覧（フルパス付き、順序指定）
