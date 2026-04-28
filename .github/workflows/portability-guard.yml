@@ -37,43 +37,60 @@ jobs:
           rg --version | head -1
 
       - name: Run portability guard (rg detection)
+        # Detect user-specific patterns that break portability:
+        # - Hardcoded username (matsumototoshihiko)
+        # - Personal project directories ($HOME/Desktop/開発2026/...)
+        # - Hooks/scripts that hardcode path.join(HOME, 'Desktop') as the
+        #   multi-project search root (PR β regression guard, 2026-04-27).
+        # - $HOME/(Desktop|taisun_agent), ${HOME}/(Desktop|taisun_agent),
+        #   /Users/<name>/(Desktop|taisun_agent), ~/taisun_agent
+        #   (Phase 1A regex hardening, 2026-04-28).
+        # The canonical helper at .claude/hooks/lib/project-dir-resolver.js
+        # accepts CLAUDE_PROJECTS_DIR override; new hooks must use it.
+        #
+        # Excluded paths (audit history / logs / backups, no runtime impact):
+        # - docs/research-knowledge-scaling/, debate-v*/, debate-priority1/,
+        #   debate-audit/, debate/, ログ/, *.log, *.bak*
+        # - .claude/hooks/lib/project-dir-resolver.js (canonical resolver
+        #   defines the legacy fallback)
+        # - docs/reviews/** (sanitized historical review docs may quote the
+        #   literal pattern as evidence)
+        #
+        # Diagnostic strategy: capture rg exit code + stderr separately so a
+        # silent regex compile failure cannot be masked by `if ... ; else` logic.
         run: |
-          # Detect user-specific patterns that break portability:
-          # - Hardcoded username (matsumototoshihiko)
-          # - Personal project directories ($HOME/Desktop/開発2026/...)
-          # - Hooks/scripts that hardcode path.join(HOME, 'Desktop') as the
-          #   multi-project search root (PR β regression guard, 2026-04-27).
-          #   The canonical helper at .claude/hooks/lib/project-dir-resolver.js
-          #   accepts CLAUDE_PROJECTS_DIR override; new hooks must use it.
-          #
-          # Excluded paths (audit history / logs / backups, no runtime impact):
-          # - docs/research-knowledge-scaling/ (research records)
-          # - debate-v*/ debate-priority1/ debate-audit/ debate/ (debate records)
-          # - ログ/ (session logs)
-          # - *.log (auto-generated logs)
-          # - *.bak* (backup files)
-          # - .claude/hooks/lib/project-dir-resolver.js
-          #     (the canonical resolver itself defines the legacy fallback)
-          # - docs/reviews/** (sanitized historical review docs may quote the
-          #     literal pattern as evidence)
+          echo "rg version: $(rg --version | head -1)"
+          set +e
+          rg_output=$(rg -l \
+                       --glob '!docs/research-knowledge-scaling/**' \
+                       --glob '!debate-v*/**' \
+                       --glob '!debate-priority1/**' \
+                       --glob '!debate-audit/**' \
+                       --glob '!debate/**' \
+                       --glob '!ログ/**' \
+                       --glob '!*.log' \
+                       --glob '!*.bak*' \
+                       --glob '!.git/**' \
+                       --glob '!node_modules/**' \
+                       --glob '!.github/workflows/portability-guard.yml' \
+                       --glob '!.claude/temp-context/**' \
+                       --glob '!.claude/hooks/lib/project-dir-resolver.js' \
+                       --glob '!docs/reviews/**' \
+                       --hidden \
+                       'matsumototoshihiko|/Desktop/開発2026|path\.join\([^)]*HOME[^)]*Desktop|~/taisun_agent|[$]HOME/(Desktop|taisun_agent)|[$][{]HOME[}]/(Desktop|taisun_agent)|/Users/[^/[:space:]]+/(Desktop|taisun_agent)' 2>&1)
+          rg_exit=$?
+          set -e
+          echo "rg exit code: $rg_exit"
+          echo "rg output:"
+          echo "$rg_output"
+          echo "---"
 
-          if rg -l \
-               --glob '!docs/research-knowledge-scaling/**' \
-               --glob '!debate-v*/**' \
-               --glob '!debate-priority1/**' \
-               --glob '!debate-audit/**' \
-               --glob '!debate/**' \
-               --glob '!ログ/**' \
-               --glob '!*.log' \
-               --glob '!*.bak*' \
-               --glob '!.git/**' \
-               --glob '!node_modules/**' \
-               --glob '!.github/workflows/portability-guard.yml' \
-               --glob '!.claude/temp-context/**' \
-               --glob '!.claude/hooks/lib/project-dir-resolver.js' \
-               --glob '!docs/reviews/**' \
-               --hidden \
-               'matsumototoshihiko|/Desktop/開発2026|path\.join\([^)]*HOME[^)]*Desktop|~/taisun_agent|\$HOME/(Desktop|taisun_agent)|\$\{HOME\}/(Desktop|taisun_agent)|/Users/[^/[:space:]]+/(Desktop|taisun_agent)'; then
+          # rg exit codes: 0=matches found, 1=no matches, 2=error
+          if [ "$rg_exit" -eq 2 ]; then
+            echo "::error::ripgrep failed with error (exit 2). See output above."
+            exit 1
+          fi
+          if [ "$rg_exit" -eq 0 ] && [ -n "$rg_output" ]; then
             echo ""
             echo "::error::Hardcoded user-specific absolute paths detected (see file list above)"
             echo ""
