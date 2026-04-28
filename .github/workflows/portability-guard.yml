@@ -4,9 +4,15 @@ name: Portability Guard
 # for other users (different OS / username / install location).
 #
 # Background: 2026-04-17/18 Opus×Codex Pro 5-round audit found 12 such paths
-# (Critical 4, High 8) including debate/write_*.py and xtaiou scripts that
-# referenced /Users/matsumototoshihiko or $HOME/Desktop/開発2026.
-# This workflow prevents regression.
+# (Critical 4, High 8). The Phase 1A regex hardening (2026-04-28) added
+# patterns for ~/taisun_agent, $HOME/(Desktop|taisun_agent), etc.
+#
+# Why git grep (instead of ripgrep):
+#   ripgrep 14.1.0 on Ubuntu CI showed inconsistent recursive-walk behavior
+#   that masked real violations even when explicit-path searches worked.
+#   git grep is built into git (no install step), tracks the repo's actual
+#   tracked-files set, has identical behavior across platforms, and avoids
+#   the dependency-on-runner-image issue entirely.
 #
 # Reference: debate-audit/PORTABILITY_ABSOLUTE_PATH_AUDIT.md
 
@@ -23,116 +29,55 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install ripgrep
-        # Ubuntu runners do not include ripgrep by default. Without this step,
-        # the `rg` invocation below fails with "command not found", and because
-        # bash treats failed commands inside `if` as condition=false, the guard
-        # silently falls through to the success branch — masking real violations.
-        # (Pre-existing infra bug uncovered while shipping Phase 1A on 2026-04-28.)
-        run: |
-          if ! command -v rg >/dev/null 2>&1; then
-            sudo apt-get update -qq
-            sudo apt-get install -y --no-install-recommends ripgrep
-          fi
-          rg --version | head -1
-
-      - name: Run portability guard (rg detection)
+      - name: Run portability guard (git grep detection)
         # Detect user-specific patterns that break portability:
         # - Hardcoded username (matsumototoshihiko)
         # - Personal project directories ($HOME/Desktop/開発2026/...)
-        # - Hooks/scripts that hardcode path.join(HOME, 'Desktop') as the
-        #   multi-project search root (PR β regression guard, 2026-04-27).
+        # - Hooks/scripts that hardcode path.join(HOME, 'Desktop')
         # - $HOME/(Desktop|taisun_agent), ${HOME}/(Desktop|taisun_agent),
         #   /Users/<name>/(Desktop|taisun_agent), ~/taisun_agent
-        #   (Phase 1A regex hardening, 2026-04-28).
         # The canonical helper at .claude/hooks/lib/project-dir-resolver.js
         # accepts CLAUDE_PROJECTS_DIR override; new hooks must use it.
         #
-        # Excluded paths (audit history / logs / backups, no runtime impact):
-        # - docs/research-knowledge-scaling/, debate-v*/, debate-priority1/,
-        #   debate-audit/, debate/, ログ/, *.log, *.bak*
-        # - .claude/hooks/lib/project-dir-resolver.js (canonical resolver
-        #   defines the legacy fallback)
-        # - docs/reviews/** (sanitized historical review docs may quote the
-        #   literal pattern as evidence)
-        #
-        # Diagnostic strategy: capture rg exit code + stderr separately so a
-        # silent regex compile failure cannot be masked by `if ... ; else` logic.
+        # Excluded paths via :(exclude) pathspec magic:
+        # - audit history (debate-*, debate/, debate-audit/, debate-priority1/, debate-v*/)
+        # - session logs (ログ/, *.log)
+        # - backups (*.bak*)
+        # - this workflow file (it documents patterns intentionally)
+        # - canonical resolver (defines legacy fallback intentionally)
+        # - sanitized historical review docs (docs/reviews/**)
+        # - research-knowledge-scaling records
         run: |
-          echo "rg version: $(rg --version | head -1)"
-          echo "pwd: $(pwd)"
-          echo "ls top:"; ls -la | head -20
-          echo ""
-          # Smoke test: each regex branch independently to isolate which one
-          # matches and which doesn't. If any non-empty branch silently gives
-          # zero matches when local does, that branch is the culprit.
-          echo "=== diag: rg file walk ==="
-          echo "files seen by rg --files (default ignores):"
-          rg --files --hidden --glob '!.git/**' --glob '!node_modules/**' 2>&1 | wc -l
-          echo "files seen by rg --files --no-ignore (override all ignores):"
-          rg --files --hidden --no-ignore --glob '!.git/**' --glob '!node_modules/**' 2>&1 | wc -l
-          echo ""
-          echo "=== ULTIMATE SANITY: rg of 'Desktop' (common word) ==="
-          rg -l 'Desktop' --hidden --glob '!.git/**' --glob '!node_modules/**' 2>&1 | head -10
-          echo "(count: $(rg -l 'Desktop' --hidden --glob '!.git/**' --glob '!node_modules/**' 2>&1 | wc -l))"
-          echo ""
-          echo "=== Check if scripts/install.sh exists and contains tilde-path ==="
-          ls -la scripts/install.sh 2>&1 || echo "(missing)"
-          grep -c 'taisun_agent' scripts/install.sh 2>&1 || echo "(grep fail)"
-          echo "rg taisun_agent on scripts/install.sh:"
-          rg 'taisun_agent' scripts/install.sh 2>&1
-          echo ""
-          echo "=== smoke per-branch (default ignore) ==="
-          for pat in 'matsumototoshihiko' '~/taisun_agent' '[$]HOME/(Desktop|taisun_agent)' '[$][{]HOME[}]/(Desktop|taisun_agent)' '/Users/[^/[:space:]]+/(Desktop|taisun_agent)'; do
-            count=$(rg -l --hidden \
-                       --glob '!.git/**' \
-                       --glob '!node_modules/**' \
-                       --glob '!.github/workflows/portability-guard.yml' \
-                       "$pat" 2>/dev/null | wc -l | tr -d ' ')
-            echo "  default: pattern='$pat' matched_files=$count"
-          done
-          echo "=== smoke per-branch (--no-ignore) ==="
-          for pat in 'matsumototoshihiko' '~/taisun_agent' '[$]HOME/(Desktop|taisun_agent)' '[$][{]HOME[}]/(Desktop|taisun_agent)' '/Users/[^/[:space:]]+/(Desktop|taisun_agent)'; do
-            count=$(rg -l --hidden --no-ignore \
-                       --glob '!.git/**' \
-                       --glob '!node_modules/**' \
-                       --glob '!.github/workflows/portability-guard.yml' \
-                       "$pat" 2>/dev/null | wc -l | tr -d ' ')
-            echo "  no-ignore: pattern='$pat' matched_files=$count"
-          done
-          echo "=== smoke end ==="
-          echo ""
           set +e
-          rg_output=$(rg -l \
-                       --glob '!docs/research-knowledge-scaling/**' \
-                       --glob '!debate-v*/**' \
-                       --glob '!debate-priority1/**' \
-                       --glob '!debate-audit/**' \
-                       --glob '!debate/**' \
-                       --glob '!ログ/**' \
-                       --glob '!*.log' \
-                       --glob '!*.bak*' \
-                       --glob '!.git/**' \
-                       --glob '!node_modules/**' \
-                       --glob '!.github/workflows/portability-guard.yml' \
-                       --glob '!.claude/temp-context/**' \
-                       --glob '!.claude/hooks/lib/project-dir-resolver.js' \
-                       --glob '!docs/reviews/**' \
-                       --hidden \
-                       'matsumototoshihiko|/Desktop/開発2026|path\.join\([^)]*HOME[^)]*Desktop|~/taisun_agent|[$]HOME/(Desktop|taisun_agent)|[$][{]HOME[}]/(Desktop|taisun_agent)|/Users/[^/[:space:]]+/(Desktop|taisun_agent)' 2>&1)
-          rg_exit=$?
+          matches=$(git grep -lE \
+            'matsumototoshihiko|/Desktop/開発2026|path\.join\([^)]*HOME[^)]*Desktop|~/taisun_agent|[$]HOME/(Desktop|taisun_agent)|[$][{]HOME[}]/(Desktop|taisun_agent)|/Users/[^/[:space:]]+/(Desktop|taisun_agent)' \
+            -- \
+            ':(exclude)docs/research-knowledge-scaling/**' \
+            ':(exclude)debate-v*/**' \
+            ':(exclude)debate-priority1/**' \
+            ':(exclude)debate-audit/**' \
+            ':(exclude)debate/**' \
+            ':(exclude)ログ/**' \
+            ':(exclude)*.log' \
+            ':(exclude)*.bak*' \
+            ':(exclude).github/workflows/portability-guard.yml' \
+            ':(exclude).claude/temp-context/**' \
+            ':(exclude).claude/hooks/lib/project-dir-resolver.js' \
+            ':(exclude)docs/reviews/**' \
+            2>&1)
+          rc=$?
           set -e
-          echo "rg exit code: $rg_exit"
-          echo "rg output:"
-          echo "$rg_output"
-          echo "---"
 
-          # rg exit codes: 0=matches found, 1=no matches, 2=error
-          if [ "$rg_exit" -eq 2 ]; then
-            echo "::error::ripgrep failed with error (exit 2). See output above."
+          # git grep exit codes: 0 = matches found, 1 = no matches, 2+ = error
+          if [ "$rc" -ge 2 ]; then
+            echo "::error::git grep failed (exit $rc):"
+            echo "$matches"
             exit 1
           fi
-          if [ "$rg_exit" -eq 0 ] && [ -n "$rg_output" ]; then
+
+          if [ "$rc" -eq 0 ] && [ -n "$matches" ]; then
+            echo "Files with hardcoded user-specific absolute paths:"
+            echo "$matches"
             echo ""
             echo "::error::Hardcoded user-specific absolute paths detected (see file list above)"
             echo ""
