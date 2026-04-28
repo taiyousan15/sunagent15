@@ -60,6 +60,23 @@ jobs:
         # silent regex compile failure cannot be masked by `if ... ; else` logic.
         run: |
           echo "rg version: $(rg --version | head -1)"
+          echo "pwd: $(pwd)"
+          echo "ls top:"; ls -la | head -20
+          echo ""
+          # Smoke test: each regex branch independently to isolate which one
+          # matches and which doesn't. If any non-empty branch silently gives
+          # zero matches when local does, that branch is the culprit.
+          echo "=== smoke per-branch ==="
+          for pat in 'matsumototoshihiko' '~/taisun_agent' '[$]HOME/(Desktop|taisun_agent)' '[$][{]HOME[}]/(Desktop|taisun_agent)' '/Users/[^/[:space:]]+/(Desktop|taisun_agent)'; do
+            count=$(rg -l --hidden \
+                       --glob '!.git/**' \
+                       --glob '!node_modules/**' \
+                       --glob '!.github/workflows/portability-guard.yml' \
+                       "$pat" 2>/dev/null | wc -l | tr -d ' ')
+            echo "  pattern='$pat' matched_files=$count"
+          done
+          echo "=== smoke end ==="
+          echo ""
           set +e
           rg_output=$(rg -l \
                        --glob '!docs/research-knowledge-scaling/**' \
