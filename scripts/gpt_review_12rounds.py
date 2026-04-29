@@ -21,8 +21,21 @@ client = OpenAI(
 )
 
 MODEL = "openai/gpt-5.4"
-REPORT_PATH = os.path.expanduser("~/taisun_agent/research/runs/20260321__codegraph-proposal/review_for_chatgpt.md")
-OUTPUT_DIR = os.path.expanduser("~/Desktop/最終GPT報告レポート")
+
+# Resolve project root portably:
+#   1) CLAUDE_PROJECT_DIR env var (set by Claude Code), or
+#   2) parent of the directory containing this script (scripts/ -> repo root)
+PROJECT_DIR = os.environ.get("CLAUDE_PROJECT_DIR") or os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))
+)
+REPORT_PATH = os.path.join(
+    PROJECT_DIR, "research/runs/20260321__codegraph-proposal/review_for_chatgpt.md"
+)
+# Output directory: configurable via env var, defaults to ~/Documents/gpt-review-reports
+OUTPUT_DIR = os.path.expanduser(
+    os.environ.get("GPT_REVIEW_OUTPUT_DIR", "~/Documents/gpt-review-reports")
+)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 with open(REPORT_PATH, "r") as f:
     review_doc = f.read()

@@ -18,9 +18,7 @@ ZIP_FILE=""
 for DIR in \
     "$(cd "$(dirname "$0")" && pwd)" \
     ~/Downloads \
-    ~/Downloads/research-system-配布用 \
     ~/Desktop \
-    ~/Desktop/research-system-配布用 \
     ~/Documents \
     ~
 do

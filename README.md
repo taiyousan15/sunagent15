@@ -106,9 +106,11 @@ bash scripts/install.sh
 ```
 # one-liner で入れた場合
 cd ~/.taisun-agent && ./scripts/update.sh
-# git clone で入れた場合
-cd ~/taisun_agent && ./scripts/update.sh
+# git clone で入れた場合（git clone でホームに入れた場合のデフォルト）
+cd "$HOME"/taisun_agent && ./scripts/update.sh
 ```
+
+> ※ 別の場所に入れた場合は、ご自身がクローンしたフォルダのパスに置き換えてください。
 
 > git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。手動操作は不要です。
 
@@ -156,7 +158,7 @@ taisun_agentの機能を他のプロジェクトでも使いたい場合、セ�
 **Mac:**
 ```bash
 cd /path/to/your/project
-~/taisun_agent/scripts/setup-project.sh
+"$HOME"/taisun_agent/scripts/setup-project.sh   # ← taisun_agent をホーム以外に入れた場合は実パスに置換
 ```
 
 **Windows:**
@@ -171,8 +173,8 @@ cd ~\Projects\MyProject
   │     項目     │                   状態                    │
   ├──────────────┼──────────────────────────────────────────┤
   │ .git         │ 初期化済み                                │
-  │ .claude/     │ → ~/taisun_agent/.claude/                │
-  │ .mcp.json    │ → ~/taisun_agent/.mcp.json               │
+  │ .claude/     │ → <taisun_agent>/.claude/                │
+  │ .mcp.json    │ → <taisun_agent>/.mcp.json               │
   │ スキル       │ 68個                                      │
   │ エージェント │ 95個                                      │
   └──────────────┴──────────────────────────────────────────┘
@@ -285,7 +287,7 @@ TAISUN (プロジェクト層)   → ./claude/ にプロジェクトローカル
 
 ```bash
 # 1. リポジトリをクローン
-cd ~/Desktop/01_開発プロジェクト   # ← 任意のフォルダでOK
+cd ~/<your-projects>   # ← 任意のフォルダでOK（例: ~/dev, ~/Projects など）
 git clone https://github.com/affaan-m/everything-claude-code.git
 cd everything-claude-code
 
@@ -303,7 +305,7 @@ bash install.sh typescript
 ### アップデート
 
 ```bash
-cd ~/Desktop/01_開発プロジェクト/everything-claude-code
+cd ~/<your-projects>/everything-claude-code
 
 # 競合する可能性があるローカルファイルを退避（初回のみ）
 # ls .claude 2>/dev/null && mv .claude .claude.backup
@@ -353,7 +355,7 @@ SDD（Software Design Document）スキル13本を環境に合わせた最適な
 
 ```
 以下を実行して（対話式でプランを選べます）：
-bash ~/taisun_agent/scripts/setup-sdd.sh
+bash "$HOME"/taisun_agent/scripts/setup-sdd.sh   # ← taisun_agent をホーム以外に入れた場合は実パスに置換
 ```
 
 完了したら：
@@ -397,7 +399,7 @@ source ~/.zshrc
 
 ```
 以下を実行して（キーを自分のものに置き換えて）：
-OPENROUTER_API_KEY="sk-or-ここにキー" GROQ_API_KEY="gsk_ここにキー" bash ~/taisun_agent/scripts/setup-litellm.sh
+OPENROUTER_API_KEY="sk-or-ここにキー" GROQ_API_KEY="gsk_ここにキー" bash "$HOME"/taisun_agent/scripts/setup-litellm.sh
 ```
 
 完了したら：
@@ -415,7 +417,7 @@ litellm-stop     ← 止める
 litellm-health   ← 起動状態を確認
 ```
 
-> **Groqだけ使いたい場合**（完全無料）: `GROQ_API_KEY="gsk_ここにキー" bash ~/taisun_agent/scripts/setup-litellm.sh`
+> **Groqだけ使いたい場合**（完全無料）: `GROQ_API_KEY="gsk_ここにキー" bash "$HOME"/taisun_agent/scripts/setup-litellm.sh`
 
 ---
 
