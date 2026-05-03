@@ -77,6 +77,10 @@ Q3. 完了条件は何か？
 | 指示書を作って/ログを作って/次のセッション/セッション終了/クリアしたい/引き継ぎを作って | `/session-end` |
 | コンパクト前に保存/引継ぎ軽量化/高速引継ぎ/handoff-lite/最小引継ぎ | `/handoff-lite` |
 
+## Codex レビュー（個人運用）
+
+Codex を用いた AI レビュー（`Agent(subagent_type: codex:codex-rescue)`）の運用ルールは、各ユーザーが個人の `.claude/CLAUDE.local.md` および `.claude/rules/codex/` に定義する（git 管理外、リポジトリ配布物には含まれない）。
+
 ## Language
 - Japanese priority / Technical terms in English OK
 
