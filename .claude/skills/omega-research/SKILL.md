@@ -102,7 +102,7 @@ Grok-4 + Exa API + 全API + GIS 31ソース + smolagents を統合した最強�
 ### Step 1: 環境確認
 
 ```bash
-cd $HOME/taisun_agent
+cd "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"
 python3 -c "import openai; print('OK')" 2>/dev/null || pip install openai python-dotenv -q
 # smolagents モードの場合
 python3 -c "import smolagents; print('OK')" 2>/dev/null || pip install smolagents -q
@@ -118,7 +118,7 @@ python3 -c "import smolagents; print('OK')" 2>/dev/null || pip install smolagent
 `--mode=intel` または `--mode=deep` の場合:
 
 ```bash
-cd $HOME/taisun_agent
+cd "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"
 npx ts-node src/intelligence/index.ts &
 INTEL_PID=$!
 ```
@@ -128,7 +128,7 @@ INTEL_PID=$!
 #### deep / grok / api / intel / academic モード
 
 ```bash
-cd $HOME/taisun_agent
+cd "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"
 
 python3 ~/.claude/skills/omega-research/scripts/research.py \
   "[TOPIC]" \
@@ -139,7 +139,7 @@ python3 ~/.claude/skills/omega-research/scripts/research.py \
 #### quick モード（旧 deep-research-grok 互換）
 
 ```bash
-cd $HOME/taisun_agent
+cd "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"
 
 # 環境確認
 python3 -c "import openai; print('OK')" 2>/dev/null || pip install openai python-dotenv -q
@@ -153,7 +153,7 @@ python3 ~/.claude/skills/deep-research-grok/scripts/research.py \
 #### smolagents モード（オープンモデル）
 
 ```bash
-cd $HOME/taisun_agent
+cd "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"
 
 python3 -c "
 import os
@@ -173,7 +173,7 @@ print(result)
 ### Step 5: intelligence-research 結果の統合（intel/deep モード）
 
 ```bash
-INTEL_REPORT=$(ls -t $HOME/taisun_agent/research/runs/*/intelligence-*.md 2>/dev/null | head -1)
+INTEL_REPORT=$(ls -t "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"/research/runs/*/intelligence-*.md 2>/dev/null | head -1)
 ```
 
 ### Step 6: Exa API 補完検索（api/deep モード）
@@ -181,7 +181,7 @@ INTEL_REPORT=$(ls -t $HOME/taisun_agent/research/runs/*/intelligence-*.md 2>/dev
 Exa APIキーが設定されている場合、Layer 2 でセマンティック検索を実行:
 
 ```bash
-cd $HOME/taisun_agent
+cd "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"
 
 python3 -c "
 import os, json

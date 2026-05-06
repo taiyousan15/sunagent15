@@ -60,6 +60,10 @@ fi
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
+# Cluster A: 公式 TAISUN_AGENT_DIR を現セッションでも export
+# （現プロセスから子プロセスへ伝播。永続化は完了処理直前で別途実施）
+export TAISUN_AGENT_DIR="$REPO_DIR"
+
 # ─────────────────────────────────────────
 # Mac: Xcode Command Line Tools 確認（gitが動くために必須）
 # ─────────────────────────────────────────
@@ -639,6 +643,29 @@ elif [ -f "$REPO_DIR/scripts/verify-installation.js" ]; then
         fail \
             "インストール検証に失敗しました" \
             "ログを確認して再実行するか、--skip-verify で検証を回避できます（推奨されません）"
+    fi
+fi
+
+# ─────────────────────────────────────────
+# Cluster A: TAISUN_AGENT_DIR を shell rc に永続化
+# 既存スクリプト・スキルが `${TAISUN_AGENT_DIR}` を参照できるよう
+# zsh/bash の rc ファイルに追記（idempotent）。CI ではスキップ。
+# ─────────────────────────────────────────
+if [ "${CI:-false}" != "true" ]; then
+    PERSISTED_FILES=""
+    for rcfile in "$HOME/.zshrc" "$HOME/.bashrc"; do
+        [ -f "$rcfile" ] || continue
+        # 既存行を削除（idempotent）
+        if grep -q '^export TAISUN_AGENT_DIR=' "$rcfile" 2>/dev/null; then
+            tmp_rc=$(mktemp) || continue
+            grep -v '^export TAISUN_AGENT_DIR=' "$rcfile" > "$tmp_rc" && mv "$tmp_rc" "$rcfile"
+        fi
+        # 新規追加（値は実 install path）
+        printf '\nexport TAISUN_AGENT_DIR=%q\n' "$REPO_DIR" >> "$rcfile"
+        PERSISTED_FILES="$PERSISTED_FILES $(basename "$rcfile")"
+    done
+    if [ -n "$PERSISTED_FILES" ]; then
+        ok "TAISUN_AGENT_DIR=$REPO_DIR を$PERSISTED_FILES に登録しました"
     fi
 fi
 

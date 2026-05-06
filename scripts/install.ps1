@@ -39,6 +39,11 @@ $ErrorActionPreference = "Continue"
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
 $REPO_DIR = Split-Path -Parent $PSScriptRoot
+
+# Cluster A: 公式 TAISUN_AGENT_DIR を現プロセスでも export
+# （現プロセスから子プロセスへ伝播。永続化は完了処理直前で別途実施）
+$env:TAISUN_AGENT_DIR = $REPO_DIR
+
 $VERSION = (Get-Content "$REPO_DIR\package.json" | ConvertFrom-Json).version
 
 if ($ListProfiles) {
@@ -612,6 +617,37 @@ if ($SKILL_COUNT -ge $EXPECTED_SKILLS) {
 
 $AGENT_COUNT = (Get-ChildItem $TARGET_AGENTS -Filter "*.md" -ErrorAction SilentlyContinue).Count
 Write-Ok "エージェント: $AGENT_COUNT 個が利用可能です"
+
+# ─────────────────────────────────────────
+# Cluster A: TAISUN_AGENT_DIR を $PROFILE に永続化
+# 既存スクリプト・スキルが $env:TAISUN_AGENT_DIR を参照できるよう
+# PowerShell プロファイルに追記（idempotent）。CI ではスキップ。
+# ─────────────────────────────────────────
+if (-not $env:CI) {
+    try {
+        $profilePath = $PROFILE
+        $profileDir = Split-Path -Parent $profilePath
+        if (-not (Test-Path $profileDir)) {
+            New-Item -ItemType Directory -Path $profileDir -Force | Out-Null
+        }
+        if (-not (Test-Path $profilePath)) {
+            New-Item -ItemType File -Path $profilePath -Force | Out-Null
+        }
+        $envLine = '$env:TAISUN_AGENT_DIR = ' + ('"' + $REPO_DIR + '"')
+        $existing = Get-Content $profilePath -Raw -ErrorAction SilentlyContinue
+        if ($existing -and ($existing -match '\$env:TAISUN_AGENT_DIR\s*=')) {
+            # 既存行を置換
+            $updated = $existing -replace '(?m)^.*\$env:TAISUN_AGENT_DIR\s*=.*$', $envLine
+            Set-Content -Path $profilePath -Value $updated -Encoding UTF8 -NoNewline
+        } else {
+            # 新規追加
+            Add-Content -Path $profilePath -Value "`r`n$envLine" -Encoding UTF8
+        }
+        Write-Ok "TAISUN_AGENT_DIR=$REPO_DIR を $profilePath に登録しました"
+    } catch {
+        Write-Warn "TAISUN_AGENT_DIR の永続化をスキップしました: $_"
+    }
+}
 
 # ─────────────────────────────────────────
 # Opt-in telemetry: install_completed

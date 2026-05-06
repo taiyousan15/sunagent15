@@ -63,7 +63,8 @@
 ## 🚀 インストール（5分）
 
 > **Claude Code のチャットにコピペするだけ！** スキル・エージェント・MCPは全て自動でグローバル登録されます。
-> インストール後はどのフォルダで Claude Code を開いても使えます。
+> インストール後はどのフォルダで Claude Code を開いてもスキル・MCP が使えます。
+> taisun_agent の hooks やプロジェクト固有ワークフローも別プロジェクトで使いたい場合は、後述の **「📂 別のプロジェクトフォルダで使う」** を参照してください。
 
 ### 🍎 Mac
 
@@ -145,6 +146,23 @@ cd $HOME\taisun_agent; .\scripts\install.ps1 -Update
 ```
 
 > git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。手動操作は不要です。
+
+---
+
+### 🔧 環境変数 `TAISUN_AGENT_DIR`（自動設定）
+
+インストールすると、`TAISUN_AGENT_DIR` 環境変数が **自動的に設定・永続化** されます:
+
+| OS | 永続化先 | 値 |
+|----|---------|---|
+| Mac / Linux | `~/.zshrc`, `~/.bashrc`（存在するもの全て） | taisun_agent インストール先の絶対パス |
+| Windows | PowerShell の `$PROFILE` | 同上 |
+
+これは **taisun_agent をインストールしたフォルダの絶対パス** を保持し、TAISUN のスキル・スクリプトが内部で参照します。**ユーザーが直接操作・export する必要はありません**。
+
+別フォルダにインストールした場合（例: `~/dev/taisun_agent`、`TAISUN_INSTALL_DIR=~/my-path`）も自動でその値が保存されます。
+
+> 💡 新しいシェルセッションでは自動で有効になります。現セッションですぐ使うには `source ~/.zshrc`（Mac/Linux）または PowerShell 再起動。
 
 ---
 

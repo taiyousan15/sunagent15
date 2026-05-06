@@ -196,6 +196,15 @@ Claude Code でこのディレクトリを開き、以下を試してくださ�
 
 ## 環境変数一覧
 
+### 自動設定される変数
+
+| 変数名 | 設定タイミング | 用途 |
+|--------|--------------|------|
+| `TAISUN_AGENT_DIR` | install.sh / install.ps1 が自動設定 | taisun_agent をインストールしたフォルダの絶対パス。スキル・スクリプトが内部で参照（手動 export 不要）|
+| `TAISUN_INSTALL_DIR` | one-liner installer で任意指定可 | clone 先パス（デフォルト: `~/.taisun-agent`）。`curl ... \| TAISUN_INSTALL_DIR=~/my-path bash` |
+
+### ユーザーが設定する API キー
+
 | 変数名 | 必須 | 用途 |
 |--------|------|------|
 | `ANTHROPIC_API_KEY` | **必須** | Claude API（全機能の基本） |
