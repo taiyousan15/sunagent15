@@ -122,6 +122,20 @@ Why: 自動生成ファイルを「完成品」と過信した。汎用テンプ
 How to apply: /session-end の Phase 4 完了前に、必ず SESSION_HANDOFF.md を Read → 本セッション固有情報の追記が入っているか確認 → なければ追記してから「保存完了」報告
 ```
 
+### Pattern 15: セッション中の hook / skill 起動による意図しないファイル変更を baseline 比較で検知しない
+```
+状況: Phase 2 セッション 34 で .claude/skills/taiyo-analyzer/SKILL.md が dirty 化、.claude/hooks/utils/guard-base.js と .claude/hooks/__tests__/guard-base.test.js が untracked で増加。Edit ツールでは一切触っていないのに /session-end 直前に発覚
+❌ 間違い: session-start 時の status を baseline 保存せず、commit 直前 / push 直前 / session-end 直前に baseline 比較しない → 「Phase 2 が他を壊した」とユーザーに誤解される
+✅ 正解:
+1. session-start 直後に `git status --short > /tmp/session-baseline-status.txt` で baseline 保存
+2. 重要 milestone (各 commit 直前 / push 直前 / session-end Phase 1) で `diff /tmp/session-baseline-status.txt <(git status --short)` 実行
+3. 想定外 M / ?? の追加があれば即座にユーザー報告し、原因調査
+4. 自分が触っていないファイルが dirty 化していたら、commit 範囲から除外（explicit pathspec で守る）
+Why: hook chain (PreToolUse / PostToolUse / UserPromptSubmit) や skill 起動時に裏で Write されることがあり、Edit していないファイルが M 化したり untracked が増えたりする。気付かないと「自分の作業が他を壊した」と誤認識を招く
+How to apply: 全 session で baseline 保存 → milestone diff チェック → 異常検知 → 報告 → 防御。Phase 2 commit が `.claude/skills/` 配下のみだったように、explicit pathspec を使えば dirty が混入しない
+Sources: セッション 34 で実観測（taiyo-analyzer/SKILL.md が `requires: {}` 削除で M、guard-base.js/test.js が新規 untracked）
+```
+
 ---
 
 ## 修正済みミス履歴
