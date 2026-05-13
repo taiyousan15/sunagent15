@@ -10,6 +10,7 @@
 # Agent count: 51
 # Regenerate: node scripts/generate-agents-baseline.js
 # Verify:     node scripts/generate-agents-baseline.js --check
+# Manifest-only validate (post-PR-β CI): node scripts/generate-agents-baseline.js --validate-manifest
 api-designer:
   omega_metrics:
     performance_bounds:
