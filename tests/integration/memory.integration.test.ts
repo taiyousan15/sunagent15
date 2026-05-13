@@ -508,5 +508,18 @@ describe('Memory System Integration Tests', () => {
       // Placeholder convention: __TEMPLATE__ or similar guard pattern
       expect(template.agent_name).toMatch(/^(_template|__[A-Z_]+__|TEMPLATE)$/);
     });
+
+    it.skip('full deep-equality against recordTask output — BLOCKED on OPEN-1 snake/camel mapper', () => {
+      // TODO: enable when OPEN-1 (snake/camel encode/decode contract) is resolved in Step 2-3.
+      // PLAN.md Step 1 spec calls for deep-equality between _template.yaml and the YAML written by saveAgentStats for a brand-new agent.
+      // Currently blocked because MemoryService.saveAgentStats:697 passthroughs omega_metrics in camelCase while _template.yaml uses snake_case (pre-existing drift bug).
+      // Implementation when enabled:
+      //   1. Create fresh MemoryService instance pointing at temp dir
+      //   2. recordTask('unknown-agent', minimalTaskRecord)
+      //   3. Read tempDir/agents/unknown-agent-stats.yaml
+      //   4. Read _template.yaml
+      //   5. Strip volatile fields (last_updated, agent_name, total_tasks=1 vs 0)
+      //   6. expect(savedNormalized).toEqual(templateNormalized)
+    });
   });
 });
