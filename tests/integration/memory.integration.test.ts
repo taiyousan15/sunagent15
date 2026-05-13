@@ -434,4 +434,79 @@ describe('Memory System Integration Tests', () => {
       expect(stats).not.toBeNull();
     });
   });
+
+  describe('Template SSoT Drift Guard (PLAN.md Step 1)', () => {
+    const TEMPLATE_PATH = path.join(__dirname, '../../.claude/memory/agents/_template.yaml');
+
+    it('_template.yaml should exist at the canonical tracked path', () => {
+      expect(fs.existsSync(TEMPLATE_PATH)).toBe(true);
+    });
+
+    it('_template.yaml should be parseable YAML', () => {
+      const content = fs.readFileSync(TEMPLATE_PATH, 'utf-8');
+      expect(() => yaml.parse(content)).not.toThrow();
+    });
+
+    it('_template.yaml should have all required top-level keys matching MemoryService schema', () => {
+      const template = yaml.parse(fs.readFileSync(TEMPLATE_PATH, 'utf-8'));
+      const requiredKeys = [
+        'agent_name',
+        'total_tasks',
+        'successful_tasks',
+        'failed_tasks',
+        'success_rate',
+        'avg_quality_score',
+        'avg_duration_ms',
+        'last_updated',
+        'recent_tasks',
+        'trends',
+        'specializations',
+        'omega_metrics',
+        'learning_metrics',
+        'metadata',
+      ];
+      for (const key of requiredKeys) {
+        expect(template).toHaveProperty(key);
+      }
+    });
+
+    it('_template.yaml omega_metrics should expose performance_bounds, dependencies, completion_probability', () => {
+      const template = yaml.parse(fs.readFileSync(TEMPLATE_PATH, 'utf-8'));
+      expect(template.omega_metrics).toHaveProperty('performance_bounds');
+      expect(template.omega_metrics).toHaveProperty('dependencies');
+      expect(template.omega_metrics).toHaveProperty('completion_probability');
+    });
+
+    it('_template.yaml learning_metrics should expose learning_rate, quality_trend, success_trend, specialization', () => {
+      const template = yaml.parse(fs.readFileSync(TEMPLATE_PATH, 'utf-8'));
+      expect(template.learning_metrics).toHaveProperty('learning_rate');
+      expect(template.learning_metrics).toHaveProperty('quality_trend');
+      expect(template.learning_metrics).toHaveProperty('success_trend');
+      expect(template.learning_metrics).toHaveProperty('specialization');
+    });
+
+    it('_template.yaml metadata should expose schema_version, passes_quality_gates, overall_health', () => {
+      const template = yaml.parse(fs.readFileSync(TEMPLATE_PATH, 'utf-8'));
+      expect(template.metadata).toHaveProperty('schema_version');
+      expect(template.metadata).toHaveProperty('passes_quality_gates');
+      expect(template.metadata).toHaveProperty('overall_health');
+    });
+
+    it('_template.yaml counters should all be zero (new-agent default state)', () => {
+      const template = yaml.parse(fs.readFileSync(TEMPLATE_PATH, 'utf-8'));
+      expect(template.total_tasks).toBe(0);
+      expect(template.successful_tasks).toBe(0);
+      expect(template.failed_tasks).toBe(0);
+      expect(template.success_rate).toBe(0);
+      expect(template.avg_quality_score).toBe(0);
+      expect(template.avg_duration_ms).toBe(0);
+      expect(template.recent_tasks).toEqual([]);
+    });
+
+    it('_template.yaml agent_name should be a placeholder, not a real shipped agent', () => {
+      const template = yaml.parse(fs.readFileSync(TEMPLATE_PATH, 'utf-8'));
+      // Placeholder convention: __TEMPLATE__ or similar guard pattern
+      expect(template.agent_name).toMatch(/^(_template|__[A-Z_]+__|TEMPLATE)$/);
+    });
+  });
 });

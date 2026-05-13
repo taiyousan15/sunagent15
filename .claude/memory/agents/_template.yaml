@@ -1,0 +1,80 @@
+# Generic agent stats template — distribution baseline (SSoT for new agents).
+# This file is TRACKED in git and ships as the schema source of truth.
+# Per-user runtime copies live at .claude/agent-memory/agents/${agent}-stats.yaml (gitignored).
+# Per-agent baseline calibration (omega_metrics, dependencies, completion_probability) lives
+# in .claude/memory/agents-baseline.yaml — that file overlays this template on first seed.
+#
+# When init-agent-memory.js copies this file into the runtime path, it preserves the
+# __TEMPLATE__ placeholder so getAgentNames() (which filters by '-stats.yaml' suffix)
+# does NOT treat the template itself as a real agent.
+#
+# DO NOT edit per-agent values here — those belong in agents-baseline.yaml.
+# This template defines the schema and the universal zero-state only.
+agent_name: __TEMPLATE__
+total_tasks: 0
+successful_tasks: 0
+failed_tasks: 0
+success_rate: 0
+avg_quality_score: 0
+avg_duration_ms: 0
+last_updated: 1970-01-01T00:00:00.000Z
+recent_tasks: []
+trends:
+  success_rate_trend: 0
+  quality_score_trend: 0
+  avg_duration_trend: 0
+specializations: {}
+omega_metrics:
+  performance_bounds:
+    min_quality_score: 0
+    min_success_rate: 0
+    max_latency_ms: 0
+    worst_case:
+      quality_score: 0
+      success_rate: 0
+      latency_ms: 0
+  dependencies:
+    omega: 0
+    little_omega: 0
+    coupling_ratio: 1
+    dependencies_list:
+      tools: []
+      agents: []
+      external: []
+    coupling_health:
+      status: good
+      recommendation: ""
+  completion_probability:
+    base_omega: 0
+    by_complexity:
+      low: 0
+      medium: 0
+      high: 0
+    by_category: {}
+    confidence_interval: 0.05
+    sample_size: 0
+    prediction_accuracy:
+      total_predictions: 0
+      accurate_predictions: 0
+      accuracy_rate: 0
+learning_metrics:
+  learning_rate: 0.1
+  quality_trend:
+    direction: stable
+    rate: 0
+  success_trend:
+    direction: stable
+    rate: 0
+  specialization:
+    primary_category: ""
+    specialization_score: 0
+    categories: {}
+metadata:
+  last_updated: 1970-01-01T00:00:00.000Z
+  schema_version: 2.0.0
+  omega_integration_date: 1970-01-01
+  passes_quality_gates:
+    min_quality: false
+    min_success_rate: false
+    acceptable_coupling: true
+  overall_health: unknown
