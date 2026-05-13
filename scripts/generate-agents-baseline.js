@@ -1,0 +1,203 @@
+#!/usr/bin/env node
+/**
+ * Generate Agents Baseline Manifest (PLAN.md Step 1.5 / Step 10 — H1 Resolution)
+ *
+ * Distills per-agent calibration from the 51 legacy `.claude/memory/agents/*-stats.yaml`
+ * files into a single tracked manifest `.claude/memory/agents-baseline.yaml`.
+ *
+ * This manifest survives PR-β (deletion of the 51 yaml) so MemoryService can seed
+ * baselines on first stats creation for known agents, even on fresh clones / installs
+ * that skip the soak period (install-release.sh / quick-install.ps1 / etc.).
+ *
+ * Fields preserved per PLAN.md Step 10:
+ *   - omega_metrics: { performance_bounds, dependencies, completion_probability }
+ *   - learning_metrics: { learning_rate, quality_trend, success_trend, specialization }
+ *   - metadata: { schema_version, omega_integration_date }   (other metadata fields are volatile)
+ *
+ * Fields explicitly excluded (volatile counters; runtime-only):
+ *   - total_tasks, successful_tasks, failed_tasks, success_rate
+ *   - avg_quality_score, avg_duration_ms, last_updated
+ *   - recent_tasks, trends, specializations
+ *   - metadata.last_updated, metadata.passes_quality_gates, metadata.overall_health
+ *
+ * Output is sorted alphabetically by agent_name for deterministic diffs.
+ *
+ * Usage:
+ *   node scripts/generate-agents-baseline.js [--check]
+ *
+ *   --check : Generate to a temp string and compare against the existing manifest.
+ *             Exit 0 if identical, exit 1 if divergent (for CI invariance gate).
+ */
+
+const fs = require('fs');
+const path = require('path');
+const yaml = require('yaml');
+
+const REPO_ROOT = path.resolve(__dirname, '..');
+const AGENTS_DIR = path.join(REPO_ROOT, '.claude', 'memory', 'agents');
+const OUTPUT_PATH = path.join(REPO_ROOT, '.claude', 'memory', 'agents-baseline.yaml');
+const TEMPLATE_FILE = '_template.yaml';
+
+const REQUIRED_OMEGA_KEYS = ['performance_bounds', 'dependencies', 'completion_probability'];
+const REQUIRED_LEARNING_KEYS = ['learning_rate', 'quality_trend', 'success_trend', 'specialization'];
+
+function listStatsFiles() {
+  if (!fs.existsSync(AGENTS_DIR)) {
+    throw new Error(`agents directory not found: ${AGENTS_DIR}`);
+  }
+  return fs
+    .readdirSync(AGENTS_DIR)
+    .filter((f) => f.endsWith('-stats.yaml') && f !== TEMPLATE_FILE)
+    .sort();
+}
+
+function extractBaseline(stats, sourceFile) {
+  const errors = [];
+
+  if (!stats.omega_metrics || typeof stats.omega_metrics !== 'object') {
+    errors.push(`${sourceFile}: missing omega_metrics`);
+  } else {
+    for (const key of REQUIRED_OMEGA_KEYS) {
+      if (!(key in stats.omega_metrics)) {
+        errors.push(`${sourceFile}: missing omega_metrics.${key}`);
+      }
+    }
+  }
+
+  if (!stats.learning_metrics || typeof stats.learning_metrics !== 'object') {
+    errors.push(`${sourceFile}: missing learning_metrics`);
+  } else {
+    for (const key of REQUIRED_LEARNING_KEYS) {
+      if (!(key in stats.learning_metrics)) {
+        errors.push(`${sourceFile}: missing learning_metrics.${key}`);
+      }
+    }
+  }
+
+  if (!stats.metadata || typeof stats.metadata !== 'object') {
+    errors.push(`${sourceFile}: missing metadata`);
+  } else {
+    if (!('schema_version' in stats.metadata)) {
+      errors.push(`${sourceFile}: missing metadata.schema_version`);
+    }
+    if (!('omega_integration_date' in stats.metadata)) {
+      errors.push(`${sourceFile}: missing metadata.omega_integration_date`);
+    }
+  }
+
+  if (errors.length > 0) {
+    throw new Error(`Validation failed for ${sourceFile}:\n  ${errors.join('\n  ')}`);
+  }
+
+  return {
+    omega_metrics: stats.omega_metrics,
+    learning_metrics: stats.learning_metrics,
+    metadata: {
+      schema_version: stats.metadata.schema_version,
+      omega_integration_date: stats.metadata.omega_integration_date,
+    },
+  };
+}
+
+function buildManifest() {
+  const files = listStatsFiles();
+  if (files.length === 0) {
+    throw new Error(`no *-stats.yaml files found in ${AGENTS_DIR}`);
+  }
+
+  const manifest = {};
+  const skipped = [];
+
+  for (const file of files) {
+    const fullPath = path.join(AGENTS_DIR, file);
+    const content = fs.readFileSync(fullPath, 'utf8');
+    let parsed;
+    try {
+      parsed = yaml.parse(content);
+    } catch (err) {
+      throw new Error(`failed to parse ${file}: ${err.message}`);
+    }
+
+    const agentName = parsed.agent_name;
+    if (!agentName || typeof agentName !== 'string') {
+      throw new Error(`${file}: missing or invalid agent_name field`);
+    }
+
+    if (manifest[agentName]) {
+      throw new Error(`duplicate agent_name "${agentName}" (in ${file})`);
+    }
+
+    manifest[agentName] = extractBaseline(parsed, file);
+  }
+
+  const sortedManifest = {};
+  for (const key of Object.keys(manifest).sort()) {
+    sortedManifest[key] = manifest[key];
+  }
+
+  return { manifest: sortedManifest, fileCount: files.length, skipped };
+}
+
+function renderHeader(agentCount) {
+  return [
+    '# Per-Agent Baseline Manifest (PLAN.md Step 1.5 / Step 10)',
+    '#',
+    '# Generated by scripts/generate-agents-baseline.js — DO NOT EDIT BY HAND.',
+    '# Source of truth: .claude/memory/agents/*-stats.yaml (51 files).',
+    '#',
+    '# Purpose: survive PR-β (deletion of the 51 yaml). MemoryService reads this',
+    '# manifest on first stats creation for a known agent so per-agent calibration',
+    '# (omega_metrics / learning_metrics / metadata) is preserved on fresh clones.',
+    '#',
+    `# Agent count: ${agentCount}`,
+    '# Regenerate: node scripts/generate-agents-baseline.js',
+    '# Verify:     node scripts/generate-agents-baseline.js --check',
+    '',
+  ].join('\n');
+}
+
+function serialize(manifest, agentCount) {
+  const body = yaml.stringify(manifest, { lineWidth: 0 });
+  return renderHeader(agentCount) + body;
+}
+
+function main() {
+  const args = process.argv.slice(2);
+  const checkMode = args.includes('--check');
+
+  console.log('=== Generate Agents Baseline Manifest ===');
+  console.log(`Input:  ${AGENTS_DIR}`);
+  console.log(`Output: ${OUTPUT_PATH}`);
+  console.log(`Mode:   ${checkMode ? 'check (CI invariance gate)' : 'write'}`);
+  console.log('');
+
+  const { manifest, fileCount } = buildManifest();
+  const serialized = serialize(manifest, Object.keys(manifest).length);
+
+  console.log(`Processed ${fileCount} *-stats.yaml files`);
+  console.log(`Manifest contains ${Object.keys(manifest).length} agents`);
+
+  if (checkMode) {
+    if (!fs.existsSync(OUTPUT_PATH)) {
+      console.error('FAIL: manifest does not exist at expected path');
+      process.exit(1);
+    }
+    const existing = fs.readFileSync(OUTPUT_PATH, 'utf8');
+    if (existing !== serialized) {
+      console.error('FAIL: manifest is out of sync with source *-stats.yaml files');
+      console.error('Run: node scripts/generate-agents-baseline.js');
+      process.exit(1);
+    }
+    console.log('OK: manifest matches source files');
+    return;
+  }
+
+  const tmpPath = `${OUTPUT_PATH}.tmp.${process.pid}.${Date.now()}`;
+  fs.writeFileSync(tmpPath, serialized);
+  fs.renameSync(tmpPath, OUTPUT_PATH);
+
+  console.log(`Wrote ${OUTPUT_PATH}`);
+  console.log(`Size: ${serialized.length} bytes`);
+}
+
+main();
