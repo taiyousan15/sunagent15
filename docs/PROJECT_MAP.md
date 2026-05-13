@@ -94,9 +94,9 @@ taisun_agent/
 | スキルディレクトリ数 | 69 | SKILL.md なしのディレクトリ 2 件存在 |
 | Hooks (`.js`) | **62** | `.claude/hooks/*.js`（top-level のみ） |
 | Installed agents (`.claude/agents/**`) | **0** | 未配置。Claude Code 組み込み subagent を活用 |
-| Agent-source templates (`.claude/agent-source/**`) | **95** | 手動 install 用テンプレート定義 |
+| Agent-source templates (`.claude/agent-source/**`) | **83** | 手動 install 用テンプレート定義 |
 | MCP servers (`.mcp.json.example`) | **25** | 配布正本は `.mcp.json.example`（`.mcp.json` はローカル個人設定のため gitignored）。`audit-project-metadata.js` で実測 |
-| Tracked commands (`.claude/commands/`) | **111** | `git ls-files .claude/commands \| wc -l`（find では 114 = +3 untracked kindle-*.md） |
+| Tracked commands (`.claude/commands/`) | **101** | `git ls-files .claude/commands \| wc -l`（find では 104 = +3 untracked kindle-*.md） |
 | Tests ファイル | (CI 実測へ委譲) | 過去値: 56（2026-04-21 snapshot） |
 | Test suites | (CI 実測へ委譲) | `jest --listTests` で実測 |
 | Tests (total) | (CI 実測へ委譲) | `npm test` で実測 |

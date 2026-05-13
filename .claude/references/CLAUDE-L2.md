@@ -56,7 +56,6 @@ Details: `.claude/rules/context-management.md`
 
 ```bash
 /agent-run          # Run agent
-/-status      # Check status
 /mcp-health         # MCP diagnostics
 /agent-catalog      # 82 agents detail
 /skill-catalog      # 66 skills detail

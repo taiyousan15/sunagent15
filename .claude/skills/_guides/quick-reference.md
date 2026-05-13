@@ -75,6 +75,5 @@ description: 高度な機能のクイックリファレンス。使い方を忘�
 /security-scan
 
 # 状態確認
-/-status
 /mcp-health
 ```

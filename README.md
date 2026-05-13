@@ -11,7 +11,7 @@
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
-> インストールするだけで 67スキル・110+コマンド・25 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 95 個の agent-source テンプレートを活用）。
+> インストールするだけで 67スキル・101+コマンド・25 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 83 個の agent-source テンプレートを活用）。
 
 ---
 
@@ -100,7 +100,7 @@ bash scripts/install.sh
 
 </details>
 
-**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（standard: 約 67 skills / minimal: 約 92 / full: 約 120）。「エージェント」表示は `.claude/agent-source/` の 95 テンプレートが `~/.claude/agents/` にコピーされた数です。
+**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（standard: 約 67 skills / minimal: 約 92 / full: 約 120）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
 
 **アップデート（1行で完了）**
 
@@ -137,7 +137,7 @@ cd taisun_agent
 > `スクリプトの実行が無効` エラーが出た場合は `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` を先に実行してください。
 > `git: 用語 'git' は〜` エラーが出た場合は https://git-scm.com/download/win から git をインストールしてください。
 
-**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（standard: 約 67 skills / minimal: 約 92 / full: 約 120）。「エージェント」表示は `.claude/agent-source/` の 95 テンプレートが `~/.claude/agents/` にコピーされた数です。
+**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（standard: 約 67 skills / minimal: 約 92 / full: 約 120）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
 
 **アップデート（1行で完了）**
 
@@ -192,7 +192,7 @@ cd ~\Projects\MyProject
   │ .claude/     │ → ~/taisun_agent/.claude/                │
   │ .mcp.json    │ → ~/taisun_agent/.mcp.json               │
   │ スキル       │ 68個                                      │
-  │ エージェント │ 95個                                      │
+  │ エージェント │ 83個                                      │
   └──────────────┴──────────────────────────────────────────┘
 ```
 
@@ -450,7 +450,7 @@ npm run taisun:diagnose
 | 14層防御Hookシステム（実 hook ファイル 62 個） | 30点 |
 | MCPサーバー接続 | 25点 |
 | スキル定義検証（68個） | 20点 |
-| agent-source 定義（95個） | 15点 |
+| agent-source 定義（83個） | 15点 |
 | ビルド状態 | 10点 |
 
 ---
@@ -474,8 +474,8 @@ YouTubeサムネイルを作って
 | カテゴリ | 数 | 例 |
 |---------|----|----|
 | スキル | 68個 | mega-research, taiyo-style-lp, sdd-full, world-research |
-| エージェント | Claude Code subagents + agent-source 95個 | planner, code-reviewer, security-reviewer, tdd-guide 等は Claude Code 組み込み |
-| コマンド | 110+個 | /learn, /research, /sdd-full, /summarize, /-*, /-* |
+| エージェント | Claude Code subagents + agent-source 83個 | planner, code-reviewer, security-reviewer, tdd-guide 等は Claude Code 組み込み |
+| コマンド | 101+個 | /learn, /research, /sdd-full, /summarize |
 | Hookシステム | 14 層（hook ファイル 62 個） | 危険コマンド防止・セッション継続・自動バックアップ・タスク結果オーバーフロー防止 |
 | MCPサーバー | 26 | playwright, pexels, claude-historian, praetorian |
 | 永続メモリ | 6エージェント | ait42-coordinator, code-reviewer, planner, security-auditor 等 |

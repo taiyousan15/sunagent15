@@ -42,7 +42,7 @@ Claude Codeで以下を実行：
 ## 含まれるコンポーネント
 
 - **67 Skills**: マーケティング・コピーライティング・動画制作
-- **Claude Code subagents 活用**: 開発・品質管理・運用（`.claude/agent-source/` に 95 個のテンプレート定義を同梱）
+- **Claude Code subagents 活用**: 開発・品質管理・運用（`.claude/agent-source/` に 83 個のテンプレート定義を同梱）
 - **25 MCP servers**: 外部サービス連携
 - **14 層防御システム**: AIの暴走防止（概念カテゴリ数。実 hook ファイルは `.claude/hooks/` に 62 個）
 

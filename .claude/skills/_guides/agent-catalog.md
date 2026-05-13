@@ -60,11 +60,6 @@ description: 82エージェントの詳細カタログ。エージェント選�
 - `workflow-coordinator`, `integration-planner`
 - `process-optimizer`, `metrics-collector`, `requirements-elicitation`
 
-##  Agents (6)
-- `-coordinator-agent`, `-codegen-agent`
-- `-issue-agent`, `-pr-agent`
-- `-review-agent`, `-deployment-agent`
-
 ## Specialized Tools (16+)
 - Data analyst, Researcher, Automation architect, etc.
 

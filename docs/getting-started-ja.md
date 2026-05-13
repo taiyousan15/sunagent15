@@ -175,16 +175,6 @@ npm run proxy:start
 /review-code
 ```
 
-### エージェントの実行
-
-```bash
-# Issueの自動処理
-/-agent
-
-# ステータス確認
-/-status
-```
-
 ## ロケール設定
 
 TAISUN AgentはIssueログやシステムメッセージを日本語または英語で出力できます。

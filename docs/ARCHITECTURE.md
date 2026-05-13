@@ -15,7 +15,7 @@
 │  └─────────┼────────────────┼─────────────────────┼────────────────┘   │
 │            │                │                     │                     │
 │  ┌─────────▼────────────────▼─────────────────────▼────────────────┐   │
-│  │                Agent Pool (95 agent-source templates)            │   │
+│  │                Agent Pool (83 agent-source templates)            │   │
 │  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────────┐ │   │
 │  │  │Architect │  │Developer │  │   QA     │  │    Operations    │ │   │
 │  │  │  (6種)   │  │  (6種)   │  │  (8種)   │  │      (8種)       │ │   │
@@ -61,7 +61,7 @@
 
 ### 2. Agent Pool（エージェント層）
 
-Claude Code 組み込みの subagent を活用し、`.claude/agent-source/` に 95 個のテンプレート定義を同梱している（手動 install 用、`.claude/agents/` の installed agents = 0）。以下は pre-2026 設計時点のカテゴリ分布の参考。
+Claude Code 組み込みの subagent を活用し、`.claude/agent-source/` に 83 個のテンプレート定義を同梱している（手動 install 用、`.claude/agents/` の installed agents = 0）。以下は pre-2026 設計時点のカテゴリ分布の参考。
 
 ```
 Agent Pool
@@ -87,7 +87,7 @@ Agent Pool
     └── ワークフロー、要件管理
 ```
 
-> 注: 上記カテゴリ内訳は pre-2026 設計時点の参考合計 53。現在の `.claude/agent-source/` 総数は 95 で、上記カテゴリを超えて拡張されている。最新の一覧は `ls .claude/agent-source/` を参照。
+> 注: 上記カテゴリ内訳は pre-2026 設計時点の参考合計 53。現在の `.claude/agent-source/` 総数は 83 で、上記カテゴリを超えて拡張されている。最新の一覧は `ls .claude/agent-source/` を参照。
 
 ### 3. Skill Library（スキル層）
 
@@ -231,7 +231,7 @@ taisun_v2/
 │   ├── CLAUDE.md              # プロジェクト指示書
 │   ├── settings.json          # パーミッション設定
 │   ├── agents/                # リポ内は空。install 時に agent-source からコピー
-│   ├── agent-source/          # 95 テンプレート定義（手動 install 用の正本）
+│   ├── agent-source/          # 83 テンプレート定義（手動 install 用の正本）
 │   ├── commands/              # コマンド定義
 │   ├── skills/                # スキル定義（active 67 / _archived 19）
 │   ├── hooks/                 # 62 個の hook JS（SessionStart/PreToolUse 等）
