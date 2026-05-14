@@ -4,9 +4,11 @@
  * Core service for managing agent statistics, task records, and analytics.
  */
 
+import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'yaml';
+import * as lockfile from 'proper-lockfile';
 import {
   AgentStats,
   AgentSummary,
@@ -20,6 +22,22 @@ import {
   TaskCategory,
   TaskRecord,
 } from './types';
+
+/**
+ * Slug regex for agent names. Matches the same pattern enforced by
+ * scripts/generate-agents-baseline.js so the runtime + baseline manifest agree.
+ */
+const AGENT_NAME_REGEX = /^[a-zA-Z0-9_-]+$/;
+
+/**
+ * Options accepted by the {@link MemoryService} constructor (Design B, PLAN.md Step 2).
+ *
+ * @property runtimeBasePath - Per-machine runtime root. When omitted, derived as a
+ *   sibling "agent-memory" directory of {@link basePath} (PLAN.md "sibling pattern").
+ */
+export interface MemoryServiceOptions {
+  runtimeBasePath?: string;
+}
 
 /**
  * Default memory configuration
@@ -64,12 +82,70 @@ const DEFAULT_CONFIG: MemoryConfig = {
  */
 export class MemoryService {
   private basePath: string;
+  private runtimeBasePath: string;
+  private baselineManifestPath: string;
   private config: MemoryConfig;
   private agentStatsCache: Map<string, AgentStats> = new Map();
+  private baselineManifestCache: Record<string, unknown> | null = null;
 
-  constructor(basePath: string = '.claude/memory') {
+  /**
+   * Construct a MemoryService for the given basePath and runtime root.
+   *
+   * - `basePath` holds the tracked layer: template, baseline manifest, and (during
+   *   the soak period) legacy `*-stats.yaml` files.
+   * - `opts.runtimeBasePath` holds the per-machine runtime layer. When omitted,
+   *   it is derived as the sibling `agent-memory` directory of `basePath`:
+   *   `.claude/memory` → `.claude/agent-memory`,
+   *   `/tmp/x/memory` → `/tmp/x/agent-memory`.
+   */
+  constructor(basePath: string = '.claude/memory', opts: MemoryServiceOptions = {}) {
     this.basePath = basePath;
+    this.runtimeBasePath = opts.runtimeBasePath ?? MemoryService.deriveRuntimeBasePath(basePath);
+    this.baselineManifestPath = path.join(this.basePath, 'agents-baseline.yaml');
     this.config = this.loadConfig();
+  }
+
+  /**
+   * Derive a runtime base path from a tracked base path. The runtime layer lives as
+   * a sibling directory named `agent-memory`, mirroring the parent of `basePath`.
+   *
+   * Examples:
+   *   `.claude/memory`              → `.claude/agent-memory`
+   *   `/tmp/x/memory`               → `/tmp/x/agent-memory`
+   *   `tests/fixtures/test-memory`  → `tests/fixtures/agent-memory`
+   */
+  static deriveRuntimeBasePath(basePath: string): string {
+    return path.join(path.dirname(basePath), 'agent-memory');
+  }
+
+  /**
+   * Validate that the given agent name is a safe slug: ASCII alphanumeric plus
+   * hyphens and underscores. Throws with the offending value when invalid.
+   *
+   * Per PLAN.md Step 3: defends `loadAgentStats` / `saveAgentStats` / `recordTask`
+   * against path-traversal and unexpected separators.
+   */
+  private static validateSlug(agentName: string): void {
+    if (typeof agentName !== 'string' || !AGENT_NAME_REGEX.test(agentName)) {
+      throw new Error(
+        `Invalid agent name: ${JSON.stringify(agentName)} — must match ${AGENT_NAME_REGEX}`
+      );
+    }
+  }
+
+  /**
+   * Resolve the stats path for an agent under a given agents directory, asserting
+   * the resolved path stays inside that directory (defense-in-depth against future
+   * code paths that bypass {@link validateSlug}).
+   */
+  private static resolveSafeStatsPath(agentsDir: string, agentName: string): string {
+    MemoryService.validateSlug(agentName);
+    const resolvedDir = path.resolve(agentsDir);
+    const resolved = path.resolve(resolvedDir, `${agentName}-stats.yaml`);
+    if (resolved !== path.join(resolvedDir, `${agentName}-stats.yaml`)) {
+      throw new Error(`Stats path escapes agents directory: ${resolved}`);
+    }
+    return resolved;
   }
 
   /**
@@ -100,66 +176,181 @@ export class MemoryService {
   }
 
   /**
-   * Get all agent names
+   * Return the union of agent names found in the runtime and legacy `agents/`
+   * directories. Filenames that don't match the `<slug>-stats.yaml` convention
+   * (including the tracked `_template.yaml` and any quarantined `.corrupt/` files)
+   * are ignored.
+   *
+   * The product decision (PLAN.md Step 3 / Round 1 M4) is that this returns
+   * agents-with-history, not the catalog of available agents.
    */
   getAgentNames(): string[] {
-    const agentsPath = path.join(this.basePath, 'agents');
+    const names = new Set<string>();
+    const dirs = [
+      path.join(this.runtimeBasePath, 'agents'),
+      path.join(this.basePath, 'agents'),
+    ];
 
-    if (!fs.existsSync(agentsPath)) {
-      return [];
+    for (const dir of dirs) {
+      if (!fs.existsSync(dir)) continue;
+      let entries: string[];
+      try {
+        entries = fs.readdirSync(dir);
+      } catch {
+        continue;
+      }
+      for (const file of entries) {
+        if (!file.endsWith('-stats.yaml')) continue;
+        if (file.startsWith('_') || file.startsWith('.')) continue;
+        const name = file.slice(0, -'-stats.yaml'.length);
+        if (!AGENT_NAME_REGEX.test(name)) continue;
+        names.add(name);
+      }
     }
 
-    return fs
-      .readdirSync(agentsPath)
-      .filter((f) => f.endsWith('-stats.yaml'))
-      .map((f) => f.replace('-stats.yaml', ''));
+    return Array.from(names);
   }
 
   /**
-   * Load agent statistics
+   * Load agent statistics.
+   *
+   * Read order (PLAN.md Step 3):
+   *   1. Runtime `${runtimeBasePath}/agents/${name}-stats.yaml`
+   *      - On parse error: quarantine to `${runtimeBasePath}/agents/.corrupt/`
+   *        with an ISO timestamp suffix, then fall through to legacy.
+   *   2. Legacy `${basePath}/agents/${name}-stats.yaml`
+   *      - On parse error: log via console.error and return null. Legacy files
+   *        are tracked in git, so we never mutate them from this code path.
+   *
+   * Returns the cached AgentStats on subsequent calls until {@link clearCache}
+   * (or {@link recordTask}, which invalidates inside its locked path) is invoked.
    */
   loadAgentStats(agentName: string): AgentStats | null {
-    // Check cache first
+    MemoryService.validateSlug(agentName);
+
     if (this.agentStatsCache.has(agentName)) {
       return this.agentStatsCache.get(agentName)!;
     }
 
-    const statsPath = path.join(this.basePath, 'agents', `${agentName}-stats.yaml`);
+    const runtimePath = MemoryService.resolveSafeStatsPath(
+      path.join(this.runtimeBasePath, 'agents'),
+      agentName
+    );
+    const legacyPath = MemoryService.resolveSafeStatsPath(
+      path.join(this.basePath, 'agents'),
+      agentName
+    );
 
+    const fromRuntime = this.tryLoadFromFile(runtimePath, agentName, /*quarantineOnError*/ true);
+    if (fromRuntime !== null) {
+      this.agentStatsCache.set(agentName, fromRuntime);
+      return fromRuntime;
+    }
+
+    const fromLegacy = this.tryLoadFromFile(legacyPath, agentName, /*quarantineOnError*/ false);
+    if (fromLegacy !== null) {
+      this.agentStatsCache.set(agentName, fromLegacy);
+      return fromLegacy;
+    }
+
+    return null;
+  }
+
+  /**
+   * Read a stats YAML file and project it into an {@link AgentStats}. Returns null
+   * when the file is missing or unparseable. When `quarantineOnError` is set and
+   * parsing fails, the offending file is moved into `.corrupt/` under the agents
+   * directory with an ISO-timestamped suffix.
+   */
+  private tryLoadFromFile(
+    statsPath: string,
+    agentName: string,
+    quarantineOnError: boolean
+  ): AgentStats | null {
     if (!fs.existsSync(statsPath)) {
       return null;
     }
 
+    let rawStats: Record<string, unknown> | null = null;
     try {
       const content = fs.readFileSync(statsPath, 'utf-8');
-      const rawStats = yaml.parse(content);
-
-      const stats: AgentStats = {
-        agentName: rawStats.agent_name || agentName,
-        totalTasks: rawStats.total_tasks || 0,
-        successfulTasks: rawStats.successful_tasks || 0,
-        failedTasks: rawStats.failed_tasks || 0,
-        successRate: rawStats.success_rate || 0,
-        avgQualityScore: rawStats.avg_quality_score || 0,
-        avgDurationMs: rawStats.avg_duration_ms || 0,
-        lastUpdated: rawStats.last_updated || new Date().toISOString(),
-        recentTasks: rawStats.recent_tasks || [],
-        trends: {
-          successRateTrend: rawStats.trends?.success_rate_trend || 0,
-          qualityScoreTrend: rawStats.trends?.quality_score_trend || 0,
-          avgDurationTrend: rawStats.trends?.avg_duration_trend || 0,
-        },
-        specializations: rawStats.specializations || {},
-        omegaMetrics: rawStats.omega_metrics || this.getDefaultOmegaMetrics(),
-        learningMetrics: rawStats.learning_metrics || this.getDefaultLearningMetrics(),
-        metadata: rawStats.metadata || this.getDefaultMetadata(),
-      };
-
-      this.agentStatsCache.set(agentName, stats);
-      return stats;
+      const parsed = yaml.parse(content);
+      if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        throw new Error('Parsed YAML root is not a mapping');
+      }
+      rawStats = parsed as Record<string, unknown>;
     } catch (error) {
-      console.error(`Failed to load stats for ${agentName}:`, error);
+      if (quarantineOnError) {
+        this.quarantineCorruptFile(statsPath, agentName, error as Error);
+      } else {
+        console.error(`Failed to parse legacy stats for ${agentName}:`, error);
+      }
       return null;
+    }
+
+    return this.projectRawStats(rawStats, agentName);
+  }
+
+  /**
+   * Convert a raw on-disk YAML object (snake_case) into the typed
+   * {@link AgentStats} (camelCase). Nested `omega_metrics` / `learning_metrics`
+   * / `metadata` are passed through as-is — the snake/camel mapper for those
+   * subtrees is tracked separately as PLAN.md OPEN-1.
+   */
+  private projectRawStats(rawStats: Record<string, unknown>, agentName: string): AgentStats {
+    const trends = (rawStats.trends as Record<string, unknown> | undefined) ?? {};
+    const stats: AgentStats = {
+      agentName: (rawStats.agent_name as string) || agentName,
+      totalTasks: (rawStats.total_tasks as number) || 0,
+      successfulTasks: (rawStats.successful_tasks as number) || 0,
+      failedTasks: (rawStats.failed_tasks as number) || 0,
+      successRate: (rawStats.success_rate as number) || 0,
+      avgQualityScore: (rawStats.avg_quality_score as number) || 0,
+      avgDurationMs: (rawStats.avg_duration_ms as number) || 0,
+      lastUpdated: (rawStats.last_updated as string) || new Date().toISOString(),
+      recentTasks: (rawStats.recent_tasks as AgentStats['recentTasks']) || [],
+      trends: {
+        successRateTrend: (trends.success_rate_trend as number) || 0,
+        qualityScoreTrend: (trends.quality_score_trend as number) || 0,
+        avgDurationTrend: (trends.avg_duration_trend as number) || 0,
+      },
+      specializations:
+        (rawStats.specializations as AgentStats['specializations']) ||
+        ({} as AgentStats['specializations']),
+      omegaMetrics:
+        (rawStats.omega_metrics as AgentStats['omegaMetrics']) || this.getDefaultOmegaMetrics(),
+      learningMetrics:
+        (rawStats.learning_metrics as AgentStats['learningMetrics']) ||
+        this.getDefaultLearningMetrics(),
+      metadata: (rawStats.metadata as AgentStats['metadata']) || this.getDefaultMetadata(),
+    };
+    return stats;
+  }
+
+  /**
+   * Move a corrupt runtime stats file into `${runtimeBasePath}/agents/.corrupt/`
+   * with an ISO-timestamped filename. Surfaces a console.warn so the operator can
+   * audit later (PLAN.md Step 3 / Round 1 M5).
+   */
+  private quarantineCorruptFile(filePath: string, agentName: string, error: Error): void {
+    const corruptDir = path.join(this.runtimeBasePath, 'agents', '.corrupt');
+    try {
+      if (!fs.existsSync(corruptDir)) {
+        fs.mkdirSync(corruptDir, { recursive: true });
+      }
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const quarantinePath = path.join(corruptDir, `${agentName}-stats-${timestamp}.yaml`);
+      fs.renameSync(filePath, quarantinePath);
+      // eslint-disable-next-line no-console
+      console.warn(
+        `MemoryService: quarantined corrupt stats file: ${filePath} → ${quarantinePath} (reason: ${error.message})`
+      );
+    } catch (renameErr) {
+      // eslint-disable-next-line no-console
+      console.error(
+        `MemoryService: failed to quarantine corrupt stats file ${filePath}:`,
+        renameErr
+      );
     }
   }
 
@@ -390,7 +581,11 @@ export class MemoryService {
         throw new Error(`Unsupported format: ${format}`);
     }
 
-    fs.writeFileSync(outputPath, content);
+    const dir = path.dirname(outputPath);
+    if (dir && !fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    MemoryService.atomicWriteFile(outputPath, content);
   }
 
   /**
@@ -665,19 +860,25 @@ export class MemoryService {
   }
 
   /**
-   * Save agent statistics
+   * Save agent statistics atomically to the runtime layer.
+   *
+   * Writes go through tmp-file + fsync + rename so an interrupt mid-write leaves
+   * either the previous version or the new version on disk — never a half-written
+   * blend (PLAN.md Step 3 / Round 2 H3).
+   *
+   * Validates `stats.agentName` as a slug before resolving the target path.
    */
   saveAgentStats(stats: AgentStats): void {
-    const agentsPath = path.join(this.basePath, 'agents');
+    MemoryService.validateSlug(stats.agentName);
+    const agentsPath = path.join(this.runtimeBasePath, 'agents');
 
-    // Ensure directory exists
     if (!fs.existsSync(agentsPath)) {
       fs.mkdirSync(agentsPath, { recursive: true });
     }
 
-    const statsPath = path.join(agentsPath, `${stats.agentName}-stats.yaml`);
+    const statsPath = MemoryService.resolveSafeStatsPath(agentsPath, stats.agentName);
 
-    // Convert to snake_case for YAML
+    const lastUpdated = new Date().toISOString();
     const yamlData = {
       agent_name: stats.agentName,
       total_tasks: stats.totalTasks,
@@ -686,7 +887,7 @@ export class MemoryService {
       success_rate: stats.successRate,
       avg_quality_score: stats.avgQualityScore,
       avg_duration_ms: stats.avgDurationMs,
-      last_updated: new Date().toISOString(),
+      last_updated: lastUpdated,
       recent_tasks: stats.recentTasks.slice(0, this.config.recentTasksLimit),
       trends: {
         success_rate_trend: stats.trends.successRateTrend,
@@ -699,82 +900,241 @@ export class MemoryService {
       metadata: stats.metadata,
     };
 
-    fs.writeFileSync(statsPath, yaml.stringify(yamlData));
+    MemoryService.atomicWriteFile(statsPath, yaml.stringify(yamlData));
 
-    // Update cache
-    stats.lastUpdated = yamlData.last_updated;
+    stats.lastUpdated = lastUpdated;
     this.agentStatsCache.set(stats.agentName, stats);
   }
 
   /**
-   * Record a new task for an agent
+   * Acquire a proper-lockfile lock with hand-rolled retry, since the sync API
+   * does not accept the `retries` option. Returns the release function on success
+   * and throws the last underlying error after `maxAttempts` failures.
+   *
+   * Sleeps between attempts via Atomics.wait so the loop yields the runtime
+   * rather than busy-spinning.
+   */
+  private static acquireLockWithRetry(
+    lockTargetPath: string,
+    lockfilePath: string,
+    opts: { maxAttempts: number; retryDelayMs: number; staleMs: number }
+  ): () => void {
+    let lastError: unknown = null;
+    for (let attempt = 0; attempt < opts.maxAttempts; attempt++) {
+      try {
+        return lockfile.lockSync(lockTargetPath, {
+          realpath: false,
+          stale: opts.staleMs,
+          lockfilePath,
+        });
+      } catch (err) {
+        lastError = err;
+        if (attempt < opts.maxAttempts - 1) {
+          const sab = new SharedArrayBuffer(4);
+          const arr = new Int32Array(sab);
+          Atomics.wait(arr, 0, 0, opts.retryDelayMs);
+        }
+      }
+    }
+    throw lastError instanceof Error
+      ? lastError
+      : new Error(`Failed to acquire lock for ${lockTargetPath}: ${String(lastError)}`);
+  }
+
+  /**
+   * Atomically write a UTF-8 string to `targetPath` via tmp-file + fsync + rename.
+   *
+   * The tmp filename embeds PID + ms + random bytes so concurrent writers and
+   * leftover tmps from crashes do not collide. On any failure the tmp file is
+   * removed so the agents directory stays clean.
+   */
+  private static atomicWriteFile(targetPath: string, content: string): void {
+    const dir = path.dirname(targetPath);
+    const random = crypto.randomBytes(4).toString('hex');
+    const tmpPath = path.join(
+      dir,
+      `${path.basename(targetPath)}.tmp.${process.pid}.${Date.now()}.${random}`
+    );
+    let fd: number | null = null;
+    try {
+      fd = fs.openSync(tmpPath, 'w');
+      fs.writeFileSync(fd, content, { encoding: 'utf-8' });
+      fs.fsyncSync(fd);
+      fs.closeSync(fd);
+      fd = null;
+      fs.renameSync(tmpPath, targetPath);
+    } catch (err) {
+      if (fd !== null) {
+        try {
+          fs.closeSync(fd);
+        } catch {
+          /* ignore close failures during cleanup */
+        }
+      }
+      try {
+        if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
+      } catch {
+        /* ignore cleanup failures */
+      }
+      throw err;
+    }
+  }
+
+  /**
+   * Record a new task for an agent. The whole load-update-save cycle is wrapped
+   * in a per-agent {@link https://github.com/moxystudio/node-proper-lockfile proper-lockfile}
+   * file lock so two long-lived processes cannot overwrite each other's updates
+   * (PLAN.md Step 3 / Round 3 H3 / Final-Round H2). Inside the lock we
+   * unconditionally clear the cache and re-read from disk before applying the
+   * update so a stale in-process cache cannot mask a fresher on-disk version.
+   *
+   * For a previously-unknown agent, this seeds per-agent calibration from
+   * {@link MemoryService#loadBaselineManifest} when the agent appears there
+   * (PLAN.md Step 10 baseline manifest), otherwise from the default factory.
    */
   recordTask(agentName: string, task: TaskRecord): void {
-    let stats = this.loadAgentStats(agentName);
+    MemoryService.validateSlug(agentName);
 
-    if (!stats) {
-      // Create new agent stats
-      stats = {
-        agentName,
-        totalTasks: 0,
-        successfulTasks: 0,
-        failedTasks: 0,
-        successRate: 0,
-        avgQualityScore: 0,
-        avgDurationMs: 0,
-        lastUpdated: new Date().toISOString(),
-        recentTasks: [],
-        trends: {
-          successRateTrend: 0,
-          qualityScoreTrend: 0,
-          avgDurationTrend: 0,
-        },
-        specializations: {} as Record<TaskCategory, number>,
-        omegaMetrics: this.getDefaultOmegaMetrics(),
-        learningMetrics: this.getDefaultLearningMetrics(),
-        metadata: this.getDefaultMetadata(),
+    const agentsDir = path.join(this.runtimeBasePath, 'agents');
+    const locksDir = path.join(agentsDir, '.locks');
+    if (!fs.existsSync(agentsDir)) fs.mkdirSync(agentsDir, { recursive: true });
+    if (!fs.existsSync(locksDir)) fs.mkdirSync(locksDir, { recursive: true });
+
+    const statsPath = MemoryService.resolveSafeStatsPath(agentsDir, agentName);
+    const lockTargetPath = statsPath;
+    const lockfilePath = path.join(locksDir, `${agentName}.lock`);
+
+    // proper-lockfile requires the target path to exist for stale-check semantics.
+    // Touch a placeholder if neither runtime nor legacy has produced one yet; the
+    // real content is written atomically by saveAgentStats inside the lock.
+    if (!fs.existsSync(lockTargetPath)) {
+      fs.writeFileSync(lockTargetPath, '');
+    }
+
+    // proper-lockfile's sync API does not support `retries`. Hand-roll a bounded
+    // retry loop with Atomics.wait so we block (rather than spin) between
+    // attempts. 5-second total wait with 1-second intervals matches PLAN.md.
+    const release = MemoryService.acquireLockWithRetry(lockTargetPath, lockfilePath, {
+      maxAttempts: 5,
+      retryDelayMs: 1000,
+      staleMs: 10000,
+    });
+
+    try {
+      // Invalidate in-process cache and re-read so we always update from the
+      // freshest on-disk state (cache-invalidation-inside-lock contract).
+      this.agentStatsCache.delete(agentName);
+      let stats = this.loadAgentStats(agentName);
+
+      if (!stats) {
+        stats = this.createSeededStats(agentName);
+      }
+
+      stats.totalTasks++;
+      if (task.status === 'completed') {
+        stats.successfulTasks++;
+      } else if (task.status === 'failed') {
+        stats.failedTasks++;
+      }
+
+      stats.successRate = stats.successfulTasks / stats.totalTasks;
+
+      if (task.qualityScore !== null) {
+        const totalQuality = stats.avgQualityScore * (stats.totalTasks - 1) + task.qualityScore;
+        stats.avgQualityScore = totalQuality / stats.totalTasks;
+      }
+
+      if (task.durationMs !== null) {
+        const totalDuration = stats.avgDurationMs * (stats.totalTasks - 1) + task.durationMs;
+        stats.avgDurationMs = totalDuration / stats.totalTasks;
+      }
+
+      stats.specializations[task.category] =
+        (stats.specializations[task.category] || 0) + 1;
+
+      stats.recentTasks.unshift(task);
+      stats.recentTasks = stats.recentTasks.slice(0, this.config.recentTasksLimit);
+
+      stats.metadata.overallHealth = this.calculateHealth(stats);
+      stats.metadata.passesQualityGates = {
+        minQuality: stats.avgQualityScore >= this.config.qualityThreshold.acceptable,
+        minSuccessRate: stats.successRate >= this.config.successRateThreshold.acceptable,
+        acceptableCoupling: true,
       };
+
+      this.saveAgentStats(stats);
+    } finally {
+      release();
     }
+  }
 
-    // Update task counts
-    stats.totalTasks++;
-    if (task.status === 'completed') {
-      stats.successfulTasks++;
-    } else if (task.status === 'failed') {
-      stats.failedTasks++;
-    }
+  /**
+   * Build a brand-new {@link AgentStats} for an agent that has no runtime / legacy
+   * file. Per-agent baseline (`omega_metrics` / `learning_metrics` / `metadata`)
+   * is seeded from `agents-baseline.yaml` when the agent appears in the manifest;
+   * otherwise the default factory is used.
+   *
+   * Note: nested fields are stored as-shipped (snake_case at rest, passthrough
+   * here). The snake/camel mapper for nested baseline data is tracked separately
+   * as PLAN.md OPEN-1.
+   */
+  private createSeededStats(agentName: string): AgentStats {
+    const manifest = this.loadBaselineManifest();
+    const seed = manifest?.[agentName] as
+      | {
+          omega_metrics?: unknown;
+          learning_metrics?: unknown;
+          metadata?: unknown;
+        }
+      | undefined;
 
-    // Update success rate
-    stats.successRate = stats.successfulTasks / stats.totalTasks;
-
-    // Update average quality score
-    if (task.qualityScore !== null) {
-      const totalQuality = stats.avgQualityScore * (stats.totalTasks - 1) + task.qualityScore;
-      stats.avgQualityScore = totalQuality / stats.totalTasks;
-    }
-
-    // Update average duration
-    if (task.durationMs !== null) {
-      const totalDuration = stats.avgDurationMs * (stats.totalTasks - 1) + task.durationMs;
-      stats.avgDurationMs = totalDuration / stats.totalTasks;
-    }
-
-    // Update specializations
-    stats.specializations[task.category] = (stats.specializations[task.category] || 0) + 1;
-
-    // Add to recent tasks (keep limited)
-    stats.recentTasks.unshift(task);
-    stats.recentTasks = stats.recentTasks.slice(0, this.config.recentTasksLimit);
-
-    // Update health status
-    stats.metadata.overallHealth = this.calculateHealth(stats);
-    stats.metadata.passesQualityGates = {
-      minQuality: stats.avgQualityScore >= this.config.qualityThreshold.acceptable,
-      minSuccessRate: stats.successRate >= this.config.successRateThreshold.acceptable,
-      acceptableCoupling: true,
+    return {
+      agentName,
+      totalTasks: 0,
+      successfulTasks: 0,
+      failedTasks: 0,
+      successRate: 0,
+      avgQualityScore: 0,
+      avgDurationMs: 0,
+      lastUpdated: new Date().toISOString(),
+      recentTasks: [],
+      trends: { successRateTrend: 0, qualityScoreTrend: 0, avgDurationTrend: 0 },
+      specializations: {} as Record<TaskCategory, number>,
+      omegaMetrics:
+        (seed?.omega_metrics as AgentStats['omegaMetrics']) || this.getDefaultOmegaMetrics(),
+      learningMetrics:
+        (seed?.learning_metrics as AgentStats['learningMetrics']) ||
+        this.getDefaultLearningMetrics(),
+      metadata: (seed?.metadata as AgentStats['metadata']) || this.getDefaultMetadata(),
     };
+  }
 
-    this.saveAgentStats(stats);
+  /**
+   * Load and cache `${basePath}/agents-baseline.yaml`. Returns an empty record
+   * (cached as `{}`) when the manifest is missing or unparseable so subsequent
+   * lookups are O(1).
+   */
+  private loadBaselineManifest(): Record<string, unknown> | null {
+    if (this.baselineManifestCache !== null) {
+      return this.baselineManifestCache;
+    }
+    if (!fs.existsSync(this.baselineManifestPath)) {
+      this.baselineManifestCache = {};
+      return this.baselineManifestCache;
+    }
+    try {
+      const content = fs.readFileSync(this.baselineManifestPath, 'utf-8');
+      const parsed = yaml.parse(content);
+      if (parsed !== null && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        this.baselineManifestCache = parsed as Record<string, unknown>;
+        return this.baselineManifestCache;
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn(`MemoryService: failed to parse baseline manifest:`, err);
+    }
+    this.baselineManifestCache = {};
+    return this.baselineManifestCache;
   }
 
   /**

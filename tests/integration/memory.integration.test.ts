@@ -13,6 +13,10 @@ import { TaskRecord, TaskCategory } from '../../src/memory/types';
 
 describe('Memory System Integration Tests', () => {
   const testBasePath = path.join(__dirname, '../fixtures/test-memory');
+  // Explicit runtime path so test cleanup does not have to chase the derived
+  // sibling default. PLAN.md Step 2-3: when `basePath` is custom, `runtimeBasePath`
+  // is derived from `path.dirname(basePath) + '/agent-memory'` unless overridden.
+  const testRuntimeBasePath = path.join(__dirname, '../fixtures/test-agent-memory');
   let memoryService: MemoryService;
 
   beforeAll(() => {
@@ -20,6 +24,10 @@ describe('Memory System Integration Tests', () => {
     const agentsPath = path.join(testBasePath, 'agents');
     if (!fs.existsSync(agentsPath)) {
       fs.mkdirSync(agentsPath, { recursive: true });
+    }
+    const runtimeAgentsPath = path.join(testRuntimeBasePath, 'agents');
+    if (!fs.existsSync(runtimeAgentsPath)) {
+      fs.mkdirSync(runtimeAgentsPath, { recursive: true });
     }
 
     // Create test config
@@ -138,13 +146,21 @@ describe('Memory System Integration Tests', () => {
       yaml.stringify(poorAgentStats)
     );
 
-    memoryService = new MemoryService(testBasePath);
+    memoryService = new MemoryService(testBasePath, { runtimeBasePath: testRuntimeBasePath });
   });
 
   afterAll(() => {
     // Cleanup test directory
     if (fs.existsSync(testBasePath)) {
       fs.rmSync(testBasePath, { recursive: true });
+    }
+    if (fs.existsSync(testRuntimeBasePath)) {
+      fs.rmSync(testRuntimeBasePath, { recursive: true });
+    }
+    // Defensive: also clean the implicit-derived runtime path used by older runs.
+    const derivedRuntime = path.join(__dirname, '../fixtures/agent-memory');
+    if (fs.existsSync(derivedRuntime)) {
+      fs.rmSync(derivedRuntime, { recursive: true });
     }
   });
 
