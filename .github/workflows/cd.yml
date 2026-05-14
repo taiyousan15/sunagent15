@@ -123,7 +123,7 @@ jobs:
           ls -lh .
 
       - name: Upload release artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ steps.get-version.outputs.version }}
           path: release/
