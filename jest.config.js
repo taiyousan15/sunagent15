@@ -119,6 +119,17 @@ module.exports = {
       ],
       testEnvironment: 'node',
     },
+    // Scripts tests: JS unit tests for scripts/*.js (e.g. generate-agents-baseline.js)
+    // Run via `npx jest --selectProjects scripts` or as part of CI generator-baseline-gate
+    {
+      displayName: 'scripts',
+      testMatch: ['<rootDir>/scripts/__tests__/**/*.test.js'],
+      modulePathIgnorePatterns: [
+        '<rootDir>/\\.claude/skills/.*/\\.venv/',
+        '<rootDir>/udemy-downloader/\\.venv/',
+      ],
+      testEnvironment: 'node',
+    },
   ],
   // Coverage thresholds
   coverageThreshold: {
