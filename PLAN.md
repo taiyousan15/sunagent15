@@ -312,3 +312,32 @@ The plan was reviewed in **5 Codex rounds** (3 main + 2 verification) producing 
 | 4 (verification 1) | Senior-engineer | 3 | 2 | 1 | 6 | ✅ |
 | 5 (verification 2) | Senior-engineer | 2 | 2 | 1 | 5 | 5 deferred to implementation |
 | **Total** | | **15** | **16** | **5** | **36** | 31 addressed + 5 deferred |
+
+---
+
+## Step 1.5 follow-up (commit 7e006b3, Codex re-review NO-GO 2026-05-14 + 3rd round 2026-05-14)
+
+After Codex 2nd-round NO-GO on Step 1.5 fix (commit 30c2051), follow-up commit 7e006b3 expanded the generator with:
+
+1. **F1 (HIGH)** — `REQUIRED_NESTED_TYPES` grown from 7 to 30+ entries (worst_case interior, performance_bounds, dependencies aggregates, completion_probability, learning_metrics trends + specialization, metadata). `null` is now treated as missing for typed leaves.
+2. **F2 (MED)** — full catalog comparison vs `.claude/agent-source/*.md`. `compareCatalog` returns surplus + missing. `--strict` fails on surplus (combined with `--check` for read-only CI use). Suffix heuristic demoted to warn-only.
+3. **F3 (MED)** — slug denylist (Windows reserved CON/PRN/AUX/NUL/COM1-9/LPT1-9), trailing hyphen forbidden, consecutive hyphens forbidden.
+4. **new MED** — `scripts/__tests__/generate-agents-baseline.test.js` (45 Jest tests), `jest.config.js` "scripts" project, `.github/workflows/ci.yml` `generator-baseline-gate` job (runs unit tests + 4 modes).
+
+### Drift cleanup (Step 1.5 follow-up scope addition)
+
+Catalog comparison surfaced 3 stale `*-stats.yaml` files that have no matching agent in `.claude/agent-source/*.md`:
+- `tmux-session-manager-stats.yaml` (`min_quality_score: 75`, `dependencies.omega: 0` — orphaned baseline)
+- `optimization-report-coordinator-stats.yaml` (`min_quality_score: 91`, `dependencies.omega: 24` — orphaned baseline of a removed coordinator)
+- `tmux-session-manager-optimization-report-stats.yaml` (suffix `-report`, orphaned)
+
+All three were `total_tasks: 0` stubs (no observed history) and absent from the catalog. They were removed in commit 7e006b3 as part of the F2 enforcement, consistent with Codex re-review feedback that the manifest must align with the authoritative catalog.
+
+**Effective baseline count post-cleanup: 48** (was 51 in PLAN.md historical references above). CI gate `--validate-manifest --expected-count 48` reflects this. Step 9 test (l) PR-β blocking test will assert 48 entries.
+
+If future work re-introduces any of these agent names (e.g. tmux-session-manager comes back with a real `.claude/agent-source/` entry), the generator will silently re-include them once their `*-stats.yaml` is re-added (or generated fresh by `recordTask`), and the manifest will grow back accordingly.
+
+### CI gate hardening (Codex 3rd-round NO-GO MED findings)
+
+- Path filter expanded: `.claude/memory/agents/**` and `.claude/agent-source/**` added to `code` paths so any drift introduced by hooks or future agent additions triggers the `generator-baseline-gate`.
+- `--strict` was previously a write-mode invocation. CI now invokes `--check --strict` so the manifest is not rewritten during CI (read-only). The `--strict` flag still works standalone for local audit + write workflows.

@@ -46,6 +46,9 @@ jobs:
               - 'install-release.ps1'
               - 'scripts/**'
               - '.github/workflows/**'
+              - '.claude/memory/agents/**'
+              - '.claude/memory/agents-baseline.yaml'
+              - '.claude/agent-source/**'
             docs:
               - 'docs/**'
               - '*.md'
@@ -465,8 +468,8 @@ jobs:
       - name: '--validate-manifest --expected-count 48 (post-PR-β CI gate)'
         run: node scripts/generate-agents-baseline.js --validate-manifest --expected-count 48
 
-      - name: '--strict (suffix + full catalog comparison)'
-        run: node scripts/generate-agents-baseline.js --strict
+      - name: '--check --strict (read-only catalog drift gate)'
+        run: node scripts/generate-agents-baseline.js --check --strict
 
   # ============================================
   # Quality Gate Summary
