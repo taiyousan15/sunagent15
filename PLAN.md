@@ -83,11 +83,11 @@ Backup files like `install 2.sh` / `install-release 2.sh` (with space + "2") are
    - (k) **Concurrent recordTask with cache invalidation** (Final-Round H2): spin up two `MemoryService` instances pointing at the same runtime; both load stats; call recordTask serially under lock; assert that **both updates are persisted** (no lost update). Repeat with 10 concurrent calls to verify lock+cache-invalidation under contention.
    - (l) **Baseline manifest E2E seeding** (Final-Round H3): wipe `.claude/memory/agents/` AND `.claude/agent-memory/agents/`; call `recordTask('api-designer', task)`; load resulting stats; assert `omega_metrics.dependencies_list.tools` matches the manifest entry for api-designer (i.e., `[Read, Write, Edit, Grep]`), and `completion_probability.by_complexity` matches manifest values (low: 0.99, medium: 0.95, high: 0.85). This is the **PR-β blocking test** — without it, PR-β deletion is unsafe.
 
-10. **Delete 51 tracked stubs (PR-β) — protected by tracked baseline manifest (Round 3 H1)** — Approach:
-    - **In PR-α (NEW Step 1.5)**: generate and commit `.claude/memory/agents-baseline.yaml` — a single tracked file that distills per-agent calibration from all 51 legacy yaml files (omega_metrics, dependencies, completion_probability, specialization). Schema: `{ [agentName]: { omega_metrics: {...}, learning_metrics: {...}, metadata: { schema_version, omega_integration_date } } }` — only the per-agent baseline fields, NOT the volatile counters (task counts, recent_tasks, success_rate). MemoryService reads this manifest on first stats creation for a new agent so the baseline carries forward.
+10. **Delete 48 tracked stubs (PR-β) — protected by tracked baseline manifest (Round 3 H1; count reconciled in Step 1.5 follow-up drift cleanup)** — Approach:
+    - **In PR-α (NEW Step 1.5)**: generate and commit `.claude/memory/agents-baseline.yaml` — a single tracked file that distills per-agent calibration from the 48 tracked legacy yaml files (originally 51; 3 drift files removed in Step 1.5 follow-up — see drift cleanup section near end of this PLAN) (omega_metrics, dependencies, completion_probability, specialization). Schema: `{ [agentName]: { omega_metrics: {...}, learning_metrics: {...}, metadata: { schema_version, omega_integration_date } } }` — only the per-agent baseline fields, NOT the volatile counters (task counts, recent_tasks, success_rate). MemoryService reads this manifest on first stats creation for a new agent so the baseline carries forward.
     - **In PR-β**: `git rm .claude/memory/agents/*-stats.yaml`. Now safe because `agents-baseline.yaml` survives — even users who skip the soak period, pull directly through `install-release.sh`, or use `quick-install.ps1` retain the baseline. The previous "CI dry-run against fixture" gate is dropped because it only proved synthetic state, not real users (Round 3 H1).
     - **Sequencing**: PR-α merges first (baseline manifest is in place from day 1) → users get runtime + helper + migration + manifest on next install → soak period (1-2 weeks recommended but no longer load-bearing) → PR-β merged. Soak is now an ergonomic preference, not a safety requirement.
-    - **PR-β safety check**: CI step asserts `agents-baseline.yaml` exists and contains all 51 agent names; fails if any agent baseline is missing. This is a structural invariant test, not a fixture simulation.
+    - **PR-β safety check (post-PR-β CI gate)**: After source `*-stats.yaml` are deleted, CI must use `node scripts/generate-agents-baseline.js --validate-manifest --strict --expected-count 48` (manifest-only mode added in Step 1.5 follow-up³, addresses Codex 4th-round NEW-MED-2). This invocation does NOT require `.claude/memory/agents/*-stats.yaml` to exist; it validates the manifest file structure + agent count + catalog cross-check (manifest agents must be a subset of `.claude/agent-source/*.md`). PR-β replaces the `--check` and `--check --strict` CI steps with this single manifest-only command. Asserts the manifest contains all 48 agent names; fails if any agent baseline is missing. This is a structural invariant test, not a fixture simulation.
 
 11. **.gitignore comment clarification** — Edit line 58-59 to read: `# Agent runtime stats (personal, machine-specific; generated from .claude/memory/agents/_template.yaml + agents-baseline.yaml)` followed by `.claude/agent-memory/`. Bundled into PR-α.
 
@@ -102,17 +102,17 @@ Backup files like `install 2.sh` / `install-release 2.sh` (with space + "2") are
 
 ## PR Split Strategy: **2-PR variant** (formerly "Plan B")
 
-Renamed from "Plan B (3 PRs)" because Step 11 (gitignore comment) is a 1-line docs change with zero conflict risk — folding it into PR-α keeps the comment colocated with the template it documents. Step 10 (51 yaml deletion) stays in its own PR (PR-β) because it touches 51 files and benefits from independent revert/rebase isolation.
+Renamed from "Plan B (3 PRs)" because Step 11 (gitignore comment) is a 1-line docs change with zero conflict risk — folding it into PR-α keeps the comment colocated with the template it documents. Step 10 (48 yaml deletion, post-drift cleanup) stays in its own PR (PR-β) because it touches 48 files and benefits from independent revert/rebase isolation.
 
 | PR | Steps | Files | Why isolated |
 |----|-------|-------|--------------|
-| **PR-α** | **1, 1.5 (manifest gen), 2, 3, 4, 5, 6, 7, 8 (Parts A+B), 9, 11, 12** | code + tests + **9 installer/update entrypoints** + agent-source rewrites + installed-copy refresh + tracked `agents-baseline.yaml` + new helpers (`init-agent-memory.js`, `reconcile-memory.js`) + `proper-lockfile` dep + gitignore comment + new `update.ps1` | Functionally complete: 3-layer architecture (template + baseline manifest + runtime) with proactive migration, per-agent locking, atomic writes, slug validation, rollback safety. Mergeable on its own — legacy 51 yaml continue to work via fallback during the soak period; baseline manifest already in place so PR-β no longer requires soak. |
-| **PR-β** | 10 only | `git rm` of 51 yaml | Pure deletion. Trivially reviewable, trivially revertable. Merged ≥1 week after PR-α so users who install during the window get proactive migration. |
+| **PR-α** | **1, 1.5 (manifest gen), 2, 3, 4, 5, 6, 7, 8 (Parts A+B), 9, 11, 12** | code + tests + **9 installer/update entrypoints** + agent-source rewrites + installed-copy refresh + tracked `agents-baseline.yaml` + new helpers (`init-agent-memory.js`, `reconcile-memory.js`) + `proper-lockfile` dep + gitignore comment + new `update.ps1` | Functionally complete: 3-layer architecture (template + baseline manifest + runtime) with proactive migration, per-agent locking, atomic writes, slug validation, rollback safety. Mergeable on its own — legacy 48 yaml (originally 51; drift cleanup in Step 1.5 follow-up) continue to work via fallback during the soak period; baseline manifest already in place so PR-β no longer requires soak. |
+| **PR-β** | 10 only | `git rm` of 48 yaml (originally 51; 3 drift files removed in Step 1.5 follow-up) + swap CI from `--check`/`--check --strict` to `--validate-manifest --strict --expected-count 48` (manifest-only mode) | Pure deletion + CI swap. Trivially reviewable, trivially revertable. Merged ≥1 week after PR-α so users who install during the window get proactive migration. |
 
 **Branching order**:
 1. Wait for **#348 (Phase 1A SKILL.md)** and **#349 (Phase 1B installer portable paths)** to merge → rebase main into local.
 2. Create `feat/memory-agents-separation` from updated main; implement Steps 1-9, 11; open PR-α as Draft.
-3. After PR-α merges + 1-2 week soak → create `chore/delete-legacy-agent-stubs` from main; `git rm` the 51 yaml; open PR-β.
+3. After PR-α merges + 1-2 week soak → create `chore/delete-legacy-agent-stubs` from main; `git rm` the 48 yaml (originally 51; 3 drift files removed in Step 1.5 follow-up); swap CI gate to `--validate-manifest --strict --expected-count 48`; open PR-β.
 
 If #348/#349 stall >7 days, fallback: branch PR-α from main now, accept rebase cost when they land.
 
@@ -127,7 +127,7 @@ If #348/#349 stall >7 days, fallback: branch PR-α from main now, accept rebase 
 - **Permission denied on `.claude/agent-memory/`** — Installer surfaces the OS error; no silent fallback to repo-tracked path.
 - **Stale in-memory cache after migration** — `clearCache()` already exposed; document in PR-α that long-lived processes should restart.
 - **Corrupt runtime YAML** — Quarantined to `.corrupt/${name}-stats-${ISO_TS}.yaml`, fallback reads legacy, `console.warn` surfaces the quarantine path (Step 3).
-- **Legacy file content variation** — Migration helper migrates ALL legacy files regardless of `total_tasks` value (Round 3 H2 cleanup). The 51 shipped files contain non-template per-agent baseline data; baselines are additionally distilled into `agents-baseline.yaml` (Step 10) to survive PR-β deletion.
+- **Legacy file content variation** — Migration helper migrates ALL legacy files regardless of `total_tasks` value (Round 3 H2 cleanup). The 48 shipped files (originally 51; 3 drift files removed in Step 1.5 follow-up drift cleanup) contain non-template per-agent baseline data; baselines are additionally distilled into `agents-baseline.yaml` (Step 10) to survive PR-β deletion.
 
 ---
 
@@ -149,7 +149,7 @@ If #348/#349 stall >7 days, fallback: branch PR-α from main now, accept rebase 
 - **Installer helper non-zero exit** — `set -e` (bash) / `$LASTEXITCODE` (PS) halt installation with visible error.
 - **Check 8 failure post-install** — verify-installation.js prints critical summary; legacy presence is `ok()` not `warn()` to avoid breaking install.sh's exit-2 fatal handling (Step 6).
 - **Existing user with non-zero legacy stats** — Migration copies to runtime on next install; user keeps their data. Without migration, only fallback read works — and that breaks after PR-β deletes legacy.
-- **Existing user without prior local modifications** — Migration copies the 51 baseline-bearing legacy files to runtime on next install; user inherits per-agent baselines automatically. After PR-β, the baseline manifest provides the same data for fresh clones.
+- **Existing user without prior local modifications** — Migration copies the 48 baseline-bearing legacy files (originally 51; 3 drift files removed in Step 1.5 follow-up drift cleanup) to runtime on next install; user inherits per-agent baselines automatically. After PR-β, the baseline manifest provides the same data for fresh clones.
 
 ## Topic-Specific Risks Tracked
 
@@ -341,3 +341,31 @@ If future work re-introduces any of these agent names (e.g. tmux-session-manager
 
 - Path filter expanded: `.claude/memory/agents/**` and `.claude/agent-source/**` added to `code` paths so any drift introduced by hooks or future agent additions triggers the `generator-baseline-gate`.
 - `--strict` was previously a write-mode invocation. CI now invokes `--check --strict` so the manifest is not rewritten during CI (read-only). The `--strict` flag still works standalone for local audit + write workflows.
+
+---
+
+## Step 1.5 follow-up³ (Codex 4th-round NO-GO 2026-05-14, doc/CODEXレビュー/2026-05-14_160000_step1.5-4thround-no-go.md)
+
+After Codex 4th-round NO-GO on Step 1.5 follow-up² (commit `7a456d5`), this follow-up³ commit resolves the 3 new findings raised in that review:
+
+### NEW-MED-1 — PLAN.md active 51-agent invariant
+Resolved by rewriting Step 10 active instructions, the PR split strategy table (PR-α + PR-β rows), and several edge-case / user-facing references to use the post-cleanup count of 48 (preserving "originally 51" as historical context where helpful). Historical narrative references (Goal section, Round 3 review notes, history rewrite mention) retain "51" to preserve the design's origin.
+
+Affected lines:
+- Step 10 — count + PR-β safety check command
+- PR split strategy intro + PR-α / PR-β table rows
+- Branching order step 3
+- Edge cases ("Legacy file content variation")
+- User-facing failure modes ("Existing user without prior local modifications")
+
+### NEW-MED-2 — `generator-baseline-gate` blocks PR-β deletion
+Resolved by extending `--validate-manifest --strict` to perform manifest-only catalog cross-check from the manifest perspective. The mode now:
+
+- Validates manifest exists + parses as YAML mapping + agent count + slug per entry + deep-schema per entry (existing).
+- **NEW**: when `--strict` is provided, also reads `.claude/agent-source/*.md`, builds the catalog, and asserts manifest agents are a subset of catalog agents (surplus = fail). The "missing in manifest" delta is informational (expected — baseline manifest is a subset of catalog).
+- Does NOT require `.claude/memory/agents/*-stats.yaml` to exist. This enables PR-β to delete the source `*-stats.yaml` and swap CI for `--validate-manifest --strict --expected-count 48` in one PR.
+
+CI now runs this new mode as an additional regression step (alongside `--check` / `--check --strict`) so the post-PR-β invocation is exercised every PR-α-era CI run, not just PR-β.
+
+### NEW-LOW-1 — `--strict` help/output text
+Resolved by updating docstring usage block + runtime `Flag: --strict` log message to read "catalog surplus fails; suffix patterns warn only" — matching the actual behavior (suffix demoted to warn-only in 7e006b3).

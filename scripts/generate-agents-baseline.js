@@ -26,11 +26,14 @@
  * Output is sorted alphabetically by agent_name for deterministic diffs.
  *
  * Usage:
- *   node scripts/generate-agents-baseline.js                        # write manifest
- *   node scripts/generate-agents-baseline.js --check                # compare-to-existing (CI invariance gate)
- *   node scripts/generate-agents-baseline.js --validate-manifest    # validate manifest alone (post-PR-β CI)
+ *   node scripts/generate-agents-baseline.js                                     # write manifest
+ *   node scripts/generate-agents-baseline.js --check                             # compare-to-existing (CI invariance gate)
+ *   node scripts/generate-agents-baseline.js --validate-manifest                 # validate manifest alone (manifest-only mode; no source *-stats.yaml required)
  *   node scripts/generate-agents-baseline.js --validate-manifest --expected-count N
- *   node scripts/generate-agents-baseline.js --strict               # extra: catalog diff + suffix patterns fail
+ *   node scripts/generate-agents-baseline.js --validate-manifest --strict        # manifest-only + catalog cross-check (post-PR-β CI gate)
+ *   node scripts/generate-agents-baseline.js --validate-manifest --strict --expected-count 48
+ *   node scripts/generate-agents-baseline.js --strict                            # extra: catalog surplus fails; suffix patterns warn only
+ *   node scripts/generate-agents-baseline.js --check --strict                    # read-only strict gate (CI default)
  *
  * Step 1.5 follow-up (Codex re-review 2026-05-14, doc/CODEXレビュー/2026-05-14_120000_step1.5-rereview-no-go.md):
  *   - F1 (HIGH): extended REQUIRED_NESTED_TYPES (30+ leaf types incl. performance_bounds, worst_case,
@@ -41,6 +44,12 @@
  *              + CI gate at .github/workflows/ci.yml (generator-baseline-gate job)
  *   - F4 (MED, prior review): --validate-manifest mode (kept)
  *   - F5/F6 (LOW, deferred to OPEN-5): parent-dir fsync; byte-compare --check
+ *
+ * Step 1.5 follow-up³ (Codex 4th-round 2026-05-14, doc/CODEXレビュー/2026-05-14_160000_step1.5-4thround-no-go.md):
+ *   - NEW-MED-2: --validate-manifest --strict now adds catalog cross-check from manifest perspective
+ *                (manifest agents must be a subset of .claude/agent-source/*.md). Enables PR-β CI gate
+ *                that does NOT require .claude/memory/agents/*-stats.yaml to exist.
+ *   - NEW-LOW-1: --strict help text corrected: catalog surplus fails; suffix patterns warn only.
  */
 
 const fs = require('fs');
@@ -333,7 +342,7 @@ function renderHeader(agentCount) {
     `# Agent count: ${agentCount}`,
     '# Regenerate: node scripts/generate-agents-baseline.js',
     '# Verify:     node scripts/generate-agents-baseline.js --check',
-    '# Manifest-only validate (post-PR-β CI): node scripts/generate-agents-baseline.js --validate-manifest',
+    '# Manifest-only validate (post-PR-β CI): node scripts/generate-agents-baseline.js --validate-manifest --strict --expected-count 48',
     '',
   ].join('\n');
 }
@@ -352,7 +361,7 @@ function atomicWrite(targetPath, content) {
   fs.renameSync(tmpPath, targetPath);
 }
 
-function validateManifestFile(expectedCount) {
+function validateManifestFile(expectedCount, strict = false) {
   if (!fs.existsSync(OUTPUT_PATH)) {
     console.error(`FAIL: manifest does not exist at ${OUTPUT_PATH}`);
     process.exit(1);
@@ -404,6 +413,29 @@ function validateManifestFile(expectedCount) {
     process.exit(1);
   }
 
+  // Step 1.5 follow-up³ NEW-MED-2: when --strict, also do catalog cross-check from manifest side.
+  // This makes --validate-manifest --strict a complete post-PR-β CI gate without requiring
+  // source *-stats.yaml to exist.
+  if (strict) {
+    const catalog = listAgentSourceCatalog();
+    if (catalog === null) {
+      console.error(`FAIL: --strict requires ${AGENT_SOURCE_DIR} catalog directory to exist`);
+      process.exit(1);
+    }
+    const report = compareCatalog(agentNames, catalog);
+    if (report.surplus.length > 0) {
+      console.error(
+        `FAIL: --strict catalog mismatch: ${report.surplus.length} agent(s) in manifest not present in catalog:`
+      );
+      for (const name of report.surplus) console.error(`  - ${name}`);
+      console.error(
+        `(missing in manifest, present in catalog — informational only: ${report.missing.length} agent(s))`
+      );
+      process.exit(1);
+    }
+    console.log(`OK: catalog cross-check passed (manifest is a subset of catalog; ${report.missing.length} catalog entries not in manifest, expected)`);
+  }
+
   console.log(`OK: manifest schema valid, ${agentNames.length} agents present`);
   console.log('Agents:');
   for (const name of agentNames.sort()) {
@@ -430,11 +462,12 @@ function main() {
   const expectedCount = parseExpectedCount(args);
 
   if (validateManifestMode) {
-    console.log('=== Validate Manifest (post-PR-β CI gate) ===');
+    console.log('=== Validate Manifest (manifest-only mode; no source *-stats.yaml required) ===');
     console.log(`Manifest: ${OUTPUT_PATH}`);
     if (expectedCount !== null) console.log(`Expected count: ${expectedCount}`);
+    if (strict) console.log('Flag:     --strict (manifest agents must be subset of catalog at .claude/agent-source/*.md)');
     console.log('');
-    validateManifestFile(expectedCount);
+    validateManifestFile(expectedCount, strict);
     return;
   }
 
@@ -442,7 +475,7 @@ function main() {
   console.log(`Input:  ${AGENTS_DIR}`);
   console.log(`Output: ${OUTPUT_PATH}`);
   console.log(`Mode:   ${checkMode ? 'check (CI invariance gate)' : 'write'}`);
-  if (strict) console.log('Flag:   --strict (suffix pattern + catalog mismatch will fail)');
+  if (strict) console.log('Flag:   --strict (catalog surplus fails; suffix patterns warn only)');
   console.log('');
 
   const { manifest, fileCount, suffixFlagged, catalogReport } = buildManifest({ strict });
