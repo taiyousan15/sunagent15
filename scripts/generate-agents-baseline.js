@@ -484,7 +484,7 @@ function main() {
   console.log(`Processed ${fileCount} *-stats.yaml files`);
   console.log(`Manifest contains ${Object.keys(manifest).length} agents`);
   if (suffixFlagged.length > 0) {
-    console.log(`WARN: ${suffixFlagged.length} agent_name(s) match non-agent suffix patterns (use --strict to fail):`);
+    console.log(`WARN: ${suffixFlagged.length} agent_name(s) match non-agent suffix patterns (suffix patterns are warning-only; catalog surplus is the strict failure condition):`);
     for (const name of suffixFlagged) console.log(`  - ${name}`);
   }
   if (catalogReport) {
