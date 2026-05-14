@@ -27,15 +27,17 @@
  *   node scripts/generate-agents-baseline.js --check                # compare-to-existing (CI invariance gate)
  *   node scripts/generate-agents-baseline.js --validate-manifest    # validate manifest alone (post-PR-β CI)
  *   node scripts/generate-agents-baseline.js --validate-manifest --expected-count N
- *   node scripts/generate-agents-baseline.js --strict               # extra: fail on unknown agent names (Step 1.5 fix Finding 2 partial)
+ *   node scripts/generate-agents-baseline.js --strict               # extra: catalog diff + suffix patterns fail
  *
- * Step 1.5 fix (Codex review 2026-05-14, doc/CODEXレビュー/2026-05-14_001000_step1.5-codex-review-no-go.md):
- *   - Finding 1 (HIGH): deep nested validator added (REQUIRED_NESTED_CHILDREN + REQUIRED_NESTED_TYPES)
- *   - Finding 2 (MED partial): --strict flag added (full agent-source catalog comparison deferred to follow-up)
- *   - Finding 3 (MED): agent_name slug regex + filename match validation added
- *   - Finding 4 (MED): --validate-manifest mode added (no source files required)
- *   - Finding 5 (LOW deferred to OPEN-5): parent-dir fsync — see TODO in atomicWrite()
- *   - Finding 6 (LOW deferred to follow-up): byte-compare --check; semantic deep-equal not yet added
+ * Step 1.5 follow-up (Codex re-review 2026-05-14, doc/CODEXレビュー/2026-05-14_120000_step1.5-rereview-no-go.md):
+ *   - F1 (HIGH): extended REQUIRED_NESTED_TYPES (30+ leaf types incl. performance_bounds, worst_case,
+ *                dependencies aggregates, completion_probability, learning_metrics trends, metadata)
+ *   - F2 (MED): full catalog comparison vs `.claude/agent-source/*.md` — surplus = fail, missing = warn
+ *   - F3 (MED): slug denylist (Windows reserved names) + trailing/consecutive hyphen forbidden
+ *   - new MED: dedicated Jest unit tests at scripts/__tests__/generate-agents-baseline.test.js
+ *              + CI gate at .github/workflows/ci.yml (generator-baseline-gate job)
+ *   - F4 (MED, prior review): --validate-manifest mode (kept)
+ *   - F5/F6 (LOW, deferred to OPEN-5): parent-dir fsync; byte-compare --check
  */
 
 const fs = require('fs');
@@ -44,18 +46,22 @@ const yaml = require('yaml');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
 const AGENTS_DIR = path.join(REPO_ROOT, '.claude', 'memory', 'agents');
+const AGENT_SOURCE_DIR = path.join(REPO_ROOT, '.claude', 'agent-source');
 const OUTPUT_PATH = path.join(REPO_ROOT, '.claude', 'memory', 'agents-baseline.yaml');
 const TEMPLATE_FILE = '_template.yaml';
 
-// Step 1.5 fix Finding 1 (HIGH): explicit nested-children validation
+// F1: explicit nested-children validation
 // REQUIRED_NESTED_CHILDREN[parent_path] = [child1, child2, ...]
 const REQUIRED_NESTED_CHILDREN = {
   'omega_metrics': ['performance_bounds', 'dependencies', 'completion_probability'],
   'omega_metrics.performance_bounds': ['min_quality_score', 'min_success_rate', 'max_latency_ms', 'worst_case'],
+  'omega_metrics.performance_bounds.worst_case': ['quality_score', 'success_rate', 'latency_ms'],
   'omega_metrics.dependencies': ['omega', 'little_omega', 'coupling_ratio', 'dependencies_list', 'coupling_health'],
   'omega_metrics.dependencies.dependencies_list': ['tools', 'agents', 'external'],
+  'omega_metrics.dependencies.coupling_health': ['status', 'recommendation'],
   'omega_metrics.completion_probability': ['base_omega', 'by_complexity', 'by_category', 'confidence_interval', 'sample_size', 'prediction_accuracy'],
   'omega_metrics.completion_probability.by_complexity': ['low', 'medium', 'high'],
+  'omega_metrics.completion_probability.prediction_accuracy': ['total_predictions', 'accurate_predictions', 'accuracy_rate'],
   'learning_metrics': ['learning_rate', 'quality_trend', 'success_trend', 'specialization'],
   'learning_metrics.quality_trend': ['direction', 'rate'],
   'learning_metrics.success_trend': ['direction', 'rate'],
@@ -63,19 +69,56 @@ const REQUIRED_NESTED_CHILDREN = {
   'metadata': ['schema_version', 'omega_integration_date'],
 };
 
-// Step 1.5 fix Finding 1 (HIGH): explicit type checks on PR-β-blocking-test (Step 9 test l) leaf fields
+// F1: explicit type checks on leaf fields. null is treated as missing for typed fields.
 const REQUIRED_NESTED_TYPES = {
+  // performance_bounds
+  'omega_metrics.performance_bounds.min_quality_score': 'number',
+  'omega_metrics.performance_bounds.min_success_rate': 'number',
+  'omega_metrics.performance_bounds.max_latency_ms': 'number',
+  'omega_metrics.performance_bounds.worst_case.quality_score': 'number',
+  'omega_metrics.performance_bounds.worst_case.success_rate': 'number',
+  'omega_metrics.performance_bounds.worst_case.latency_ms': 'number',
+  // dependencies aggregates
+  'omega_metrics.dependencies.omega': 'number',
+  'omega_metrics.dependencies.little_omega': 'number',
+  'omega_metrics.dependencies.coupling_ratio': 'number',
+  'omega_metrics.dependencies.coupling_health.status': 'string',
+  'omega_metrics.dependencies.coupling_health.recommendation': 'string',
+  // dependencies_list
   'omega_metrics.dependencies.dependencies_list.tools': 'array',
   'omega_metrics.dependencies.dependencies_list.agents': 'array',
   'omega_metrics.dependencies.dependencies_list.external': 'array',
+  // completion_probability aggregates
+  'omega_metrics.completion_probability.base_omega': 'number',
+  'omega_metrics.completion_probability.confidence_interval': 'number',
+  'omega_metrics.completion_probability.sample_size': 'number',
   'omega_metrics.completion_probability.by_complexity.low': 'number',
   'omega_metrics.completion_probability.by_complexity.medium': 'number',
   'omega_metrics.completion_probability.by_complexity.high': 'number',
+  'omega_metrics.completion_probability.prediction_accuracy.total_predictions': 'number',
+  'omega_metrics.completion_probability.prediction_accuracy.accurate_predictions': 'number',
+  'omega_metrics.completion_probability.prediction_accuracy.accuracy_rate': 'number',
+  // learning_metrics
   'learning_metrics.learning_rate': 'number',
+  'learning_metrics.quality_trend.direction': 'string',
+  'learning_metrics.quality_trend.rate': 'number',
+  'learning_metrics.success_trend.direction': 'string',
+  'learning_metrics.success_trend.rate': 'number',
+  'learning_metrics.specialization.primary_category': 'string',
+  'learning_metrics.specialization.specialization_score': 'number',
+  // metadata
+  'metadata.schema_version': 'string',
+  'metadata.omega_integration_date': 'string',
 };
 
-// Step 1.5 fix Finding 3 (MED): agent_name slug validation
+// F3: slug regex + denylist
 const AGENT_NAME_REGEX = /^[a-z][a-z0-9-]*$/;
+// Windows reserved device names (case-insensitive) — would break filesystem ops on Windows CI.
+const WINDOWS_RESERVED = new Set([
+  'CON', 'PRN', 'AUX', 'NUL',
+  'COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9',
+  'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9',
+]);
 
 function getPath(obj, dotPath) {
   const parts = dotPath.split('.');
@@ -91,9 +134,21 @@ function validateSlug(agentName, sourceFile) {
   if (!AGENT_NAME_REGEX.test(agentName)) {
     throw new Error(`${sourceFile}: agent_name "${agentName}" violates slug regex ${AGENT_NAME_REGEX}`);
   }
-  const expectedFilename = `${agentName}-stats.yaml`;
-  if (sourceFile !== expectedFilename) {
-    throw new Error(`${sourceFile}: agent_name "${agentName}" does not match filename (expected "${expectedFilename}")`);
+  if (/--/.test(agentName)) {
+    throw new Error(`${sourceFile}: agent_name "${agentName}" contains consecutive hyphens`);
+  }
+  if (/-$/.test(agentName)) {
+    throw new Error(`${sourceFile}: agent_name "${agentName}" ends with a hyphen`);
+  }
+  if (WINDOWS_RESERVED.has(agentName.toUpperCase())) {
+    throw new Error(`${sourceFile}: agent_name "${agentName}" is a Windows reserved name (would break filesystem ops on Windows CI)`);
+  }
+  // Filename match check is skipped when sourceFile is null (manifest validation context)
+  if (sourceFile !== null) {
+    const expectedFilename = `${agentName}-stats.yaml`;
+    if (sourceFile !== expectedFilename) {
+      throw new Error(`${sourceFile}: agent_name "${agentName}" does not match filename (expected "${expectedFilename}")`);
+    }
   }
 }
 
@@ -113,10 +168,11 @@ function deepValidate(stats, sourceFile) {
     }
   }
 
+  // F1 (HIGH fix): null is treated as missing for typed leaf fields. Existence alone is not enough.
   for (const [leafPath, expectedType] of Object.entries(REQUIRED_NESTED_TYPES)) {
     const value = getPath(stats, leafPath);
-    if (value === undefined) {
-      errors.push(`${sourceFile}: ${leafPath} missing`);
+    if (value === undefined || value === null) {
+      errors.push(`${sourceFile}: ${leafPath} missing or null (expected ${expectedType})`);
       continue;
     }
     if (expectedType === 'array') {
@@ -143,6 +199,38 @@ function listStatsFiles() {
     .sort();
 }
 
+// F2: full catalog comparison helpers
+function extractAgentNameFromCatalog(filename) {
+  let name = filename.replace(/\.md$/, '');
+  // Iteratively strip "NN-" and "ait42-" prefixes (filenames have inconsistent prefixes
+  // e.g. "00-ait42-coordinator.md" and "ait42-01-ait42-coordinator-fast.md").
+  let prev;
+  do {
+    prev = name;
+    name = name.replace(/^\d+-/, '');
+    name = name.replace(/^ait42-/, '');
+  } while (name !== prev);
+  return name;
+}
+
+function listAgentSourceCatalog() {
+  if (!fs.existsSync(AGENT_SOURCE_DIR)) {
+    return null; // catalog not present, skip comparison
+  }
+  return fs
+    .readdirSync(AGENT_SOURCE_DIR)
+    .filter((f) => f.endsWith('.md'))
+    .map(extractAgentNameFromCatalog);
+}
+
+function compareCatalog(manifestAgents, catalogAgents) {
+  const manifestSet = new Set(manifestAgents);
+  const catalogSet = new Set(catalogAgents);
+  const surplus = manifestAgents.filter((a) => !catalogSet.has(a));
+  const missing = catalogAgents.filter((a) => !manifestSet.has(a));
+  return { surplus, missing };
+}
+
 function extractBaseline(stats) {
   return {
     omega_metrics: stats.omega_metrics,
@@ -162,7 +250,7 @@ function buildManifest(options = {}) {
   }
 
   const manifest = {};
-  const unknownAgents = [];
+  const suffixFlagged = [];
 
   for (const file of files) {
     const fullPath = path.join(AGENTS_DIR, file);
@@ -179,28 +267,23 @@ function buildManifest(options = {}) {
       throw new Error(`${file}: missing or invalid agent_name field`);
     }
 
-    // Step 1.5 fix Finding 3 (MED): slug + filename validation
+    // F3: slug + filename + denylist + hyphen checks
     validateSlug(agentName, file);
 
     if (manifest[agentName]) {
       throw new Error(`duplicate agent_name "${agentName}" (in ${file})`);
     }
 
-    // Step 1.5 fix Finding 1 (HIGH): deep nested validation
+    // F1: deep nested validation (existence + type, null treated as missing)
     deepValidate(parsed, file);
 
-    // Step 1.5 fix Finding 2 (MED partial): --strict flag flags unknown agents
-    // For now, "unknown" = agent_name with telltale non-agent suffix patterns.
-    // Full catalog comparison vs `.claude/agent-source/*.md` deferred to follow-up.
+    // F2 follow-up: suffix is a cheap heuristic only (cosmetic warning).
+    // Authoritative drift detection is the full catalog comparison below.
+    // We no longer fail --strict on suffix alone — that would create false positives for
+    // legitimate "*-report" agent names while the catalog comparison already detects surplus.
     const isLikelyNonAgent = /-report$|-summary$|-log$/.test(agentName);
     if (isLikelyNonAgent) {
-      unknownAgents.push(agentName);
-      if (strict) {
-        throw new Error(
-          `${file}: agent_name "${agentName}" matches non-agent suffix pattern (-report/-summary/-log). ` +
-          `Use --strict=false to allow; full catalog audit recommended as follow-up.`
-        );
-      }
+      suffixFlagged.push(agentName);
     }
 
     manifest[agentName] = extractBaseline(parsed);
@@ -211,7 +294,26 @@ function buildManifest(options = {}) {
     sortedManifest[key] = manifest[key];
   }
 
-  return { manifest: sortedManifest, fileCount: files.length, unknownAgents };
+  // F2: full catalog comparison (only meaningful when catalog is present)
+  let catalogReport = null;
+  const catalog = listAgentSourceCatalog();
+  if (catalog) {
+    catalogReport = compareCatalog(Object.keys(sortedManifest), catalog);
+    if (strict && catalogReport.surplus.length > 0) {
+      throw new Error(
+        `--strict catalog mismatch: ${catalogReport.surplus.length} agent(s) in manifest not present in catalog:\n  ` +
+        catalogReport.surplus.join('\n  ') +
+        `\n(missing in manifest, present in catalog — informational only: ${catalogReport.missing.length} agent(s))`
+      );
+    }
+  }
+
+  return {
+    manifest: sortedManifest,
+    fileCount: files.length,
+    suffixFlagged,
+    catalogReport,
+  };
 }
 
 function renderHeader(agentCount) {
@@ -239,7 +341,7 @@ function serialize(manifest, agentCount) {
 }
 
 function atomicWrite(targetPath, content) {
-  // Step 1.5 fix Finding 5 (LOW, deferred to OPEN-5):
+  // F5 (LOW, deferred to OPEN-5):
   //   Add parent-dir fsync (POSIX) and {flush: true} (Node 20.10+) for crash durability.
   //   Currently uses tmp+rename which is namespace-atomic but not crash-durable.
   const tmpPath = `${targetPath}.tmp.${process.pid}.${Date.now()}`;
@@ -275,8 +377,11 @@ function validateManifestFile(expectedCount) {
   const errors = [];
 
   for (const agentName of agentNames) {
-    if (!AGENT_NAME_REGEX.test(agentName)) {
-      errors.push(`agent_name "${agentName}" violates slug regex ${AGENT_NAME_REGEX}`);
+    try {
+      // sourceFile=null skips the filename match (manifest entries have no filename context)
+      validateSlug(agentName, null);
+    } catch (err) {
+      errors.push(err.message);
     }
     try {
       deepValidate(parsed[agentName], `manifest entry ${agentName}`);
@@ -334,17 +439,28 @@ function main() {
   console.log(`Input:  ${AGENTS_DIR}`);
   console.log(`Output: ${OUTPUT_PATH}`);
   console.log(`Mode:   ${checkMode ? 'check (CI invariance gate)' : 'write'}`);
-  if (strict) console.log('Flag:   --strict (non-agent suffix patterns will fail)');
+  if (strict) console.log('Flag:   --strict (suffix pattern + catalog mismatch will fail)');
   console.log('');
 
-  const { manifest, fileCount, unknownAgents } = buildManifest({ strict });
+  const { manifest, fileCount, suffixFlagged, catalogReport } = buildManifest({ strict });
   const serialized = serialize(manifest, Object.keys(manifest).length);
 
   console.log(`Processed ${fileCount} *-stats.yaml files`);
   console.log(`Manifest contains ${Object.keys(manifest).length} agents`);
-  if (unknownAgents.length > 0) {
-    console.log(`WARN: ${unknownAgents.length} agent_name(s) match non-agent suffix patterns (use --strict to fail):`);
-    for (const name of unknownAgents) console.log(`  - ${name}`);
+  if (suffixFlagged.length > 0) {
+    console.log(`WARN: ${suffixFlagged.length} agent_name(s) match non-agent suffix patterns (use --strict to fail):`);
+    for (const name of suffixFlagged) console.log(`  - ${name}`);
+  }
+  if (catalogReport) {
+    if (catalogReport.surplus.length > 0) {
+      console.log(`WARN: ${catalogReport.surplus.length} agent(s) in manifest but not in catalog (use --strict to fail):`);
+      for (const name of catalogReport.surplus) console.log(`  - ${name}`);
+    }
+    if (catalogReport.missing.length > 0) {
+      console.log(`INFO: ${catalogReport.missing.length} agent(s) in catalog but not in manifest (PR-β baseline subset is expected to be a subset of catalog):`);
+      for (const name of catalogReport.missing.slice(0, 10)) console.log(`  - ${name}`);
+      if (catalogReport.missing.length > 10) console.log(`  ... and ${catalogReport.missing.length - 10} more`);
+    }
   }
 
   if (checkMode) {
@@ -367,4 +483,20 @@ function main() {
   console.log(`Size: ${serialized.length} bytes`);
 }
 
-main();
+// Module exports for unit tests (scripts/__tests__/generate-agents-baseline.test.js)
+module.exports = {
+  AGENT_NAME_REGEX,
+  WINDOWS_RESERVED,
+  REQUIRED_NESTED_CHILDREN,
+  REQUIRED_NESTED_TYPES,
+  getPath,
+  validateSlug,
+  deepValidate,
+  extractAgentNameFromCatalog,
+  compareCatalog,
+};
+
+// Only run main() when invoked as a script, not when imported as a module
+if (require.main === module) {
+  main();
+}
