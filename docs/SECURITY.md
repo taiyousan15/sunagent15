@@ -7,7 +7,7 @@
 セキュリティ上の脆弱性を発見した場合は、**公開Issueを作成せず**、以下の方法で報告してください：
 
 1. **GitHub Security Advisory** (推奨)
-   - [Security Advisory を作成](https://github.com/san15/taisun_agent/security/advisories/new)
+   - [Security Advisory を作成](https://github.com/taiyousan15/sunagent15/security/advisories/new)
    - 非公開で報告でき、修正まで情報が保護されます
 
 2. **メールでの報告**
@@ -240,4 +240,4 @@ tail -20 logs/supervisor-runlog.jsonl | jq .
 
 ---
 
-*セキュリティに関する質問は [GitHub Security Advisory](https://github.com/san15/taisun_agent/security/advisories/new) からお問い合わせください。*
+*セキュリティに関する質問は [GitHub Security Advisory](https://github.com/taiyousan15/sunagent15/security/advisories/new) からお問い合わせください。*

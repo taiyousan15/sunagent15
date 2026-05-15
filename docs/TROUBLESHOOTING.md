@@ -446,7 +446,7 @@ cat logs/error.log
 ```
 
 2. **Issue を作成:**
-[GitHub Issues](https://github.com/san15/taisun_agent/issues) で報告
+[GitHub Issues](https://github.com/taiyousan15/sunagent15/issues) で報告
 
 Issue に含める情報:
 - エラーメッセージ全文
@@ -476,4 +476,4 @@ npm install
 
 ---
 
-*このドキュメントで解決しない問題は [GitHub Issues](https://github.com/san15/taisun_agent/issues) で報告してください。*
+*このドキュメントで解決しない問題は [GitHub Issues](https://github.com/taiyousan15/sunagent15/issues) で報告してください。*

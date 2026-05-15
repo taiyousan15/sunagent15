@@ -408,8 +408,8 @@ taisun_agent/
 
 ## 質問・サポート
 
-- [GitHub Issues](https://github.com/san15/taisun_agent/issues) - バグ報告、機能要望
-- [GitHub Discussions](https://github.com/san15/taisun_agent/discussions) - 質問、ディスカッション
+- [GitHub Issues](https://github.com/taiyousan15/sunagent15/issues) - バグ報告、機能要望
+- [GitHub Discussions](https://github.com/taiyousan15/sunagent15/discussions) - 質問、ディスカッション
 
 ---
 

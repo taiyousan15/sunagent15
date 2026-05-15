@@ -1,11 +1,11 @@
-# taisun_agent - Remote installer (for irm | iex)
+# sunagent15 - Remote installer (for irm | iex)
 #
 # Usage:
-#   irm https://raw.githubusercontent.com/san15/taisun_agent/main/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.ps1 | iex
 #
-# Or with options (PowerShell limitation: piped iex cannot pass args; use the script-file form):
+# Or with options (PowerShell limitation: piped iex cannot pass args; set env vars first):
 #   $env:TAISUN_PROFILE = "minimal"
-#   irm https://raw.githubusercontent.com/san15/taisun_agent/main/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.ps1 | iex
 #
 # What this does:
 #   1. Clones the repo into $env:TAISUN_INSTALL_DIR (default: $HOME\.taisun-agent)
@@ -19,10 +19,12 @@ $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
-$RepoUrl     = if ($env:TAISUN_REPO_URL)     { $env:TAISUN_REPO_URL }     else { 'https://github.com/san15/taisun_agent.git' }
+$RepoUrl     = if ($env:TAISUN_REPO_URL)     { $env:TAISUN_REPO_URL }     else { 'https://github.com/taiyousan15/sunagent15.git' }
 $InstallDir  = if ($env:TAISUN_INSTALL_DIR)  { $env:TAISUN_INSTALL_DIR }  else { Join-Path $HOME '.taisun-agent' }
 $Branch      = if ($env:TAISUN_BRANCH)       { $env:TAISUN_BRANCH }       else { 'main' }
-$Profile     = if ($env:TAISUN_PROFILE)      { $env:TAISUN_PROFILE }      else { '' }
+# NOTE: Renamed from $Profile to avoid clobbering the PowerShell automatic variable $PROFILE
+#   ref: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables
+$SkillProfile = if ($env:TAISUN_PROFILE)     { $env:TAISUN_PROFILE }      else { '' }
 
 # Detect local checkout (script invoked from inside repo, not piped)
 $ScriptDir = $null
@@ -71,7 +73,7 @@ if (Test-Path (Join-Path $InstallDir '.git')) {
 
 # Build args for delegated installer
 $forwardArgs = @()
-if ($Profile) { $forwardArgs += '-Profile'; $forwardArgs += $Profile }
+if ($SkillProfile) { $forwardArgs += '-Profile'; $forwardArgs += $SkillProfile }
 
 Write-Host ""
 Write-Host "▶ メインインストーラーに委譲 ..."

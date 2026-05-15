@@ -2,8 +2,8 @@
 # taisun_agent - Verified release installer (SHA256-checked archive)
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install-release.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install-release.sh | bash -s -- --version v2.53.3
+#   curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | bash -s -- --version v2.53.3
 #
 # What this does (SECURE PATH — recommended):
 #   1. Resolves target version (latest release if not specified)
@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-REPO="${TAISUN_REPO:-san15/taisun_agent}"
+REPO="${TAISUN_REPO:-taiyousan15/sunagent15}"
 INSTALL_DIR="${TAISUN_INSTALL_DIR:-$HOME/.taisun-agent}"
 VERSION="${TAISUN_VERSION:-}"
 EXTRA_ARGS=()

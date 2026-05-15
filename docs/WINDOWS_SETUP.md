@@ -104,7 +104,7 @@ docker info
 # PowerShell または Git Bash を開く
 
 # リポジトリをクローン
-git clone https://github.com/san15/taisun_agent.git
+git clone https://github.com/taiyousan15/sunagent15.git
 cd taisun_agent
 
 # Windows セットアップスクリプトを実行
@@ -313,7 +313,7 @@ git config --global core.autocrlf false
 # リポジトリを再クローン
 cd ..
 rmdir /s /q taisun_agent
-git clone https://github.com/san15/taisun_agent.git
+git clone https://github.com/taiyousan15/sunagent15.git
 cd taisun_agent
 npm install
 ```
@@ -377,7 +377,7 @@ Error: EPERM: operation not permitted
 
 ```bash
 # WSL2 (Ubuntu など) で実行
-git clone https://github.com/san15/taisun_agent.git
+git clone https://github.com/taiyousan15/sunagent15.git
 cd taisun_agent
 npm install
 npm test
@@ -474,7 +474,7 @@ WSL2 を使う場合、Linux 環境として扱えるため、`.sh` スクリプ
    ```
 
 4. **GitHub Issue を作成**
-   - [Issues ページ](https://github.com/san15/taisun_agent/issues)
+   - [Issues ページ](https://github.com/taiyousan15/sunagent15/issues)
    - `npm run doctor` の出力を添付
    - OS バージョン、Node.js バージョンを記載
 

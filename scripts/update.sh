@@ -83,7 +83,7 @@ git pull origin main --ff-only 2>/dev/null && GIT_UPDATED=true || {
     if [ "$GIT_UPDATED" = false ]; then
         info "ZIPダウンロードで更新します..."
 
-        ZIP_URL="https://github.com/san15/taisun_agent/archive/refs/heads/main.zip"
+        ZIP_URL="https://github.com/taiyousan15/sunagent15/archive/refs/heads/main.zip"
         ZIP_PATH="/tmp/taisun_agent_update.zip"
         EXTRACT_PATH="/tmp/taisun_agent_extract"
 

@@ -258,6 +258,6 @@ MCPサーバーは`.env`ファイルを自動で読み込みません。
 ## サポート
 
 解決しない場合:
-1. [GitHub Issues](https://github.com/san15/taisun_agent/issues)に報告
+1. [GitHub Issues](https://github.com/taiyousan15/sunagent15/issues)に報告
 2. `/doctor`の出力を添付
 3. エラーメッセージの全文を共有

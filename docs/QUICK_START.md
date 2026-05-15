@@ -32,7 +32,7 @@ git clone → npm install → npm test → Claude Codeで使う
 ## Step 1: クローン (30秒)
 
 ```bash
-git clone https://github.com/san15/taisun_agent.git
+git clone https://github.com/taiyousan15/sunagent15.git
 cd taisun_agent
 ```
 

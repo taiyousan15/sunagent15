@@ -2,13 +2,13 @@
 
 **Unified Development & Marketing Platform** - AIエージェント、MCPツール、マーケティングスキルを統合した次世代開発プラットフォーム
 
-[![CI](https://github.com/san15/taisun_agent/actions/workflows/ci.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/ci.yml)
-[![Security Scan](https://github.com/san15/taisun_agent/actions/workflows/security.yml/badge.svg)](https://github.com/san15/taisun_agent/actions/workflows/security.yml)
+[![CI](https://github.com/taiyousan15/sunagent15/actions/workflows/ci.yml/badge.svg)](https://github.com/taiyousan15/sunagent15/actions/workflows/ci.yml)
+[![Security Scan](https://github.com/taiyousan15/sunagent15/actions/workflows/security.yml/badge.svg)](https://github.com/taiyousan15/sunagent15/actions/workflows/security.yml)
 [![Node.js](https://img.shields.io/badge/Node.js-20.x%20%7C%2022.x-green)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-1092%20passing-brightgreen)](https://github.com/san15/taisun_agent/actions)
-[![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/san15/taisun_agent/blob/main/.claude/skills/world-research/SKILL.md)
+[![Tests](https://img.shields.io/badge/Tests-1092%20passing-brightgreen)](https://github.com/taiyousan15/sunagent15/actions)
+[![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/taiyousan15/sunagent15/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
 > インストールするだけで 67スキル・101+コマンド・25 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 83 個の agent-source テンプレートを活用）。
@@ -72,16 +72,16 @@
 
 ```
 以下をコピペして実行：
-curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.sh | bash
 ```
 
-> デフォルトで `~/.taisun-agent/` にクローンされます。別のパスに入れたい場合: `curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install.sh | TAISUN_INSTALL_DIR=~/my-path bash`
+> デフォルトで `~/.taisun-agent/` にクローンされます。別のパスに入れたい場合: `curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.sh | TAISUN_INSTALL_DIR=~/my-path bash`
 
 **インストール（検証付き: SHA256チェックあり・セキュリティ重視）**
 
 ```
 以下をコピペして実行：
-curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install-release.sh | bash
+curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | bash
 ```
 
 <details>
@@ -90,7 +90,7 @@ curl -fsSL https://raw.githubusercontent.com/san15/taisun_agent/main/install-rel
 ```
 以下のコマンドを順番に実行して：
 cd ~
-git clone https://github.com/san15/taisun_agent.git
+git clone https://github.com/taiyousan15/sunagent15.git
 cd taisun_agent
 bash scripts/install.sh
 ```
@@ -129,7 +129,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 ```powershell
 cd $HOME
-git clone https://github.com/san15/taisun_agent.git
+git clone https://github.com/taiyousan15/sunagent15.git
 cd taisun_agent
 .\scripts\install.ps1
 ```
@@ -532,7 +532,7 @@ YouTubeサムネイルを作って
 Claude Code v2.1.0以降（Mac / Windows 共通）：
 
 ```bash
-/plugin marketplace add san15/taisun_agent
+/plugin marketplace add taiyousan15/sunagent15
 /plugin install taisun-agent@taisun-agent
 ```
 
