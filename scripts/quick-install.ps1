@@ -1,7 +1,7 @@
 # TAISUN Agent - Windows ワンライナーインストーラー
 #
 # 使い方（PowerShellに1行貼るだけ）:
-#   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; irm https://raw.githubusercontent.com/san15/taisun_agent/main/scripts/quick-install.ps1 | iex
+#   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; irm https://raw.githubusercontent.com/taiyousan15/sunagent15/main/scripts/quick-install.ps1 | iex
 #
 # 動作:
 #   1. %USERPROFILE%\taisun_agent に git clone（既存なら git pull）
@@ -30,7 +30,7 @@ $ErrorActionPreference = "Continue"
 # 定数
 # ─────────────────────────────────────────
 $INSTALL_DIR = $InstallDir
-$REPO_URL = "https://github.com/san15/taisun_agent.git"
+$REPO_URL = "https://github.com/taiyousan15/sunagent15.git"
 
 # ─────────────────────────────────────────
 # 表示ヘルパー

@@ -1,11 +1,11 @@
 # taisun_agent - Verified release installer (SHA256-checked archive)
 #
 # Usage:
-#   irm https://raw.githubusercontent.com/san15/taisun_agent/main/install-release.ps1 | iex
+#   irm https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.ps1 | iex
 #
 # Or with explicit version:
 #   $env:TAISUN_VERSION = "v2.53.3"
-#   irm https://raw.githubusercontent.com/san15/taisun_agent/main/install-release.ps1 | iex
+#   irm https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.ps1 | iex
 #
 # What this does (SECURE PATH — recommended):
 #   1. Resolves target version (latest release if not specified)
@@ -22,10 +22,12 @@ $ErrorActionPreference = 'Stop'
 $OutputEncoding = [System.Text.Encoding]::UTF8
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Repo        = if ($env:TAISUN_REPO)         { $env:TAISUN_REPO }         else { 'san15/taisun_agent' }
+$Repo        = if ($env:TAISUN_REPO)         { $env:TAISUN_REPO }         else { 'taiyousan15/sunagent15' }
 $InstallDir  = if ($env:TAISUN_INSTALL_DIR)  { $env:TAISUN_INSTALL_DIR }  else { Join-Path $HOME '.taisun-agent' }
 $Version     = if ($env:TAISUN_VERSION)      { $env:TAISUN_VERSION }      else { '' }
-$Profile     = if ($env:TAISUN_PROFILE)      { $env:TAISUN_PROFILE }      else { '' }
+# NOTE: Renamed from $Profile to avoid clobbering the PowerShell automatic variable $PROFILE
+#   ref: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables
+$SkillProfile = if ($env:TAISUN_PROFILE)     { $env:TAISUN_PROFILE }      else { '' }
 
 Write-Host ""
 Write-Host "════════════════════════════════════════════════════"
@@ -109,7 +111,7 @@ try {
     Write-Host "▶ メインインストーラーに委譲 ..."
     Write-Host ""
     $forwardArgs = @()
-    if ($Profile) { $forwardArgs += '-Profile'; $forwardArgs += $Profile }
+    if ($SkillProfile) { $forwardArgs += '-Profile'; $forwardArgs += $SkillProfile }
     & (Join-Path $InstallDir 'scripts\install.ps1') @forwardArgs
     exit $LASTEXITCODE
 } finally {

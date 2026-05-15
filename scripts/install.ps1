@@ -77,6 +77,180 @@ function Write-Info { param($msg) Write-Host "  ->  $msg" -ForegroundColor Cyan 
 function Write-Fail { param($msg) Write-Host "  NG  $msg" -ForegroundColor Red }
 function Write-Step { param($msg) Write-Host ""; Write-Host "━━━ $msg ━━━" -ForegroundColor White }
 
+# ─────────────────────────────────────────
+# 共通ヘルパー: BOM 安全な JSON 修復・書き出し
+#   PowerShell 5.1 の Set-Content -Encoding UTF8 は BOM を付与するため、
+#   .NET API を直接呼んで UTF-8 (no BOM) で書き出す。
+#   ref: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-content
+# ─────────────────────────────────────────
+function Write-Utf8NoBom {
+    param([string]$Path, [string]$Content)
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($Path, $Content, $utf8NoBom)
+}
+
+function Repair-JsonFile {
+    param([string]$Path, [string]$Label = "JSON file")
+    if (-not (Test-Path $Path)) { return $true }
+    try {
+        $bytes = [System.IO.File]::ReadAllBytes($Path)
+        if ($bytes.Length -eq 0) { return $true }
+        $needsRewrite = $false
+
+        # UTF-8 BOM (EF BB BF) を検出して除去
+        if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+            $bytes = $bytes[3..($bytes.Length - 1)]
+            $needsRewrite = $true
+            Write-Info "${Label}: BOM を検出。除去します ($Path)"
+        }
+        # UTF-16 LE BOM (FF FE) も検出（救出は手動）
+        elseif ($bytes.Length -ge 2 -and $bytes[0] -eq 0xFF -and $bytes[1] -eq 0xFE) {
+            $backup = "${Path}.utf16-broken-$(Get-Date -Format 'yyyyMMdd-HHmmss').bak"
+            [System.IO.File]::Copy($Path, $backup, $true)
+            Write-Warn "${Label}: UTF-16 でエンコードされています。バックアップ: $backup"
+            Write-Warn "${Label} を空の {} で初期化します（バックアップから手動復元可能）"
+            Write-Utf8NoBom -Path $Path -Content "{}"
+            return $true
+        }
+
+        $text = [System.Text.Encoding]::UTF8.GetString($bytes)
+        try {
+            $null = $text | ConvertFrom-Json -ErrorAction Stop
+        } catch {
+            $backup = "${Path}.broken-$(Get-Date -Format 'yyyyMMdd-HHmmss').bak"
+            [System.IO.File]::Copy($Path, $backup, $true)
+            Write-Warn "${Label} が JSON として壊れています。バックアップ: $backup"
+            Write-Warn "${Label} を空の {} で初期化します（バックアップから手動復元可能）"
+            Write-Utf8NoBom -Path $Path -Content "{}"
+            return $true
+        }
+
+        if ($needsRewrite) {
+            Write-Utf8NoBom -Path $Path -Content $text
+            Write-Ok "${Label}: BOM を除去して保存しました"
+        }
+        return $true
+    } catch {
+        Write-Warn "${Label} の修復処理でエラー: $($_.Exception.Message)"
+        return $false
+    }
+}
+
+# ─────────────────────────────────────────
+# 共通ヘルパー: Junction の古いリンクを安全に更新
+#   ReparsePoint を Remove-Item -Recurse で消すと「リンク先のファイルが消える」事故を起こすため、
+#   Junction を消すときは [System.IO.Directory]::Delete($path, $false) を使う。
+#   ref: https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.delete
+# ─────────────────────────────────────────
+function Remove-LinkOrDirectory {
+    param([string]$Path)
+    if (-not (Test-Path $Path)) { return }
+    $item = Get-Item -LiteralPath $Path -Force
+    if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) {
+        # Junction / Symlink: リンクのみ削除（ターゲットは温存）
+        [System.IO.Directory]::Delete($Path, $false)
+    } else {
+        Remove-Item -LiteralPath $Path -Recurse -Force
+    }
+}
+
+function Test-JunctionTargetMatches {
+    param([string]$LinkPath, [string]$ExpectedTarget)
+    try {
+        $item = Get-Item -LiteralPath $LinkPath -Force
+        if (-not ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)) { return $false }
+        $current = $item.Target
+        if ($current -is [array]) { $current = $current[0] }
+        if (-not $current) { return $false }
+        $normCurrent  = [System.IO.Path]::GetFullPath($current).TrimEnd('\')
+        $normExpected = [System.IO.Path]::GetFullPath($ExpectedTarget).TrimEnd('\')
+        return ($normCurrent -ieq $normExpected)
+    } catch {
+        return $false
+    }
+}
+
+# ─────────────────────────────────────────
+# 共通ヘルパー: 古い install フォルダを指す MCP サーバーのパスを
+#               現在の $REPO_DIR に張り替える。
+# 例: "C:\Users\mitsu\taisun_agent\mcp-servers\..." → "C:\Users\mitsu\sunagent15\mcp-servers\..."
+# 検出ルール: 絶対パスかつ
+#             (a) $REPO_DIR で始まらない
+#             (b) `\mcp-servers\` / `\dist\` を含む
+# のものを「内部 MCP サーバーへの参照だが旧パス」とみなして書き換える。
+# ユーザー独自の MCP サーバー（リポ外を指すもの）は触らない。
+# ─────────────────────────────────────────
+function Repair-McpServerPaths {
+    param([string]$SettingsPath, [string]$RepoDir)
+    if (-not (Test-Path $SettingsPath)) { return }
+
+    # 安全のため「リポジトリが提供する MCP サーバー」だけを対象にする。
+    # ユーザーが独自に登録した MCP サーバーは触らない。
+    # (.mcp.json.example の mcpServers セクションから抽出した既知リスト)
+    $KNOWN_INTERNAL_MCPS = @(
+        'taisun-proxy',
+        'line-bot',
+        'voice-ai',
+        'ai-sdr',
+        'codebase-memory'
+    )
+
+    try {
+        $raw = Get-Content $SettingsPath -Raw
+        if (-not $raw -or $raw.Trim().Length -eq 0) { return }
+        $json = $raw | ConvertFrom-Json -ErrorAction Stop
+    } catch {
+        Write-Warn "MCP パスマイグレーション: settings.json をパースできず、スキップしました"
+        return
+    }
+    if (-not $json.mcpServers) { return }
+
+    $normRepo = [System.IO.Path]::GetFullPath($RepoDir).TrimEnd('\')
+    $changes = 0
+    $serverNames = @($json.mcpServers.PSObject.Properties.Name) |
+        Where-Object { $KNOWN_INTERNAL_MCPS -contains $_ }
+
+    foreach ($name in $serverNames) {
+        $server = $json.mcpServers.$name
+        if (-not $server -or -not $server.args) { continue }
+
+        $newArgs = @()
+        $modified = $false
+        foreach ($arg in $server.args) {
+            $newArg = $arg
+            if ($arg -is [string] -and $arg -match '^[A-Za-z]:[\\/]') {
+                $argNorm = $arg -replace '/', '\'
+                $isInRepo = $argNorm.StartsWith($normRepo, [StringComparison]::OrdinalIgnoreCase)
+                if (-not $isInRepo) {
+                    if ($argNorm -match '[\\](mcp-servers[\\].*|dist[\\].*)$') {
+                        $relative = $Matches[1]
+                        $candidate = Join-Path $normRepo $relative
+                        if (Test-Path $candidate) {
+                            $newArg = $candidate
+                            $modified = $true
+                            Write-Info "MCP マイグレーション: ${name} → $candidate"
+                        }
+                    }
+                }
+            }
+            $newArgs += $newArg
+        }
+        if ($modified) {
+            $server.args = $newArgs
+            $changes++
+        }
+    }
+
+    if ($changes -gt 0) {
+        try {
+            Write-Utf8NoBom -Path $SettingsPath -Content ($json | ConvertTo-Json -Depth 20)
+            Write-Ok "MCP サーバーパスを ${changes} 件 ${normRepo} に書き換えました"
+        } catch {
+            Write-Warn "MCP パス書き戻しに失敗: $($_.Exception.Message)"
+        }
+    }
+}
+
 # Opt-in telemetry helper (no-op unless user opted in via manage.js or env var)
 $script:InstallStartEpoch = [int]([DateTimeOffset]::Now.ToUnixTimeSeconds())
 function Emit-Telemetry {
@@ -126,9 +300,9 @@ if ($Update) {
         } catch {
         Write-Warn "git同期に失敗しました。ZIPダウンロードで更新します..."
 
-        $zipUrl = "https://github.com/san15/taisun_agent/archive/refs/heads/main.zip"
-        $zipPath = "$env:TEMP\taisun_agent_update.zip"
-        $extractPath = "$env:TEMP\taisun_agent_extract"
+        $zipUrl = "https://github.com/taiyousan15/sunagent15/archive/refs/heads/main.zip"
+        $zipPath = "$env:TEMP\sunagent15_update.zip"
+        $extractPath = "$env:TEMP\sunagent15_extract"
 
         try {
             Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath -UseBasicParsing
@@ -416,9 +590,19 @@ if (Test-Path $SOURCE_SKILLS) {
 
         $target = "$TARGET_SKILLS\$skillName"
 
-        # 古い通常ディレクトリを削除（Junctionではないもの）
-        if ((Test-Path $target) -and (-not ((Get-Item $target).Attributes -band [IO.FileAttributes]::ReparsePoint))) {
-            Remove-Item $target -Recurse -Force
+        # 既存ターゲットの状態を判定
+        #  - 通常ディレクトリ → 削除して Junction で置き換え
+        #  - Junction だが別フォルダ (例: 旧 taisun_agent インストール) を指している → 削除して再作成
+        #  - Junction かつ現在のソースを正しく指している → スキップ
+        if (Test-Path $target) {
+            $isReparse = (Get-Item -LiteralPath $target -Force).Attributes -band [IO.FileAttributes]::ReparsePoint
+            if (-not $isReparse) {
+                # 通常ディレクトリ → 削除
+                Remove-Item -LiteralPath $target -Recurse -Force
+            } elseif (-not (Test-JunctionTargetMatches -LinkPath $target -ExpectedTarget $skillDir)) {
+                # 古い Junction (別インストール先を指す) → リンクのみ削除して再作成
+                Remove-LinkOrDirectory -Path $target
+            }
         }
 
         if (-not (Test-Path $target)) {
@@ -558,6 +742,12 @@ if (-not (Test-Path $settingsDir)) {
     Write-Ok "$settingsDir フォルダを作成しました"
 }
 
+# Pre-flight: BOM 除去 + JSON 健全性チェック
+#   PowerShell 5.1 系で過去に書かれたファイルは BOM 付きの可能性があり、
+#   ConvertFrom-Json / Node 側の JSON.parse がエラーで落ちる原因になる。
+#   壊れていればバックアップを取って空 {} で初期化（ユーザーが手動復元可能）。
+Repair-JsonFile -Path $SETTINGS_FILE -Label "user settings.json" | Out-Null
+
 # Use shared update-settings.js for non-destructive merge with backup
 # (replaces previous inline overwrite that destroyed user MCP customizations).
 # Behavior parity with macOS install.sh:434-438.
@@ -574,17 +764,24 @@ if (-not (Test-Path $updateScript)) {
     if ($LASTEXITCODE -ne 0) {
         Write-Warn "MCPのグローバル登録に問題がありました（後から手動設定もできます）"
     }
+
+    # 旧 taisun_agent などのフォルダを指す MCP サーバーのパスを現在の REPO_DIR に張り替える
+    # (taisun-proxy / line-bot / voice-ai / ai-sdr 等、内部 MCP サーバー専用)
+    Repair-McpServerPaths -SettingsPath $SETTINGS_FILE -RepoDir $REPO_DIR
 }
 
 # CodeGraph MCP パスをプロジェクト設定に自動書き換え
 $PROJ_SETTINGS = "$REPO_DIR\.claude\settings.json"
 $CODEGRAPH_BIN = "$REPO_DIR\tools\codebase-memory-mcp\codebase-memory-mcp"
 if ((Test-Path $PROJ_SETTINGS) -and (Test-Path $CODEGRAPH_BIN)) {
+    # Pre-flight: BOM 除去 + JSON 健全性チェック
+    Repair-JsonFile -Path $PROJ_SETTINGS -Label "project settings.json" | Out-Null
     try {
         $projSettings = Get-Content $PROJ_SETTINGS -Raw | ConvertFrom-Json
         if ($projSettings.mcpServers -and $projSettings.mcpServers.'codebase-memory') {
             $projSettings.mcpServers.'codebase-memory'.command = $CODEGRAPH_BIN
-            $projSettings | ConvertTo-Json -Depth 10 | Set-Content $PROJ_SETTINGS -Encoding UTF8
+            # UTF-8 (no BOM) で書き出し。PS5.1 の Set-Content -Encoding UTF8 は BOM を付与してしまうため使わない。
+            Write-Utf8NoBom -Path $PROJ_SETTINGS -Content ($projSettings | ConvertTo-Json -Depth 10)
             Write-Ok "CodeGraph MCP パスを自動設定しました"
         }
     } catch {

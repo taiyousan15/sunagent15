@@ -9,7 +9,7 @@ Claude Code Plugin marketplace形式での配布設定。
 Claude Codeで以下を実行：
 
 ```bash
-/plugin marketplace add san15/taisun_agent
+/plugin marketplace add taiyousan15/sunagent15
 /plugin install taisun-agent@taisun-agent
 ```
 
@@ -23,7 +23,7 @@ Claude Codeで以下を実行：
     "taisun-agent": {
       "source": {
         "source": "github",
-        "repo": "san15/taisun_agent"
+        "repo": "taiyousan15/sunagent15"
       }
     }
   },

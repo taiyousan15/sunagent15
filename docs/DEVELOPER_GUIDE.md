@@ -27,7 +27,7 @@
 
 ```bash
 # 1. リポジトリをクローン
-git clone https://github.com/san15/taisun_agent.git
+git clone https://github.com/taiyousan15/sunagent15.git
 cd taisun_agent
 
 # 2. 依存関係をインストール

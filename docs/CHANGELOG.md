@@ -165,8 +165,8 @@
 ## 関連リンク
 
 - [README](../README.md)
-- [GitHub Releases](https://github.com/san15/taisun_agent/releases)
-- [GitHub Issues](https://github.com/san15/taisun_agent/issues)
+- [GitHub Releases](https://github.com/taiyousan15/sunagent15/releases)
+- [GitHub Issues](https://github.com/taiyousan15/sunagent15/issues)
 
 ---
 

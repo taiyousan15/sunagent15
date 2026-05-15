@@ -21,8 +21,8 @@
 
 ```bash
 # 1. リポジトリをクローン
-git clone https://github.com/san15/taisun_agent.git
-cd taisun_agent
+git clone https://github.com/taiyousan15/sunagent15.git
+cd sunagent15
 
 # 2. インストール実行（全自動）
 bash scripts/install.sh
@@ -82,8 +82,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 nvm install 20
 
 # 3. リポジトリをクローン
-git clone https://github.com/san15/taisun_agent.git
-cd taisun_agent
+git clone https://github.com/taiyousan15/sunagent15.git
+cd sunagent15
 
 # 4. インストール実行
 bash scripts/install.sh
@@ -122,18 +122,44 @@ PowerShell でスクリプトの実行を許可する（初回のみ）:
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-### クイックインストール
+### クイックインストール（1 コマンド・どのシェルでも動作）
 
-**PowerShell を開いて実行:**
+PowerShell / cmd.exe / Git Bash / Claude Code 内 bash のすべてで動きます:
+
+```
+# 1. リポジトリをクローン
+git clone https://github.com/taiyousan15/sunagent15.git
+cd sunagent15
+
+# 2. インストール実行（install.cmd は内部で PowerShell を起動します）
+.\install.cmd
+```
+
+**Claude Code 内 bash から実行する場合**:
+
+```bash
+git clone https://github.com/taiyousan15/sunagent15.git
+cd sunagent15
+./install.cmd
+```
+
+**完全リモート 1 行（PowerShell ウィンドウから）**:
 
 ```powershell
-# 1. リポジトリをクローン
-git clone https://github.com/san15/taisun_agent.git
-cd taisun_agent
-
-# 2. インストール実行（全自動）
-.\scripts\install.ps1
+irm https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.ps1 | iex
 ```
+
+**プロファイル指定（オプション）**:
+
+```
+.\install.cmd -Profile minimal      # コアスキルのみ（約92個）
+.\install.cmd -Profile standard     # 標準構成（約113個）[デフォルト]
+.\install.cmd -Profile full         # 全スキル（約120個）
+.\install.cmd -ListProfiles         # プロファイル一覧
+```
+
+> **対応引数**: `-Profile <name>`, `-Update`, `-Fresh`, `-Force`, `-ListProfiles`, `-AllowPartial`, `-SkipVerify`
+> 複雑な引用符付き引数は cmd ラッパー経由では保証外です。その場合は `.\scripts\install.ps1` を直接呼んでください。
 
 ### .env を設定
 
@@ -154,11 +180,19 @@ NEWSAPI_KEY=your_key
 APIFY_TOKEN=your_key
 ```
 
-### アップデート
+### アップデート（1 コマンド）
 
-```powershell
-git pull origin main
-.\scripts\install.ps1
+`update.cmd` は `git pull` → 失敗時 `git reset --hard` → 失敗時 ZIP フォールバックを自動で試します:
+
+```
+.\update.cmd                # 通常更新
+.\update.cmd -Force         # ローカル変更を破棄して強制更新
+```
+
+Git Bash や Claude Code bash からも同じ:
+
+```bash
+./update.cmd
 ```
 
 ### Windows の注意点
@@ -169,7 +203,11 @@ git pull origin main
 | エージェント | シンボリックリンク（自動更新） | コピー（再インストールで更新） |
 | chmod | 必要 | 不要 |
 
-> **エージェントの更新について**: Windows では `git pull` 後に `.\scripts\install.ps1` を再実行することでエージェントが最新化されます。
+> **エージェントの更新について**: Windows では `git pull` 後に `.\update.cmd` を再実行することでエージェントが最新化されます。
+
+> **古い別フォルダにインストール済みの場合**: install.cmd は古い Junction を自動検出して新フォルダに張り替えます（v2.53.4+）。
+
+> **settings.json が壊れている場合**: install.cmd は BOM を自動除去し、JSON が壊れていればバックアップを作成して `{}` で初期化します（バックアップから手動復元可能）。
 
 ### トラブルシューティング（Windows）
 
@@ -179,6 +217,9 @@ git pull origin main
 | `node が見つからない` | https://nodejs.org/ からインストール後、PowerShell を再起動 |
 | `git が見つからない` | https://git-scm.com/ からインストール |
 | Junction 作成失敗 | PowerShell を管理者として実行 |
+| Claude Code 内 bash で `.scriptsinstall.ps1: command not found` | `./install.cmd` を使う（バックスラッシュ問題を回避） |
+| 旧 `taisun_agent` フォルダのスキルが残る | `.\install.cmd` を再実行（Junction が自動で張り替わります） |
+| `settings.json` パースエラー | `.\install.cmd` を再実行（BOM 除去・壊れた JSON は自動バックアップ）|
 
 ---
 
@@ -219,4 +260,4 @@ Claude Code でこのディレクトリを開き、以下を試してくださ�
 
 ## サポート
 
-- Issues: https://github.com/san15/taisun_agent/issues
+- Issues: https://github.com/taiyousan15/sunagent15/issues
