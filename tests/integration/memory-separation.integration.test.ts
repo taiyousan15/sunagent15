@@ -17,12 +17,52 @@
  * Case (j) Conflict-suffix lives in scripts/__tests__/ for init-agent-memory.
  */
 
+import { spawn } from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as yaml from 'yaml';
 import { MemoryService } from '../../src/memory/MemoryService';
 import { TaskRecord, TaskCategory } from '../../src/memory/types';
+
+const WORKER_PATH = path.join(__dirname, '..', 'fixtures', 'memory-worker.ts');
+const TS_NODE_BIN = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'ts-node');
+
+interface WorkerResult {
+  pid: number;
+  code: number | null;
+  signal: NodeJS.Signals | null;
+  stdout: string;
+  stderr: string;
+}
+
+/**
+ * Spawn the memory-worker fixture as a real child process and resolve when it
+ * exits. Used by MED-1 multi-process tests so different proper-lockfile
+ * processes contend for the same per-agent lock.
+ */
+function spawnWorker(args: string[]): Promise<WorkerResult> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(TS_NODE_BIN, [WORKER_PATH, ...args], {
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, NODE_OPTIONS: '' },
+    });
+    const chunksOut: Buffer[] = [];
+    const chunksErr: Buffer[] = [];
+    child.stdout.on('data', (c: Buffer) => chunksOut.push(c));
+    child.stderr.on('data', (c: Buffer) => chunksErr.push(c));
+    child.on('error', reject);
+    child.on('close', (code, signal) => {
+      resolve({
+        pid: child.pid ?? -1,
+        code,
+        signal,
+        stdout: Buffer.concat(chunksOut).toString('utf-8'),
+        stderr: Buffer.concat(chunksErr).toString('utf-8'),
+      });
+    });
+  });
+}
 
 /** Minimal valid task record builder */
 function makeTask(overrides: Partial<TaskRecord> = {}): TaskRecord {
@@ -526,6 +566,105 @@ describe('MemoryService — Template/Runtime Separation (PLAN.md Step 2-3 / Step
       const stats = svc.loadAgentStats('serial-agent');
       expect(stats!.totalTasks).toBe(10);
     });
+
+    // ---------------------------------------------------------------------
+    // MED-1 (Codex 1st round, 2026-05-15): true multi-process concurrency
+    // via child_process.spawn against a real second Node runtime, so the
+    // proper-lockfile gate is exercised across PIDs (not just two service
+    // instances in one process).
+    // ---------------------------------------------------------------------
+    it('two child processes recording 3 tasks each persist all 6 updates and create no .corrupt placeholders', async () => {
+      const agent = 'mp-record-agent';
+
+      const [r1, r2] = await Promise.all([
+        spawnWorker([dirs.basePath, dirs.runtimeBasePath, agent, 'record', '3', 'pA']),
+        spawnWorker([dirs.basePath, dirs.runtimeBasePath, agent, 'record', '3', 'pB']),
+      ]);
+
+      expect(r1.code).toBe(0);
+      expect(r2.code).toBe(0);
+      expect(r1.stderr).toBe('');
+      expect(r2.stderr).toBe('');
+
+      const runtimeYaml = yaml.parse(
+        fs.readFileSync(path.join(dirs.runtimeBasePath, 'agents', `${agent}-stats.yaml`), 'utf-8')
+      );
+      expect(runtimeYaml.total_tasks).toBe(6);
+      expect(runtimeYaml.successful_tasks).toBe(6);
+
+      const recentIds = new Set(runtimeYaml.recent_tasks.map((t: { id: string }) => t.id));
+      for (const id of ['pA-t0', 'pA-t1', 'pA-t2', 'pB-t0', 'pB-t1', 'pB-t2']) {
+        expect(recentIds.has(id)).toBe(true);
+      }
+
+      // HIGH-2 regression: no spurious quarantine on first-use multi-process
+      const corruptDir = path.join(dirs.runtimeBasePath, 'agents', '.corrupt');
+      expect(fs.existsSync(corruptDir)).toBe(false);
+    }, 30000);
+
+    it('cleanupOldTasks in one process does not lose a concurrent recordTask in another (HIGH-3 / OPEN-2 regression)', async () => {
+      const agent = 'mp-cleanup-agent';
+
+      // Pre-populate one old task by writing the runtime stats file directly.
+      // Use makeLegacyStatsYaml shape and place into runtime so loadAgentStats
+      // resolves it without falling back to legacy.
+      const oldDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365); // 365 days ago
+      const oldTaskRecord = {
+        id: 'old-task-1',
+        agentName: agent,
+        description: 'old task',
+        category: 'testing',
+        complexity: 1,
+        status: 'completed',
+        qualityScore: 100,
+        durationMs: 10,
+        startedAt: oldDate.toISOString(),
+        completedAt: oldDate.toISOString(),
+        error: null,
+        metadata: {},
+      };
+      const seedYaml = makeLegacyStatsYaml(agent, {
+        total_tasks: 1,
+        successful_tasks: 1,
+        failed_tasks: 0,
+        success_rate: 1.0,
+        recent_tasks: [oldTaskRecord],
+      });
+      fs.writeFileSync(
+        path.join(dirs.runtimeBasePath, 'agents', `${agent}-stats.yaml`),
+        yaml.stringify(seedYaml)
+      );
+
+      // Tighten retention so the 365-day-old task is eligible for cleanup.
+      // Rewrite config to retentionDays = 1.
+      const cfgPath = path.join(dirs.basePath, 'config.yaml');
+      const cfg = yaml.parse(fs.readFileSync(cfgPath, 'utf-8'));
+      cfg.retention_days = 1;
+      fs.writeFileSync(cfgPath, yaml.stringify(cfg));
+
+      // Race: recordTask + cleanup in two child processes.
+      const [rRecord, rClean] = await Promise.all([
+        spawnWorker([dirs.basePath, dirs.runtimeBasePath, agent, 'record', '1', 'new']),
+        spawnWorker([dirs.basePath, dirs.runtimeBasePath, agent, 'cleanup', '0']),
+      ]);
+
+      expect(rRecord.code).toBe(0);
+      expect(rClean.code).toBe(0);
+
+      const runtimeYaml = yaml.parse(
+        fs.readFileSync(path.join(dirs.runtimeBasePath, 'agents', `${agent}-stats.yaml`), 'utf-8')
+      );
+      // Old task started at total=1; recordTask increments → total=2.
+      // Cleanup must not roll total back even when interleaved.
+      expect(runtimeYaml.total_tasks).toBe(2);
+
+      const recentIds = new Set(runtimeYaml.recent_tasks.map((t: { id: string }) => t.id));
+      // The new task must be present — cleanup must not have clobbered it.
+      expect(recentIds.has('new-t0')).toBe(true);
+      // The old task should have been filtered out by cleanup (no matter the
+      // race order, the final state must reflect both ops applied serially).
+      expect(recentIds.has('old-task-1')).toBe(false);
+    }, 30000);
   });
 
   // -------------------------------------------------------------------------
@@ -638,6 +777,64 @@ describe('MemoryService — Template/Runtime Separation (PLAN.md Step 2-3 / Step
       // Default baseline → zero counters and empty deps
       expect(runtimeYaml.total_tasks).toBe(1);
       expect(runtimeYaml.omega_metrics.dependencies.omega).toBe(0);
+    });
+
+    // ---------------------------------------------------------------------
+    // MED-2 (Codex 1st round, 2026-05-15): exercise the real shipped 48-entry
+    // .claude/memory/agents-baseline.yaml against typed `AgentStats` access.
+    // The synthetic 1-entry manifest tests above can pass while typed
+    // consumers (memory-report.ts, omega-aware coordinator) crash on the real
+    // shape — this test guards against that drift.
+    // ---------------------------------------------------------------------
+    it('seeds api-designer from real agents-baseline.yaml and exposes typed camelCase access', () => {
+      const realManifestPath = path.join(
+        __dirname,
+        '..',
+        '..',
+        '.claude',
+        'memory',
+        'agents-baseline.yaml'
+      );
+      // Sanity-check the fixture exists; without it the test is meaningless.
+      expect(fs.existsSync(realManifestPath)).toBe(true);
+
+      fs.copyFileSync(realManifestPath, path.join(dirs.basePath, 'agents-baseline.yaml'));
+
+      const svc = new MemoryService(dirs.basePath, { runtimeBasePath: dirs.runtimeBasePath });
+      svc.recordTask('api-designer', makeTask({ agentName: 'api-designer', category: 'design' }));
+
+      // On-disk YAML should be canonical snake_case (round-trip)
+      const runtimeYaml = yaml.parse(
+        fs.readFileSync(path.join(dirs.runtimeBasePath, 'agents', 'api-designer-stats.yaml'), 'utf-8')
+      );
+      expect(runtimeYaml.omega_metrics.dependencies.dependencies_list.tools).toEqual([
+        'Read',
+        'Write',
+        'Edit',
+        'Grep',
+      ]);
+      expect(runtimeYaml.omega_metrics.dependencies.omega).toBe(6);
+      expect(runtimeYaml.omega_metrics.performance_bounds.min_quality_score).toBe(100);
+
+      // Typed access via loadAgentStats must read camelCase nested keys (HIGH-1)
+      svc.clearCache();
+      const stats = svc.loadAgentStats('api-designer');
+      expect(stats).not.toBeNull();
+      expect(stats!.omegaMetrics.dependencies.dependenciesList.tools).toEqual([
+        'Read',
+        'Write',
+        'Edit',
+        'Grep',
+      ]);
+      expect(stats!.omegaMetrics.dependencies.omega).toBe(6);
+      expect(stats!.omegaMetrics.performanceBounds.minQualityScore).toBe(100);
+      expect(stats!.omegaMetrics.completionProbability.byComplexity.medium).toBeCloseTo(0.95, 5);
+      expect(stats!.learningMetrics.specialization.primaryCategory).toBe('implementation');
+      // recordTask sets overallHealth via calculateHealth — must be a known
+      // health string, proving typed metadata access works after mapping.
+      expect(['excellent', 'good', 'fair', 'poor', 'unknown']).toContain(
+        stats!.metadata.overallHealth
+      );
     });
   });
 });

@@ -292,13 +292,71 @@ export class MemoryService {
   }
 
   /**
+   * Recursive snake_case → camelCase key rename. Used to convert nested
+   * `omega_metrics` / `learning_metrics` / `metadata` subtrees from on-disk
+   * YAML shape into the typed {@link AgentStats} shape (HIGH-1, Codex 1st
+   * round 2026-05-15 / PLAN.md OPEN-1).
+   *
+   * - Only renames keys that contain `_<lowercase letter or digit>`. Keys with
+   *   hyphens (TaskCategory values like `bug-fix`) are preserved as-is so
+   *   `specializations` / `categories` / `by_category` maps round-trip cleanly.
+   * - Recurses into arrays (positional, no key rename) and plain objects only;
+   *   primitives (number / string / boolean / null) are returned unchanged.
+   */
+  private static snakeToCamelDeep<T = unknown>(value: T): T {
+    if (Array.isArray(value)) {
+      return value.map((v) => MemoryService.snakeToCamelDeep(v)) as unknown as T;
+    }
+    if (value !== null && typeof value === 'object') {
+      const result: Record<string, unknown> = {};
+      for (const [key, v] of Object.entries(value as Record<string, unknown>)) {
+        const camel = key.replace(/_([a-z0-9])/g, (_match, ch: string) => ch.toUpperCase());
+        result[camel] = MemoryService.snakeToCamelDeep(v);
+      }
+      return result as unknown as T;
+    }
+    return value;
+  }
+
+  /**
+   * Recursive camelCase → snake_case key rename. Used to convert nested
+   * `omegaMetrics` / `learningMetrics` / `metadata` subtrees back into the
+   * canonical on-disk YAML snake_case shape on save (HIGH-1).
+   *
+   * Inverse of {@link snakeToCamelDeep}. Hyphenated keys (TaskCategory values)
+   * pass through unchanged because the regex only inserts `_` before uppercase.
+   */
+  private static camelToSnakeDeep<T = unknown>(value: T): T {
+    if (Array.isArray(value)) {
+      return value.map((v) => MemoryService.camelToSnakeDeep(v)) as unknown as T;
+    }
+    if (value !== null && typeof value === 'object') {
+      const result: Record<string, unknown> = {};
+      for (const [key, v] of Object.entries(value as Record<string, unknown>)) {
+        const snake = key.replace(/([A-Z])/g, '_$1').toLowerCase();
+        result[snake] = MemoryService.camelToSnakeDeep(v);
+      }
+      return result as unknown as T;
+    }
+    return value;
+  }
+
+  /**
    * Convert a raw on-disk YAML object (snake_case) into the typed
-   * {@link AgentStats} (camelCase). Nested `omega_metrics` / `learning_metrics`
-   * / `metadata` are passed through as-is — the snake/camel mapper for those
-   * subtrees is tracked separately as PLAN.md OPEN-1.
+   * {@link AgentStats} (camelCase). Top-level fields use explicit conversion;
+   * the nested `omega_metrics` / `learning_metrics` / `metadata` subtrees are
+   * mapped recursively via {@link snakeToCamelDeep} (HIGH-1 / PLAN.md OPEN-1).
+   *
+   * `recent_tasks` is intentionally passed through as-is: TaskRecord on disk is
+   * already camelCase under the current writer, and converting its keys would
+   * mangle them. Changing the on-disk shape of `recent_tasks` is out of scope
+   * for HIGH-1.
    */
   private projectRawStats(rawStats: Record<string, unknown>, agentName: string): AgentStats {
     const trends = (rawStats.trends as Record<string, unknown> | undefined) ?? {};
+    const rawOmega = rawStats.omega_metrics;
+    const rawLearning = rawStats.learning_metrics;
+    const rawMetadata = rawStats.metadata;
     const stats: AgentStats = {
       agentName: (rawStats.agent_name as string) || agentName,
       totalTasks: (rawStats.total_tasks as number) || 0,
@@ -317,12 +375,15 @@ export class MemoryService {
       specializations:
         (rawStats.specializations as AgentStats['specializations']) ||
         ({} as AgentStats['specializations']),
-      omegaMetrics:
-        (rawStats.omega_metrics as AgentStats['omegaMetrics']) || this.getDefaultOmegaMetrics(),
-      learningMetrics:
-        (rawStats.learning_metrics as AgentStats['learningMetrics']) ||
-        this.getDefaultLearningMetrics(),
-      metadata: (rawStats.metadata as AgentStats['metadata']) || this.getDefaultMetadata(),
+      omegaMetrics: rawOmega
+        ? (MemoryService.snakeToCamelDeep(rawOmega) as AgentStats['omegaMetrics'])
+        : this.getDefaultOmegaMetrics(),
+      learningMetrics: rawLearning
+        ? (MemoryService.snakeToCamelDeep(rawLearning) as AgentStats['learningMetrics'])
+        : this.getDefaultLearningMetrics(),
+      metadata: rawMetadata
+        ? (MemoryService.snakeToCamelDeep(rawMetadata) as AgentStats['metadata'])
+        : this.getDefaultMetadata(),
     };
     return stats;
   }
@@ -862,14 +923,29 @@ export class MemoryService {
   /**
    * Save agent statistics atomically to the runtime layer.
    *
-   * Writes go through tmp-file + fsync + rename so an interrupt mid-write leaves
-   * either the previous version or the new version on disk — never a half-written
-   * blend (PLAN.md Step 3 / Round 2 H3).
+   * Public entry point: acquires the per-agent lock via {@link withAgentLock}
+   * and then delegates to {@link saveAgentStatsLocked} (HIGH-3, Codex 1st round
+   * 2026-05-15 / PLAN.md OPEN-2). This prevents concurrent writers — including
+   * `cleanupOldTasks()` and external callers — from clobbering each other.
    *
-   * Validates `stats.agentName` as a slug before resolving the target path.
+   * Validates `stats.agentName` as a slug before acquiring the lock so invalid
+   * names fail fast.
    */
   saveAgentStats(stats: AgentStats): void {
     MemoryService.validateSlug(stats.agentName);
+    this.withAgentLock(stats.agentName, () => {
+      this.saveAgentStatsLocked(stats);
+    });
+  }
+
+  /**
+   * Internal save path. The caller MUST hold the per-agent lock for
+   * `stats.agentName` (acquired via {@link withAgentLock}). Writes go through
+   * tmp-file + fsync + rename so an interrupt mid-write leaves either the
+   * previous version or the new version on disk — never a half-written blend
+   * (PLAN.md Step 3 / Round 2 H3).
+   */
+  private saveAgentStatsLocked(stats: AgentStats): void {
     const agentsPath = path.join(this.runtimeBasePath, 'agents');
 
     if (!fs.existsSync(agentsPath)) {
@@ -895,15 +971,53 @@ export class MemoryService {
         avg_duration_trend: stats.trends.avgDurationTrend,
       },
       specializations: stats.specializations,
-      omega_metrics: stats.omegaMetrics,
-      learning_metrics: stats.learningMetrics,
-      metadata: stats.metadata,
+      // HIGH-1 (Codex 1st round, 2026-05-15): convert nested camelCase subtrees
+      // back to canonical snake_case so on-disk YAML keeps the shipped baseline
+      // shape. Round-trip lossless with projectRawStats's snakeToCamelDeep.
+      omega_metrics: MemoryService.camelToSnakeDeep(stats.omegaMetrics),
+      learning_metrics: MemoryService.camelToSnakeDeep(stats.learningMetrics),
+      metadata: MemoryService.camelToSnakeDeep(stats.metadata),
     };
 
     MemoryService.atomicWriteFile(statsPath, yaml.stringify(yamlData));
 
     stats.lastUpdated = lastUpdated;
     this.agentStatsCache.set(stats.agentName, stats);
+  }
+
+  /**
+   * Acquire the per-agent file lock, run `fn`, and release the lock in finally.
+   * Centralizes the lock acquisition so every write path goes through the same
+   * gate (HIGH-3 / PLAN.md OPEN-2).
+   *
+   * The lock target is a dedicated marker file under
+   * `${runtimeBasePath}/agents/.locks/${agentName}.target`, NOT the stats data
+   * file (HIGH-2). The marker is created on-demand and is never read by
+   * loadAgentStats / getAgentNames.
+   */
+  private withAgentLock<T>(agentName: string, fn: () => T): T {
+    MemoryService.validateSlug(agentName);
+    const agentsDir = path.join(this.runtimeBasePath, 'agents');
+    const locksDir = path.join(agentsDir, '.locks');
+    if (!fs.existsSync(agentsDir)) fs.mkdirSync(agentsDir, { recursive: true });
+    if (!fs.existsSync(locksDir)) fs.mkdirSync(locksDir, { recursive: true });
+
+    const lockTargetPath = path.join(locksDir, `${agentName}.target`);
+    const lockfilePath = path.join(locksDir, `${agentName}.lock`);
+    if (!fs.existsSync(lockTargetPath)) {
+      fs.writeFileSync(lockTargetPath, '');
+    }
+
+    const release = MemoryService.acquireLockWithRetry(lockTargetPath, lockfilePath, {
+      maxAttempts: 5,
+      retryDelayMs: 1000,
+      staleMs: 10000,
+    });
+    try {
+      return fn();
+    } finally {
+      release();
+    }
   }
 
   /**
@@ -995,32 +1109,7 @@ export class MemoryService {
   recordTask(agentName: string, task: TaskRecord): void {
     MemoryService.validateSlug(agentName);
 
-    const agentsDir = path.join(this.runtimeBasePath, 'agents');
-    const locksDir = path.join(agentsDir, '.locks');
-    if (!fs.existsSync(agentsDir)) fs.mkdirSync(agentsDir, { recursive: true });
-    if (!fs.existsSync(locksDir)) fs.mkdirSync(locksDir, { recursive: true });
-
-    const statsPath = MemoryService.resolveSafeStatsPath(agentsDir, agentName);
-    const lockTargetPath = statsPath;
-    const lockfilePath = path.join(locksDir, `${agentName}.lock`);
-
-    // proper-lockfile requires the target path to exist for stale-check semantics.
-    // Touch a placeholder if neither runtime nor legacy has produced one yet; the
-    // real content is written atomically by saveAgentStats inside the lock.
-    if (!fs.existsSync(lockTargetPath)) {
-      fs.writeFileSync(lockTargetPath, '');
-    }
-
-    // proper-lockfile's sync API does not support `retries`. Hand-roll a bounded
-    // retry loop with Atomics.wait so we block (rather than spin) between
-    // attempts. 5-second total wait with 1-second intervals matches PLAN.md.
-    const release = MemoryService.acquireLockWithRetry(lockTargetPath, lockfilePath, {
-      maxAttempts: 5,
-      retryDelayMs: 1000,
-      staleMs: 10000,
-    });
-
-    try {
+    this.withAgentLock(agentName, () => {
       // Invalidate in-process cache and re-read so we always update from the
       // freshest on-disk state (cache-invalidation-inside-lock contract).
       this.agentStatsCache.delete(agentName);
@@ -1062,10 +1151,9 @@ export class MemoryService {
         acceptableCoupling: true,
       };
 
-      this.saveAgentStats(stats);
-    } finally {
-      release();
-    }
+      // Use the locked save path; we already hold the per-agent lock.
+      this.saveAgentStatsLocked(stats);
+    });
   }
 
   /**
@@ -1074,9 +1162,9 @@ export class MemoryService {
    * is seeded from `agents-baseline.yaml` when the agent appears in the manifest;
    * otherwise the default factory is used.
    *
-   * Note: nested fields are stored as-shipped (snake_case at rest, passthrough
-   * here). The snake/camel mapper for nested baseline data is tracked separately
-   * as PLAN.md OPEN-1.
+   * The manifest is canonical snake_case; nested subtrees are converted to
+   * camelCase via {@link snakeToCamelDeep} so seeded stats are immediately
+   * usable through typed access (HIGH-1).
    */
   private createSeededStats(agentName: string): AgentStats {
     const manifest = this.loadBaselineManifest();
@@ -1100,12 +1188,15 @@ export class MemoryService {
       recentTasks: [],
       trends: { successRateTrend: 0, qualityScoreTrend: 0, avgDurationTrend: 0 },
       specializations: {} as Record<TaskCategory, number>,
-      omegaMetrics:
-        (seed?.omega_metrics as AgentStats['omegaMetrics']) || this.getDefaultOmegaMetrics(),
-      learningMetrics:
-        (seed?.learning_metrics as AgentStats['learningMetrics']) ||
-        this.getDefaultLearningMetrics(),
-      metadata: (seed?.metadata as AgentStats['metadata']) || this.getDefaultMetadata(),
+      omegaMetrics: seed?.omega_metrics
+        ? (MemoryService.snakeToCamelDeep(seed.omega_metrics) as AgentStats['omegaMetrics'])
+        : this.getDefaultOmegaMetrics(),
+      learningMetrics: seed?.learning_metrics
+        ? (MemoryService.snakeToCamelDeep(seed.learning_metrics) as AgentStats['learningMetrics'])
+        : this.getDefaultLearningMetrics(),
+      metadata: seed?.metadata
+        ? (MemoryService.snakeToCamelDeep(seed.metadata) as AgentStats['metadata'])
+        : this.getDefaultMetadata(),
     };
   }
 
@@ -1193,7 +1284,14 @@ export class MemoryService {
   }
 
   /**
-   * Cleanup old tasks beyond retention period
+   * Cleanup old tasks beyond retention period.
+   *
+   * HIGH-3 (Codex 1st round, 2026-05-15 / PLAN.md OPEN-2): each agent's
+   * load-mutate-save cycle runs inside {@link withAgentLock}. Without this,
+   * cleanup would read a stale snapshot, then a concurrent recordTask in
+   * another process would commit a new task, and cleanup would clobber that
+   * update by writing its stale snapshot. Acquiring the lock + re-reading
+   * inside the lock ensures every save is based on the latest on-disk state.
    */
   cleanupOldTasks(): number {
     let cleanedCount = 0;
@@ -1201,18 +1299,26 @@ export class MemoryService {
     cutoffDate.setDate(cutoffDate.getDate() - this.config.retentionDays);
     const cutoffStr = cutoffDate.toISOString();
 
-    const allAgents = this.getAllAgentStats();
+    const agentNames = this.getAgentNames();
 
-    for (const stats of allAgents) {
-      const originalCount = stats.recentTasks.length;
-      stats.recentTasks = stats.recentTasks.filter(
-        (task) => !task.completedAt || task.completedAt >= cutoffStr
-      );
+    for (const name of agentNames) {
+      this.withAgentLock(name, () => {
+        // Force a fresh read inside the lock — never trust the in-memory cache
+        // when we're about to write.
+        this.agentStatsCache.delete(name);
+        const stats = this.loadAgentStats(name);
+        if (!stats) return;
 
-      if (stats.recentTasks.length < originalCount) {
-        cleanedCount += originalCount - stats.recentTasks.length;
-        this.saveAgentStats(stats);
-      }
+        const originalCount = stats.recentTasks.length;
+        stats.recentTasks = stats.recentTasks.filter(
+          (task) => !task.completedAt || task.completedAt >= cutoffStr
+        );
+
+        if (stats.recentTasks.length < originalCount) {
+          cleanedCount += originalCount - stats.recentTasks.length;
+          this.saveAgentStatsLocked(stats);
+        }
+      });
     }
 
     return cleanedCount;
