@@ -983,7 +983,31 @@ export class MemoryService {
 
     const statsPath = MemoryService.resolveSafeStatsPath(agentsPath, stats.agentName);
 
-    const lastUpdated = new Date().toISOString();
+    // HIGH (Codex 3rd round, 2026-05-20): make `lastUpdated` strictly monotonic
+    // within the per-agent lock. Otherwise two saves landing in the same
+    // millisecond (or under a fixed clock) produce identical ISO strings, and
+    // the public-path optimistic stale check (which compares lastUpdated) can
+    // pass even though a real concurrent update was just committed → lost
+    // update regression. We read the on-disk last_updated under the lock and
+    // bump by 1 ms whenever the wall clock has not moved past it.
+    const nowMs = Date.now();
+    let candidateMs = nowMs;
+    if (fs.existsSync(statsPath)) {
+      try {
+        const raw = yaml.parse(fs.readFileSync(statsPath, 'utf-8'));
+        const onDiskIso = raw && typeof raw === 'object' ? (raw as { last_updated?: unknown }).last_updated : undefined;
+        if (typeof onDiskIso === 'string') {
+          const onDiskMs = Date.parse(onDiskIso);
+          if (Number.isFinite(onDiskMs) && onDiskMs >= candidateMs) {
+            candidateMs = onDiskMs + 1;
+          }
+        }
+      } catch {
+        // Unparseable on-disk YAML: fall through with nowMs. The atomic
+        // write below will replace it.
+      }
+    }
+    const lastUpdated = new Date(candidateMs).toISOString();
     const yamlData = {
       agent_name: stats.agentName,
       total_tasks: stats.totalTasks,

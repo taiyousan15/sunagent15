@@ -633,6 +633,43 @@ describe('MemoryService — Template/Runtime Separation (PLAN.md Step 2-3 / Step
       expect(recentIds.has('t2')).toBe(true);
     });
 
+    // HIGH (Codex 3rd round, 2026-05-20): the optimistic stale check used
+    // `lastUpdated` (ISO ms-precision) as its version token. Two writes
+    // landing in the same millisecond — or any test that mocks Date.now —
+    // produced identical timestamps, letting a stale snapshot overwrite a
+    // concurrent recordTask. saveAgentStatsLocked now bumps lastUpdated to
+    // be strictly monotonic inside the lock.
+    it('rejects stale public saveAgentStats under a fixed clock (Codex 3rd round HIGH regression)', () => {
+      const fixedMs = Date.now();
+      const dateNowSpy = jest.spyOn(Date, 'now').mockReturnValue(fixedMs);
+      try {
+        const svcA = new MemoryService(dirs.basePath, { runtimeBasePath: dirs.runtimeBasePath });
+        const svcB = new MemoryService(dirs.basePath, { runtimeBasePath: dirs.runtimeBasePath });
+        const agent = 'fixed-clock-agent';
+
+        svcA.recordTask(agent, makeTask({ agentName: agent, id: 'fc-t1' }));
+        const stale = svcA.loadAgentStats(agent);
+        expect(stale).not.toBeNull();
+
+        // Second recordTask under the same Date.now() value. The monotonic
+        // bump inside saveAgentStatsLocked must still advance lastUpdated so
+        // the public stale check on svcA's snapshot fires.
+        svcB.recordTask(agent, makeTask({ agentName: agent, id: 'fc-t2' }));
+
+        expect(() => svcA.saveAgentStats(stale!)).toThrow(/Stale saveAgentStats/);
+
+        svcA.clearCache();
+        const final = svcA.loadAgentStats(agent);
+        expect(final).not.toBeNull();
+        expect(final!.totalTasks).toBe(2);
+        const ids = new Set(final!.recentTasks.map((t) => t.id));
+        expect(ids.has('fc-t1')).toBe(true);
+        expect(ids.has('fc-t2')).toBe(true);
+      } finally {
+        dateNowSpy.mockRestore();
+      }
+    });
+
     it('cleanupOldTasks in one process does not lose a concurrent recordTask in another (HIGH-3 / OPEN-2 regression)', async () => {
       const agent = 'mp-cleanup-agent';
 
