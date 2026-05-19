@@ -934,6 +934,35 @@ export class MemoryService {
   saveAgentStats(stats: AgentStats): void {
     MemoryService.validateSlug(stats.agentName);
     this.withAgentLock(stats.agentName, () => {
+      // HIGH (Codex 2nd round, 2026-05-20): optimistic concurrency check.
+      // Acquiring the lock prevents two writers from interleaving the
+      // tmp+rename, but it does NOT protect a caller-side load-modify-save
+      // sequence: if the caller loaded `stats` before a concurrent
+      // recordTask in another process advanced the on-disk state, writing
+      // the stale snapshot would clobber that update. Re-read the current
+      // on-disk version under the lock and reject when its lastUpdated has
+      // moved on since the caller loaded it.
+      //
+      // The check is skipped when no on-disk file exists yet (first-write
+      // for a fresh agent) and when the on-disk file is unparseable
+      // (caller's data is the most we have — surfacing the parse error
+      // here would just mask the corruption).
+      const agentsPath = path.join(this.runtimeBasePath, 'agents');
+      const statsPath = MemoryService.resolveSafeStatsPath(agentsPath, stats.agentName);
+      if (fs.existsSync(statsPath)) {
+        const onDisk = this.tryLoadFromFile(
+          statsPath,
+          stats.agentName,
+          /*quarantineOnError*/ false
+        );
+        if (onDisk && onDisk.lastUpdated !== stats.lastUpdated) {
+          throw new Error(
+            `Stale saveAgentStats for ${stats.agentName}: ` +
+              `on-disk lastUpdated=${onDisk.lastUpdated} but provided lastUpdated=${stats.lastUpdated}. ` +
+              `Re-load via loadAgentStats() before saving (or use recordTask, which handles this internally).`
+          );
+        }
+      }
       this.saveAgentStatsLocked(stats);
     });
   }

@@ -602,6 +602,37 @@ describe('MemoryService — Template/Runtime Separation (PLAN.md Step 2-3 / Step
       expect(fs.existsSync(corruptDir)).toBe(false);
     }, 30000);
 
+    // HIGH (Codex 2nd round, 2026-05-20): the public saveAgentStats path
+    // must reject a stale caller-side snapshot so the load-modify-save
+    // pattern cannot silently clobber a concurrent recordTask update.
+    it('rejects stale public saveAgentStats: caller-side load → other-process write → stale save throws and on-disk state survives', () => {
+      const svcA = new MemoryService(dirs.basePath, { runtimeBasePath: dirs.runtimeBasePath });
+      const svcB = new MemoryService(dirs.basePath, { runtimeBasePath: dirs.runtimeBasePath });
+      const agent = 'stale-save-agent';
+
+      // 1) svcA seeds the agent with t1.
+      svcA.recordTask(agent, makeTask({ agentName: agent, id: 't1' }));
+
+      // 2) svcA captures a snapshot (stale-to-be once svcB writes).
+      const stale = svcA.loadAgentStats(agent);
+      expect(stale).not.toBeNull();
+
+      // 3) svcB records t2 on the same agent — advances on-disk lastUpdated.
+      svcB.recordTask(agent, makeTask({ agentName: agent, id: 't2' }));
+
+      // 4) svcA tries to persist its stale snapshot — must throw, not silently overwrite.
+      expect(() => svcA.saveAgentStats(stale!)).toThrow(/Stale saveAgentStats/);
+
+      // On-disk state preserved svcB's update (total_tasks=2, both ids present).
+      svcA.clearCache();
+      const final = svcA.loadAgentStats(agent);
+      expect(final).not.toBeNull();
+      expect(final!.totalTasks).toBe(2);
+      const recentIds = new Set(final!.recentTasks.map((t) => t.id));
+      expect(recentIds.has('t1')).toBe(true);
+      expect(recentIds.has('t2')).toBe(true);
+    });
+
     it('cleanupOldTasks in one process does not lose a concurrent recordTask in another (HIGH-3 / OPEN-2 regression)', async () => {
       const agent = 'mp-cleanup-agent';
 
