@@ -60,11 +60,37 @@
 
 ---
 
+## 📦 リポジトリ移行のお知らせ（旧 taisun_agent ユーザー向け）
+
+本プロジェクトは **2026-05 にリポジトリ名を `taisun_agent` → `sunagent15` に変更** しました。
+旧リポジトリ `taiyousan15/taisun_agent` は凍結済み（今後の更新なし・近日アーカイブ予定）です。
+
+### 旧 `~/taisun_agent` を使っている方の乗り換え手順
+
+旧 repo から git pull はできません（新リポジトリは別 URL）。下記の **クリーン乗り換え** を推奨します。
+
+```bash
+# 1. 旧フォルダをバックアップ（念のため）
+mv ~/taisun_agent ~/taisun_agent.backup-$(date +%Y%m%d)
+
+# 2. 新リポジトリを取得して再インストール
+cd $HOME
+git clone https://github.com/taiyousan15/sunagent15.git
+cd sunagent15
+./scripts/install.sh   # Mac/Linux
+# .\scripts\install.ps1 # Windows
+```
+
+> 動作確認後に `~/taisun_agent.backup-*` は削除して構いません。
+> なお、`.claude/agent-memory/` の per-machine 学習履歴を引き継ぎたい場合は、バックアップから `cp -r ~/taisun_agent.backup-YYYYMMDD/.claude/agent-memory ~/sunagent15/.claude/` で復元できます。
+
+---
+
 ## 🚀 インストール（5分）
 
 > **Claude Code のチャットにコピペするだけ！** スキル・エージェント・MCPは全て自動でグローバル登録されます。
 > インストール後はどのフォルダで Claude Code を開いてもスキル・MCP が使えます。
-> taisun_agent の hooks やプロジェクト固有ワークフローも別プロジェクトで使いたい場合は、後述の **「📂 別のプロジェクトフォルダで使う」** を参照してください。
+> sunagent15 の hooks やプロジェクト固有ワークフローも別プロジェクトで使いたい場合は、後述の **「📂 別のプロジェクトフォルダで使う」** を参照してください。
 
 ### 🍎 Mac
 
@@ -91,7 +117,7 @@ curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install
 以下のコマンドを順番に実行して：
 cd ~
 git clone https://github.com/taiyousan15/sunagent15.git
-cd taisun_agent
+cd sunagent15
 bash scripts/install.sh
 ```
 
@@ -108,7 +134,7 @@ bash scripts/install.sh
 # one-liner で入れた場合
 cd ~/.taisun-agent && ./scripts/update.sh
 # git clone で入れた場合
-cd ~/taisun_agent && ./scripts/update.sh
+cd ~/sunagent15 && ./scripts/update.sh
 ```
 
 > git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。手動操作は不要です。
@@ -130,7 +156,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```powershell
 cd $HOME
 git clone https://github.com/taiyousan15/sunagent15.git
-cd taisun_agent
+cd sunagent15
 .\scripts\install.ps1
 ```
 
@@ -142,7 +168,7 @@ cd taisun_agent
 **アップデート（1行で完了）**
 
 ```powershell
-cd $HOME\taisun_agent; .\scripts\install.ps1 -Update
+cd $HOME\sunagent15; .\scripts\install.ps1 -Update
 ```
 
 > git pull を自動試行し、失敗した場合はZIPダウンロードで自動更新します。手動操作は不要です。
@@ -155,12 +181,12 @@ cd $HOME\taisun_agent; .\scripts\install.ps1 -Update
 
 | OS | 永続化先 | 値 |
 |----|---------|---|
-| Mac / Linux | `~/.zshrc`, `~/.bashrc`（存在するもの全て） | taisun_agent インストール先の絶対パス |
+| Mac / Linux | `~/.zshrc`, `~/.bashrc`（存在するもの全て） | sunagent15 インストール先の絶対パス |
 | Windows | PowerShell の `$PROFILE` | 同上 |
 
-これは **taisun_agent をインストールしたフォルダの絶対パス** を保持し、TAISUN のスキル・スクリプトが内部で参照します。**ユーザーが直接操作・export する必要はありません**。
+これは **sunagent15 をインストールしたフォルダの絶対パス** を保持し、TAISUN のスキル・スクリプトが内部で参照します（環境変数名は歴史的経緯で `TAISUN_AGENT_DIR` のまま）。**ユーザーが直接操作・export する必要はありません**。
 
-別フォルダにインストールした場合（例: `~/dev/taisun_agent`、`TAISUN_INSTALL_DIR=~/my-path`）も自動でその値が保存されます。
+別フォルダにインストールした場合（例: `~/dev/sunagent15`、`TAISUN_INSTALL_DIR=~/my-path`）も自動でその値が保存されます。
 
 > 💡 新しいシェルセッションでは自動で有効になります。現セッションですぐ使うには `source ~/.zshrc`（Mac/Linux）または PowerShell 再起動。
 
@@ -168,19 +194,19 @@ cd $HOME\taisun_agent; .\scripts\install.ps1 -Update
 
 ### 📂 別のプロジェクトフォルダで使う
 
-taisun_agentの機能を他のプロジェクトでも使いたい場合、セットアップスクリプトを1行実行するだけです。
+sunagent15 の機能を他のプロジェクトでも使いたい場合、セットアップスクリプトを1行実行するだけです。
 `.claude/` と `.mcp.json` がリンクされ、そのフォルダでClaude Codeを開くと全機能が使えます。
 
 **Mac:**
 ```bash
 cd /path/to/your/project
-~/taisun_agent/scripts/setup-project.sh
+~/sunagent15/scripts/setup-project.sh
 ```
 
 **Windows:**
 ```powershell
 cd ~\Projects\MyProject
-~\taisun_agent\scripts\setup-project.ps1
+~\sunagent15\scripts\setup-project.ps1
 ```
 
 実行後の結果:
@@ -189,8 +215,8 @@ cd ~\Projects\MyProject
   │     項目     │                   状態                    │
   ├──────────────┼──────────────────────────────────────────┤
   │ .git         │ 初期化済み                                │
-  │ .claude/     │ → ~/taisun_agent/.claude/                │
-  │ .mcp.json    │ → ~/taisun_agent/.mcp.json               │
+  │ .claude/     │ → ~/sunagent15/.claude/                │
+  │ .mcp.json    │ → ~/sunagent15/.mcp.json               │
   │ スキル       │ 68個                                      │
   │ エージェント │ 83個                                      │
   └──────────────┴──────────────────────────────────────────┘
@@ -371,7 +397,7 @@ SDD（Software Design Document）スキル13本を環境に合わせた最適な
 
 ```
 以下を実行して（対話式でプランを選べます）：
-bash ~/taisun_agent/scripts/setup-sdd.sh
+bash ~/sunagent15/scripts/setup-sdd.sh
 ```
 
 完了したら：
@@ -415,7 +441,7 @@ source ~/.zshrc
 
 ```
 以下を実行して（キーを自分のものに置き換えて）：
-OPENROUTER_API_KEY="sk-or-ここにキー" GROQ_API_KEY="gsk_ここにキー" bash ~/taisun_agent/scripts/setup-litellm.sh
+OPENROUTER_API_KEY="sk-or-ここにキー" GROQ_API_KEY="gsk_ここにキー" bash ~/sunagent15/scripts/setup-litellm.sh
 ```
 
 完了したら：
@@ -433,7 +459,7 @@ litellm-stop     ← 止める
 litellm-health   ← 起動状態を確認
 ```
 
-> **Groqだけ使いたい場合**（完全無料）: `GROQ_API_KEY="gsk_ここにキー" bash ~/taisun_agent/scripts/setup-litellm.sh`
+> **Groqだけ使いたい場合**（完全無料）: `GROQ_API_KEY="gsk_ここにキー" bash ~/sunagent15/scripts/setup-litellm.sh`
 
 ---
 
@@ -498,7 +524,7 @@ YouTubeサムネイルを作って
 ## 🌐 グローバルスキル（どのプロジェクトでも使用可能）
 
 `npm run taisun:setup` 実行時に、以下のスキルが `~/.claude/skills/` に自動インストールされます。
-**taisun_agentをリンクしていないプロジェクトでも**使用可能です。
+**sunagent15 をリンクしていないプロジェクトでも**使用可能です。
 
 | スキル | コマンド | 説明 |
 |--------|---------|------|
@@ -517,7 +543,7 @@ YouTubeサムネイルを作って
 |------|---------|
 | `「already exists」エラー` | 正常です！アップデートコマンドを実行してください |
 | `「command not found: claude」` | まずClaude Code CLIをインストール: https://claude.ai/code |
-| スキルが使えない | `このフォルダでtaisun_agentを使えるようにして` とClaude Codeに伝える |
+| スキルが使えない | `このフォルダで sunagent15 を使えるようにして` とClaude Codeに伝える |
 | `「heap out of memory」` | `メモリ設定を最適化して` とClaude Codeに伝える |
 | ビルドエラー | `npm run taisun:setup` を再実行 |
 | Windowsでシンボリックリンク失敗 | 開発者モードを有効化するか、方法B（管理者）または方法C（コピー）を試す |
