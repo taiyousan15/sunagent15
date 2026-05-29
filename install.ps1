@@ -40,7 +40,7 @@ if ($ScriptDir -and (Test-Path (Join-Path $ScriptDir 'scripts\install.ps1'))) {
 # Remote install path
 Write-Host ""
 Write-Host "════════════════════════════════════════════════════"
-Write-Host "  taisun_agent - Remote Installer"
+Write-Host "  sunagent15 - Remote Installer"
 Write-Host "════════════════════════════════════════════════════"
 Write-Host ""
 Write-Host "  Repo:   $RepoUrl"

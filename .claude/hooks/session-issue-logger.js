@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 設定
-const REPO = 'san15/taisun_agent';
+const REPO = 'taiyousan15/sunagent15';
 const SESSION_STATE_FILE = '.agent_usage_state.json';
 const WORKFLOW_STATE_FILE = '.workflow_state.json';
 

@@ -105,7 +105,7 @@ docker info
 
 # リポジトリをクローン
 git clone https://github.com/taiyousan15/sunagent15.git
-cd taisun_agent
+cd sunagent15
 
 # Windows セットアップスクリプトを実行
 npm run setup:windows
@@ -312,9 +312,9 @@ git config --global core.autocrlf false
 
 # リポジトリを再クローン
 cd ..
-rmdir /s /q taisun_agent
+rmdir /s /q sunagent15
 git clone https://github.com/taiyousan15/sunagent15.git
-cd taisun_agent
+cd sunagent15
 npm install
 ```
 
@@ -329,7 +329,7 @@ Error: ENOENT: no such file or directory
 ```powershell
 # プロジェクトのルートディレクトリにいるか確認
 pwd
-# C:\Users\YourName\taisun_agent のような表示になっているか
+# C:\Users\YourName\sunagent15 のような表示になっているか
 
 # パス区切りの問題の場合、Node.js スクリプトを使用
 # ✅ 良い例: npm run mcp:health
@@ -378,7 +378,7 @@ Error: EPERM: operation not permitted
 ```bash
 # WSL2 (Ubuntu など) で実行
 git clone https://github.com/taiyousan15/sunagent15.git
-cd taisun_agent
+cd sunagent15
 npm install
 npm test
 ```

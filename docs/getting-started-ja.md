@@ -34,8 +34,8 @@
 ### 1. リポジトリをクローン
 
 ```bash
-git clone https://github.com/your-org/taisun_agent.git
-cd taisun_agent
+git clone https://github.com/taiyousan15/sunagent15.git
+cd sunagent15
 ```
 
 ### 2. 依存関係をインストール
@@ -302,7 +302,7 @@ npm run build
 
 問題が解決しない場合は、以下の方法でサポートを受けられます：
 
-1. [GitHub Issues](https://github.com/your-org/taisun_agent/issues) で新しいIssueを作成
+1. [GitHub Issues](https://github.com/taiyousan15/sunagent15/issues) で新しいIssueを作成
 2. Slackの `#taisun-support` チャンネルで質問
 
 ---
