@@ -39,7 +39,7 @@ if LC_ALL=C printf '%s' "$PWD" | LC_ALL=C grep -q '[^ -~]'; then
     echo ""
     echo "  ℹ️  現在のパスに非ASCII文字（日本語等）が含まれています:"
     echo "     $PWD"
-    echo "     互換性のため英字パス（例: ~/taisun_agent）を推奨します"
+    echo "     互換性のため英字パス（例: ~/sunagent15）を推奨します"
     echo ""
 fi
 
@@ -548,7 +548,7 @@ if [ ! -f "$REPO_DIR/.env" ]; then
     echo "    META_ACCESS_TOKEN → Facebook/Instagram広告機能"
     echo ""
     echo "  👉 設定方法："
-    echo "     1. taisun_agent フォルダを開く"
+    echo "     1. sunagent15 フォルダを開く"
     echo "     2. .env ファイルをテキストエディタで開く"
     echo "     3. ANTHROPIC_API_KEY= の右側にAPIキーを貼り付ける"
     echo "     4. 保存して閉じる"
@@ -693,7 +693,7 @@ echo "  │  次にやること（3ステップ）                              
 echo "  ├──────────────────────────────────────────────────────────┤"
 echo "  │                                                          │"
 echo "  │  1️⃣  .env ファイルに ANTHROPIC_API_KEY を設定する         │"
-echo "  │     → taisun_agent フォルダの中にある .env を開く         │"
+echo "  │     → sunagent15 フォルダの中にある .env を開く           │"
 echo "  │     → ANTHROPIC_API_KEY=sk-ant-... と入力して保存        │"
 echo "  │                                                          │"
 echo "  │  2️⃣  Claude Code を開く（再起動が必要です）                │"

@@ -127,7 +127,7 @@ if (fs.existsSync(userSkills)) {
     }
     if (dangling > 0) {
       warn(
-        `壊れたスキルリンク: ${dangling}/${linkCount} 件（taisun_agent フォルダを移動した場合に発生）。\n` +
+        `壊れたスキルリンク: ${dangling}/${linkCount} 件（sunagent15 フォルダを移動した場合に発生）。\n` +
         `    → 修復: bash scripts/install.sh`
       );
     } else if (linkCount > 0) {

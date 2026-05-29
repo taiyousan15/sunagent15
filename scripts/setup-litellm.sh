@@ -3,11 +3,11 @@
 #
 # 使い方（Claude Codeのチャットに貼り付けて実行）:
 #
-#   OPENROUTER_API_KEY="sk-or-xxxx" GROQ_API_KEY="gsk_xxxx" bash ~/taisun_agent/scripts/setup-litellm.sh
+#   OPENROUTER_API_KEY="sk-or-xxxx" GROQ_API_KEY="gsk_xxxx" bash ~/sunagent15/scripts/setup-litellm.sh
 #
 # GroqキーなしでOpenRouterだけの場合:
 #
-#   OPENROUTER_API_KEY="sk-or-xxxx" bash ~/taisun_agent/scripts/setup-litellm.sh
+#   OPENROUTER_API_KEY="sk-or-xxxx" bash ~/sunagent15/scripts/setup-litellm.sh
 
 set -e
 
@@ -87,7 +87,7 @@ $MARKER
 # Python パス（litellm コマンドを使えるように）
 export PATH="\$HOME/Library/Python/3.9/bin:\$HOME/Library/Python/3.11/bin:\$HOME/.local/bin:\$PATH"
 
-# taisun_agent の .env を自動読み込み
+# sunagent15 の .env を自動読み込み
 [ -f "$REPO_DIR/.env" ] && export \$(grep -v '^#' "$REPO_DIR/.env" | xargs)
 
 # claude-lite: OpenRouter経由でClaude Codeを起動（claude より安い）

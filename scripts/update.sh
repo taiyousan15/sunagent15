@@ -40,7 +40,7 @@ echo ""
 # git リポジトリ確認
 if [ ! -d "$REPO_DIR/.git" ]; then
     echo "  ❌ エラー：このフォルダは TAISUN Agent のフォルダではありません"
-    echo "     → taisun_agent フォルダの中で実行してください"
+    echo "     → sunagent15 フォルダの中で実行してください"
     exit 1
 fi
 
@@ -84,8 +84,8 @@ git pull origin main --ff-only 2>/dev/null && GIT_UPDATED=true || {
         info "ZIPダウンロードで更新します..."
 
         ZIP_URL="https://github.com/taiyousan15/sunagent15/archive/refs/heads/main.zip"
-        ZIP_PATH="/tmp/taisun_agent_update.zip"
-        EXTRACT_PATH="/tmp/taisun_agent_extract"
+        ZIP_PATH="/tmp/sunagent15_update.zip"
+        EXTRACT_PATH="/tmp/sunagent15_extract"
 
         if curl -fsSL "$ZIP_URL" -o "$ZIP_PATH" 2>/dev/null; then
             rm -rf "$EXTRACT_PATH"

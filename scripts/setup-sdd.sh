@@ -5,7 +5,7 @@
 # 使っている環境に合わせて3パターンから選択できます。
 #
 # 使い方:
-#   bash ~/taisun_agent/scripts/setup-sdd.sh
+#   bash ~/sunagent15/scripts/setup-sdd.sh
 #
 # パターン:
 #   1. Claude MAX/Pro プラン（APIキーあり）  ← Anthropic直接・最高品質
@@ -94,7 +94,7 @@ print_header
 # SDD スキルの存在確認
 if [ ! -d "$SKILLS_DIR/sdd-req100" ]; then
     echo -e "${RED}[ERROR]${NC} SDD スキルが見つかりません: $SKILLS_DIR"
-    echo "  taisun_agent がインストールされているか確認してください。"
+    echo "  sunagent15 がインストールされているか確認してください。"
     exit 1
 fi
 
@@ -391,7 +391,7 @@ if ! grep -q "$MARKER" "$SHELL_RC" 2>/dev/null; then
     cat >> "$SHELL_RC" << SHELLEOF
 
 $MARKER
-# taisun_agent の .env を自動読み込み
+# sunagent15 の .env を自動読み込み
 [ -f "$REPO_DIR/.env" ] && export \$(grep -v '^#' "$REPO_DIR/.env" | xargs 2>/dev/null)
 # === END TAISUN SDD ===
 SHELLEOF

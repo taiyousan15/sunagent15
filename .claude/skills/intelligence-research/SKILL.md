@@ -83,12 +83,12 @@ opencli-rs の結果は GIS の結果とマージし、重複排除後にスコ�
 
 ### 1. プロジェクトパス確認
 
-シンボリックリンクからtaisun_agentのルートを自動検出する:
+シンボリックリンクからsunagent15のルートを自動検出する:
 
 ```bash
 # シンボリックリンク解決でプロジェクトルートを自動検出
 _SKILL_REAL=$(python3 -c "import os; p=os.path.realpath(os.path.expanduser('~/.claude/skills/intelligence-research/SKILL.md')); print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(p)))))" 2>/dev/null || echo "")
-PROJECT_DIR="${_SKILL_REAL:-${TAISUN_AGENT_DIR:-$HOME/taisun_agent}}"
+PROJECT_DIR="${_SKILL_REAL:-${TAISUN_AGENT_DIR:-$HOME/sunagent15}}"
 ```
 
 ### 2. 引数解析
@@ -102,7 +102,7 @@ ARGUMENTSから `--category` を抽出する。
 
 ```bash
 _SKILL_REAL=$(python3 -c "import os; p=os.path.realpath(os.path.expanduser('~/.claude/skills/intelligence-research/SKILL.md')); print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(p)))))" 2>/dev/null || echo "")
-PROJECT_DIR="${_SKILL_REAL:-${TAISUN_AGENT_DIR:-$HOME/taisun_agent}}"
+PROJECT_DIR="${_SKILL_REAL:-${TAISUN_AGENT_DIR:-$HOME/sunagent15}}"
 cd "$PROJECT_DIR"
 npx ts-node src/intelligence/index.ts
 ```
@@ -111,7 +111,7 @@ npx ts-node src/intelligence/index.ts
 
 ```bash
 _SKILL_REAL=$(python3 -c "import os; p=os.path.realpath(os.path.expanduser('~/.claude/skills/intelligence-research/SKILL.md')); print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(p)))))" 2>/dev/null || echo "")
-PROJECT_DIR="${_SKILL_REAL:-${TAISUN_AGENT_DIR:-$HOME/taisun_agent}}"
+PROJECT_DIR="${_SKILL_REAL:-${TAISUN_AGENT_DIR:-$HOME/sunagent15}}"
 cd "$PROJECT_DIR"
 INTELLIGENCE_CATEGORY=ai_news npx ts-node src/intelligence/index.ts
 ```

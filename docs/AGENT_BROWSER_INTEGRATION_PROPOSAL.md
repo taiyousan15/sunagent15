@@ -277,7 +277,7 @@ agent-browser open https://api.example.com/admin \
 
 ```bash
 # プロジェクトルート
-cd ~/taisun_agent
+cd ~/sunagent15
 
 # グローバルインストール
 npm install -g agent-browser
@@ -432,7 +432,7 @@ async function getPageSnapshot(url: string) {
 ```markdown
 <command-name>/agent-browser</command-name>
 
-Base directory for this skill: ~/taisun_agent/.claude/skills/agent-browser
+Base directory for this skill: ~/sunagent15/.claude/skills/agent-browser
 
 # Agent Browser CLI Skill
 

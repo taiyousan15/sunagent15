@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Opt-in telemetry emitter for taisun_agent install/update events.
+ * Opt-in telemetry emitter for sunagent15 install/update events.
  *
  * Default behavior: NO-OP (telemetry is opt-in only).
  *
@@ -22,7 +22,7 @@
  *   - anonymous install_id (UUID v4, generated locally, stored in opt-in file)
  *   - event type
  *   - timestamp (ISO 8601)
- *   - taisun_agent version (from package.json)
+ *   - sunagent15 version (from package.json)
  *   - OS family (darwin/linux/win32) + major version
  *   - Node major version
  *   - profile name (if applicable)

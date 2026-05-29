@@ -3,7 +3,7 @@ kind: "taisun_master_guard_spec_ja"
 
 target:
   portability: true
-  primary_repo_example: "san15/taisun_agent"
+  primary_repo_example: "taiyousan15/sunagent15"
   works_for:
     - "Claude Code hooks + state + workflow/policy を持つ任意のリポジトリ"
   locale:

@@ -1,11 +1,11 @@
 ﻿# TAISUN Agent - プロジェクトセットアップ (Windows)
 #
-# 別のプロジェクトフォルダでtaisun_agentの機能を使えるようにする。
+# 別のプロジェクトフォルダでsunagent15の機能を使えるようにする。
 # .claude/ と .mcp.json を Junction/コピーで反映する。
 #
 # 使い方:
 #   cd ~\Projects\MyProject
-#   ~\taisun_agent\scripts\setup-project.ps1
+#   ~\sunagent15\scripts\setup-project.ps1
 #
 #   または:
 #   .\scripts\setup-project.ps1 ~\Projects\MyProject
@@ -21,7 +21,7 @@ $ErrorActionPreference = "Continue"
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
 # ─────────────────────────────────────────
-# taisun_agent のルートを検出
+# sunagent15 のルートを検出
 # ─────────────────────────────────────────
 $SCRIPT_DIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 $TAISUN_DIR = Split-Path -Parent $SCRIPT_DIR
@@ -55,7 +55,7 @@ Write-Host "  TAISUN:       $TAISUN_DIR"
 Write-Host "  プロジェクト: $PROJECT_DIR"
 Write-Host ""
 
-# taisun_agent の .claude が存在するか確認
+# sunagent15 の .claude が存在するか確認
 if (-not (Test-Path "$TAISUN_DIR\.claude")) {
     Write-Host "  NG  $TAISUN_DIR\.claude が見つかりません" -ForegroundColor Red
     Write-Host "     先に .\scripts\install.ps1 を実行してください"
@@ -117,7 +117,7 @@ if (Test-Path "$TAISUN_DIR\.mcp.json") {
     } else {
         Copy-Item "$TAISUN_DIR\.mcp.json" $MCP_LINK
         Write-Ok ".mcp.json をコピーしました"
-        Write-Info "※ Windowsではコピーです。taisun_agent側を更新したら再実行してください"
+        Write-Info "※ Windowsではコピーです。sunagent15側を更新したら再実行してください"
     }
 }
 
