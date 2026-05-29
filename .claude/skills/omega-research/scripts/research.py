@@ -25,7 +25,7 @@ except ImportError:
 try:
     from dotenv import load_dotenv
     load_dotenv(Path.cwd() / ".env")
-    load_dotenv(Path.home() / "taisun_agent/.env", override=False)
+    load_dotenv(Path.home() / "sunagent15/.env", override=False)
 except ImportError:
     pass
 

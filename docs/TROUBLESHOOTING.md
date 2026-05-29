@@ -42,7 +42,7 @@ npm install --legacy-peer-deps
 
 **症状:**
 ```
-Error: Cannot find module '/path/to/taisun_agent/dist/proxy-mcp/server.js'
+Error: Cannot find module '/path/to/sunagent15/dist/proxy-mcp/server.js'
 ```
 
 **原因:** ビルドが実行されていない

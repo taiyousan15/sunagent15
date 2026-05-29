@@ -2,7 +2,7 @@
 
 **Status**: Stable
 **Last updated**: 2026-04-19
-**Applies to**: taisun_agent v2.x and later
+**Applies to**: sunagent15 v2.x and later
 
 ---
 
@@ -179,7 +179,7 @@ The following are explicitly NOT covered by this policy and MAY change at any ti
 If a release breaks something that this policy says shouldn't break:
 
 1. Open an issue with title prefix `[compat]`
-2. Include: `taisun_agent` version, OS, Node version, exact error
+2. Include: `sunagent15` version, OS, Node version, exact error
 3. Tag with `breaking-change-regression`
 4. Maintainers will treat as P0 — patch release within 7 days
 

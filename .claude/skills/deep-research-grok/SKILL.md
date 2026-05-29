@@ -45,7 +45,7 @@ XAI_API_KEY=xai-...（.env に設定済み）
 ### 1. 環境確認
 
 ```bash
-cd "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"
+cd "${TAISUN_AGENT_DIR:-$HOME/sunagent15}"
 python3 -c "import openai; print('OK')" 2>/dev/null || pip install openai python-dotenv -q
 ```
 
@@ -54,7 +54,7 @@ python3 -c "import openai; print('OK')" 2>/dev/null || pip install openai python
 ARGUMENTSからトピックと追加オプションを解析する。
 
 ```bash
-cd "${TAISUN_AGENT_DIR:-$HOME/taisun_agent}"
+cd "${TAISUN_AGENT_DIR:-$HOME/sunagent15}"
 
 # デフォルト（4セクション、研究ディレクトリに保存）
 python3 ~/.claude/skills/deep-research-grok/scripts/research.py \

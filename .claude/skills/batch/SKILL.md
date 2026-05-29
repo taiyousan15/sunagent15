@@ -161,4 +161,4 @@ git merge batch-xxxx-2   # コンフリクトを手動解決
 - Boris Cherny 発表 (2026-02-28): `/simplify` と `/batch` で「エージェントチーム」時代
 - Claude Code v2.1.63 GitHub Release Notes
 - 公式ドキュメント: `code.claude.com/docs/en/skills`
-- taisun_agentv2 AGENTS.md: `isolation: worktree` の適用済みエージェント一覧
+- sunagent15 AGENTS.md: `isolation: worktree` の適用済みエージェント一覧

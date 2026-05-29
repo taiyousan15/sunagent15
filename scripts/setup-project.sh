@@ -1,20 +1,20 @@
 #!/bin/bash
 # TAISUN Agent - プロジェクトセットアップ
 #
-# 別のプロジェクトフォルダでtaisun_agentの機能を使えるようにする。
+# 別のプロジェクトフォルダでsunagent15の機能を使えるようにする。
 # .claude/ と .mcp.json をシンボリックリンクで反映する。
 #
 # 使い方:
 #   cd /path/to/your/project
-#   ~/taisun_agent/scripts/setup-project.sh
+#   ~/sunagent15/scripts/setup-project.sh
 #
 #   または:
-#   bash ~/taisun_agent/scripts/setup-project.sh /path/to/your/project
+#   bash ~/sunagent15/scripts/setup-project.sh /path/to/your/project
 
 set +e
 
 # ─────────────────────────────────────────
-# taisun_agent のルートを検出
+# sunagent15 のルートを検出
 # ─────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 TAISUN_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -48,10 +48,10 @@ echo "  TAISUN:    $TAISUN_DIR"
 echo "  プロジェクト: $PROJECT_DIR"
 echo ""
 
-# taisun_agent の .claude が存在するか確認
+# sunagent15 の .claude が存在するか確認
 if [ ! -d "$TAISUN_DIR/.claude" ]; then
     echo "  ❌ $TAISUN_DIR/.claude が見つかりません"
-    echo "     先に ~/taisun_agent/scripts/install.sh を実行してください"
+    echo "     先に ~/sunagent15/scripts/install.sh を実行してください"
     exit 1
 fi
 

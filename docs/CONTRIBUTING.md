@@ -19,8 +19,8 @@ TAISUN v2への貢献に感謝します。このガイドでは、エージェ�
 
 ```bash
 # 1. リポジトリをフォーク & クローン
-git clone https://github.com/YOUR_USERNAME/taisun_agent.git
-cd taisun_agent
+git clone https://github.com/YOUR_USERNAME/sunagent15.git
+cd sunagent15
 
 # 2. 依存関係をインストール
 npm install
@@ -376,7 +376,7 @@ npm run test:coverage
 ## ディレクトリ構造リファレンス
 
 ```
-taisun_agent/
+sunagent15/
 ├── .claude/
 │   ├── agents/          # エージェント定義 (*.md)
 │   ├── skills/          # スキル定義 (*/SKILL.md)

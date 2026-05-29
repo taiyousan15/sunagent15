@@ -1,6 +1,6 @@
 # OpenCode / Oh My OpenCode(OMO) 任意導入ガイド（TAISUN v2向け）
 
-このドキュメントは、taisun_agent（Claude Code拡張）に **OpenCode / OMO を"必要な時だけ"併用**するためのガイドです。
+このドキュメントは、sunagent15（Claude Code拡張）に **OpenCode / OMO を"必要な時だけ"併用**するためのガイドです。
 
 ## 目的（なぜ入れるのか）
 - Claude Code + TAISUNで実装しつつ、難しいバグ修正や大規模リファクタ時に **OpenCode/OMOを"セカンドエンジン"として呼び出す**。

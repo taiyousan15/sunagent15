@@ -151,7 +151,15 @@ cd ~/sunagent15 && ./scripts/update.sh
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-**インストール（初回のみ）**
+**インストール（推奨: 1行で完了）**
+
+```powershell
+irm https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.ps1 | iex
+```
+
+> 上の事前準備（`Set-ExecutionPolicy`）を済ませてから PowerShell ウィンドウで実行してください。
+
+**インストール（git clone から手動）**
 
 ```powershell
 cd $HOME

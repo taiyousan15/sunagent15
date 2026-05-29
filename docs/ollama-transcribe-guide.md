@@ -36,7 +36,7 @@ Ollamaを使用して、Udemy動画の文字起こし結果を:
 ### 基本: 文字起こし + Ollama処理
 
 ```bash
-cd ~/taisun_agent
+cd ~/sunagent15
 
 # 字幕ダウンロード + 要約・学習ノート・キーワード抽出
 ./scripts/udemy-transcribe.sh -p "https://www.udemy.com/course/autowebinar/learn/lecture/45461633"

@@ -46,8 +46,8 @@
 
 4. **ファイルを配置**
    ```bash
-   # taisun_agentディレクトリに配置
-   mv ~/Downloads/cookies.txt ~/taisun_agent/cookies.txt
+   # sunagent15ディレクトリに配置
+   mv ~/Downloads/cookies.txt ~/sunagent15/cookies.txt
    ```
 
 #### 手動でCookieを取得する方法
@@ -65,7 +65,7 @@
 #### 1. 単一動画の文字起こし
 
 ```bash
-cd ~/taisun_agent
+cd ~/sunagent15
 
 ./scripts/udemy-transcribe.sh "https://www.udemy.com/course/autowebinar/learn/lecture/45461633"
 ```
@@ -246,7 +246,7 @@ Cookieは期限切れになります:
 #!/bin/bash
 # 夜間バッチ処理用スクリプト
 
-cd ~/taisun_agent
+cd ~/sunagent15
 
 # タイムスタンプ付きログディレクトリ
 OUTPUT_DIR="udemy-transcripts/$(date '+%Y%m%d')"

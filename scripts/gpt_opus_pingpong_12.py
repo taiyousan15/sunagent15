@@ -33,7 +33,7 @@ GPT_MODEL = "openai/gpt-5.4"
 OPUS_MODEL = "anthropic/claude-opus-4"
 TOTAL_ROUNDS = 12
 
-REPORT_PATH = os.path.expanduser("~/taisun_agent/research/runs/20260321__codegraph-proposal/review_for_chatgpt.md")
+REPORT_PATH = os.path.expanduser("~/sunagent15/research/runs/20260321__codegraph-proposal/review_for_chatgpt.md")
 OUTPUT_DIR = os.path.expanduser("~/Desktop/最終GPT報告レポート")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

@@ -77,7 +77,7 @@ fi
 # Remote install path (curl | bash)
 echo ""
 echo "════════════════════════════════════════════════════"
-echo "  taisun_agent - Remote Installer"
+echo "  sunagent15 - Remote Installer"
 echo "════════════════════════════════════════════════════"
 echo ""
 echo "  Repo:   $REPO_URL"

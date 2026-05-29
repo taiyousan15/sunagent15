@@ -28,7 +28,7 @@
 ```bash
 # 1. リポジトリをクローン
 git clone https://github.com/taiyousan15/sunagent15.git
-cd taisun_agent
+cd sunagent15
 
 # 2. 依存関係をインストール
 npm install
