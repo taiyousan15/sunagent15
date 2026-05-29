@@ -33,7 +33,7 @@ git clone → npm install → npm test → Claude Codeで使う
 
 ```bash
 git clone https://github.com/taiyousan15/sunagent15.git
-cd taisun_agent
+cd sunagent15
 ```
 
 ## Step 2: インストール (2分)
@@ -70,8 +70,8 @@ npm run doctor
 ### 方法A: Claude Code CLI を使う場合
 
 ```bash
-# taisun_agent ディレクトリで Claude Code を起動
-cd taisun_agent
+# sunagent15 ディレクトリで Claude Code を起動
+cd sunagent15
 claude
 ```
 
@@ -90,13 +90,13 @@ Claude: /lp-analysis スキルで分析します...
 
 ### 方法B: VS Code + Claude拡張機能を使う場合
 
-1. VS Code で `taisun_agent` フォルダを開く
+1. VS Code で `sunagent15` フォルダを開く
 2. Claude拡張機能が `.claude/` フォルダを自動認識
 3. チャットパネルで会話するだけ
 
 ### 方法C: Cursor を使う場合
 
-1. Cursor で `taisun_agent` フォルダを開く
+1. Cursor で `sunagent15` フォルダを開く
 2. AI チャットで会話するだけ
 
 ---

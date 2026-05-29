@@ -4,9 +4,9 @@
 #   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; irm https://raw.githubusercontent.com/taiyousan15/sunagent15/main/scripts/quick-install.ps1 | iex
 #
 # 動作:
-#   1. %USERPROFILE%\taisun_agent に git clone（既存なら git pull）
+#   1. %USERPROFILE%\sunagent15 に git clone（既存なら git pull）
 #      インストール先を変更したい場合は -InstallDir を指定:
-#        & { iwr https://... | iex } -InstallDir 'D:\Projects\taisun_agent'
+#        & { iwr https://... | iex } -InstallDir 'D:\Projects\sunagent15'
 #   2. install.ps1 を自動実行
 #   3. 完了後、Claude Code で開くだけ
 #
@@ -14,7 +14,7 @@
 #           Join-Path デフォルト式が動作保証外)
 
 param(
-    [string]$InstallDir = (Join-Path $env:USERPROFILE 'taisun_agent'),
+    [string]$InstallDir = (Join-Path $env:USERPROFILE 'sunagent15'),
     [switch]$Force
 )
 
