@@ -55,7 +55,7 @@ Before taking action, apply appropriate level of extended thinking:
 1. Parse user request → Extract keywords + task type (5 types: design/implementation/qa/operations/meta)
 2. **Index-based pre-filtering** (v1.5.2): Query .claude/memory/index.yaml for task pattern matching → Get 2-5 candidate agents (85-90% cache hit)
 3. **Dependency-aware filtering**: Check parallel compatibility from dependency graph
-4. Query .claude/memory/agents/*.yaml for historical success rates (ONLY for candidates, not all 49)
+4. Query .claude/agent-memory/agents/*.yaml for historical success rates (ONLY for candidates, not all 49)
 5. **Score candidates** using weighted algorithm (historical: 35%, stats: 30%, index: 25%, dependency: 10%)
 6. Select top 1-3 agents with parallel execution validation
 7. Validate: Selected agents cover 100% of request scope + optimal parallelization
@@ -74,7 +74,7 @@ Before taking action, apply appropriate level of extended thinking:
 **Memory Integration**:
 1. Pre-selection: Read agent stats for success_rate + avg_quality_score
 2. Post-execution: Write task record to .claude/memory/tasks/YYYY-MM-DD-NNN.yaml
-3. Update agent stats in .claude/memory/agents/{agent}-stats.yaml
+3. Update agent stats in .claude/agent-memory/agents/{agent}-stats.yaml
 
 **Quality Metrics**:
 - Agent selection accuracy: ≥90% (measure: user confirms correct agent chosen)
@@ -238,7 +238,7 @@ cat .claude/memory/index.yaml 2>/dev/null || echo "Index not found, using full a
 
 **Prerequisites**:
 - yq installed (YAML parser): `brew install yq` or `apt-get install yq`
-- Memory files exist: `.claude/memory/agents/{agent}-stats.yaml`
+- Memory files exist (runtime, created on first run): `.claude/agent-memory/agents/{agent}-stats.yaml`
 
 **Executable Implementation**:
 
@@ -280,7 +280,7 @@ MAX_SCORE=0
 BEST_AGENT=""
 
 for agent in $(echo -e "$CANDIDATES"); do
-  STATS_FILE=".claude/memory/agents/${agent}-stats.yaml"
+  STATS_FILE=".claude/agent-memory/agents/${agent}-stats.yaml"
 
   # Default values for cold-start agents
   SUCCESS_RATE=0.85
@@ -492,7 +492,7 @@ Execution:
 
 **Selected Agent(s)**:
 1. **[agent-name]**: [Selection rationale with memory stats if available]
-   - Historical success rate: [X%] (from .claude/memory/agents/{agent}-stats.yaml)
+   - Historical success rate: [X%] (from .claude/agent-memory/agents/{agent}-stats.yaml)
    - Scope: [What this agent will deliver]
 
 [Repeat for agents 2-3 if parallel execution]
@@ -625,7 +625,7 @@ for agent in "${SELECTED_AGENTS[@]}"; do
   echo "📊 Updating stats for ${agent}..."
 
   # ✅ Use TASK_ID from record-task.ts output (extracted above)
-  npx tsx .claude/memory/scripts/update-agent-stats.ts \
+  npx ts-node scripts/record-agent-task.ts \
     --agent "${agent}" \
     --quality-score ${QUALITY_SCORE} \
     --success ${SUCCESS_FLAG} \
@@ -692,7 +692,7 @@ if [ -f .claude/memory/tasks/${TASK_ID}-*.yaml ]; then
 fi
 
 # Verify stats were updated
-STATS_FILE=".claude/memory/agents/${SELECTED_AGENTS[0]}-stats.yaml"
+STATS_FILE=".claude/agent-memory/agents/${SELECTED_AGENTS[0]}-stats.yaml"
 LAST_UPDATED=$(grep "last_updated:" "$STATS_FILE" | cut -d' ' -f2)
 echo "   Stats last updated: ${LAST_UPDATED}"
 ```
