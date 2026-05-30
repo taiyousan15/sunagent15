@@ -462,20 +462,14 @@ jobs:
         run: npx jest --selectProjects scripts --ci --forceExit
         timeout-minutes: 5
 
-      - name: '--check (manifest in sync with source *-stats.yaml)'
-        run: node scripts/generate-agents-baseline.js --check
-
       - name: '--validate-manifest --expected-count 48 (manifest-only structural validate)'
         run: node scripts/generate-agents-baseline.js --validate-manifest --expected-count 48
-
-      - name: '--check --strict (read-only catalog drift gate)'
-        run: node scripts/generate-agents-baseline.js --check --strict
 
       - name: '--validate-manifest --strict --expected-count 48 (post-PR-β CI gate, manifest-only + catalog cross-check)'
         # Step 1.5 follow-up³ NEW-MED-2 (Codex 4th-round 2026-05-14):
         # This mode does NOT require .claude/memory/agents/*-stats.yaml to exist.
-        # PR-β will swap --check / --check --strict for this single command after the
-        # source files are deleted.
+        # PR-β (this PR) swapped --check / --check --strict for this manifest-only
+        # command after deleting the source *-stats.yaml.
         run: node scripts/generate-agents-baseline.js --validate-manifest --strict --expected-count 48
 
   # ============================================
