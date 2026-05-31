@@ -487,10 +487,12 @@ echo ""
 # ============================================
 echo "📊 Step 5.2: Updating agent statistics for ${EVALUATED_AGENT}..."
 
-# Check if TypeScript runtime available
-if command -v npx &> /dev/null && [ -f ".claude/memory/scripts/update-agent-stats.ts" ]; then
-  # Use TypeScript script for stats update (Bayesian EMA α=0.2)
-  npx tsx .claude/memory/scripts/update-agent-stats.ts \
+# Record via MemoryService (per-agent lock + atomic write + baseline-manifest seeding).
+# scripts/record-agent-task.ts routes to the runtime memory layer at
+# .claude/agent-memory/agents/ — the canonical store that memory-report.ts reads.
+# (The previous bash+yq fallback wrote the deleted legacy path and bypassed seeding/locking.)
+if command -v npx &> /dev/null; then
+  npx ts-node scripts/record-agent-task.ts \
     --agent "${EVALUATED_AGENT}" \
     --task-id "${TASK_ID}" \
     --quality-score ${TOTAL_SCORE} \
@@ -500,58 +502,12 @@ if command -v npx &> /dev/null && [ -f ".claude/memory/scripts/update-agent-stat
     2>&1
 
   if [ $? -eq 0 ]; then
-    echo "   ✅ Agent statistics updated successfully"
+    echo "   ✅ Agent statistics updated successfully (runtime memory layer)"
   else
     echo "   ⚠️ Warning: Stats update failed (non-blocking)"
   fi
-
 else
-  # Fallback: Manual stats update using bash + yq
-  echo "   ℹ️ TypeScript runtime not available, using bash fallback..."
-
-  STATS_FILE=".claude/memory/agents/${EVALUATED_AGENT}-stats.yaml"
-
-  # Create stats file if not exists
-  if [ ! -f "$STATS_FILE" ]; then
-    cat > "$STATS_FILE" << STATS_EOF
-agent_name: "${EVALUATED_AGENT}"
-total_tasks: 0
-successful_tasks: 0
-failed_tasks: 0
-success_rate: 0.85
-avg_quality_score: 85.0
-last_updated: "$(date -Iseconds)"
-recent_tasks: []
-STATS_EOF
-  fi
-
-  # Read current stats (requires yq)
-  if command -v yq &> /dev/null; then
-    TOTAL_TASKS=$(yq eval '.total_tasks' "$STATS_FILE")
-    SUCCESSFUL_TASKS=$(yq eval '.successful_tasks' "$STATS_FILE")
-    AVG_QUALITY=$(yq eval '.avg_quality_score' "$STATS_FILE")
-
-    # Update counters
-    TOTAL_TASKS=$((TOTAL_TASKS + 1))
-    if [ "${DECISION}" = "ACCEPT" ]; then
-      SUCCESSFUL_TASKS=$((SUCCESSFUL_TASKS + 1))
-    fi
-
-    # Update stats using Bayesian EMA (α=0.2)
-    NEW_AVG_QUALITY=$(echo "${AVG_QUALITY} * 0.8 + ${TOTAL_SCORE} * 0.2" | bc -l)
-    NEW_SUCCESS_RATE=$(echo "scale=3; ${SUCCESSFUL_TASKS} / ${TOTAL_TASKS}" | bc -l)
-
-    # Write updated stats
-    yq eval -i ".total_tasks = ${TOTAL_TASKS}" "$STATS_FILE"
-    yq eval -i ".successful_tasks = ${SUCCESSFUL_TASKS}" "$STATS_FILE"
-    yq eval -i ".success_rate = ${NEW_SUCCESS_RATE}" "$STATS_FILE"
-    yq eval -i ".avg_quality_score = ${NEW_AVG_QUALITY}" "$STATS_FILE"
-    yq eval -i ".last_updated = \"$(date -Iseconds)\"" "$STATS_FILE"
-
-    echo "   ✅ Stats updated via yq fallback"
-  else
-    echo "   ⚠️ Warning: yq not available, skipping stats update"
-  fi
+  echo "   ⚠️ Warning: node/npx unavailable — stats update skipped (non-blocking)"
 fi
 
 echo ""
@@ -600,7 +556,7 @@ else
 fi
 
 # Verify agent stats were updated
-STATS_FILE=".claude/memory/agents/${EVALUATED_AGENT}-stats.yaml"
+STATS_FILE=".claude/agent-memory/agents/${EVALUATED_AGENT}-stats.yaml"
 if [ -f "$STATS_FILE" ]; then
   if command -v yq &> /dev/null; then
     LAST_UPDATED=$(yq eval '.last_updated' "$STATS_FILE" 2>/dev/null || echo "unknown")

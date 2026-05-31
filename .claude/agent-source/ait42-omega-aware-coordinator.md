@@ -159,7 +159,7 @@ return agentsWithProbability
 <memory_integration>
 ## Ω統計のメモリ統合
 
-### .claude/memory/agents/${agent_name}-stats.yaml
+### .claude/agent-memory/agents/${agent_name}-stats.yaml
 
 ```yaml
 omega_metrics:

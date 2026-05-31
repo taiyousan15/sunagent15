@@ -81,3 +81,24 @@ jobs:
           fi
 
           echo "✓ No hardcoded user-specific absolute paths detected"
+
+      - name: Detect legacy agent-stats path in agent-source (PLAN Step 8 Part A)
+        run: |
+          # After PR-α/PR-β, agent runtime stats live at .claude/agent-memory/agents/.
+          # The legacy .claude/memory/agents/<name>-stats.yaml was deleted; any new
+          # read/write reference from agent-source would re-introduce the split-brain.
+          # Allowed (read-only baseline carrier): _template.yaml. agents-baseline.yaml
+          # lives at .claude/memory/agents-baseline.yaml and does not match agents/.
+          if [ ! -d .claude/agent-source ]; then
+            echo "::error::.claude/agent-source directory not found"
+            exit 1
+          fi
+          # '|| true' must wrap the WHOLE pipe: under GitHub Actions' default
+          # `bash -eo pipefail`, rg exits 1 on "no match" and would otherwise fail the step.
+          HITS=$(rg -n --hidden '\.claude/memory/agents/' .claude/agent-source/ | grep -v '_template\.yaml' || true)
+          if [ -n "$HITS" ]; then
+            echo "$HITS"
+            echo "::error::legacy agent-stats path in .claude/agent-source/ — use .claude/agent-memory/agents/ (runtime) or scripts/record-agent-task.ts"
+            exit 1
+          fi
+          echo "✓ No legacy agent-stats path in .claude/agent-source/"

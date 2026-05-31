@@ -107,7 +107,7 @@ alternative_agent_selection:
       selection_criteria: "UI complexity level"
 
   # Step 2: Query agent stats
-  query: ".claude/memory/agents/{alternative}-stats.yaml"
+  query: ".claude/agent-memory/agents/{alternative}-stats.yaml"
   filter: "success_rate >= 0.75"
 
   # Step 3: Select highest success rate
