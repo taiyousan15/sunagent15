@@ -11,7 +11,7 @@
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
+      "args": ["-y", "@playwright/mcp"],
       "disabled": false,
       "description": "ブラウザ自動化（NanoBanana操作）",
       "category": "browser-automation"

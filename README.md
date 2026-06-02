@@ -94,21 +94,23 @@ cd sunagent15
 
 ### 🍎 Mac
 
-**インストール（推奨: 1行で完了）**
+**インストール（推奨: SHA256検証付き）**
+
+```
+以下をコピペして実行：
+curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | bash
+```
+
+> デフォルトで `~/.taisun-agent/` にクローンされます。別のパスに入れたい場合: `curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | TAISUN_INSTALL_DIR=~/my-path bash`
+
+**インストール（開発向け: 未検証・HEAD の curl|bash）**
 
 ```
 以下をコピペして実行：
 curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.sh | bash
 ```
 
-> デフォルトで `~/.taisun-agent/` にクローンされます。別のパスに入れたい場合: `curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.sh | TAISUN_INSTALL_DIR=~/my-path bash`
-
-**インストール（検証付き: SHA256チェックあり・セキュリティ重視）**
-
-```
-以下をコピペして実行：
-curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | bash
-```
+> `install.sh` は HEAD をそのまま実行する開発向け経路です。配布・通常導入では `install-release.sh` を使ってください。
 
 <details>
 <summary>Legacy: git clone から手動インストール</summary>

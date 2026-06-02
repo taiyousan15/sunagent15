@@ -40,6 +40,7 @@ import {
   runPipelineTabsSkillize as runPipelineCore,
   PipelineTabsSkillizeConfig,
 } from './pipeline-tabs-skillize';
+import { sanitizeUntrusted } from '../../intelligence/sanitize';
 
 /** Backend type for web skills */
 export type WebBackend = 'default' | 'cdp';
@@ -134,12 +135,15 @@ export async function readUrl(
     const captchaCheck = guardCaptcha(pageContent, url);
     if (captchaCheck) return captchaCheck;
 
+    const sanitizedTitle = sanitizeUntrusted(pageTitle);
+    const sanitizedContent = sanitizeUntrusted(pageContent);
+
     // Store full content in memory
     const memResult = await memoryAdd(
       JSON.stringify({
         url,
-        title: pageTitle,
-        content: pageContent,
+        title: sanitizedTitle,
+        content: sanitizedContent,
         fetchedAt: new Date().toISOString(),
       }),
       namespace,
@@ -166,8 +170,8 @@ export async function readUrl(
       summary,
       data: {
         url,
-        title: pageTitle,
-        contentLength: pageContent.length,
+        title: sanitizedTitle,
+        contentLength: sanitizedContent.length,
         message: `Page loaded. Use memory_search("${memResult.referenceId}") for full content.`,
       },
     };
@@ -275,6 +279,14 @@ export async function extractLinks(
         }
       });
     }
+
+    // Sanitize untrusted link text/title before storing or summarizing
+    // (prevents indirect prompt injection via remote page content).
+    filteredLinks = filteredLinks.map((l) => ({
+      ...l,
+      text: sanitizeUntrusted(l.text || ''),
+      title: l.title ? sanitizeUntrusted(l.title) : undefined,
+    }));
 
     // Store full link list in memory
     const memResult = await memoryAdd(
@@ -417,6 +429,17 @@ export async function captureDomMap(
     const captchaCheck = guardCaptcha(allText, url);
     if (captchaCheck) return captchaCheck;
 
+    // Sanitize untrusted DOM title/component text before storing or summarizing
+    // (prevents indirect prompt injection via remote page content).
+    domMap = {
+      ...domMap,
+      title: sanitizeUntrusted(domMap.title || ''),
+      components: domMap.components.map((c) => ({
+        ...c,
+        text: c.text ? sanitizeUntrusted(c.text) : c.text,
+      })),
+    };
+
     // Store DOM map in memory
     const memResult = await memoryAdd(
       JSON.stringify({
@@ -475,8 +498,9 @@ export async function captureDomMap(
  */
 function generateSummary(title: string, content: string, url: string): string {
   const hostname = new URL(url).hostname;
-  const preview = content.slice(0, 300).replace(/\s+/g, ' ').trim();
-  return `${title} (${hostname})\n\n${preview}${content.length > 300 ? '...' : ''}`;
+  const safeTitle = sanitizeUntrusted(title);
+  const safePreview = sanitizeUntrusted(content).slice(0, 300);
+  return `${safeTitle} (${hostname})\n\n${safePreview}${content.length > 300 ? '...' : ''}`;
 }
 
 // ============================================
@@ -513,13 +537,15 @@ async function readUrlViaCDPWithMemory(
 
   const pageData = result.data!;
   const content = pageData.content.substring(0, maxLength);
+  const sanitizedTitle = sanitizeUntrusted(pageData.title);
+  const sanitizedContent = sanitizeUntrusted(content);
 
   // Store full content in memory
   const memResult = await memoryAdd(
     JSON.stringify({
       url: pageData.url,
-      title: pageData.title,
-      content,
+      title: sanitizedTitle,
+      content: sanitizedContent,
       fetchedAt: new Date().toISOString(),
       backend: 'cdp',
     }),
@@ -546,8 +572,8 @@ async function readUrlViaCDPWithMemory(
     summary,
     data: {
       url: pageData.url,
-      title: pageData.title,
-      contentLength: content.length,
+      title: sanitizedTitle,
+      contentLength: sanitizedContent.length,
       backend: 'cdp',
       message: `Page loaded via CDP. Use memory_search("${memResult.referenceId}") for full content.`,
     },
@@ -604,6 +630,14 @@ async function extractLinksViaCDPWithMemory(
       }
     });
   }
+
+  // Sanitize untrusted link text/title before storing or summarizing
+  // (prevents indirect prompt injection via remote page content).
+  filteredLinks = filteredLinks.map((l) => ({
+    ...l,
+    text: sanitizeUntrusted(l.text || ''),
+    title: l.title ? sanitizeUntrusted(l.title) : undefined,
+  }));
 
   // Store full link list in memory
   const memResult = await memoryAdd(
@@ -676,12 +710,25 @@ async function captureDomMapViaCDPWithMemory(
 
   const domData = result.data!;
 
+  // Sanitize untrusted DOM title + (recursively) element text before storing
+  // or returning (prevents indirect prompt injection via remote page content).
+  const sanitizeDomElements = <T extends { text?: string; children?: T[] }>(
+    els: T[]
+  ): T[] =>
+    els.map((el) => ({
+      ...el,
+      text: el.text ? sanitizeUntrusted(el.text) : el.text,
+      children: el.children ? sanitizeDomElements(el.children) : el.children,
+    }));
+  const safeTitle = sanitizeUntrusted(domData.title || '');
+  const safeElements = sanitizeDomElements(domData.elements);
+
   // Store DOM map in memory
   const memResult = await memoryAdd(
     JSON.stringify({
       url: domData.url,
-      title: domData.title,
-      elements: domData.elements,
+      title: safeTitle,
+      elements: safeElements,
       totalElements: domData.totalElements,
       capturedAt: new Date().toISOString(),
       backend: 'cdp',
@@ -712,7 +759,7 @@ async function captureDomMapViaCDPWithMemory(
   };
   countTags(domData.elements);
 
-  const summary = `DOM map for ${domData.title || url} (CDP):\n${Object.entries(tagCounts)
+  const summary = `DOM map for ${safeTitle || url} (CDP):\n${Object.entries(tagCounts)
     .slice(0, 10)
     .map(([tag, count]) => `- ${tag}: ${count}`)
     .join('\n')}${Object.keys(tagCounts).length > 10 ? '\n...' : ''}`;
@@ -724,7 +771,7 @@ async function captureDomMapViaCDPWithMemory(
     summary,
     data: {
       url: domData.url,
-      title: domData.title,
+      title: safeTitle,
       totalElements: domData.totalElements,
       backend: 'cdp',
       message: `Use memory_search("${memResult.referenceId}") for full DOM map.`,
@@ -767,10 +814,21 @@ export async function listTabsUrls(
 
     const tabsData = result.data!;
 
+    // Sanitize untrusted tab titles before storing or summarizing
+    // (prevents indirect prompt injection via remote page titles).
+    const safeTabs = tabsData.tabs.map((t) => ({
+      ...t,
+      title: t.title ? sanitizeUntrusted(t.title) : t.title,
+    }));
+    const safePreview = tabsData.tabsPreview.map((t) => ({
+      ...t,
+      title: t.title ? sanitizeUntrusted(t.title) : t.title,
+    }));
+
     // Store full tab list in memory
     const memResult = await memoryAdd(
       JSON.stringify({
-        tabs: tabsData.tabs,
+        tabs: safeTabs,
         totalTabs: tabsData.totalTabs,
         listedAt: new Date().toISOString(),
         backend: 'cdp',
@@ -790,7 +848,7 @@ export async function listTabsUrls(
     }
 
     // Summary with top tabs
-    const topTabs = tabsData.tabsPreview
+    const topTabs = safePreview
       .slice(0, 5)
       .map((t) => `- [${t.index}] ${t.title || t.url}`);
 
@@ -803,7 +861,7 @@ export async function listTabsUrls(
       summary,
       data: {
         totalTabs: tabsData.totalTabs,
-        tabs: tabsData.tabsPreview,
+        tabs: safePreview,
         backend: 'cdp',
         message: `Use memory_search("${memResult.referenceId}") for full tab list.`,
       },

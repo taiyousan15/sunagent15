@@ -5,6 +5,7 @@
 
 import { CollectorResult, IntelligenceCategory, IntelligenceItem, ReliabilityScore } from '../types'
 import crypto from 'crypto'
+import { sanitizeUntrusted, sanitizeUrl } from '../sanitize'
 
 interface RssSource {
   name: string
@@ -48,7 +49,13 @@ function parseRssDate(dateStr: string): Date {
 }
 
 function extractTextFromHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").trim()
+  const decoded = html
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+  return decoded.replace(/<[^>]*>/g, '').replace(/[<>]/g, '').trim()
 }
 
 async function fetchRssFeed(source: RssSource, maxItems: number): Promise<IntelligenceItem[]> {
@@ -81,10 +88,10 @@ async function fetchRssFeed(source: RssSource, maxItems: number): Promise<Intell
 
     items.push({
       id: generateId(link, title),
-      title,
-      summary: description.slice(0, 300),
-      url: link.trim(),
-      source: source.name,
+      title: sanitizeUntrusted(title),
+      summary: sanitizeUntrusted(description.slice(0, 300)),
+      url: sanitizeUrl(link.trim()),
+      source: sanitizeUntrusted(source.name),
       sourceType: 'rss',
       category: source.category,
       publishedAt: parseRssDate(pubDate),

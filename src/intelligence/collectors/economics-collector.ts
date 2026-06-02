@@ -5,6 +5,7 @@
 
 import { CollectorResult, EconomicIndicator, IntelligenceItem } from '../types'
 import crypto from 'crypto'
+import { sanitizeUntrusted, sanitizeUrl } from '../sanitize'
 
 function makeId(src: string, id: string): string {
   return crypto.createHash('md5').update(`${src}:${id}`).digest('hex').slice(0, 16)
@@ -69,10 +70,10 @@ export async function collectFredData(apiKey: string): Promise<CollectorResult> 
 
     items.push({
       id: makeId('fred', series.id),
-      title: `${series.name}: ${value}${series.unit} ${direction}`,
-      summary: `${series.name} as of ${latest.date}: ${value} ${series.unit}${prevValue !== undefined ? ` (前回: ${prevValue})` : ''}${changePercent !== undefined ? ` 変化率: ${changePercent.toFixed(2)}%` : ''}`,
-      url: `https://fred.stlouisfed.org/series/${series.id}`,
-      source: 'FRED (St. Louis Fed)',
+      title: sanitizeUntrusted(`${series.name}: ${value}${series.unit} ${direction}`),
+      summary: sanitizeUntrusted(`${series.name} as of ${latest.date}: ${value} ${series.unit}${prevValue !== undefined ? ` (前回: ${prevValue})` : ''}${changePercent !== undefined ? ` 変化率: ${changePercent.toFixed(2)}%` : ''}`),
+      url: sanitizeUrl(`https://fred.stlouisfed.org/series/${series.id}`),
+      source: sanitizeUntrusted('FRED (St. Louis Fed)'),
       sourceType: 'api',
       category: 'economics',
       publishedAt: new Date(latest.date),
@@ -120,10 +121,10 @@ export async function collectWorldBankData(): Promise<CollectorResult> {
 
     items.push({
       id: makeId('worldbank', `${ind.country}:${ind.code}`),
-      title: `${latest.country.value} ${ind.name}: ${latest.value.toFixed(2)}`,
-      summary: `World Bank data - ${ind.name} for ${latest.country.value} (${latest.date}): ${latest.value.toFixed(2)}`,
-      url: `https://data.worldbank.org/indicator/${ind.code}`,
-      source: 'World Bank Open Data',
+      title: sanitizeUntrusted(`${latest.country.value} ${ind.name}: ${latest.value.toFixed(2)}`),
+      summary: sanitizeUntrusted(`World Bank data - ${ind.name} for ${latest.country.value} (${latest.date}): ${latest.value.toFixed(2)}`),
+      url: sanitizeUrl(`https://data.worldbank.org/indicator/${ind.code}`),
+      source: sanitizeUntrusted('World Bank Open Data'),
       sourceType: 'api',
       category: 'economics',
       publishedAt: new Date(`${latest.date}-01-01`),
@@ -173,10 +174,10 @@ export async function collectHackerNews(maxItems = 20): Promise<CollectorResult>
 
     items.push({
       id: makeId('hn', String(story.id)),
-      title: story.title,
-      summary: `HackerNews - Score: ${story.score ?? 0}, Comments: ${story.descendants ?? 0}`,
-      url: story.url,
-      source: 'Hacker News',
+      title: sanitizeUntrusted(story.title),
+      summary: sanitizeUntrusted(`HackerNews - Score: ${story.score ?? 0}, Comments: ${story.descendants ?? 0}`),
+      url: sanitizeUrl(story.url),
+      source: sanitizeUntrusted('Hacker News'),
       sourceType: 'api',
       category: 'dev_tools',
       publishedAt: new Date((story.time ?? 0) * 1000),
@@ -220,10 +221,10 @@ export async function collectGithubTrending(language = ''): Promise<CollectorRes
 
     items.push({
       id: makeId('github-trending', repoPath),
-      title: repoPath,
-      summary: `GitHub Trending: ${description || repoPath} (+${starsToday} stars today)`,
-      url: `https://github.com/${repoPath}`,
-      source: 'GitHub Trending',
+      title: sanitizeUntrusted(repoPath),
+      summary: sanitizeUntrusted(`GitHub Trending: ${description || repoPath} (+${starsToday} stars today)`),
+      url: sanitizeUrl(`https://github.com/${repoPath}`),
+      source: sanitizeUntrusted('GitHub Trending'),
       sourceType: 'scraper',
       category: 'dev_tools',
       publishedAt: new Date(),

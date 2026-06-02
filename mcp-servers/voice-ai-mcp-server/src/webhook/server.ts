@@ -1,5 +1,7 @@
-import express from "express";
+import express, { type NextFunction, type Request, type Response } from "express";
+import rateLimit from "express-rate-limit";
 import { createServer, type Server as HttpServer } from "node:http";
+import twilio from "twilio";
 import { WebSocketServer, type WebSocket } from "ws";
 import type { OpenAIRealtimeClient } from "../clients/openai-realtime-client.js";
 import { MediaStreamBridge } from "../bridge/media-stream-bridge.js";
@@ -13,18 +15,26 @@ export class WebhookServer {
   private readonly bridge: MediaStreamBridge;
   private readonly openaiClient: OpenAIRealtimeClient;
   private readonly port: number;
+  private readonly host: string;
   private readonly baseUrl: string;
+  private readonly twilioAuthToken: string;
   private running = false;
 
   constructor(openaiClient: OpenAIRealtimeClient, config: EnvConfig) {
     this.openaiClient = openaiClient;
     this.port = config.webhookPort;
+    this.host = process.env.VOICE_WEBHOOK_HOST ?? "127.0.0.1";
     this.baseUrl = config.webhookBaseUrl;
+    this.twilioAuthToken = config.twilioAuthToken.trim();
     this.bridge = new MediaStreamBridge(openaiClient);
 
+    if (!this.twilioAuthToken) {
+      throw new Error("TWILIO_AUTH_TOKEN is required to start the voice webhook server");
+    }
+
     this.app = express();
-    this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(express.json());
+    this.app.use(express.json({ limit: "64kb" }));
+    this.app.use(express.urlencoded({ extended: false, limit: "64kb" }));
 
     this.httpServer = createServer(this.app);
     this.wss = new WebSocketServer({ server: this.httpServer, path: "/voice/stream" });
@@ -34,11 +44,18 @@ export class WebhookServer {
   }
 
   private setupRoutes(): void {
+    const webhookLimiter = rateLimit({
+      windowMs: 60 * 1000,
+      max: 60,
+      standardHeaders: true,
+      legacyHeaders: false,
+    });
+
     this.app.get("/health", (_req, res) => {
       res.json({ status: "ok", connections: this.bridge.getActiveConnections() });
     });
 
-    this.app.post("/voice", async (_req, res) => {
+    this.app.post("/voice", webhookLimiter, this.verifyTwilioSignature.bind(this), async (_req, res) => {
       try {
         const session = await this.openaiClient.createSession();
         const wsUrl = `${this.baseUrl.replace(/^http/, "ws")}/voice/stream?sessionId=${session.sessionId}`;
@@ -53,13 +70,37 @@ export class WebhookServer {
       }
     });
 
-    this.app.post("/voice/status", (req, res) => {
+    this.app.post("/voice/status", webhookLimiter, this.verifyTwilioSignature.bind(this), (req, res) => {
       const body = req.body as Record<string, string>;
       const callSid = body.CallSid ?? "unknown";
       const callStatus = body.CallStatus ?? "unknown";
       console.error(`[WebhookServer] Call status update: ${callSid} -> ${callStatus}`);
       res.sendStatus(200);
     });
+  }
+
+  private verifyTwilioSignature(req: Request, res: Response, next: NextFunction): void {
+    const signature = req.header("X-Twilio-Signature");
+
+    if (!signature) {
+      res.sendStatus(403);
+      return;
+    }
+
+    const fullUrl = `${this.baseUrl.replace(/\/$/, "")}${req.originalUrl}`;
+    const isValid = twilio.validateRequest(
+      this.twilioAuthToken,
+      signature,
+      fullUrl,
+      req.body as Record<string, string>
+    );
+
+    if (!isValid) {
+      res.sendStatus(403);
+      return;
+    }
+
+    next();
   }
 
   private setupWebSocket(): void {
@@ -92,9 +133,9 @@ export class WebhookServer {
     }
 
     return new Promise((resolve, reject) => {
-      this.httpServer.listen(this.port, () => {
+      this.httpServer.listen(this.port, this.host, () => {
         this.running = true;
-        console.error(`[WebhookServer] Listening on port ${this.port}`);
+        console.error(`[WebhookServer] Listening on ${this.host}:${this.port}`);
         resolve();
       });
 

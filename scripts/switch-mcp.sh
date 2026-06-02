@@ -131,7 +131,7 @@ case "$PRESET" in
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
+      "args": ["-y", "@playwright/mcp"],
       "disabled": false,
       "description": "Playwright MCP",
       "category": "browser-automation"

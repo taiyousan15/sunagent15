@@ -17,6 +17,7 @@ import { detectTemplate, getTemplate } from './templates';
 import { readUrl } from '../browser';
 import { memoryAdd } from '../tools/memory';
 import { MemoryNamespace } from '../memory/types';
+import { sanitizeUntrusted } from '../../intelligence/sanitize';
 
 const SKILLS_DIR = path.join(process.cwd(), '.claude', 'skills');
 
@@ -149,7 +150,8 @@ function analyzeUrlContent(
   data?: Record<string, unknown>
 ): UrlAnalysis {
   const parsedUrl = new URL(url);
-  const contentLower = summary.toLowerCase();
+  const sanitizedSummary = sanitizeUntrusted(summary);
+  const contentLower = sanitizedSummary.toLowerCase();
 
   // Detect content type
   let contentType: UrlAnalysis['contentType'] = 'unknown';
@@ -190,15 +192,15 @@ function analyzeUrlContent(
   }
 
   // Extract sections (headings)
-  const headingMatches = summary.match(/^#+\s+.+$/gm) || [];
+  const headingMatches = sanitizedSummary.match(/^#+\s+.+$/gm) || [];
   const sections = headingMatches.map((h) => h.replace(/^#+\s+/, '').trim()).slice(0, 20);
 
   // Extract product info if applicable
   let productInfo: UrlAnalysis['productInfo'];
   if (contentType === 'product') {
-    const priceMatch = summary.match(/\$[\d,]+\.?\d*/);
+    const priceMatch = sanitizedSummary.match(/\$[\d,]+\.?\d*/);
     productInfo = {
-      name: (data?.title as string) || parsedUrl.pathname.split('/').pop() || undefined,
+      name: sanitizeUntrusted((data?.title as string) || parsedUrl.pathname.split('/').pop() || ''),
       price: priceMatch ? priceMatch[0] : undefined,
     };
   }
@@ -206,19 +208,19 @@ function analyzeUrlContent(
   // Extract API endpoints if applicable
   let apiEndpoints: string[] | undefined;
   if (contentType === 'api') {
-    const endpointMatches = summary.match(/(GET|POST|PUT|DELETE|PATCH)\s+\/[\w\-/{}]+/gi);
+    const endpointMatches = sanitizedSummary.match(/(GET|POST|PUT|DELETE|PATCH)\s+\/[\w\-/{}]+/gi);
     apiEndpoints = endpointMatches?.slice(0, 10);
   }
 
   return {
     url,
-    title: (data?.title as string) || parsedUrl.hostname,
-    description: summary.substring(0, 200),
+    title: sanitizeUntrusted((data?.title as string) || parsedUrl.hostname),
+    description: sanitizedSummary.substring(0, 200),
     contentType,
     hostname: parsedUrl.hostname,
     path: parsedUrl.pathname,
     sections,
-    sampleContent: summary,
+    sampleContent: sanitizedSummary,
     apiEndpoints,
     productInfo,
   };

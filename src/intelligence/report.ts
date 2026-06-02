@@ -23,6 +23,9 @@ function formatItem(item: IntelligenceItem, index: number): string {
   const date = item.publishedAt.toLocaleDateString('ja-JP', {
     month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
   })
+  // Untrusted fields (title/summary/source/speaker/url) are sanitized at the
+  // collector source (src/intelligence/collectors/*); do NOT re-sanitize here
+  // or output gets double-escaped.
   const speaker = item.speaker ? ` **[${item.speaker}]**` : ''
   const reliability = '⭐'.repeat(item.reliability)
 
@@ -119,6 +122,7 @@ export async function saveReport(
     ...result,
     fetchedAt: result.fetchedAt.toISOString(),
     items: result.items.map(item => ({
+      // Fields already sanitized at the collector source.
       ...item,
       publishedAt: item.publishedAt.toISOString(),
       fetchedAt: item.fetchedAt.toISOString(),

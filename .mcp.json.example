@@ -15,7 +15,7 @@
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
+      "args": ["-y", "@playwright/mcp"],
       "disabled": false,
       "defer_loading": false,
       "description": "Playwright MCP - ブラウザ自動化",

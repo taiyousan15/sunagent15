@@ -19,7 +19,7 @@
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
+      "args": ["-y", "@playwright/mcp"],
       "disabled": false,
       "description": "E2Eテスト・ブラウザ自動化",
       "category": "browser-automation"

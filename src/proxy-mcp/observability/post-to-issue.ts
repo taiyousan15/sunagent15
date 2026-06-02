@@ -7,12 +7,12 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import { promisify } from 'util';
 import { ReportData } from './report';
 import { t, getLocale } from '../../i18n';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 interface ReportConfig {
   github: {
@@ -121,11 +121,15 @@ export async function postReportToIssue(data: ReportData, markdown: string): Pro
   });
 
   try {
-    // Use gh CLI to post comment
-    const escapedBody = commentBody.replace(/'/g, "'\\''");
-    const cmd = `gh issue comment ${issueNumber} --repo ${owner}/${repo} --body '${escapedBody}'`;
-
-    const { stdout, stderr } = await execAsync(cmd, {
+    const { stdout, stderr } = await execFileAsync('gh', [
+      'issue',
+      'comment',
+      String(issueNumber),
+      '--repo',
+      `${owner}/${repo}`,
+      '--body',
+      commentBody,
+    ], {
       maxBuffer: 1024 * 1024, // 1MB buffer
     });
 
@@ -158,10 +162,18 @@ export async function createReportIssue(owner: string, repo: string): Promise<Po
   const body = t('observability.thread.body');
 
   try {
-    const escapedBody = body.replace(/'/g, "'\\''");
-    const cmd = `gh issue create --repo ${owner}/${repo} --title '${title}' --body '${escapedBody}' --label 'observability,automated'`;
-
-    const { stdout } = await execAsync(cmd);
+    const { stdout } = await execFileAsync('gh', [
+      'issue',
+      'create',
+      '--repo',
+      `${owner}/${repo}`,
+      '--title',
+      title,
+      '--body',
+      body,
+      '--label',
+      'observability,automated',
+    ]);
 
     // Extract issue URL
     const urlMatch = stdout.match(/https:\/\/github\.com\/[^\s]+/);

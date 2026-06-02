@@ -19,7 +19,7 @@
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
+      "args": ["-y", "@playwright/mcp"],
       "disabled": false,
       "description": "ブラウザ自動化（LP確認等）",
       "category": "browser-automation"
