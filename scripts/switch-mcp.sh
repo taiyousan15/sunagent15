@@ -82,7 +82,7 @@ case "$PRESET" in
     "context7": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"],
+      "args": ["-y", "@upstash/context7-mcp@3.1.0"],
       "disabled": false,
       "description": "Context7 - 最新ドキュメント",
       "category": "documentation"
@@ -102,7 +102,7 @@ case "$PRESET" in
     "figma": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "figma-developer-mcp", "--figma-api-key=${FIGMA_API_KEY}", "--stdio"],
+      "args": ["-y", "figma-developer-mcp@0.12.0", "--figma-api-key=${FIGMA_API_KEY}", "--stdio"],
       "disabled": false,
       "description": "Figma MCP",
       "category": "design"
@@ -123,7 +123,7 @@ case "$PRESET" in
     "puppeteer": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer@2025.5.12"],
       "disabled": false,
       "description": "Puppeteer MCP",
       "category": "browser-automation"
@@ -131,7 +131,7 @@ case "$PRESET" in
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp"],
+      "args": ["-y", "@playwright/mcp@0.0.75"],
       "disabled": false,
       "description": "Playwright MCP",
       "category": "browser-automation"

@@ -25,6 +25,7 @@ import {
   batchSkillizeUrlBundle as batchSkillizeCore,
   BatchSkillizeConfig,
 } from './url-bundle-skillize';
+import { sanitizeUntrusted } from '../../intelligence/sanitize';
 
 /** Pipeline configuration */
 export interface PipelineTabsSkillizeConfig {
@@ -215,10 +216,16 @@ export async function runPipelineTabsSkillize(
         });
       }
 
+      // Sanitize untrusted tab titles before storing (indirect prompt injection guard)
+      const safeTabs = filteredTabs.map((t) => ({
+        ...t,
+        title: t.title ? sanitizeUntrusted(t.title) : t.title,
+      }));
+
       // Store tabs in memory
       const tabsMemResult = await memoryAdd(
         JSON.stringify({
-          tabs: filteredTabs,
+          tabs: safeTabs,
           totalTabs: filteredTabs.length,
           originalTotalTabs: totalTabs,
           collectedAt: new Date().toISOString(),

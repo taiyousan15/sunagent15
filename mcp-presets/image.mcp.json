@@ -11,7 +11,7 @@
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp"],
+      "args": ["-y", "@playwright/mcp@0.0.75"],
       "disabled": false,
       "description": "ブラウザ自動化（NanoBanana操作）",
       "category": "browser-automation"
@@ -19,7 +19,7 @@
     "figma": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "figma-developer-mcp", "--figma-api-key=${FIGMA_API_KEY}", "--stdio"],
+      "args": ["-y", "figma-developer-mcp@0.12.0", "--figma-api-key=${FIGMA_API_KEY}", "--stdio"],
       "disabled": false,
       "description": "Figmaデザイン取得",
       "category": "design"
