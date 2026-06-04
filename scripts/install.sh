@@ -64,6 +64,12 @@ REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 # （現プロセスから子プロセスへ伝播。永続化は完了処理直前で別途実施）
 export TAISUN_AGENT_DIR="$REPO_DIR"
 
+# 検証付きアップデート（FIX-9 / C-MODE-1 オプトイン / 既定 OFF）
+#   有効化: TAISUN_UPDATE_VERIFIED=true ./scripts/update.sh
+#   リリース未公開の間は自動でレガシー git フローにフォールバックします。
+#   検証モードは devDeps を prune しません（ts-node/tsx 等が実行時に必要なため）。
+#   既定 ON 化（C-MODE-2）は実リリース公開・検証・署名検証追加後の別コミットで実施。
+
 # ─────────────────────────────────────────
 # Mac: Xcode Command Line Tools 確認（gitが動くために必須）
 # ─────────────────────────────────────────
