@@ -118,6 +118,12 @@ module.exports = {
         '<rootDir>/udemy-downloader/\\.venv/',
       ],
       testEnvironment: 'node',
+      // Hook tests are .js but some require() TypeScript modules under src/
+      // (e.g. unified-guard-stage2b requires src/intent-parser/*.ts). Transform
+      // only .ts/.tsx so those imports load; .js test files are unaffected.
+      transform: {
+        '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
+      },
     },
     // Scripts tests: JS unit tests for scripts/*.js (e.g. generate-agents-baseline.js)
     // Run via `npx jest --selectProjects scripts` or as part of CI generator-baseline-gate

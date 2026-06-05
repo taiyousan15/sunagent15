@@ -89,32 +89,32 @@ describe('Model Auto-Switch', () => {
   describe('getRecommendedModel', () => {
     test('trivial → haiku', () => {
       const rec = getRecommendedModel('trivial')
-      expect(rec.claudeModel).toBe('haiku')
+      expect(rec.claudeCodeModel).toBe('haiku')
     })
 
     test('simple → haiku', () => {
       const rec = getRecommendedModel('simple')
-      expect(rec.claudeModel).toBe('haiku')
+      expect(rec.claudeCodeModel).toBe('haiku')
     })
 
     test('moderate → sonnet', () => {
       const rec = getRecommendedModel('moderate')
-      expect(rec.claudeModel).toBe('sonnet')
+      expect(rec.claudeCodeModel).toBe('sonnet')
     })
 
     test('complex → sonnet', () => {
       const rec = getRecommendedModel('complex')
-      expect(rec.claudeModel).toBe('sonnet')
+      expect(rec.claudeCodeModel).toBe('sonnet')
     })
 
     test('expert → opus', () => {
       const rec = getRecommendedModel('expert')
-      expect(rec.claudeModel).toBe('opus')
+      expect(rec.claudeCodeModel).toBe('opus')
     })
 
     test('不明な複雑度 → デフォルトsonnet', () => {
       const rec = getRecommendedModel('unknown')
-      expect(rec.claudeModel).toBe('sonnet')
+      expect(rec.claudeCodeModel).toBe('sonnet')
     })
   })
 
@@ -126,17 +126,11 @@ describe('Model Auto-Switch', () => {
     test('全ルールに必須フィールドがある', () => {
       ROUTING_RULES.forEach(rule => {
         expect(rule).toHaveProperty('complexity')
-        expect(rule).toHaveProperty('model')
-        expect(rule).toHaveProperty('claudeModel')
-        expect(rule).toHaveProperty('maxCost')
+        expect(rule).toHaveProperty('taskModel')
+        expect(rule).toHaveProperty('claudeCodeModel')
+        expect(rule).toHaveProperty('litellmModel')
         expect(rule).toHaveProperty('description')
       })
-    })
-
-    test('コストが昇順', () => {
-      for (let i = 1; i < ROUTING_RULES.length; i++) {
-        expect(ROUTING_RULES[i].maxCost).toBeGreaterThanOrEqual(ROUTING_RULES[i - 1].maxCost)
-      }
     })
   })
 
