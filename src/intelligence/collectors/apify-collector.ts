@@ -10,6 +10,7 @@
 
 import { CollectorResult, IntelligenceItem, WATCH_TARGETS, X_WATCH_ACCOUNTS, getXHandles } from '../types'
 import crypto from 'crypto'
+import { sanitizeUntrusted, sanitizeUrl } from '../sanitize'
 
 const APIFY_BASE_URL = 'https://api.apify.com/v2'
 
@@ -127,17 +128,17 @@ export async function collectCelebrityTweets(
 
       items.push({
         id: makeId('apify-twitter', tweet.id ?? tweet.text),
-        title: `[${target.name}] ${tweet.text.slice(0, 100)}${tweet.text.length > 100 ? '...' : ''}`,
-        summary: tweet.text,
-        url: tweet.url ?? `https://x.com/search?q=${encodeURIComponent(target.name)}`,
-        source: 'X (Twitter) via Apify',
+        title: sanitizeUntrusted(`[${target.name}] ${tweet.text.slice(0, 100)}${tweet.text.length > 100 ? '...' : ''}`),
+        summary: sanitizeUntrusted(tweet.text),
+        url: sanitizeUrl(tweet.url ?? `https://x.com/search?q=${encodeURIComponent(target.name)}`),
+        source: sanitizeUntrusted('X (Twitter) via Apify'),
         sourceType: 'social',
         category: 'celebrity',
         publishedAt: tweet.createdAt ? new Date(tweet.createdAt) : new Date(),
         fetchedAt: new Date(),
         reliability: 3,
         tags: ['twitter', 'celebrity', target.category],
-        speaker: target.name,
+        speaker: sanitizeUntrusted(target.name),
       })
     }
   }
@@ -197,17 +198,19 @@ export async function collectXWatchAccounts(
 
         items.push({
           id: makeId('apify-watch', tweet.id ?? tweet.text),
-          title: `[@${tweet.author?.userName ?? 'unknown'}] ${tweet.text.slice(0, 100)}${tweet.text.length > 100 ? '...' : ''}`,
-          summary: tweet.text,
-          url: tweet.url ?? `https://x.com/${tweet.author?.userName ?? ''}`,
-          source: 'X (Twitter) via Apify',
+          title: sanitizeUntrusted(`[@${tweet.author?.userName ?? 'unknown'}] ${tweet.text.slice(0, 100)}${tweet.text.length > 100 ? '...' : ''}`),
+          summary: sanitizeUntrusted(tweet.text),
+          url: sanitizeUrl(tweet.url ?? `https://x.com/${tweet.author?.userName ?? ''}`),
+          source: sanitizeUntrusted('X (Twitter) via Apify'),
           sourceType: 'social',
           category,
           publishedAt: tweet.createdAt ? new Date(tweet.createdAt) : new Date(),
           fetchedAt: new Date(),
           reliability: 3,
           tags: ['twitter', ...(account?.specialty ?? []), account?.language ?? 'en'],
-          speaker: account?.name ?? tweet.author?.name,
+          speaker: account?.name || tweet.author?.name
+            ? sanitizeUntrusted(account?.name ?? tweet.author?.name ?? '')
+            : undefined,
         })
       }
     } catch (err) {
@@ -251,17 +254,17 @@ export async function collectXTrending(
 
     items.push({
       id: makeId('apify-trend', tweet.id ?? tweet.text),
-      title: `${tweet.author?.name ?? 'Unknown'}: ${tweet.text.slice(0, 80)}`,
-      summary: tweet.text,
-      url: tweet.url ?? '',
-      source: 'X (Twitter) via Apify',
+      title: sanitizeUntrusted(`${tweet.author?.name ?? 'Unknown'}: ${tweet.text.slice(0, 80)}`),
+      summary: sanitizeUntrusted(tweet.text),
+      url: sanitizeUrl(tweet.url ?? ''),
+      source: sanitizeUntrusted('X (Twitter) via Apify'),
       sourceType: 'social',
       category: speaker ? 'celebrity' : 'ai_news',
       publishedAt: tweet.createdAt ? new Date(tweet.createdAt) : new Date(),
       fetchedAt: new Date(),
       reliability: 2,
       tags: ['twitter', 'trending', ...keywords.slice(0, 3)],
-      speaker: speaker?.name,
+      speaker: speaker ? sanitizeUntrusted(speaker.name) : undefined,
     })
   }
 

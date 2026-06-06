@@ -17,7 +17,15 @@
 
 ## Mac（Air / Pro）
 
-### クイックインストール
+### クイックインストール（推奨: SHA256検証付き）
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | bash
+```
+
+> `install-release.sh` を通常導入の既定手順にしてください。`install.sh` の curl|bash は未検証の開発向け経路です。
+
+### 手動インストール / 開発向け
 
 ```bash
 # 1. リポジトリをクローン
@@ -71,7 +79,15 @@ source ~/.zshrc
 
 ## Linux (Ubuntu 22.04+ / Debian 12+)
 
-### クイックインストール
+### クイックインストール（推奨: SHA256検証付き）
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | bash
+```
+
+> `install-release.sh` を通常導入の既定手順にしてください。`install.sh` の curl|bash は未検証の開発向け経路です。
+
+### 手動インストール / 開発向け
 
 ```bash
 # 1. 必要パッケージの確認

@@ -7,6 +7,11 @@
 const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
 const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
 const { CallToolRequestSchema, ListToolsRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
+const { execSync, execFileSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+const { fileURLToPath } = require('url');
 
 class IDEIntegrationServer {
   constructor() {
@@ -112,8 +117,6 @@ class IDEIntegrationServer {
 
   async getDiagnostics(args) {
     const { uri } = args;
-    const { execSync } = require('child_process');
-    const path = require('path');
 
     try {
       // Run TypeScript compiler
@@ -127,8 +130,8 @@ class IDEIntegrationServer {
       // Run ESLint
       let eslintOutput = '';
       try {
-        const targetPath = uri ? uri.replace('file://', '') : '.';
-        execSync(`npx eslint ${targetPath} --format json`, { encoding: 'utf8', stdio: 'pipe' });
+        const targetPath = uri ? this.resolveDiagnosticsPath(uri) : '.';
+        execFileSync('npx', ['eslint', targetPath, '--format', 'json'], { encoding: 'utf8', stdio: 'pipe' });
       } catch (error) {
         eslintOutput = error.stdout || '';
       }
@@ -187,10 +190,6 @@ class IDEIntegrationServer {
 
   async executeCode(args) {
     const { code, language } = args;
-    const { execSync } = require('child_process');
-    const fs = require('fs');
-    const path = require('path');
-    const os = require('os');
 
     try {
       // Create temporary file
@@ -251,10 +250,6 @@ class IDEIntegrationServer {
 
   async formatCode(args) {
     const { code, filePath } = args;
-    const { execSync } = require('child_process');
-    const fs = require('fs');
-    const path = require('path');
-    const os = require('os');
 
     try {
       // Determine file extension
@@ -263,7 +258,7 @@ class IDEIntegrationServer {
       fs.writeFileSync(tempFile, code);
 
       // Run Prettier
-      const formatted = execSync(`npx prettier --write ${tempFile}`, { encoding: 'utf8' });
+      execFileSync('npx', ['prettier', '--write', tempFile], { encoding: 'utf8' });
       const formattedCode = fs.readFileSync(tempFile, 'utf8');
 
       // Cleanup
@@ -306,6 +301,17 @@ class IDEIntegrationServer {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
     console.error('IDE Integration MCP Server running on stdio');
+  }
+
+  resolveDiagnosticsPath(uri) {
+    const cwdRealPath = fs.realpathSync(process.cwd());
+    const resolvedPath = fs.realpathSync(fileURLToPath(uri));
+
+    if (resolvedPath !== cwdRealPath && !resolvedPath.startsWith(`${cwdRealPath}${path.sep}`)) {
+      throw new Error('Diagnostics path must be inside the current workspace');
+    }
+
+    return resolvedPath;
   }
 }
 

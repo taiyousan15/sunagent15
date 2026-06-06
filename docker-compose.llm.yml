@@ -5,10 +5,10 @@ services:
     image: ghcr.io/berriai/litellm:main-latest
     container_name: taisun-litellm
     ports:
-      - "4000:4000"
+      - "127.0.0.1:4000:4000"
     environment:
-      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-sk-litellm-master-local}
-      - DATABASE_URL=postgresql://postgres:litellm_password@litellm-db:5432/litellm
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:?set LITELLM_MASTER_KEY}
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@litellm-db:5432/litellm
       - REDIS_HOST=litellm-redis
       - REDIS_PORT=6379
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
@@ -35,11 +35,11 @@ services:
     image: postgres:16-alpine
     container_name: taisun-litellm-db
     ports:
-      - "5433:5432"
+      - "127.0.0.1:5433:5432"
     environment:
       - POSTGRES_DB=litellm
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=litellm_password
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
     volumes:
       - litellm_postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -53,7 +53,7 @@ services:
     image: redis:7-alpine
     container_name: taisun-litellm-redis
     ports:
-      - "6380:6379"
+      - "127.0.0.1:6380:6379"
     volumes:
       - litellm_redis_data:/data
     healthcheck:

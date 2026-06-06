@@ -5,6 +5,7 @@
 
 import { CollectorResult, IntelligenceItem, WATCH_TARGETS, WATCH_KEYWORDS } from '../types'
 import crypto from 'crypto'
+import { sanitizeUntrusted, sanitizeUrl } from '../sanitize'
 
 function makeId(src: string, id: string): string {
   return crypto.createHash('md5').update(`${src}:${id}`).digest('hex').slice(0, 16)
@@ -60,17 +61,17 @@ export async function collectNewsApi(apiKey: string, maxPerQuery = 5): Promise<C
 
       items.push({
         id: makeId('newsapi', article.url ?? article.title),
-        title: article.title,
-        summary: article.description ?? '',
-        url: article.url ?? '',
-        source: article.source?.name ?? 'NewsAPI',
+        title: sanitizeUntrusted(article.title),
+        summary: sanitizeUntrusted(article.description ?? ''),
+        url: sanitizeUrl(article.url ?? ''),
+        source: sanitizeUntrusted(article.source?.name ?? 'NewsAPI'),
         sourceType: 'api',
         category: speaker ? 'celebrity' : category,
         publishedAt: new Date(article.publishedAt ?? Date.now()),
         fetchedAt: new Date(),
         reliability: 4,
         tags: ['newsapi'],
-        speaker: speaker?.name,
+        speaker: speaker ? sanitizeUntrusted(speaker.name) : undefined,
       })
     }
   }
@@ -119,10 +120,10 @@ export async function collectReddit(maxPerSub = 5): Promise<CollectorResult> {
 
       items.push({
         id: makeId('reddit', p.id),
-        title: p.title,
-        summary: p.selftext ? p.selftext.slice(0, 200) : `r/${sub.name} - Score: ${p.score ?? 0}`,
-        url: `https://reddit.com${p.permalink}`,
-        source: `Reddit r/${sub.name}`,
+        title: sanitizeUntrusted(p.title),
+        summary: sanitizeUntrusted(p.selftext ? p.selftext.slice(0, 200) : `r/${sub.name} - Score: ${p.score ?? 0}`),
+        url: sanitizeUrl(`https://reddit.com${p.permalink}`),
+        source: sanitizeUntrusted(`Reddit r/${sub.name}`),
         sourceType: 'social',
         category: sub.category,
         publishedAt: new Date((p.created_utc ?? 0) * 1000),
