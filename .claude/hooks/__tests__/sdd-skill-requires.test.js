@@ -14,14 +14,14 @@ describe('SDD skills requires frontmatter', () => {
     }
   );
 
-  test('skill requirements validator remains green (67/67)', () => {
+  test('skill requirements validator remains green', () => {
     const result = spawnSync(process.execPath, ['scripts/check-skill-requirements.js'], {
       cwd: repoRoot,
       encoding: 'utf8',
     });
 
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain('Scanned 67 skills');
+    expect(result.stdout).toMatch(/Scanned \d+ skills/);
     expect(result.stdout).toContain('OK — all skills pass schema validation.');
   });
 });

@@ -13,7 +13,12 @@ permissions:
 
 env:
   NODE_VERSION: '20.x'
-  COVERAGE_THRESHOLD: 80
+  # Lines-coverage floor for the out-of-band "Check coverage threshold" step below.
+  # Keep in sync with jest.config.js coverageThreshold.global.lines (currently 66).
+  # This is a no-regression ratchet at the true measured level (~67.8%), NOT the goal:
+  # the historical 80 was never enforced (a process.exit short-circuited jest --coverage).
+  # Raise both in lockstep as tests are added for untested modules toward 80%.
+  COVERAGE_THRESHOLD: 66
 
 jobs:
   # ============================================

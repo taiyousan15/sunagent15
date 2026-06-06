@@ -263,4 +263,9 @@ if (typeof module !== 'undefined') {
   }
 }
 
-main().catch(() => process.exit(0))
+// CLI（フック）として直接起動された時だけ main() を実行する。
+// テスト等が require() で読み込んだ場合は実行しない＝import 時の process.exit による
+// jest 途中終了（偽 GREEN マスキング）を防ぐ。settings.json は `node ...js` 直接起動。
+if (require.main === module) {
+  main().catch(() => process.exit(0))
+}
