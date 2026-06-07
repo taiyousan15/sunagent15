@@ -23,8 +23,8 @@
       "command": "uvx",
       "args": ["--from", "gpt-researcher-mcp", "gpt-researcher-mcp"],
       "env": {
-        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
-        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
+        "OPENAI_API_KEY": "${OPENAI_API_KEY:-}",
+        "TAVILY_API_KEY": "${TAVILY_API_KEY:-}"
       },
       "disabled": false,
       "defer_loading": true,
@@ -37,7 +37,7 @@
       "command": "npx",
       "args": ["-y", "@apify/mcp-server"],
       "env": {
-        "APIFY_API_TOKEN": "${APIFY_API_TOKEN}"
+        "APIFY_API_TOKEN": "${APIFY_API_TOKEN:-}"
       },
       "disabled": false,
       "defer_loading": true,
@@ -50,7 +50,7 @@
       "command": "npx",
       "args": ["-y", "tavily-mcp"],
       "env": {
-        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
+        "TAVILY_API_KEY": "${TAVILY_API_KEY:-}"
       },
       "disabled": false,
       "defer_loading": true,
