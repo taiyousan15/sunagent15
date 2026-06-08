@@ -151,7 +151,7 @@ else
     warn "一部の再構築に問題がありましたが、続行します"
 fi
 
-for mcp_dir in "mcp-servers/voice-ai-mcp-server" "mcp-servers/ai-sdr-mcp-server" "mcp-servers/line-bot-mcp-server"; do
+for mcp_dir in "mcp-servers/voice-ai-mcp-server" "mcp-servers/ai-sdr-mcp-server"; do
     if [ -f "$REPO_DIR/$mcp_dir/package.json" ]; then
         mcp_name=$(basename "$mcp_dir")
         if [ -f "$REPO_DIR/$mcp_dir/package-lock.json" ]; then
