@@ -11,11 +11,13 @@
 **ターミナルで実行する正しいコマンド:**
 
 ```bash
-claude logout
-claude login
+claude auth logout
+claude auth login
 ```
 
-または API キーを直接設定する（推奨）:
+サブスクリプションを使うなら、まず `claude auth login`（上）での再ログインを試す。
+どうしても API キー（Console の従量課金）を使う場合のみ次を設定する。
+**※ `ANTHROPIC_API_KEY` を設定するとサブスクのログインより優先され、API 従量課金になります。**
 
 ```bash
 # ~/.zshrc に追加
@@ -44,7 +46,11 @@ source ~/.zshrc
 - `/login`を実行しても認証が保持されない
 - SSH接続時にエラーが出る
 
-#### 解決策A: APIキー直接設定（推奨）
+#### 解決策A: 再ログイン or APIキー直接設定
+
+サブスクリプション利用なら、まず `claude auth login` で再ログインする（推奨）。
+SSH など `/login` が保持されない環境では、API キー（従量課金）を設定する。
+**※ `ANTHROPIC_API_KEY` を設定するとサブスクのログインより優先され、API 従量課金になります。**
 
 ```bash
 # ~/.zshrc に追加
@@ -75,8 +81,8 @@ claude() {
 **注意**: 「Please run /login」の `/login` は Claude Code の**チャット内**で打つスラッシュコマンドです。ターミナルでは次のコマンドを使います。
 
 ```bash
-claude logout
-claude login
+claude auth logout
+claude auth login
 ```
 
 ---
@@ -89,7 +95,10 @@ claude login
 - MCPツールが使えない
 
 #### 原因
-`.mcp.json`の環境変数展開（`${VAR}`）がMCPサブプロセスで機能しない。
+Claude Code は `.mcp.json` の `${VAR}` を **自身の環境（シェルの `export` / `~/.claude/settings.json` の `env`）から展開**して MCP サブプロセスへ渡す。プロジェクトの `.env` は **自動では読み込まない**ため、キーを `.env` だけに書くと展開元が無く空になり「Invalid API key」等になる。
+さらに、`:-` 既定値の無い bare な `${VAR}` が未設定だと **`.mcp.json` 全体の読み込みが失敗**する（公式仕様。本リポジトリは全 `${VAR}` に `:-` 既定値を付与済み）。
+
+> 補足: 有料MCP（gpt-researcher / tavily / apify / firecrawl）は配布既定で `disabled: true`（オフ）。使うときは `.mcp.json` で該当サーバーを `"disabled": false` にし、下記いずれかの方法でキーを設定する。
 
 #### 解決策A: ~/.claude/settings.json に設定（推奨）
 
