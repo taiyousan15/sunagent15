@@ -10,6 +10,7 @@ import {
   startWorkflow,
   transitionToNextPhase,
   getStatus,
+  verifyCompletion,
 } from '../../src/proxy-mcp/workflow/engine';
 import { clearState, setStateDir, resetStateDir } from '../../src/proxy-mcp/workflow/store';
 import { clearCache, setWorkflowsDir, resetWorkflowsDir } from '../../src/proxy-mcp/workflow/registry';
@@ -229,6 +230,80 @@ describe('Workflow Phase 3 - Parallel Execution', () => {
         3
       );
       expect(status.state?.parallelExecutions![0].completedAt).toBeDefined();
+    });
+  });
+
+  describe('final parallel group completes the workflow (改善計画 Phase 2-4)', () => {
+    beforeEach(() => {
+      const workflow: WorkflowDefinition = {
+        id: 'test_parallel_v1',
+        name: 'Final Parallel Group Test',
+        version: '1.0.0',
+        phases: [
+          {
+            id: 'phase_0',
+            name: 'Preparation',
+            nextPhase: 'phase_1',
+          },
+          {
+            id: 'phase_1',
+            name: 'Start Parallel',
+            parallelNext: {
+              phases: ['phase_2a', 'phase_2b'],
+              waitStrategy: 'all',
+            },
+          },
+          {
+            id: 'phase_2a',
+            name: 'Final A',
+            requiredArtifacts: [path.join(TEST_FILES_DIR, 'a.txt')],
+            nextPhase: null,
+          },
+          {
+            id: 'phase_2b',
+            name: 'Final B',
+            requiredArtifacts: [path.join(TEST_FILES_DIR, 'b.txt')],
+            nextPhase: null,
+          },
+        ],
+      };
+
+      fs.writeFileSync(
+        TEST_WORKFLOW_PATH,
+        JSON.stringify(workflow, null, 2),
+        'utf-8'
+      );
+
+      clearCache();
+    });
+
+    it('treats nextPhase=null after parallel completion as normal workflow completion', () => {
+      startWorkflow('test_parallel_v1', false);
+
+      transitionToNextPhase(); // phase_0 → phase_1
+      transitionToNextPhase(); // phase_1 → phase_2a (並列開始)
+
+      fs.writeFileSync(path.join(TEST_FILES_DIR, 'a.txt'), 'done');
+      let result = transitionToNextPhase(); // phase_2a 完了 → phase_2b
+      expect(result.success).toBe(true);
+      expect(result.newPhase).toBe('phase_2b');
+
+      fs.writeFileSync(path.join(TEST_FILES_DIR, 'b.txt'), 'done');
+      result = transitionToNextPhase(); // 並列グループ完了・次フェーズなし
+
+      // 従来は success:false（"最終フェーズです。"）で行き止まりだった
+      expect(result.success).toBe(true);
+      expect(result.errors).toEqual([]);
+      expect(result.message).toContain('並列実行完了');
+      expect(result.message).toContain('最終フェーズ');
+
+      const status = getStatus();
+      expect(status.state?.currentPhase).toBe('phase_2b');
+      expect(status.state?.completedPhases).toContain('phase_2b');
+      expect(status.state?.parallelExecutions![0].completedAt).toBeDefined();
+
+      // ワークフロー完了検証も通過する
+      expect(verifyCompletion().passed).toBe(true);
     });
   });
 

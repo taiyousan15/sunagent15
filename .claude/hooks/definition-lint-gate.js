@@ -31,6 +31,23 @@ const TARGET_PATTERNS = [
   /\.policy\.json$/i,
 ];
 
+/**
+ * lint 対象ファイルか判定（PostToolUse main() と lint-all 再帰スキャンで共通）
+ * - TARGET_PATTERNS にマッチするファイル名
+ * - または workflows ディレクトリ配下の .json（ワークフロー定義は
+ *   content_creation_v1.json のようにファイル名に "workflow" を含まないため）
+ * - "_" 始まりのファイル（_schema.json 等）は除外
+ */
+function isLintTarget(filePath) {
+  const fileName = path.basename(filePath);
+  if (fileName.startsWith('_')) return false;
+  if (TARGET_PATTERNS.some((pattern) => pattern.test(fileName))) return true;
+  return (
+    fileName.endsWith('.json') &&
+    path.dirname(filePath).split(path.sep).includes('workflows')
+  );
+}
+
 // 必須フィールド定義
 const SCHEMA_DEFINITIONS = {
   workflow: {
@@ -75,9 +92,9 @@ async function main() {
   const filePath = toolInput.file_path || '';
   const fileName = path.basename(filePath);
 
-  // 対象ファイルかチェック
-  const isTarget = TARGET_PATTERNS.some(pattern => pattern.test(fileName));
-  if (!isTarget) {
+  // 対象ファイルかチェック（lint-all と同一判定。workflows ディレクトリ配下の
+  // .json はファイル名に "workflow" を含まなくても対象）
+  if (!isLintTarget(filePath)) {
     process.exit(0);
     return;
   }
@@ -314,14 +331,81 @@ function parseSimpleYaml(content) {
 // ===== Phase 7: Definition Lint Hard Gate API =====
 
 /**
+ * 既知のスキル/エージェント名を収集（allowedSkills 実在検証用）
+ * - scripts/skill-profiles.json（配布スキルの SSoT・全プロファイル）
+ * - .claude/skills/ のディレクトリ名（リポジトリ同梱スキル）
+ * - .claude/agent-source/ の frontmatter name（エージェント名。
+ *   ワークフローの allowedSkills はスキル名とエージェント名の混在名前空間のため）
+ */
+function loadKnownSkillNames(cwd) {
+  const known = new Set();
+
+  try {
+    const profiles = JSON.parse(
+      fs.readFileSync(path.join(cwd, 'scripts/skill-profiles.json'), 'utf8')
+    );
+    for (const profile of Object.values(profiles.profiles || {})) {
+      for (const skill of profile.skills || []) known.add(skill);
+    }
+  } catch (e) { /* SSoTが無い環境では skills/agents のみで検証 */ }
+
+  const skillsDir = path.join(cwd, '.claude/skills');
+  if (fs.existsSync(skillsDir)) {
+    for (const entry of fs.readdirSync(skillsDir, { withFileTypes: true })) {
+      if (entry.isDirectory()) known.add(entry.name);
+    }
+  }
+
+  const agentDir = path.join(cwd, '.claude/agent-source');
+  if (fs.existsSync(agentDir)) {
+    for (const file of fs.readdirSync(agentDir)) {
+      if (!file.endsWith('.md')) continue;
+      try {
+        const head = fs.readFileSync(path.join(agentDir, file), 'utf8').slice(0, 500);
+        const m = head.match(/^name:\s*(\S+)/m);
+        if (m) known.add(m[1]);
+      } catch (e) { /* ignore */ }
+    }
+  }
+
+  return known;
+}
+
+/**
+ * ディレクトリを再帰走査して lint 対象ファイル（isLintTarget 判定）を収集
+ * - "_" 始まり（_schema.md / _drafts/ 等）はディレクトリ・ファイルとも除外
+ * - 隠しディレクトリ・node_modules も除外
+ */
+function collectLintTargets(dir, targets) {
+  if (!fs.existsSync(dir)) return;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (
+      entry.name.startsWith('.') ||
+      entry.name.startsWith('_') ||
+      entry.name === 'node_modules'
+    ) {
+      continue;
+    }
+    const filePath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      collectLintTargets(filePath, targets);
+    } else if (entry.isFile() && isLintTarget(filePath)) {
+      targets.push(filePath);
+    }
+  }
+}
+
+/**
  * 全定義ファイルをLintする（ワークフロー開始時に呼び出し）
+ * config/workflows/ 配下も再帰スキャンする（旧実装は非再帰でワークフロー定義を見ていなかった）
  */
 function lintAllDefinitions(cwd) {
   const results = {
     valid: true,
     violations: [],
     warnings: [],
-    checkedFiles: []
+    checkedFiles: [],
+    workflowFilesChecked: 0
   };
 
   // 検索対象ディレクトリ
@@ -331,32 +415,50 @@ function lintAllDefinitions(cwd) {
     path.join(cwd, 'artifacts')
   ];
 
+  const targets = [];
   for (const searchPath of searchPaths) {
-    if (!fs.existsSync(searchPath)) continue;
+    collectLintTargets(searchPath, targets);
+  }
 
-    const files = fs.readdirSync(searchPath);
-    for (const file of files) {
-      const filePath = path.join(searchPath, file);
-      const isTarget = TARGET_PATTERNS.some(pattern => pattern.test(file));
+  const knownSkills = loadKnownSkillNames(cwd);
 
-      if (isTarget && fs.statSync(filePath).isFile()) {
-        const result = lintFile(filePath);
-        results.checkedFiles.push(filePath);
+  for (const filePath of targets) {
+    const result = lintFile(filePath);
+    results.checkedFiles.push(filePath);
 
-        if (result.violations.length > 0) {
-          results.valid = false;
-          results.violations.push({
-            file: filePath,
-            issues: result.violations
-          });
+    // allowedSkills 実在検証（ワークフロー定義のみ・警告レベル）
+    // 未解決名はリポジトリ外エージェント等の可能性があるためブロックしない
+    if (filePath.endsWith('.json')) {
+      try {
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        if (Array.isArray(data.phases)) {
+          results.workflowFilesChecked += 1;
+          for (const phase of data.phases) {
+            for (const skill of phase.allowedSkills || []) {
+              if (!knownSkills.has(skill)) {
+                result.warnings.push({
+                  type: 'unknown_skill',
+                  message: `phase "${phase.id}" の allowedSkills "${skill}" がスキル/エージェント定義に見つかりません（skill-profiles.json / .claude/skills / .claude/agent-source を確認）`
+                });
+              }
+            }
+          }
         }
-        if (result.warnings.length > 0) {
-          results.warnings.push({
-            file: filePath,
-            issues: result.warnings
-          });
-        }
-      }
+      } catch (e) { /* パース不能は lintFile 側で violation 済み */ }
+    }
+
+    if (result.violations.length > 0) {
+      results.valid = false;
+      results.violations.push({
+        file: filePath,
+        issues: result.violations
+      });
+    }
+    if (result.warnings.length > 0) {
+      results.warnings.push({
+        file: filePath,
+        issues: result.warnings
+      });
     }
   }
 
@@ -441,6 +543,7 @@ if (require.main === module) {
 module.exports = {
   lintAllDefinitions,
   lintFile,
+  isLintTarget,
   SCHEMA_DEFINITIONS,
   TARGET_PATTERNS
 };
