@@ -11,7 +11,7 @@
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/taiyousan15/sunagent15/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
-> インストールするだけで 67スキル・101+コマンド・25 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 83 個の agent-source テンプレートを活用）。
+> インストールするだけで 92〜121スキル（プロファイル可変・標準 約114）・101+コマンド・25 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 83 個の agent-source テンプレートを活用）。
 
 ---
 
@@ -103,12 +103,18 @@ curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install
 
 > デフォルトで `~/.taisun-agent/` にクローンされます。別のパスに入れたい場合: `curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install.sh | TAISUN_INSTALL_DIR=~/my-path bash`
 
-**インストール（検証付き: SHA256チェックあり・セキュリティ重視）**
+<details>
+<summary>インストール（検証付き: SHA256チェックあり）※現在準備中・利用不可</summary>
+
+> ⚠️ この方式は GitHub Release の公開後に利用可能になります（現在 Release は未公開のため失敗します）。
+> 通常は上の1行インストールをご利用ください。
 
 ```
 以下をコピペして実行：
 curl -fsSL https://raw.githubusercontent.com/taiyousan15/sunagent15/main/install-release.sh | bash
 ```
+
+</details>
 
 <details>
 <summary>Legacy: git clone から手動インストール</summary>
@@ -126,7 +132,7 @@ bash scripts/install.sh
 
 </details>
 
-**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（standard: 約 67 skills / minimal: 約 92 / full: 約 120）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
+**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（minimal: 約 92 / standard: 約 114 / full: 約 121）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
 
 **アップデート（1行で完了）**
 
@@ -171,7 +177,7 @@ cd sunagent15
 > `スクリプトの実行が無効` エラーが出た場合は `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` を先に実行してください。
 > `git: 用語 'git' は〜` エラーが出た場合は https://git-scm.com/download/win から git をインストールしてください。
 
-**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（standard: 約 67 skills / minimal: 約 92 / full: 約 120）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
+**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（minimal: 約 92 / standard: 約 114 / full: 約 121）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
 
 **アップデート（1行で完了）**
 
@@ -477,15 +483,16 @@ litellm-health   ← 起動状態を確認
 npm run taisun:diagnose
 ```
 
-**98点以上で全機能正常動作**
+**70点以上で正常動作（90点以上で全機能良好）**
 
 | 項目 | 配点 |
 |------|------|
-| 14層防御Hookシステム（実 hook ファイル 62 個） | 30点 |
-| MCPサーバー接続 | 25点 |
-| スキル定義検証（68個） | 20点 |
-| agent-source 定義（83個） | 15点 |
-| ビルド状態 | 10点 |
+| 13層防御システム | 40点 |
+| Hooks 設定 | 20点 |
+| スキル | 15点 |
+| エージェント | 15点 |
+| MCPツール | 5点 |
+| メモリシステム | 5点 |
 
 ---
 

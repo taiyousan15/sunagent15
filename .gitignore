@@ -178,3 +178,7 @@ scripts/originals/backups/pre-compact-*.json
 
 # CLAUDE.md backups (session-specific)
 .claude/CLAUDE.md.backup-*
+
+# Python bytecode caches
+__pycache__/
+*.py[cod]

@@ -122,6 +122,15 @@ Why: 自動生成ファイルを「完成品」と過信した。汎用テンプ
 How to apply: /session-end の Phase 4 完了前に、必ず SESSION_HANDOFF.md を Read → 本セッション固有情報の追記が入っているか確認 → なければ追記してから「保存完了」報告
 ```
 
+### Pattern 15: 数値修正時にSSoT（CIが参照する生成元）を特定せず表示文を根拠にする
+```
+状況: README のスキル数を修正する際、install.sh の --list-profiles 表示文（92/113/120）を正値として同期した
+❌ 間違い: CI の readme-skill-count-sync は scripts/skill-profiles.json から導出（92/114/121）。表示文自体が古く、誤った値でコミット→訂正コミットが必要になった
+✅ 正解: 数値を「正す」前に、CI ジョブ・生成スクリプトを grep して正本（SSoT）を特定し、そこから導出された値で全箇所を同期する
+Why: 「スクリプトの表示文 = 実装に近い = 正しい」という思い込み。実際は表示文もドキュメントの一種で腐る
+How to apply: 数値修正タスクでは最初に `.github/workflows/ と scripts/ を「その数値名」で grep` → check/sync 系スクリプトがあればそれを正とし、ローカルで --check を回してから commit する
+```
+
 ---
 
 ## 修正済みミス履歴

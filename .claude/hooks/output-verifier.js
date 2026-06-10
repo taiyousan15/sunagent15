@@ -66,8 +66,9 @@ function main() {
           `[OutputVerifier] ⚠️  不確実性スコア HIGH: ${(score * 100).toFixed(0)}% — 再確認を推奨\n` +
           `  検出語句: ${phrases}\n`
         );
-        // exit 1 で Claude に警告を通知 (ブロックはしない)
-        process.exit(1);
+        // fail-open: PostToolUse で非0を返すとセッション進行を妨げるため
+        // 警告は stderr のみで通知し、常に exit 0（boot/04 Hook Safety 原則）
+        process.exit(0);
       } else if (score >= WARN_THRESHOLD) {
         const phrases = flagged.map(f => `"${f.phrase}"`).join(', ');
         process.stderr.write(
