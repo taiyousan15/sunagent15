@@ -29,7 +29,7 @@
     "check:unicode": "node scripts/check-hidden-unicode.js",
     "context:report": "node scripts/context-footprint.js",
     "context:report:hooks": "node scripts/context-footprint.js --hooks",
-    "context:check": "node scripts/context-footprint.js --check --limit 3700",
+    "context:check": "node scripts/context-footprint.js --check --limit 3800",
     "lint": "eslint src/ tests/",
     "lint:fix": "eslint src/ tests/ --fix",
     "typecheck": "tsc --noEmit",

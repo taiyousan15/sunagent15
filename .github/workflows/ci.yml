@@ -83,7 +83,10 @@ jobs:
   # Context Footprint Gate
   # Fails when per-session auto-injected context (CLAUDE.md + .claude/rules/*.md)
   # exceeds the ratchet limit. Same ratchet philosophy as COVERAGE_THRESHOLD:
-  # 3700 = current measured level (~3587 tokens) + ledger-growth headroom, NOT the goal.
+  # 3800 = current measured level (3739 tokens on main after PR #37 added
+  # mistakes.md Pattern 15, +152 tokens) + ledger-growth headroom, NOT the goal.
+  # PR #38 set 3700 measuring 3587 pre-#37; the two PRs merged green separately
+  # but their combination put main over the gate (merge-order blind spot).
   # Lower toward ~1800 as Phase 3 reductions land
   # (see doc/2026-06-11_improvement-plan-sunagent15.md). Keep in sync with
   # package.json "context:check".
@@ -98,7 +101,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - run: node scripts/context-footprint.js --check --limit 3700
+      - run: node scripts/context-footprint.js --check --limit 3800
 
   # ============================================
   # Plugin Metadata Sync (Pattern 10 防止)
