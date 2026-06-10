@@ -3,8 +3,8 @@
 #
 # 使い方:
 #   ./scripts/install.sh                    # 標準インストール（core + video + x-sns）
-#   ./scripts/install.sh --profile minimal  # 最小構成（coreのみ、約85スキル）
-#   ./scripts/install.sh --profile full     # 全スキル（約118スキル）
+#   ./scripts/install.sh --profile minimal  # 最小構成（coreのみ、約92スキル）
+#   ./scripts/install.sh --profile full     # 全スキル（約120スキル）
 #   ./scripts/install.sh --with-docker      # 標準 + Docker スキル追加
 #   ./scripts/install.sh --with-figma       # 標準 + Figma スキル追加
 #   ./scripts/install.sh --with-voice       # 標準 + 音声AI スキル追加
