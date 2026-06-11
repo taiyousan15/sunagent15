@@ -76,6 +76,8 @@ bash "$SCRIPT_DIR/ollama-call.sh" "qwen2.5:32b" "システムプロンプト" "�
 ```
 **コンテンツ抽出を飛ばして技術分析だけ行うことは絶対にしない。**
 
+**分析完了後は必ず [url-learning スキル](../url-learning/SKILL.md) を使用して後処理（メモリ保存 → ノウハウ判定 → スキル化提案）を実行する。**
+
 Playwright MCP + WebFetch + Ollama (localhost) のみ使用。追加APIキー不要。
 
 ## 引数パース
