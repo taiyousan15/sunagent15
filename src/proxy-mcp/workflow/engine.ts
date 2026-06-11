@@ -4,6 +4,7 @@
  */
 
 import * as fs from 'fs';
+import * as path from 'path';
 import { spawnSync } from 'child_process';
 import { loadState, saveState, clearState } from './store';
 import { getWorkflow } from './registry';
@@ -556,10 +557,15 @@ export function transitionToNextPhase(): PhaseTransitionResult {
       const nextPhaseId = currentPhase.nextPhase;
 
       if (!nextPhaseId) {
+        // 次フェーズなし＝最終並列グループの完了。正常完了として扱う
+        updatedState.completedPhases.push(updatedState.currentPhase);
+        updatedState.lastUpdatedAt = new Date().toISOString();
+        saveState(updatedState);
+
         return {
-          success: false,
+          success: true,
           errors: [],
-          message: `Phase ${currentPhase.id} は最終フェーズです。`,
+          message: `✅ 並列実行完了。Phase ${currentPhase.id} は最終フェーズです。/workflow-verify で完了を確認してください。`,
         };
       }
 
@@ -604,10 +610,15 @@ export function transitionToNextPhase(): PhaseTransitionResult {
         const nextPhaseId = currentPhase.nextPhase;
 
         if (!nextPhaseId) {
+          // 次フェーズなし＝最終並列グループの完了。正常完了として扱う
+          updatedState.completedPhases.push(updatedState.currentPhase);
+          updatedState.lastUpdatedAt = new Date().toISOString();
+          saveState(updatedState);
+
           return {
-            success: false,
+            success: true,
             errors: [],
-            message: `Phase ${currentPhase.id} は最終フェーズです。`,
+            message: `✅ 並列実行完了。Phase ${currentPhase.id} は最終フェーズです。/workflow-verify で完了を確認してください。`,
           };
         }
 
@@ -819,23 +830,91 @@ export function rollbackToPhase(
     );
   }
 
-  // 削除する成果物を収集
-  const deletedArtifacts: string[] = [];
+  // 削除対象の成果物を収集
   const targetIndex = workflow.phases.findIndex((p) => p.id === targetPhaseId);
   const currentIndex = workflow.phases.findIndex(
     (p) => p.id === state.currentPhase
   );
 
-  // 現在より後のフェーズの成果物を削除
+  // 同一パスが複数フェーズの requiredArtifacts に重複し得るため Set で一意化する
+  // （重複のまま削除ループに渡すと 2 回目の unlink が ENOENT で中断してしまう）
+  const artifactsToDeleteSet = new Set<string>();
   for (let i = targetIndex + 1; i <= currentIndex; i++) {
     const phase = workflow.phases[i];
     if (phase.requiredArtifacts) {
       for (const artifact of phase.requiredArtifacts) {
         if (fs.existsSync(artifact)) {
-          fs.unlinkSync(artifact);
-          deletedArtifacts.push(artifact);
+          artifactsToDeleteSet.add(artifact);
         }
       }
+    }
+  }
+  const artifactsToDelete = Array.from(artifactsToDeleteSet);
+
+  // 削除前に全成果物の削除可否を検証する（state 更新前・ファイル削除前）。
+  // 1件でも削除不能なら何も消さずに中断し、state も成果物も変化させない。
+  const undeletable: string[] = [];
+  const directoryArtifacts: string[] = [];
+  for (const artifact of artifactsToDelete) {
+    try {
+      // ディレクトリ成果物は unlink できず EISDIR になる（video_generation_v1 の
+      // assets/images/ 等）。誤設定パスの再帰削除は危険なため自動削除しない
+      if (fs.lstatSync(artifact).isDirectory()) {
+        directoryArtifacts.push(artifact);
+        continue;
+      }
+      // unlink には親ディレクトリへの書き込み権限と探索（実行）権限が必要
+      fs.accessSync(
+        path.dirname(artifact),
+        fs.constants.W_OK | fs.constants.X_OK
+      );
+    } catch {
+      undeletable.push(artifact);
+    }
+  }
+  if (directoryArtifacts.length > 0) {
+    throw new Error(
+      `Rollback aborted: directory artifacts cannot be deleted automatically:\n` +
+        directoryArtifacts.map((a) => `  - ${a}`).join('\n') +
+        `\n\nロールバックを中断しました（state・成果物とも変更されていません）。\n` +
+        `上記の成果物はディレクトリのため、安全のため自動削除しません。\n` +
+        `手動対応手順:\n` +
+        `  1. 内容を確認し、不要であれば手動で削除する（rm -r <ディレクトリ>）\n` +
+        `  2. もう一度ロールバックを実行する`
+    );
+  }
+  if (undeletable.length > 0) {
+    throw new Error(
+      `Rollback aborted: cannot delete artifacts (permission denied):\n` +
+        undeletable.map((a) => `  - ${a}`).join('\n') +
+        `\n\nロールバックを中断しました（state・成果物とも変更されていません）。\n` +
+        `上記ファイルの親ディレクトリに書き込み・探索権限がないため削除できません。\n` +
+        `手動対応手順:\n` +
+        `  1. chmod u+wx <親ディレクトリ> で権限を付与する（または所有者を確認: ls -ld）\n` +
+        `  2. もう一度ロールバックを実行する\n` +
+        `  3. 権限を変更できない場合は、上記ファイルを手動で削除してから再実行する`
+    );
+  }
+
+  // 検証済みの成果物を削除（途中失敗時は state を変更せずに中断し、進捗を報告）
+  const deletedArtifacts: string[] = [];
+  for (const artifact of artifactsToDelete) {
+    try {
+      fs.unlinkSync(artifact);
+      deletedArtifacts.push(artifact);
+    } catch (error) {
+      const remaining = artifactsToDelete.filter(
+        (a) => !deletedArtifacts.includes(a)
+      );
+      throw new Error(
+        `Rollback aborted: failed to delete artifact: ${artifact} (${(error as Error).message})\n\n` +
+          `ロールバックを中断しました（state は変更されていません）。\n` +
+          `削除済み: ${deletedArtifacts.length > 0 ? deletedArtifacts.join(', ') : 'なし'}\n` +
+          `未削除: ${remaining.join(', ')}\n` +
+          `手動対応手順:\n` +
+          `  1. 未削除ファイルを手動で削除する（rm <ファイル>）\n` +
+          `  2. もう一度ロールバックを実行する`
+      );
     }
   }
 

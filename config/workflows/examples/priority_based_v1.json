@@ -102,7 +102,8 @@
           "high": "phase_4_high_priority_execution",
           "normal": "phase_4_normal_priority_execution",
           "low": "phase_4_low_priority_execution"
-        }
+        },
+        "defaultNext": "phase_error"
       }
     },
     {
