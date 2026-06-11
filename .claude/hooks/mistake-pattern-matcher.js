@@ -23,6 +23,10 @@ const path = require('path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '../../');
 const MISTAKES_FILE = path.join(PROJECT_ROOT, '.claude', 'rules', 'mistakes.md');
+// 検索コーパスは詳細版（状況/❌/Why の語彙）を優先する。mistakes.md は薄型化（見出し+✅のみ）
+// されており、類似マッチの recall を維持するには詳細版が必要。hook はディスクから読むだけ
+// なので、詳細版を使ってもセッションへのコンテキスト注入量は増えない。
+const MISTAKES_EXTENDED_FILE = path.join(PROJECT_ROOT, '.claude', 'references', 'mistakes-extended.md');
 const MATCH_LOG = path.join(PROJECT_ROOT, '.claude', 'hooks', 'data', 'mistake-match.log');
 const PHASE = process.env.MISTAKE_MATCHER_PHASE || '1';
 
@@ -31,9 +35,13 @@ const PHASE = process.env.MISTAKE_MATCHER_PHASE || '1';
 // ─────────────────────────────────────────
 function extractPatterns() {
   try {
-    if (!fs.existsSync(MISTAKES_FILE)) return [];
+    // 詳細版があればそれを、無い環境（旧配布等）では mistakes.md にフォールバック
+    const corpusFile = fs.existsSync(MISTAKES_EXTENDED_FILE)
+      ? MISTAKES_EXTENDED_FILE
+      : MISTAKES_FILE;
+    if (!fs.existsSync(corpusFile)) return [];
 
-    const content = fs.readFileSync(MISTAKES_FILE, 'utf8');
+    const content = fs.readFileSync(corpusFile, 'utf8');
     const patterns = [];
 
     // ### Pattern N: xxx ブロックを抽出

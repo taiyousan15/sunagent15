@@ -24,29 +24,11 @@ async function main() {
   const location = args[1] || 'Unknown';
   const remedy = args[2] || 'Follow the mandatory pre-flight checks';
 
-  const mistakesPath = path.join(__dirname, '..', 'rules', 'mistakes.md');
+  // テスト時は VIOLATION_RECORDER_TARGET で書込先を差し替え可能
+  const mistakesPath = process.env.VIOLATION_RECORDER_TARGET ||
+    path.join(__dirname, '..', 'rules', 'mistakes.md');
 
-  // 既存の内容を読み込み
-  let content = '';
-  try {
-    if (fs.existsSync(mistakesPath)) {
-      content = fs.readFileSync(mistakesPath, 'utf8');
-    }
-  } catch (e) { /* fail-open */ }
-
-  // ヘッダーがなければ追加
-  if (!content.includes('# Mistakes Log')) {
-    content = `# Mistakes Log
-
-このファイルは自動的に記録された違反・ミスのログです。
-同じミスを繰り返さないために、作業開始前に確認してください。
-
----
-
-`;
-  }
-
-  // 新しい違反を追加
+  // 新しい違反エントリ
   const timestamp = new Date().toISOString();
   const entry = `
 ## ${timestamp}
@@ -58,11 +40,34 @@ async function main() {
 ---
 `;
 
-  content += entry;
+  const header = `# Mistakes Ledger（ミス台帳）
 
-  // 書き込み
+このファイルは自動的に記録された違反・ミスのログです。
+同じミスを繰り返さないために、作業開始前に確認してください。
+
+---
+`;
+
+  // 書き込みは追記（O_APPEND）のみで行い、既存ファイルへの全文書き戻しは一切しない:
+  //   - read-modify-write は並行呼出で lost-update になる
+  //   - 読み取り不能なファイルへのテンプレート書き戻しは台帳消失になる
+  // ヘッダーは 'wx'（新規作成時のみ成功・既存なら EEXIST）で一度だけ作成し、
+  // 既存の空ファイルには append で補う。並行初回作成時に稀にヘッダーが重複し得るが、
+  // エントリの欠落・既存内容の消失は起きない。
   try {
-    fs.writeFileSync(mistakesPath, content, 'utf8');
+    const fd = fs.openSync(mistakesPath, 'wx');
+    fs.writeSync(fd, header);
+    fs.closeSync(fd);
+  } catch (e) { /* EEXIST = 既存ファイル。それ以外も fail-open */ }
+
+  try {
+    if (fs.statSync(mistakesPath).size === 0) {
+      fs.appendFileSync(mistakesPath, header, 'utf8');
+    }
+  } catch (e) { /* fail-open */ }
+
+  try {
+    fs.appendFileSync(mistakesPath, entry, 'utf8');
   } catch (e) { /* fail-open */ }
 
   process.exit(0);
