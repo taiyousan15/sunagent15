@@ -10,7 +10,7 @@
         "gpt-researcher", "apify-research",
         "keyword-free", "keyword-mega-extractor", "keyword-to-gem",
         "codegraph", "context7-docs", "firecrawl", "stagehand",
-        "url-all", "url-deep-analysis", "note-research",
+        "url-all", "url-deep-analysis", "url-learning", "note-research",
         "sdd-full", "sdd-design", "sdd-adr", "sdd-context",
         "sdd-event-storming", "sdd-glossary", "sdd-guardrails",
         "sdd-req100", "sdd-runbook", "sdd-slo", "sdd-stakeholder", "sdd-tasks", "sdd-threat",

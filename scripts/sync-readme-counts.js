@@ -163,6 +163,18 @@ function syncReadmeCounts(readmeContent, installedCount, profileCounts, groupCou
       }
     }
 
+    // 「完了の目安」形式（minimal: 約 N / standard: 約 N / full: 約 N）を一括同期
+    if (/minimal:\s*約?\s*\d+\s*\/\s*standard:\s*約?\s*\d+\s*\/\s*full:\s*約?\s*\d+/.test(line)) {
+      for (const key of ['minimal', 'standard', 'full']) {
+        if (typeof profileCounts[key] === 'number') {
+          line = line.replace(
+            new RegExp(`(${key}:\\s*約?\\s*)\\d+`),
+            `$1${profileCounts[key]}`
+          );
+        }
+      }
+    }
+
     const groupRules = [
       { key: 'docker', flag: /(?:--with-docker|-WithDocker)\b/i },
       { key: 'figma', flag: /(?:--with-figma|-WithFigma)\b/i },

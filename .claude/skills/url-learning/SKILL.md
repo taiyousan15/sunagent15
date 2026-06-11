@@ -1,6 +1,10 @@
-# URL Learning Pipeline Rules
+---
+name: url-learning
+description: URL分析（url-all / url-deep-analysis）完了後の学習パイプライン。分析結果を要約→メモリ保存（Praetorian任意）→ノウハウ判定→該当時はスキル化提案→ユーザー承認後に /skill-create 実行。URL分析を実行したら必ずこのスキルで後処理する。
+requires: {}
+---
 
-## Overview
+# URL Learning Pipeline
 
 URL分析（url-all / url-deep-analysis）実行後に、自動的にメモリ保存し、
 内容がノウハウ・技術の場合はスキル化を提案するパイプライン。

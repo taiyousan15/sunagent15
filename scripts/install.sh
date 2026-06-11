@@ -3,8 +3,8 @@
 #
 # 使い方:
 #   ./scripts/install.sh                    # 標準インストール（core + video + x-sns）
-#   ./scripts/install.sh --profile minimal  # 最小構成（coreのみ、約92スキル）
-#   ./scripts/install.sh --profile full     # 全スキル（約121スキル）
+#   ./scripts/install.sh --profile minimal  # 最小構成（coreのみ、約93スキル）
+#   ./scripts/install.sh --profile full     # 全スキル（約122スキル）
 #   ./scripts/install.sh --with-docker      # 標準 + Docker スキル追加
 #   ./scripts/install.sh --with-figma       # 標準 + Figma スキル追加
 #   ./scripts/install.sh --with-voice       # 標準 + 音声AI スキル追加
@@ -133,13 +133,13 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "  利用可能なプロファイル:"
             echo ""
-            echo "  minimal   — コアスキルのみ（約92個）"
+            echo "  minimal   — コアスキルのみ（約93個）"
             echo "              リサーチ・SDD・LP・コピーライティング・キーワード等"
             echo ""
-            echo "  standard  — 標準構成（約114個）[デフォルト]"
+            echo "  standard  — 標準構成（約115個）[デフォルト]"
             echo "              core + 動画制作 + X/SNS自動投稿"
             echo ""
-            echo "  full      — 全スキル（約121個）"
+            echo "  full      — 全スキル（約122個）"
             echo "              standard + Docker + Figma + 音声AI + ディープリサーチ拡張"
             echo ""
             echo "  追加オプション:"

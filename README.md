@@ -11,7 +11,7 @@
 [![Research Sources](https://img.shields.io/badge/Research%20Sources-133-blueviolet)](https://github.com/taiyousan15/sunagent15/blob/main/.claude/skills/world-research/SKILL.md)
 
 > **TAISUN v2 は Claude Code の拡張パックです。**
-> インストールするだけで 92〜121スキル（プロファイル可変・標準 約114）・101+コマンド・25 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 83 個の agent-source テンプレートを活用）。
+> インストールするだけで 93〜122スキル（プロファイル可変・標準 約115）・101+コマンド・25 MCPサーバー が使えるようになります（エージェントは Claude Code 組み込み subagent + 83 個の agent-source テンプレートを活用）。
 
 ---
 
@@ -132,7 +132,7 @@ bash scripts/install.sh
 
 </details>
 
-**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（minimal: 約 92 / standard: 約 114 / full: 約 121）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
+**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（minimal: 約 93 / standard: 約 115 / full: 約 122）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
 
 **アップデート（1行で完了）**
 
@@ -177,7 +177,7 @@ cd sunagent15
 > `スクリプトの実行が無効` エラーが出た場合は `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` を先に実行してください。
 > `git: 用語 'git' は〜` エラーが出た場合は https://git-scm.com/download/win から git をインストールしてください。
 
-**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（minimal: 約 92 / standard: 約 114 / full: 約 121）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
+**完了の目安**: `スキル: N 個が利用可能です ✅（期待値: M個）` と `エージェント: N 個が利用可能です` が表示されれば成功。数値はプロファイルで変動（minimal: 約 93 / standard: 約 115 / full: 約 122）。「エージェント」表示は `.claude/agent-source/` の 83 テンプレートが `~/.claude/agents/` にコピーされた数です。
 
 **アップデート（1行で完了）**
 
@@ -231,7 +231,7 @@ cd ~\Projects\MyProject
   │ .git         │ 初期化済み                                │
   │ .claude/     │ → ~/sunagent15/.claude/                │
   │ .mcp.json    │ → ~/sunagent15/.mcp.json               │
-  │ スキル       │ 68個                                      │
+  │ スキル       │ 69個                                      │
   │ エージェント │ 83個                                      │
   └──────────────┴──────────────────────────────────────────┘
 ```
@@ -282,16 +282,16 @@ npm run mcp:status       # 現在の状態を確認
 **Mac:**
 ```bash
 ./scripts/install.sh --list-profiles          # 一覧表示
-./scripts/install.sh --profile minimal        # 最小構成（92個）
-./scripts/install.sh --profile full           # 全スキル（約121個）
+./scripts/install.sh --profile minimal        # 最小構成（93個）
+./scripts/install.sh --profile full           # 全スキル（約122個）
 ./scripts/install.sh --with-docker --with-figma  # 個別追加
 ```
 
 **Windows:**
 ```powershell
 .\scripts\install.ps1 -ListProfiles           # 一覧表示
-.\scripts\install.ps1 -Profile minimal        # 最小構成（92個）
-.\scripts\install.ps1 -Profile full           # 全スキル（約121個）
+.\scripts\install.ps1 -Profile minimal        # 最小構成（93個）
+.\scripts\install.ps1 -Profile full           # 全スキル（約122個）
 .\scripts\install.ps1 -WithDocker -WithFigma  # 個別追加
 ```
 
@@ -514,7 +514,7 @@ YouTubeサムネイルを作って
 
 | カテゴリ | 数 | 例 |
 |---------|----|----|
-| スキル | 68個 | mega-research, taiyo-style-lp, sdd-full, world-research |
+| スキル | 69個 | mega-research, taiyo-style-lp, sdd-full, world-research |
 | エージェント | Claude Code subagents + agent-source 83個 | planner, code-reviewer, security-reviewer, tdd-guide 等は Claude Code 組み込み |
 | コマンド | 101+個 | /learn, /research, /sdd-full, /summarize |
 | Hookシステム | 14 層（hook ファイル 62 個） | 危険コマンド防止・セッション継続・自動バックアップ・タスク結果オーバーフロー防止 |
