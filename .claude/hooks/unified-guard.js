@@ -41,6 +41,11 @@ const DANGEROUS_PATTERNS = [
   // eslint-disable-next-line no-useless-escape
   /rm\s+-rf\s+[\/~]/,
   /rm\s+-rf\s+\*/,
+  /rm\s+-(?:\w*r\w*f|\w*f\w*r)\w*\s+["']?[\/~]/,
+  /rm\s+-\w*r\w*\s+["']?(?:\$HOME\b|\$\{HOME\}|%USERPROFILE%)/i,
+  /(?=[\s\S]*Remove-Item)(?=[\s\S]*-Recurse)(?=[\s\S]*(?:\$env:USERPROFILE|\$HOME\b|~[\/\\]))/i,
+  /rmdir\s+\/s\b/i,
+  /del\s+\/[sq]\b/i,
   />\s*\/dev\/sd[a-z]/,
   /mkfs\./,
   /dd\s+if=.*of=\/dev/,
@@ -355,7 +360,7 @@ function performQuickChecks(toolName, toolInput) {
   }
 
   if (toolName === 'Write' || toolName === 'Edit') {
-    const filePath = toolInput.file_path || '';
+    const filePath = (toolInput.file_path || '').replace(/\\/g, '/');
     const content = toolInput.content || toolInput.new_string || '';
 
     // 重要ファイルの保護
