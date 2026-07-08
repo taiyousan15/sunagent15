@@ -43,7 +43,7 @@ async function main() {
   const skillPatterns = [
     /([a-zA-Z0-9_-]+)\s*(?:の)?スキルを使(?:って|用)/gi,
     /(?:use|using)\s+(?:the\s+)?([a-zA-Z0-9_-]+)\s+skill/gi,
-    /\/([a-zA-Z0-9_-]+)/g,  // スラッシュコマンド
+    /(?:^|\s)\/([a-zA-Z][a-zA-Z0-9_-]{1,39})(?=\s|$)/g,  // スラッシュコマンド（行頭/空白直後のみ・URL/パス誤検出を防ぐ）
   ];
 
   const detectedSkills = [];
