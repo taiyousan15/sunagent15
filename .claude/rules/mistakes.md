@@ -1,5 +1,9 @@
 # Mistakes Ledger（ミス台帳）
 
+> **SSoT宣言**: 汎用パターンの正本は本ファイル（taisun_agent）。sync-claude-system は rules/ を同期しないため、
+> 汎用的な新パターンは**必ずここへ先に追記**し、各プロジェクトへ手動反映する（Pattern 11 準拠）。
+> プロジェクト固有の教訓は各プロジェクト側 mistakes.md の「プロジェクト固有」節で管理し、正本へ逆流させない。
+
 過去のミスと再発防止策の台帳（要点版）。関連タスク開始時に参照し、失敗が起きたら必ず追記する。
 各パターンの詳細（状況・❌間違い・Why・How to apply）は **必ず [.claude/references/mistakes-extended.md](../references/mistakes-extended.md) を Read すること**（明示リンクがないと読まれない: Pattern 13）。
 
