@@ -494,7 +494,7 @@ try {
 }
 
 # Prefer npm ci for reproducible install when lockfile present, fall back to npm install otherwise.
-foreach ($server in @("voice-ai-mcp-server", "ai-sdr-mcp-server", "line-bot-mcp-server")) {
+foreach ($server in @("voice-ai-mcp-server", "ai-sdr-mcp-server")) {
     $serverPath = "$REPO_DIR\mcp-servers\$server\package.json"
     if (Test-Path $serverPath) {
         try {

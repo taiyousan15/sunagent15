@@ -372,7 +372,7 @@ fi
 
 # 追加MCPサーバーのビルド
 # Prefer npm ci for reproducible install when lockfile present, fall back to npm install otherwise.
-for mcp_dir in "mcp-servers/voice-ai-mcp-server" "mcp-servers/ai-sdr-mcp-server" "mcp-servers/line-bot-mcp-server"; do
+for mcp_dir in "mcp-servers/voice-ai-mcp-server" "mcp-servers/ai-sdr-mcp-server"; do
     if [ -f "$REPO_DIR/$mcp_dir/package.json" ]; then
         mcp_name=$(basename "$mcp_dir")
         if [ -f "$REPO_DIR/$mcp_dir/package-lock.json" ]; then
