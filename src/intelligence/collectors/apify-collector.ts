@@ -8,20 +8,12 @@
  *   - quacker/twitter-search (Quote Tweet含む検索)
  */
 
-import { CollectorResult, IntelligenceItem, WATCH_TARGETS, X_WATCH_ACCOUNTS, getXHandles } from '../types'
 import crypto from 'crypto'
-
-const APIFY_BASE_URL = 'https://api.apify.com/v2'
+import { CollectorResult, IntelligenceItem, WATCH_TARGETS, X_WATCH_ACCOUNTS, getXHandles } from '../types'
+import { runApifyActor } from './apify-client'
 
 function makeId(src: string, id: string): string {
   return crypto.createHash('md5').update(`${src}:${id}`).digest('hex').slice(0, 16)
-}
-
-interface ApifyRunInput {
-  searchTerms?: string[]
-  handles?: string[]
-  maxItems?: number
-  language?: string
 }
 
 interface Tweet {
@@ -35,64 +27,6 @@ interface Tweet {
   replyCount?: number
 }
 
-async function runApifyActor(
-  actorId: string,
-  input: ApifyRunInput,
-  apiToken: string
-): Promise<Tweet[]> {
-  // Actor 起動
-  const runRes = await fetch(
-    `${APIFY_BASE_URL}/acts/${actorId}/runs?token=${apiToken}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...input, maxItems: input.maxItems ?? 20 }),
-      signal: AbortSignal.timeout(15000),
-    }
-  )
-  if (!runRes.ok) {
-    const body = await runRes.text()
-    throw new Error(`Apify run failed ${runRes.status}: ${body.slice(0, 200)}`)
-  }
-
-  const runData = await runRes.json()
-  const runId: string = runData.data?.id
-  if (!runId) throw new Error('Apify: run ID not returned')
-
-  // 完了待ち (最大60秒)
-  const deadline = Date.now() + 60000
-  let datasetId: string | null = null
-
-  while (Date.now() < deadline) {
-    await new Promise(r => setTimeout(r, 3000))
-    const statusRes = await fetch(
-      `${APIFY_BASE_URL}/actor-runs/${runId}?token=${apiToken}`,
-      { signal: AbortSignal.timeout(8000) }
-    )
-    const status = await statusRes.json()
-    const runStatus: string = status.data?.status
-
-    if (runStatus === 'SUCCEEDED') {
-      datasetId = status.data?.defaultDatasetId
-      break
-    }
-    if (['FAILED', 'TIMED-OUT', 'ABORTED'].includes(runStatus)) {
-      throw new Error(`Apify run ${runStatus}`)
-    }
-  }
-
-  if (!datasetId) throw new Error('Apify: timeout waiting for run')
-
-  // データセット取得
-  const itemsRes = await fetch(
-    `${APIFY_BASE_URL}/datasets/${datasetId}/items?token=${apiToken}&format=json`,
-    { signal: AbortSignal.timeout(10000) }
-  )
-  if (!itemsRes.ok) throw new Error(`Apify dataset fetch failed: ${itemsRes.status}`)
-
-  return itemsRes.json()
-}
-
 // ─────────────────────────────────────────────
 // 著名人ツイート収集
 // ─────────────────────────────────────────────
@@ -104,15 +38,15 @@ export async function collectCelebrityTweets(
 
   // 重要度3の著名人のみ対象（コスト節約）
   const targets = WATCH_TARGETS.filter(t => t.importance === 3)
-  const handles = targets.map(t => t.name.toLowerCase().replace(/\s+/g, ''))
 
   const results = await Promise.allSettled(
     targets.map(async target => {
       const searchTerms = [`from:${target.name.split(' ').pop()?.toLowerCase() ?? target.name}`]
-      const tweets = await runApifyActor(
+      const tweets = await runApifyActor<Tweet>(
         'apidojo~tweet-scraper',
         { searchTerms, maxItems: maxPerPerson },
-        apiToken
+        apiToken,
+        { maxItems: maxPerPerson }
       )
       return { target, tweets }
     })
@@ -176,10 +110,12 @@ export async function collectXWatchAccounts(
     const searchTerms = batch.map(h => `from:${h}`)
 
     try {
-      const tweets = await runApifyActor(
+      const maxItems = batch.length * maxPerAccount
+      const tweets = await runApifyActor<Tweet>(
         'apidojo~tweet-scraper',
-        { searchTerms, maxItems: batch.length * maxPerAccount },
-        apiToken
+        { searchTerms, maxItems },
+        apiToken,
+        { maxItems }
       )
 
       for (const tweet of tweets) {
@@ -233,10 +169,11 @@ export async function collectXTrending(
 ): Promise<CollectorResult> {
   const items: IntelligenceItem[] = []
 
-  const tweets = await runApifyActor(
+  const tweets = await runApifyActor<Tweet>(
     'apidojo~tweet-scraper',
     { searchTerms: keywords, maxItems },
-    apiToken
+    apiToken,
+    { maxItems }
   )
 
   for (const tweet of tweets) {

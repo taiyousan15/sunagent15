@@ -7,7 +7,7 @@ disable-model-invocation: true
 effort: high
 requires:
   tools: ["python3", "ollama"]
-  env: ["FRED_API_KEY", "NEWSAPI_KEY", "APIFY_API_TOKEN"]
+  env: ["FRED_API_KEY", "NEWSAPI_KEY", "APIFY_TOKEN"]
 ---
 
 # intelligence-research - ワンコマンドグローバル情報収集
@@ -78,6 +78,70 @@ fi
 ```
 
 opencli-rs の結果は GIS の結果とマージし、重複排除後にスコアリングに含める。
+
+## Xquik Apify Actor ルート
+
+既存の GIS X 収集ルートはそのまま既定値として維持する。
+Xquik Actor は公開 X データを明示的に調査する場合だけ使用する。
+通常の `npx ts-node src/intelligence/index.ts` からは自動実行しない。
+
+利用できる Actor:
+
+- [X Tweet Scraper](https://apify.com/xquik/x-tweet-scraper)
+- [X Follower Scraper](https://apify.com/xquik/x-follower-scraper)
+
+有料実行の前に次の順序を守る:
+
+1. 対象 Actor の Store ページを開く。
+2. 現在の入力スキーマと料金を確認する。
+3. `--max-items` と `--max-charge` を正数で指定する。
+4. `--plan` で Actor、入力、上限を表示する。
+5. 表示した計画についてユーザーの承認を得る。
+6. 同じ入力へ `--approve-paid-run` を追加する。
+
+Actor、対象、relation、上限、料金が変わった場合は再承認を得る。
+`--plan` は `APIFY_TOKEN` を読まず、Actor も起動しない。
+
+Tweet Actor の計画例:
+
+```bash
+npm run intelligence:xquik -- \
+  tweet search "AI agents" \
+  --max-items 25 \
+  --max-charge 0.10 \
+  --plan
+```
+
+承認後は同じ入力で実行する:
+
+```bash
+npm run intelligence:xquik -- \
+  tweet search "AI agents" \
+  --max-items 25 \
+  --max-charge 0.10 \
+  --approve-paid-run
+```
+
+Tweet モードは `tweet`、`tweets`、`search`、`profileTweets`、
+`thread` を使用できる。複数の対象はカンマで区切る。
+
+Follower Actor の計画例:
+
+```bash
+npm run intelligence:xquik -- \
+  followers verified_followers nasa \
+  --max-items 10 \
+  --max-charge 0.05 \
+  --plan
+```
+
+relation は `followers`、`following`、`verified_followers` を使用できる。
+数値ユーザー ID には `--target-type userIds` を追加する。
+
+認証情報は `Authorization` ヘッダーだけに送る。URL へ追加しない。
+実行には Apify の maximum total charge も設定する。
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
 
 ## 手順
 
@@ -155,7 +219,7 @@ research/runs/YYYYMMDD__intelligence/
 |--------|------|------|
 | FRED_API_KEY | 推奨 | FRED経済指標7系列（無料・要登録） |
 | NEWSAPI_KEY | 推奨 | NewsAPI.org（無料枠100req/day） |
-| APIFY_TOKEN | オプション | X/Twitter収集（Freeプラン$5クレジット/月） |
+| APIFY_TOKEN | オプション | 既存 X 収集と承認済み Xquik Actor 実行 |
 
 APIキーが未設定の場合、該当ソースはスキップされ無料ソースのみで収集。
 
@@ -276,7 +340,7 @@ Crypto・仮想通貨（20件）:
 
 - **ts-node が見つからない**: `npm install` を実行
 - **APIキーエラー**: `.env` ファイルを確認し、キーが正しく設定されているか確認
-- **Apify 401**: APIFY_TOKEN の先頭スペースを確認（`cat -A .env | grep APIFY`）
+- **Apify 401**: `APIFY_TOKEN` の設定有無と有効性を安全に確認
 - **タイムアウト**: 個別ソースのエラーはスキップされ収集継続
 
 ## ソース追加方法
