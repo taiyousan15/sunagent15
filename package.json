@@ -77,6 +77,7 @@
     "ops:schedule:status": "node dist/scripts/ops/schedule-runner.js --status",
     "security:secrets-scan": "npx gitleaks detect --source . --verbose",
     "doctor": "npx ts-node src/utils/env-check.ts",
+    "intelligence:xquik": "npx ts-node src/intelligence/xquik-actors-cli.ts",
     "workflow:start": "npx tsx scripts/workflow/start.ts",
     "workflow:status": "npx tsx scripts/workflow/status.ts",
     "workflow:next": "npx tsx scripts/workflow/next.ts",
