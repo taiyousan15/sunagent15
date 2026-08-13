@@ -358,17 +358,30 @@ Agent A/B/C の結果を受けて、以下のスキルを3バッチで追加実�
   B2. /deep-research-grok — Grok-4 Live Search（リアルタイム最新情報）
 → /compact 実行
 
---- バッチC: 55サイト333コマンド（opencli-rs 直接呼び出し）---
-  C1. opencli-rs で以下を実行:
-      - opencli-rs hackernews top/search "[KEYWORD]" --format json
+--- バッチC: opencli-rs 直接呼び出し（⚠️ 実行前提ゲートあり・2026-08-14改訂）---
+  C0. 【必須ゲート】opencli-rs のブラウザ拡張依存コマンド（arxiv / youtube 等。認証不要でも拡張依存）は、
+      拡張未接続時に `open -a "Google Chrome" about:blank` を実行しユーザーのChromeにタブを増殖させる
+      実害が確認済み（2026-08-14実測・5タブ再現）。
+      **接続済みであることを事前に肯定的に確認できない限り opencli-rs を実行せず、
+      C2のHTTP系代替へフォールバックすること。**
+      接続確認は副作用のない `opencli-rs doctor` の出力で拡張接続の肯定表示（extension: ✓ 等）を
+      確認できた場合のみ接続済みとみなす。コマンドの試し打ちによる接続確認は禁止（タブ増殖の原因）。
+  C1. 接続確認済みの場合のみ、以下を実行:
+      - opencli-rs hackernews top --format json（※クエリ非連動のトレンドリストとして扱うこと）
+        ⚠️ `hackernews search` は使用禁止: クエリを無視し固定の歴代殿堂入りリストを返すバグを
+        実測確認済み（2026-08-14、3クエリ+無関係クエリでバイト単位同一出力）。HN検索はC2で代替
       - opencli-rs arxiv search "[KEYWORD]" --format json
-      - opencli-rs devto search "[KEYWORD]" --format json
+      - opencli-rs devto tag "[TAG]" --format json（※ `devto search` サブコマンドは不存在）
       - opencli-rs youtube search "[KEYWORD]" --format json
       - opencli-rs youtube transcript [発見した関連動画URL] --format json
       - opencli-rs stackoverflow search "[KEYWORD]" --format json
       - opencli-rs bloomberg --format json（金融関連の場合）
       - opencli-rs twitter search "[KEYWORD]" --format json（認証済みの場合）
       - opencli-rs reddit hot --subreddit [関連subreddit] --format json（認証済みの場合）
+  C2. 拡張未接続時のHTTP系代替（認証不要・タブ増殖なし）:
+      - HN検索: `curl "https://hn.algolia.com/api/v1/search?query=[KEYWORD]&tags=story"`
+      - arXiv: `curl -sL "https://export.arxiv.org/api/query?search_query=..."`（https+リダイレクト追従+リクエスト間3秒以上）
+      - Dev.to / StackOverflow / YouTube: WebSearch + WebFetch で代替
 → /compact 実行
 
 ---
