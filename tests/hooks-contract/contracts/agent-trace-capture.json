@@ -1,0 +1,68 @@
+{
+  "hookId": "agent-trace-capture",
+  "event": "PostToolUse",
+  "source": ".claude/hooks/agent-trace-capture.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": false,
+  "cases": [
+    {
+      "caseId": "non-target-tool-silent",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "echo hi"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "write-creates-trace-record",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "${projectDir}/src-file.txt",
+          "content": "x"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "createdExactly": [
+          "projectDir:.agent-trace/traces/*.json"
+        ]
+      }
+    },
+    {
+      "caseId": "excluded-path-env-silent",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "${projectDir}/.env",
+          "content": "SECRET=1"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    }
+  ],
+  "writeSinks": [
+    "<検出projectRoot>/.agent-trace/traces/<date>_<id>.json (L193-201)"
+  ],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}

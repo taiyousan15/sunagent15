@@ -1,0 +1,11 @@
+{
+  "unified-guard": "unified-guard.js",
+  "deviation-approval-guard": "deviation-approval-guard.js",
+  "pre-compact-save": "pre-compact-save.js",
+  "definition-lint-gate": "definition-lint-gate.js",
+  "agent-trace-capture": "agent-trace-capture.js",
+  "compact-optimizer": "compact-optimizer.js",
+  "task-overflow-guard": "task-overflow-guard.js",
+  "session-handoff-generator": "session-handoff-generator.js",
+  "output-verifier": "output-verifier.js"
+}

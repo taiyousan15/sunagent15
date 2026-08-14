@@ -1,0 +1,63 @@
+{
+  "hookId": "compact-optimizer",
+  "event": "PostToolUse",
+  "source": ".claude/hooks/compact-optimizer.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": false,
+  "notes": "空cwdでも常に state を書く（exit 0 ≠ no-op の実例・ADR-007 Rev.4）",
+  "cases": [
+    {
+      "caseId": "first-call-writes-state-only",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Read",
+        "tool_input": {
+          "file_path": "x"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "createdExactly": [
+          "projectDir:.claude/temp/compact-optimizer-state.json"
+        ]
+      }
+    },
+    {
+      "caseId": "seeded-threshold-suggests-compact",
+      "setup": "seed-compact-state-at-threshold",
+      "envelope": {
+        "tool_name": "Read",
+        "tool_input": {
+          "file_path": "x"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutMatches": [
+          "\\[Compact\\]"
+        ],
+        "stderrMatches": [
+          "Compact Optimizer",
+          "/compact 推奨"
+        ],
+        "createdExactly": [
+          "projectDir:.claude/hooks/data/compact-metrics.jsonl",
+          "projectDir:.claude/temp/compact-optimizer.log"
+        ],
+        "modifiedExactly": [
+          "projectDir:.claude/temp/compact-optimizer-state.json"
+        ]
+      }
+    }
+  ],
+  "writeSinks": [
+    "<cwd>/.claude/temp/compact-optimizer-state.json (L54-59 常時)",
+    "<cwd>/.claude/temp/compact-optimizer.log (L72-77)",
+    "<cwd>/.claude/hooks/data/compact-metrics.jsonl (L61-70)"
+  ],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}

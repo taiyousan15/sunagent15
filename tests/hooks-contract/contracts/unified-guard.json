@@ -1,0 +1,96 @@
+{
+  "hookId": "unified-guard",
+  "event": "PreToolUse",
+  "source": ".claude/hooks/unified-guard.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": true,
+  "cases": [
+    {
+      "caseId": "allow-silent",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "echo hello"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "deny-dangerous-command",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "rm -rf /"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 2,
+        "stdoutMatches": [
+          "\"decision\":\"block\"",
+          "危険なコマンドパターン"
+        ],
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "intent-context-new-file",
+      "setup": "seed-workflow-state",
+      "envelope": {
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "${projectDir}/brand-new-file.txt",
+          "content": "hello"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutMatches": [
+          "NEW_FILE_CREATION",
+          "hookSpecificOutput"
+        ],
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "warning-injection-pattern",
+      "setup": "seed-workflow-state",
+      "envelope": {
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "echo $(date)"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutMatches": [
+          "\\[WARNING\\]",
+          "インジェクション"
+        ],
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "malformed-stdin-fail-open",
+      "setup": null,
+      "envelopeRaw": "this is not json {{{",
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "noWrites": true
+      }
+    }
+  ],
+  "writeSinks": [],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}

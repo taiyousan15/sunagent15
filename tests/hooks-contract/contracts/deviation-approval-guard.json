@@ -1,0 +1,64 @@
+{
+  "hookId": "deviation-approval-guard",
+  "event": "PreToolUse",
+  "source": ".claude/hooks/deviation-approval-guard.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": false,
+  "advisoryOnly": true,
+  "cases": [
+    {
+      "caseId": "silent-without-workflow-state",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "${projectDir}/a.txt",
+          "content": "コードを最適化します"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "advisory-on-deviation-pattern",
+      "setup": "seed-workflow-state",
+      "envelope": {
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "${projectDir}/a.txt",
+          "content": "コードを最適化します"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrMatches": [
+          "ADVISORY",
+          "逸脱パターン"
+        ],
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "malformed-stdin-fail-open",
+      "setup": null,
+      "envelopeRaw": "{{broken",
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrMatches": [
+          "stdin parse error"
+        ],
+        "noWrites": true
+      }
+    }
+  ],
+  "writeSinks": [],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}
