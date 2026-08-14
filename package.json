@@ -26,6 +26,8 @@
     "test:guards": "jest --testPathPattern=workflow-fidelity-guard --runInBand",
     "workflow:lint": "node .claude/hooks/definition-lint-gate.js lint-all",
     "guard:verify": "npm run workflow:lint && npm run test:guards",
+    "eval:hooks": "node scripts/run-hooks-contract.js",
+    "guard:verify:full": "npm run guard:verify && npm run eval:hooks",
     "check:unicode": "node scripts/check-hidden-unicode.js",
     "context:report": "node scripts/context-footprint.js",
     "context:report:hooks": "node scripts/context-footprint.js --hooks",

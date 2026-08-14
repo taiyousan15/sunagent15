@@ -179,6 +179,12 @@ jobs:
         timeout-minutes: 5
         continue-on-error: true
 
+      # hooks-contract gate (PR-4): blocking。continue-on-error/passWithNoTests/forceExit 禁止
+      # 原子的単一入口が stage 検証→jest→fullName 双方向照合→worktree 無変化まで一括判定する
+      - name: Run hooks-contract gate (blocking)
+        run: npm run eval:hooks
+        timeout-minutes: 5
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
@@ -199,6 +205,28 @@ jobs:
       - name: Skip coverage check (docs-only)
         if: needs.changes.outputs.code != 'true'
         run: echo "Skipping coverage threshold check for docs-only changes"
+
+  # ============================================
+  # hooks-contract gate on Node 18（宣言でなく実測ゲート — PR-4）
+  # test ジョブの matrix は 20/22 のため、engines >=18.0.0 の下限を本ジョブで担保する
+  # ============================================
+  hooks-contract-node18:
+    name: hooks-contract (Node 18)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run hooks-contract gate (blocking)
+        run: npm run eval:hooks
+        timeout-minutes: 5
 
   # ============================================
   # Security Scan

@@ -1,0 +1,43 @@
+{
+  "hookId": "session-handoff-generator",
+  "event": "SessionEnd",
+  "source": ".claude/hooks/session-handoff-generator.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": false,
+  "notes": "CLAUDE_PROJECTS_DIR（sandbox空dir固定）で sibling スキャンを封じ込め。実運用ではDesktop配下に書くhookのため env 固定が必須",
+  "cases": [
+    {
+      "caseId": "generates-handoff-in-cwd",
+      "setup": null,
+      "envelope": {
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "createdExactly": [
+          "projectDir:.claude/handoff.json",
+          "projectDir:SESSION_HANDOFF.md"
+        ]
+      }
+    },
+    {
+      "caseId": "malformed-stdin-fail-open",
+      "setup": null,
+      "envelopeRaw": "]broken[",
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    }
+  ],
+  "writeSinks": [
+    "<cwd>/SESSION_HANDOFF.md (L49-65)",
+    "<cwd>/.claude/handoff.json (L88-94)",
+    "<CLAUDE_PROJECTS_DIR>配下の直近1h更新dir 最大5件へ同上 (L34-39,168-192)"
+  ],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}

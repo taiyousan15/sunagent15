@@ -1,0 +1,76 @@
+{
+  "hookId": "task-overflow-guard",
+  "event": "PostToolUse",
+  "source": ".claude/hooks/task-overflow-guard.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": false,
+  "cases": [
+    {
+      "caseId": "non-task-silent",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Read",
+        "tool_input": {
+          "file_path": "x"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "under-threshold-logs-only",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Task",
+        "tool_input": {
+          "description": "small"
+        },
+        "tool_result": "short result",
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "createdExactly": [
+          "projectDir:.claude/temp/task-overflow-guard.log"
+        ]
+      }
+    },
+    {
+      "caseId": "overflow-emits-guidance-and-detail",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Task",
+        "tool_input": {
+          "description": "big-agent"
+        },
+        "tool_result": "${repeat2500}",
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutMatches": [
+          "\\[Context Guard\\]",
+          "2500chars",
+          "big-agent"
+        ],
+        "stderrEmpty": true,
+        "createdExactly": [
+          "projectDir:.claude/hooks/data/task-result-overflow.json",
+          "projectDir:.claude/temp/task-overflow-guard.log"
+        ]
+      }
+    }
+  ],
+  "writeSinks": [
+    "<cwd>/.claude/temp/task-overflow-guard.log (L33-38)",
+    "<cwd>/.claude/hooks/data/task-result-overflow.json (L64-71)"
+  ],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}

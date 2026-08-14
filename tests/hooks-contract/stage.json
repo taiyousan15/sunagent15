@@ -1,0 +1,4 @@
+{
+  "stage": "G-PR4",
+  "_comment": "唯一のstage SSoT。環境変数による上書き機構は存在しない（Codex Final B4）。G-PR1c への切替は PR-1c の atomic change-set（injector本体・契約・allowlist・expected-cases・本ファイル・hooks.json登録・plugin.json rules除去）で行う"
+}

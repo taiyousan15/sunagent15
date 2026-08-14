@@ -1,0 +1,69 @@
+{
+  "hookId": "pre-compact-save",
+  "event": "PreToolUse",
+  "source": ".claude/hooks/pre-compact-save.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": false,
+  "cases": [
+    {
+      "caseId": "non-trigger-silent",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "git status"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "compact-trigger-creates-backup",
+      "setup": "seed-handoff-file",
+      "envelope": {
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "/compact"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrMatches": [
+          "\\[TCPS\\]",
+          "バックアップ完了"
+        ],
+        "createdExactly": [
+          "projectDir:scripts/originals/backups/pre-compact-*.json"
+        ],
+        "modifiedExactly": [
+          "projectDir:SESSION_HANDOFF.md"
+        ]
+      }
+    },
+    {
+      "caseId": "malformed-stdin-fail-open",
+      "setup": null,
+      "envelopeRaw": "x{",
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrMatches": [
+          "pre-compact-save エラー"
+        ],
+        "noWrites": true
+      }
+    }
+  ],
+  "writeSinks": [
+    "<cwd>/scripts/originals/backups/pre-compact-*.json (L59-88)",
+    "<cwd>/SESSION_HANDOFF.md 追記 (L114-131)"
+  ],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}

@@ -1,0 +1,76 @@
+{
+  "hookId": "output-verifier",
+  "event": "PostToolUse",
+  "source": ".claude/hooks/output-verifier.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": false,
+  "advisoryOnly": true,
+  "cases": [
+    {
+      "caseId": "short-output-silent",
+      "setup": null,
+      "envelope": {
+        "tool_result": {
+          "output": "ok"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "medium-uncertainty-warns",
+      "setup": null,
+      "envelope": {
+        "tool_result": {
+          "output": "この実装はおそらく正しい挙動です。たぶん問題ありませんが検証データを添付します。ここは五十文字以上に必ずなるよう十分に長い説明文を続けています。"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrMatches": [
+          "MEDIUM"
+        ],
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "high-uncertainty-warns",
+      "setup": null,
+      "envelope": {
+        "tool_result": {
+          "output": "動くと思います。かもしれませんという表現を含み、確認していませんが多分このままで大丈夫なはずです。ここも五十文字以上になるよう記述を続けます。"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrMatches": [
+          "HIGH",
+          "再確認"
+        ],
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "malformed-stdin-fail-open",
+      "setup": null,
+      "envelopeRaw": "not json",
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    }
+  ],
+  "writeSinks": [],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}

@@ -1,0 +1,73 @@
+{
+  "hookId": "definition-lint-gate",
+  "event": "PostToolUse",
+  "source": ".claude/hooks/definition-lint-gate.js",
+  "confirmedAt": "2026-08-15",
+  "denyContract": false,
+  "advisoryOnly": true,
+  "cases": [
+    {
+      "caseId": "non-target-silent",
+      "setup": null,
+      "envelope": {
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "${projectDir}/notes.md"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    },
+    {
+      "caseId": "violation-advisory-and-detail-file",
+      "setup": "write-invalid-workflow-json",
+      "envelope": {
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "${projectDir}/config/workflows/test_workflow.json"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutMatches": [
+          "\\[Lint Gate\\]",
+          "ADVISORY",
+          "CRITICAL 1件"
+        ],
+        "stderrMatches": [
+          "ADVISORY"
+        ],
+        "createdExactly": [
+          "projectDir:.claude/hooks/data/lint-gate-detail.json"
+        ]
+      }
+    },
+    {
+      "caseId": "valid-definition-silent",
+      "setup": "write-valid-workflow-json",
+      "envelope": {
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "${projectDir}/config/workflows/ok_workflow.json"
+        },
+        "cwd": "${projectDir}"
+      },
+      "expect": {
+        "exitCode": 0,
+        "stdoutEmpty": true,
+        "stderrEmpty": true,
+        "noWrites": true
+      }
+    }
+  ],
+  "writeSinks": [
+    "<cwd>/.claude/hooks/data/lint-gate-detail.json (L189-199)"
+  ],
+  "writeSinksAuditNote": "fs.write*/appendFile* 呼び出しのソース静的監査（2026-08-15・行番号付き）。検知保証範囲外（任意絶対パス）への書込みが無いことの補助証拠"
+}
