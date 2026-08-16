@@ -428,6 +428,10 @@ INSTALLED=0; UPDATED=0; SKIPPED=0; PROFILE_SKIPPED=0
 
 if [ -d "$SOURCE_SKILLS" ]; then
     for skill_dir in "$SOURCE_SKILLS"/*/; do
+        # グロブ "*/" は末尾スラッシュ付きのパスを返すが readlink は付けずに返す。
+        # 剥がさないと後段の既存リンク比較が常に不一致となり、更新不要なリンクまで
+        # 毎回張り直してしまう（Windows のジャンクション上では ln が失敗する）。
+        skill_dir="${skill_dir%/}"
         skill_name=$(basename "$skill_dir")
         [[ "$skill_name" == "_archived" ]] && continue
         [[ "$skill_name" == "_guides" ]] && continue
@@ -443,15 +447,27 @@ if [ -d "$SOURCE_SKILLS" ]; then
         fi
 
         target="$TARGET_SKILLS/$skill_name"
-        if [ -d "$target" ] && [ ! -L "$target" ]; then rm -rf "$target"; fi
+        # 実ディレクトリを退ける必要がある場合、rm -rf は使わず退避に留める。
+        # Windows のジャンクションが -L で検出できない環境では、rm -rf が
+        # リンク先（リポジトリ本体のスキル実体）まで再帰削除しうるため。
+        if [ -d "$target" ] && [ ! -L "$target" ]; then
+            replaced_dir="$TARGET_SKILLS/../.skills-replaced"
+            mkdir -p "$replaced_dir"
+            if mv "$target" "$replaced_dir/${skill_name}.$(date +%Y%m%d_%H%M%S)" 2>/dev/null; then
+                warn "実ディレクトリ $skill_name を $replaced_dir へ退避しました（削除はしていません）"
+            else
+                warn "実ディレクトリ $skill_name を退避できませんでした。手動で確認してください: $target"
+                continue
+            fi
+        fi
 
         if [ ! -L "$target" ]; then
-            ln -sf "$skill_dir" "$target"
+            ln -sfn "$skill_dir" "$target"
             ((INSTALLED++)) || true
         else
             current_target=$(readlink "$target")
             if [ "$current_target" != "$skill_dir" ]; then
-                ln -sf "$skill_dir" "$target"
+                ln -sfn "$skill_dir" "$target"
                 ((UPDATED++)) || true
             else
                 ((SKIPPED++)) || true
