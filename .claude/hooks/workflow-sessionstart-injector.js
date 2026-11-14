@@ -12,7 +12,9 @@ const fs = require('fs');
 const path = require('path');
 const stateManager = require('./workflow-state-manager.js');
 const { readStdin } = require('./utils/read-stdin');
-const { resolveProjectsRoot } = require('./lib/project-dir-resolver');
+// 2026-07-08 監査対応(F-20): 兄弟プロジェクト横断走査を廃止（自プロジェクト限定）。
+// resolveProjectsRoot による他プロジェクトの SESSION_HANDOFF/workflow_state 注入は
+// プロジェクト境界侵食・横断プロンプト注入面となるため PPC では無効化。
 
 async function main() {
   let input = {};
@@ -117,61 +119,23 @@ async function main() {
 }
 
 function findDesktopWorkflowStates() {
-  const states = [];
-  try {
-    // 複数プロジェクト探索ルート（CLAUDE_PROJECTS_DIR > HOME/Desktop fallback）
-    const desktop = resolveProjectsRoot();
-    if (desktop && fs.existsSync(desktop)) {
-      const entries = fs.readdirSync(desktop, { withFileTypes: true });
-
-      entries.forEach(entry => {
-        if (entry.isDirectory() && !entry.name.startsWith('.')) {
-          const statePath = path.join(desktop, entry.name, '.workflow_state.json');
-          if (fs.existsSync(statePath)) {
-            try {
-              const content = fs.readFileSync(statePath, 'utf8');
-              const state = JSON.parse(content);
-              states.push({
-                path: path.join(desktop, entry.name),
-                workflowId: state.meta?.workflowId || 'unknown',
-                phase: state.meta?.currentPhase || 1
-              });
-            } catch (e) { /* fail-open */ }
-          }
-        }
-      });
-    }
-  } catch (e) { /* fail-open */ }
-  return states.slice(0, 5);
+  // 2026-07-08 監査対応(F-20): 兄弟プロジェクトの workflow_state 走査を廃止。
+  // 自プロジェクトの状態は main() 冒頭で注入済みのため、ここでは何も返さない。
+  return [];
 }
 
 function findSessionHandoffs(cwd) {
   const handoffs = [];
 
   try {
-    // カレントディレクトリ
+    // カレントディレクトリのみ（2026-07-08 監査対応(F-20): 兄弟プロジェクト走査を廃止）
     const cwdHandoff = path.join(cwd, 'SESSION_HANDOFF.md');
     if (fs.existsSync(cwdHandoff)) {
       handoffs.push(cwdHandoff);
     }
-
-    // 複数プロジェクト探索ルート（CLAUDE_PROJECTS_DIR > HOME/Desktop fallback）
-    const desktop = resolveProjectsRoot();
-    if (desktop && fs.existsSync(desktop)) {
-      const entries = fs.readdirSync(desktop, { withFileTypes: true });
-
-      entries.forEach(entry => {
-        if (entry.isDirectory() && !entry.name.startsWith('.')) {
-          const handoffPath = path.join(desktop, entry.name, 'SESSION_HANDOFF.md');
-          if (fs.existsSync(handoffPath)) {
-            handoffs.push(handoffPath);
-          }
-        }
-      });
-    }
   } catch (e) { /* fail-open */ }
 
-  return [...new Set(handoffs)].slice(0, 5);
+  return handoffs;
 }
 
 /**

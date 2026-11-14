@@ -1,35 +1,102 @@
 {
   "alwaysThinkingEnabled": true,
-  "disabledMcpServers": [
-    "figma",
-    "qdrant",
-    "chroma",
-    "n8n-mcp",
-    "meta-ads",
-    "facebook-ads-library",
-    "mcp-memory-service",
-    "sequential-thinking",
-    "pexels",
-    "obsidian",
-    "puppeteer",
-    "gpt-researcher"
-  ],
   "permissions": {
     "allow": [
-      "Bash",
       "Read",
-      "Write",
       "Edit",
+      "Write",
       "Glob",
       "Grep",
       "Task",
       "WebFetch",
       "WebSearch",
-      "AskUserQuestion"
+      "AskUserQuestion",
+      "NotebookEdit",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)",
+      "Bash(git restore:*)",
+      "Bash(git stash:*)",
+      "Bash(git config --get:*)",
+      "Bash(npm run:*)",
+      "Bash(npm test:*)",
+      "Bash(npm ci:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx next:*)",
+      "Bash(npx jest:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npx prisma validate:*)",
+      "Bash(npx prisma studio:*)",
+      "Bash(npx prettier:*)",
+      "Bash(npx eslint:*)",
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(find:*)",
+      "Bash(echo:*)",
+      "Bash(pwd)",
+      "Bash(wc:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(diff:*)",
+      "Bash(which:*)",
+      "Bash(where:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Bash(touch:*)",
+      "Bash(test:*)"
     ],
-    "deny": []
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(rm:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(npx prisma migrate:*)",
+      "Bash(firebase:*)",
+      "Bash(vercel:*)",
+      "Bash(npm publish:*)",
+      "Bash(gh:*)",
+      "mcp__twitter-client__*",
+      "mcp__meta-ads__*",
+      "mcp__facebook-ads-library__*",
+      "mcp__line-bot__*",
+      "mcp__voice-ai__*",
+      "mcp__obsidian__*",
+      "mcp__n8n-mcp__*",
+      "mcp__skyvern__*",
+      "mcp__stagehand__*",
+      "mcp__chroma__*",
+      "mcp__qdrant__*",
+      "mcp__mcp-memory-service__*"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Read(./.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/.credentials.json)",
+      "Read(**/*.pem)",
+      "Read(**/id_rsa)",
+      "Bash(cat .env:*)",
+      "Bash(cat .env.local:*)",
+      "Bash(type .env:*)",
+      "Bash(type .env.local:*)",
+      "Bash(head .env:*)",
+      "Bash(tail .env:*)",
+      "Bash(more .env:*)"
+    ]
   },
-  "preferredModel": "sonnet",
   "mcpServers": {
     "codebase-memory": {
       "type": "stdio",
@@ -51,12 +118,6 @@
       "description": "CodeGraph - コードベース知識グラフ検索・影響分析（64言語対応）",
       "category": "code-intelligence"
     }
-  },
-  "maxParallelAgents": 5,
-  "qualityGates": {
-    "codeReviewMinScore": 80,
-    "testCoverageMin": 80,
-    "securityScanRequired": true
   },
   "hooks": {
     "SessionStart": [
@@ -146,6 +207,26 @@
       }
     ],
     "PreToolUse": [
+      {
+        "matcher": "mcp__twitter-client__.*|mcp__meta-ads__.*|mcp__facebook-ads-library__.*|mcp__line-bot__.*|mcp__voice-ai__.*|mcp__stagehand__.*|mcp__skyvern__.*|mcp__n8n-mcp__.*|mcp__obsidian__.*|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ ! -f .claude/hooks/approval-gate.js ] && exit 0; node .claude/hooks/approval-gate.js",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ ! -f .claude/hooks/input-sanitizer-guard.js ] && exit 0; node .claude/hooks/input-sanitizer-guard.js",
+            "timeout": 5
+          }
+        ]
+      },
       {
         "matcher": "Write|Edit|Bash",
         "hooks": [

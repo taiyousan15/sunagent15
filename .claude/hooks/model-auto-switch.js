@@ -23,7 +23,9 @@ const LOG_PATH = path.join(DATA_DIR, 'model-switch.log')
 
 // Claude Code で使用可能なモデル短縮名
 // Task ツールの model パラメータ: 'opus' | 'sonnet' | 'haiku'
-// litellmModel: LiteLLM proxy 経由で呼び出す外部モデル
+// litellmModel: 2026-07-08 監査対応(F-29): 消費コードが存在しない孤立参照だったため
+// 外部モデル指定（minimax-m2-5）を全て null 化（フィールドはテスト互換のため残置）。
+// ※ユーザー方針: メイン/サブエージェントとも原則 Fable 5。ユーザーの明示指定が常に最優先。
 const ROUTING_RULES = [
   {
     complexity: 'trivial',
@@ -50,14 +52,14 @@ const ROUTING_RULES = [
     complexity: 'complex',
     taskModel: 'sonnet',
     claudeCodeModel: 'sonnet',
-    litellmModel: 'minimax-m2-5',
+    litellmModel: null,
     description: '新機能実装・API構築・マルチファイル変更',
   },
   {
     complexity: 'expert',
     taskModel: 'opus',
     claudeCodeModel: 'opus',
-    litellmModel: 'minimax-m2-5',
+    litellmModel: null,
     description: 'アーキテクチャ設計・セキュリティ監査・大規模リファクタリング',
   },
 ]

@@ -196,7 +196,7 @@ function Repair-McpServerPaths {
     )
 
     try {
-        $raw = Get-Content $SettingsPath -Raw
+        $raw = Get-Content $SettingsPath -Raw -Encoding UTF8
         if (-not $raw -or $raw.Trim().Length -eq 0) { return }
         $json = $raw | ConvertFrom-Json -ErrorAction Stop
     } catch {
@@ -532,7 +532,7 @@ $ALLOWED_SKILLS = @()
 
 if (Test-Path $PROFILE_FILE) {
     try {
-        $profileData = Get-Content $PROFILE_FILE -Raw | ConvertFrom-Json
+        $profileData = Get-Content $PROFILE_FILE -Raw -Encoding UTF8 | ConvertFrom-Json
         $presetGroups = $profileData.presets.$SkillProfile
         if (-not $presetGroups) { $presetGroups = $profileData.presets.standard }
 
@@ -777,7 +777,7 @@ if ((Test-Path $PROJ_SETTINGS) -and (Test-Path $CODEGRAPH_BIN)) {
     # Pre-flight: BOM 除去 + JSON 健全性チェック
     Repair-JsonFile -Path $PROJ_SETTINGS -Label "project settings.json" | Out-Null
     try {
-        $projSettings = Get-Content $PROJ_SETTINGS -Raw | ConvertFrom-Json
+        $projSettings = Get-Content $PROJ_SETTINGS -Raw -Encoding UTF8 | ConvertFrom-Json
         if ($projSettings.mcpServers -and $projSettings.mcpServers.'codebase-memory') {
             $projSettings.mcpServers.'codebase-memory'.command = $CODEGRAPH_BIN
             # UTF-8 (no BOM) で書き出し。PS5.1 の Set-Content -Encoding UTF8 は BOM を付与してしまうため使わない。

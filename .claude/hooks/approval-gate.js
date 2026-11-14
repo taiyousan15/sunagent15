@@ -82,10 +82,10 @@ process.stdin.on('end', () => {
       const msg = `⚠️  投稿系操作を検出しました\n` +
         `   ツール: ${toolName}\n` +
         `   分類: 投稿系（外部状態を変更）\n` +
-        `   承認が必要です。\n`;
+        `   自動実行をブロックしました。人間の明示承認が必要です。\n`;
       process.stderr.write(msg);
-      logApproval(toolName, 'posting', 'pending');
-      process.exit(0);
+      logApproval(toolName, 'posting', false);
+      process.exit(2);
     }
 
     if (classification === 'billing') {
